@@ -1,5 +1,5 @@
+.env
 target
 node_modules
 .wrangler
-.env
 build
