@@ -27,6 +27,9 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> worker::Result<Response
                 spotify: Option<String>,
                 apple_music: Option<String>,
                 tidal: Option<String>,
+                soundcloud: Option<String>,
+                bandcamp: Option<String>,
+                youtube: Option<String>,
             }
 
             if let Some(upc) = ctx.param("upc") {
@@ -81,6 +84,9 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> worker::Result<Response
                     artist_name: Some(apple_music_release.artistName),
                     spotify: Some(spotify_release.external_urls.spotify),
                     tidal: Some(tidal_link),
+                    bandcamp: None,
+                    youtube: None,
+                    soundcloud: None,
                 };
 
                 return Response::from_json(&response);
