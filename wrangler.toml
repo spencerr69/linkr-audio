@@ -1,0 +1,6 @@
+name = "sr-api"
+main = "build/index.js"
+compatibility_date = "2025-12-12"
+
+[build]
+command = "cargo install -q worker-build@^0.7 && worker-build --release"
