@@ -1,8 +1,12 @@
 mod apple_music;
+mod spotify;
 
 use crate::apple_music::AppleMusicClient;
+use crate::spotify::SpotifyClient;
+use futures::try_join;
 use serde::{Deserialize, Serialize};
 use worker::{Context, Env, Request, Response, Router};
+
 use worker_macros::event;
 
 #[event(fetch)]
@@ -26,22 +30,37 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> worker::Result<Response
             if let Some(upc) = ctx.param("upc") {
                 let upc = upc.to_string();
                 let apple_music_client = AppleMusicClient::new();
-
-                let album = match apple_music_client.get_album_by_upc(&upc).await {
-                    Ok(album) => album,
-                    Err(e) => return Response::error(e.to_string(), 404),
+                let spotify_client = match SpotifyClient::new(
+                    &ctx.secret("SPOTIFY_CLIENT_ID")
+                        .expect("No spotify client ID.")
+                        .to_string(),
+                    &ctx.secret("SPOTIFY_CLIENT_SECRET")
+                        .expect("No spotify client secret.")
+                        .to_string(),
+                )
+                .await
+                {
+                    Ok(client) => client,
+                    Err(e) => return Response::error(e.to_string(), 500),
                 };
 
-                let album_art = album.get_album_art_url(750);
+                let Ok((spotify_release, apple_music_release)) = try_join!(
+                    spotify_client.get_release_by_upc(&upc),
+                    apple_music_client.get_release_by_upc(&upc)
+                ) else {
+                    return Response::error("Internal Server Error".to_string(), 500);
+                };
+
+                let album_art = apple_music_release.get_album_art_url(750);
 
                 let response = LinkResponse {
                     upc,
-                    apple_music: Some(album.collectionViewUrl),
-                    title: Some(album.collectionName),
-                    track_count: Some(album.trackCount),
+                    apple_music: Some(apple_music_release.collectionViewUrl),
+                    title: Some(apple_music_release.collectionName),
+                    track_count: Some(apple_music_release.trackCount),
                     image_url: Some(album_art),
-                    artist_name: Some(album.artistName),
-                    spotify: None,
+                    artist_name: Some(apple_music_release.artistName),
+                    spotify: Some(spotify_release.external_urls.spotify),
                     tidal: None,
                 };
 

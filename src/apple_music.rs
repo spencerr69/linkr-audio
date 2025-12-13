@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 #[allow(non_snake_case)]
 #[derive(Serialize, Deserialize, Debug, Default)]
-pub struct AppleMusicAlbum {
+pub struct AppleMusicRelease {
     pub wrapperType: String,
     pub collectionType: String,
     pub artistId: u128,
@@ -25,7 +25,7 @@ pub struct AppleMusicAlbum {
     pub primaryGenreName: String,
 }
 
-impl AppleMusicAlbum {
+impl AppleMusicRelease {
     pub fn get_album_art_url(&self, size: u32) -> String {
         self.artworkUrl100
             .replace("100x100", &format!("{size}x{size}"))
@@ -36,27 +36,34 @@ impl AppleMusicAlbum {
 #[derive(Serialize, Deserialize, Debug)]
 struct RawSearchResponse {
     pub resultCount: u32,
-    pub results: Vec<AppleMusicAlbum>,
+    pub results: Vec<AppleMusicRelease>,
 }
 
-pub struct AppleMusicClient {}
+pub struct AppleMusicClient {
+    client: reqwest::Client,
+}
 
 impl AppleMusicClient {
     pub fn new() -> Self {
-        AppleMusicClient {}
+        AppleMusicClient {
+            client: reqwest::Client::new(),
+        }
     }
 
-    pub async fn get_album_by_upc(
+    pub async fn get_release_by_upc(
         &self,
         upc: &str,
-    ) -> Result<AppleMusicAlbum, Box<dyn std::error::Error>> {
-        let resp = reqwest::get(format!("https://itunes.apple.com/lookup?upc={upc}"))
+    ) -> Result<AppleMusicRelease, Box<dyn std::error::Error>> {
+        let resp = self
+            .client
+            .get(format!("https://itunes.apple.com/lookup?upc={upc}"))
+            .send()
             .await?
             .json::<RawSearchResponse>()
             .await?;
 
         let Some(album) = resp.results.into_iter().nth(0) else {
-            return Ok(AppleMusicAlbum::default());
+            return Ok(AppleMusicRelease::default());
         };
 
         Ok(album)
