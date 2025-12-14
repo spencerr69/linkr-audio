@@ -57,13 +57,7 @@ VALUES (?1, ?2, null, ?3);",
     Response::error("Internal Server Error", 500)
 }
 
-pub async fn get_artist(req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
-    let d1 = ctx.d1("prod_sr_db")?;
-
-    if !authenticated(req.headers(), d1, None).await {
-        return Response::error("Unauthorized", 401);
-    }
-
+pub async fn get_artist(_req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
     #[derive(Deserialize, Serialize)]
     struct GetArtistResponse {
         pub artist_id: String,
