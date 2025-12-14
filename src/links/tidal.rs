@@ -110,7 +110,7 @@ impl TidalClient {
             .await
             .unwrap();
 
-        if let Some(album) = resp.data.into_iter().nth(0).take() {
+        if let Some(album) = resp.data.into_iter().nth(0) {
             Ok(album.attributes)
         } else {
             Ok(TidalRelease::default())

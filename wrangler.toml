@@ -4,3 +4,9 @@ compatibility_date = "2025-12-12"
 
 [build]
 command = "cargo install -q worker-build@^0.7 && worker-build --release"
+
+[[d1_databases]]
+binding = "prod_sr_db"
+database_name = "prod-sr-db"
+database_id = "9fe15959-f4dd-4b76-810f-42ca521b697e"
+remote = true
