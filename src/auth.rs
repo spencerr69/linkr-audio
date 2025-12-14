@@ -2,7 +2,7 @@ use base64::Engine;
 use serde::{Deserialize, Serialize};
 use sha2::Digest;
 use worker::wasm_bindgen::JsValue;
-use worker::{D1Database, Headers};
+use worker::{D1Database, Headers, Request, Response, RouteContext};
 
 pub fn salt_and_hash(raw_pw: &str, raw_id: &str) -> String {
     let mut hasher = sha2::Sha256::default();
@@ -57,4 +57,13 @@ pub async fn authenticated(headers: &Headers, d1: D1Database, target_id: Option<
     };
 
     true
+}
+
+pub async fn login(req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
+    let d1 = ctx.d1("prod_sr_db")?;
+    if !authenticated(req.headers(), d1, None).await {
+        return Response::error("Unauthorized", 401);
+    }
+
+    Response::ok("Login successful")
 }
