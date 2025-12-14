@@ -1,58 +1,59 @@
 use serde::{Deserialize, Serialize};
+use worker::{console_log, console_warn};
 
 #[derive(Serialize, Deserialize, Debug)]
 struct RawSearchResponse {
-    albums: RawAlbumsResponse,
+    pub albums: RawAlbumsResponse,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 struct RawAlbumsResponse {
-    href: String,
-    limit: u32,
-    next: Option<String>,
-    offset: u32,
-    previous: Option<String>,
-    total: u32,
-    items: Vec<SpotifyRelease>,
+    pub href: String,
+    pub limit: u32,
+    pub next: Option<String>,
+    pub offset: u32,
+    pub previous: Option<String>,
+    pub total: u32,
+    pub items: Vec<SpotifyRelease>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Default)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone)]
 pub struct SpotifyRelease {
-    album_type: String,
+    pub album_type: String,
     pub total_tracks: u32,
-    available_markets: Vec<String>,
+    pub available_markets: Vec<String>,
     pub external_urls: ExternalUrls,
-    href: String,
-    id: String,
-    images: Vec<ImageResponse>,
+    pub href: String,
+    pub id: String,
+    pub images: Vec<ImageResponse>,
     pub name: String,
     pub release_date: String,
-    release_date_precision: String,
-    r#type: String,
-    uri: String,
+    pub release_date_precision: String,
+    pub r#type: String,
+    pub uri: String,
     pub artists: Vec<SpotifyArtist>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct SpotifyArtist {
     pub external_urls: ExternalUrls,
-    href: String,
-    id: String,
+    pub href: String,
+    pub id: String,
     pub name: String,
-    r#type: String,
-    uri: String,
+    pub r#type: String,
+    pub uri: String,
 }
 
-#[derive(Serialize, Deserialize, Debug, Default)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone)]
 pub struct ExternalUrls {
     pub spotify: String,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
-struct ImageResponse {
-    height: u32,
-    width: u32,
-    url: String,
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct ImageResponse {
+    pub height: u32,
+    pub width: u32,
+    pub url: String,
 }
 
 pub struct SpotifyClient {
@@ -103,13 +104,17 @@ impl SpotifyClient {
             ))
             .header("Authorization", &self.access_token)
             .send()
-            .await?
-            .json::<RawSearchResponse>()
             .await?;
+
+        let Ok(resp) = resp.json::<RawSearchResponse>().await else {
+            console_warn!("Failed to parse Spotify API response for UPC: {upc}");
+            return Ok(SpotifyRelease::default());
+        };
 
         if let Some(album) = resp.albums.items.into_iter().nth(0) {
             Ok(album)
         } else {
+            console_log!("Couldn't find album for upc: {upc}");
             Ok(SpotifyRelease::default())
         }
     }

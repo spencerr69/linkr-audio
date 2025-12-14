@@ -1,29 +1,30 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use worker::{console_log, console_warn};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 struct RawSearchResponse {
     pub data: Vec<RawReleaseResponse>,
     links: HashMap<String, String>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 struct RawReleaseResponse {
     id: String,
     r#type: String,
     pub attributes: TidalRelease,
     relationships: Relationships,
 }
-#[derive(Serialize, Deserialize, Default)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 #[allow(non_snake_case)]
 pub struct TidalRelease {
-    title: String,
+    pub title: String,
     barcodeId: String,
     numberOfVolumes: u32,
-    numberOfItems: u32,
-    duration: String,
-    explicit: bool,
-    releaseDate: String,
+    pub numberOfItems: u32,
+    pub duration: String,
+    pub explicit: bool,
+    pub releaseDate: String,
     copyright: HashMap<String, String>,
     popularity: f64,
     accessType: String,
@@ -33,18 +34,18 @@ pub struct TidalRelease {
     r#type: String,
 }
 
-#[derive(Serialize, Deserialize, Default)]
+#[derive(Serialize, Deserialize, Default, Debug)]
 pub struct ExternalLinks {
     pub href: String,
     meta: HashMap<String, String>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 struct Links {
     links: HashMap<String, String>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 #[allow(non_snake_case)]
 struct Relationships {
     artists: Links,
@@ -105,13 +106,17 @@ impl TidalClient {
             .header("Authorization", &self.access_token)
             .header("accept", "application/vnd.api+json")
             .send()
-            .await?
-            .json::<RawSearchResponse>()
             .await?;
+
+        let Ok(resp) = resp.json::<RawSearchResponse>().await else {
+            console_warn!("Failed to parse Tidal API response for UPC: {upc}");
+            return Ok(TidalRelease::default());
+        };
 
         if let Some(album) = resp.data.into_iter().nth(0) {
             Ok(album.attributes)
         } else {
+            console_log!("No album found for UPC: {upc}");
             Ok(TidalRelease::default())
         }
     }

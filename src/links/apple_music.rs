@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use worker::{console_log, console_warn};
 
 #[allow(non_snake_case)]
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -58,11 +59,15 @@ impl AppleMusicClient {
             .client
             .get(format!("https://itunes.apple.com/lookup?upc={upc}"))
             .send()
-            .await?
-            .json::<RawSearchResponse>()
             .await?;
 
+        let Ok(resp) = resp.json::<RawSearchResponse>().await else {
+            console_warn!("Failed to parse Apple Music API response for UPC: {upc}");
+            return Ok(AppleMusicRelease::default());
+        };
+
         let Some(album) = resp.results.into_iter().nth(0) else {
+            console_log!("No album found for UPC: {upc}");
             return Ok(AppleMusicRelease::default());
         };
 

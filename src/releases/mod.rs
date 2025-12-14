@@ -8,6 +8,7 @@ pub struct ReleaseBody {
     pub upc: String,
     pub title: String,
     pub artist_name: String,
+    pub release_date: String,
     pub artwork: String,
     pub spotify: String,
     pub apple_music: String,
@@ -70,6 +71,7 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
         pub slug: String,
         pub upc: String,
         pub title: String,
+        pub release_date: String,
         pub artist_name: String,
         pub artwork: String,
         pub spotify: String,
@@ -89,7 +91,7 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
     };
 
     let d1 = ctx.d1("prod_sr_db")?;
-    let query =  d1.prepare("INSERT INTO Releases (slug, upc, title, artist_name, artist_id, artwork, spotify, apple_music, tidal, bandcamp, soundcloud, youtube, track_count) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13)");
+    let query =  d1.prepare("INSERT INTO Releases (slug, upc, title, artist_name, artist_id, artwork, spotify, apple_music, tidal, bandcamp, soundcloud, youtube, track_count, release_date) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)");
     let binded = query.bind(&[
         JsValue::from(new_release.slug),
         JsValue::from(new_release.upc),
@@ -104,6 +106,7 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
         JsValue::from(new_release.soundcloud),
         JsValue::from(new_release.youtube),
         JsValue::from(new_release.track_count),
+        JsValue::from(new_release.release_date),
     ])?;
 
     let result = binded.run().await?;
@@ -156,7 +159,7 @@ pub async fn post_edit_release(
     };
 
     let d1 = ctx.d1("prod_sr_db")?;
-    let query =  d1.prepare("REPLACE INTO Releases (slug, upc, title, artist_name, artist_id, artwork, spotify, apple_music, tidal, bandcamp, soundcloud, youtube, track_count) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13)");
+    let query =  d1.prepare("REPLACE INTO Releases (slug, upc, title, artist_name, artist_id, artwork, spotify, apple_music, tidal, bandcamp, soundcloud, youtube, track_count, release_date) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)");
     let binded = query.bind(&[
         JsValue::from(slug),
         JsValue::from(new_release.upc),
@@ -171,6 +174,7 @@ pub async fn post_edit_release(
         JsValue::from(new_release.soundcloud),
         JsValue::from(new_release.youtube),
         JsValue::from(new_release.track_count),
+        JsValue::from(new_release.release_date),
     ])?;
 
     let result = binded.run().await?;

@@ -28,6 +28,7 @@ pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Re
         artist_name: Option<String>,
         track_count: Option<u32>,
         image_url: Option<String>,
+        release_date: Option<String>,
         spotify: Option<String>,
         apple_music: Option<String>,
         tidal: Option<String>,
@@ -76,15 +77,25 @@ pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Re
 
     let tidal_link = tidal_release.externalLinks.first().unwrap().href.clone();
 
-    let album_art = apple_music_release.get_album_art_url(750);
+    // let album_art = apple_music_release.get_album_art_url(750);
+    let album_art = spotify_release.clone().images.first().unwrap().url.clone();
+
+    let artist = spotify_release
+        .clone()
+        .artists
+        .first()
+        .unwrap()
+        .name
+        .clone();
 
     let response = LinkResponse {
         upc,
-        apple_music: Some(apple_music_release.collectionViewUrl),
-        title: Some(apple_music_release.collectionName),
-        track_count: Some(apple_music_release.trackCount),
+        title: Some(tidal_release.title),
+        track_count: Some(tidal_release.numberOfItems),
         image_url: Some(album_art),
-        artist_name: Some(apple_music_release.artistName),
+        artist_name: Some(artist),
+        release_date: Some(spotify_release.release_date),
+        apple_music: Some(apple_music_release.collectionViewUrl),
         spotify: Some(spotify_release.external_urls.spotify),
         tidal: Some(tidal_link),
         bandcamp: None,
