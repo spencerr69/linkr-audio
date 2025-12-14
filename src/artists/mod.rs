@@ -1,15 +1,28 @@
-use crate::authenticated_request;
+use crate::auth::authenticated;
 use serde::{Deserialize, Serialize};
 use worker::wasm_bindgen::JsValue;
 use worker::{Request, Response, RouteContext};
 
+/// Handles POST request to create a new artist account.
+///
+/// ### Request Body:
+/// ```ignore
+/// {
+///     id: String,
+///     artist_name: String,
+///     pw: String
+/// }
+/// ```
 pub async fn post_create_artist(
     mut req: Request,
     ctx: RouteContext<()>,
 ) -> worker::Result<Response> {
-    if !authenticated_request(req.headers()) {
+    let d1 = ctx.d1("prod_sr_db")?;
+
+    if !authenticated(req.headers(), d1, None).await {
         return Response::error("Unauthorized", 401);
     }
+
     #[derive(Serialize, Deserialize, Debug)]
     struct CreateArtistJson {
         pub id: String,
@@ -26,7 +39,7 @@ pub async fn post_create_artist(
     let d1 = ctx.d1("prod_sr_db")?;
 
     let statement = d1.prepare(
-        "INSERT INTO Artists (artist_id, master_artist_name, styling, pw_hash)
+        "REPLACE INTO Artists (artist_id, master_artist_name, styling, pw_hash)
 VALUES (?1, ?2, null, ?3);",
     );
 
@@ -42,4 +55,36 @@ VALUES (?1, ?2, null, ?3);",
     };
 
     Response::error("Internal Server Error", 500)
+}
+
+pub async fn get_artist(req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
+    let d1 = ctx.d1("prod_sr_db")?;
+
+    if !authenticated(req.headers(), d1, None).await {
+        return Response::error("Unauthorized", 401);
+    }
+
+    #[derive(Deserialize, Serialize)]
+    struct GetArtistResponse {
+        pub artist_id: String,
+        pub master_artist_name: String,
+        pub styling: Option<String>,
+    }
+
+    let Some(id) = ctx.param("id") else {
+        return Response::error("Invalid artist ID", 400);
+    };
+
+    let d1 = ctx.d1("prod_sr_db")?;
+
+    let statement = d1
+        .prepare("SELECT artist_id, master_artist_name, styling FROM Artists WHERE artist_id = ?1");
+
+    let binded = statement.bind(&[JsValue::from(id)])?;
+
+    let Some(result): Option<GetArtistResponse> = binded.first(None).await? else {
+        return Response::error("Artist not found", 404);
+    };
+
+    Response::from_json(&result)
 }

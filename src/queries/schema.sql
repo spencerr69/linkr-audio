@@ -7,16 +7,17 @@ CREATE TABLE IF NOT EXISTS Artists
     pw_hash            TEXT
 );
 INSERT INTO Artists (artist_id, master_artist_name, styling, pw_hash)
-VALUES ('dummy', 'Dummy', null, 'Dummy');
+VALUES ('sr', 'Spencer Raymond', null, '1a8db61ffa4484cd0174da464a69e4a1c5585d50fa2dad9055b1b24b49578508');
 
 
 DROP TABLE IF EXISTS Releases;
 CREATE TABLE IF NOT EXISTS Releases
 (
-    upc         TEXT PRIMARY KEY,
-    title       TEXT,
-    artist_name TEXT,
-    artist_id   TEXT not null,
+    slug        TEXT PRIMARY KEY,
+    upc         TEXT    not null,
+    title       TEXT    not null,
+    artist_name TEXT    not null,
+    artist_id   TEXT    not null,
     artwork     TEXT,
     spotify     TEXT,
     apple_music TEXT,
@@ -24,5 +25,6 @@ CREATE TABLE IF NOT EXISTS Releases
     bandcamp    TEXT,
     soundcloud  TEXT,
     youtube     TEXT,
+    track_count INTEGER not null,
     FOREIGN KEY (artist_id) REFERENCES Artists (artist_id)
 );

@@ -1077,6 +1077,7 @@ dependencies = [
 name = "sr-api"
 version = "0.1.0"
 dependencies = [
+ "base64",
  "futures",
  "reqwest",
  "serde",

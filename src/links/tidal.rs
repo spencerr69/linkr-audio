@@ -107,8 +107,7 @@ impl TidalClient {
             .send()
             .await?
             .json::<RawSearchResponse>()
-            .await
-            .unwrap();
+            .await?;
 
         if let Some(album) = resp.data.into_iter().nth(0) {
             Ok(album.attributes)

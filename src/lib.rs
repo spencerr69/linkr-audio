@@ -1,11 +1,13 @@
 mod artists;
 mod auth;
 mod links;
+mod releases;
 
 use crate::links::get_links_by_upc;
-use worker::{Context, Env, Headers, Request, Response, Router};
+use worker::{Context, Env, Request, Response, Router};
 
-use crate::artists::post_create_artist;
+use crate::artists::{get_artist, post_create_artist};
+use crate::releases::{get_release, post_edit_release, post_new_release};
 use worker_macros::event;
 
 #[event(fetch)]
@@ -14,12 +16,11 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> worker::Result<Response
 
     router
         .get_async("/links/:upc", get_links_by_upc)
+        .get_async("/artists/:id", get_artist)
         .post_async("/artists", post_create_artist)
+        .get_async("/releases/:id/:slug", get_release)
+        .post_async("/releases/:id", post_new_release)
+        .post_async("/releases/:id/:slug", post_edit_release)
         .run(req, env)
         .await
-}
-
-pub fn authenticated_request(headers: &Headers) -> bool {
-    //TODO: Implement authentication logic maybe... this is really just to make sure no bots can fuck with stuff
-    headers.get("check").unwrap_or(None).is_some()
 }

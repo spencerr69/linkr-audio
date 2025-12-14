@@ -1,4 +1,4 @@
-use crate::authenticated_request;
+use crate::auth::authenticated;
 use crate::links::apple_music::AppleMusicClient;
 use crate::links::spotify::SpotifyClient;
 use crate::links::tidal::TidalClient;
@@ -11,7 +11,9 @@ mod spotify;
 mod tidal;
 
 pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
-    if !authenticated_request(req.headers()) {
+    let d1 = ctx.d1("prod_sr_db")?;
+
+    if !authenticated(req.headers(), d1, None).await {
         return Response::error("Unauthorized", 401);
     }
 
