@@ -63,7 +63,7 @@ pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Re
         SpotifyClient::new(&spotify_client_id, &spotify_client_secret),
         TidalClient::new(&tidal_client_id, &tidal_client_secret)
     ) else {
-        return Response::error("Internal Server Error".to_string(), 500);
+        return Response::error("ABACUS : Internal Server Error".to_string(), 500);
     };
 
     let Ok((spotify_release, apple_music_release, tidal_release)) = try_join!(
@@ -71,7 +71,7 @@ pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Re
         apple_music_client.get_release_by_upc(&upc),
         tidal_client.get_release_by_upc(&upc)
     ) else {
-        return Response::error("Internal Server Error".to_string(), 500);
+        return Response::error("BANANA : Internal Server Error".to_string(), 500);
     };
 
     let tidal_link = tidal_release.externalLinks.first().unwrap().href.clone();
