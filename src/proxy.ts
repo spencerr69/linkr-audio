@@ -37,8 +37,6 @@ export async function proxy(request: NextRequest) {
     const {pathname} = request.nextUrl;
     const subdomain = extractSubdomain(request);
 
-    console.log(subdomain);
-
     if (subdomain) {
         // Block access to admin page from subdomains
         if (pathname.startsWith('/admin')) {
@@ -47,7 +45,7 @@ export async function proxy(request: NextRequest) {
 
         // For the root path on a subdomain, rewrite to the subdomain page
         if (pathname === '/') {
-            return NextResponse.rewrite(new URL(`/s/${subdomain}`, request.url));
+            return NextResponse.rewrite(new URL(`/${subdomain}`, request.url));
         }
 
         return NextResponse.rewrite(new URL(

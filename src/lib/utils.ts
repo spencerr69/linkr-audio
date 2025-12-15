@@ -1,2 +1,4 @@
 export const rootDomain =
-    process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost:3000';
+    process.env.PUBLIC_ROOT_DOMAIN || 'http://localhost:3000';
+
+export const apiDomain = process.env.API_ROOT_DOMAIN || 'http://localhost:8787'

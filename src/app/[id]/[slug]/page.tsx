@@ -1,7 +1,8 @@
 import Image from "next/image";
 import {Metadata} from "next";
+import {apiDomain} from "@/lib/utils";
 
-const BASE_API_URL = "https://sr-api.aletrispinkroot.workers.dev";
+const BASE_API_URL = apiDomain;
 
 type Release =
     {
@@ -16,10 +17,12 @@ type Release =
         soundcloud: string;
         youtube: string;
         track_count: number;
+        release_date: string;
     }
 
 const Page = async ({params}: { params: Promise<{ id: string, slug: string }> }) => {
     const {id, slug} = await params;
+
 
     const resp = await fetch(`${BASE_API_URL}/releases/${id}/${slug}`);
 
@@ -39,7 +42,7 @@ const Page = async ({params}: { params: Promise<{ id: string, slug: string }> })
         <a href={release.spotify}>spotify</a>
         <a href={release.tidal}>tidal</a>
 
-    </>)
+    </>);
 }
 
 export default Page;
