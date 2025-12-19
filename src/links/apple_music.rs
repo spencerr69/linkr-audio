@@ -26,12 +26,12 @@ pub struct AppleMusicRelease {
     pub primaryGenreName: String,
 }
 
-impl AppleMusicRelease {
-    pub fn get_album_art_url(&self, size: u32) -> String {
-        self.artworkUrl100
-            .replace("100x100", &format!("{size}x{size}"))
-    }
-}
+// impl AppleMusicRelease {
+//     pub fn get_album_art_url(&self, size: u32) -> String {
+//         self.artworkUrl100
+//             .replace("100x100", &format!("{size}x{size}"))
+//     }
+// }
 
 #[allow(non_snake_case)]
 #[derive(Serialize, Deserialize, Debug)]

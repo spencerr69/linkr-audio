@@ -8,15 +8,21 @@ pub fn salt_and_hash(raw_pw: &str, raw_id: &str) -> String {
     let mut hasher = sha2::Sha256::default();
     hasher.update((raw_pw.to_owned() + raw_id).as_bytes());
     let out = hasher.finalize();
-    format!("{:x}", out)
+    format!("{out:x}")
 }
 
 pub async fn authenticated(headers: &Headers, d1: D1Database, target_id: Option<&str>) -> bool {
+    #[derive(Serialize, Deserialize)]
+    struct QueryResponse {
+        artist_id: String,
+        pw_hash: String,
+    }
+
     let Some(auth) = headers.get("Authorization").unwrap_or(None) else {
         return false;
     };
 
-    let (auth_type, auth_token) = auth.split_once(" ").unwrap_or(("", ""));
+    let (auth_type, auth_token) = auth.split_once(' ').unwrap_or(("", ""));
 
     if auth_type != "Basic" {
         return false;
@@ -26,16 +32,16 @@ pub async fn authenticated(headers: &Headers, d1: D1Database, target_id: Option<
         return false;
     };
 
-    let auth_token = String::from_utf8(auth_token).unwrap_or("".into());
+    let auth_token = String::from_utf8(auth_token).unwrap_or_default();
 
-    let Some((id, pass)) = auth_token.split_once(":") else {
+    let Some((id, pass)) = auth_token.split_once(':') else {
         return false;
     };
 
-    if let Some(target_id) = target_id {
-        if id != target_id {
-            return false;
-        }
+    if let Some(target_id) = target_id
+        && id != target_id
+    {
+        return false;
     }
 
     let pw_hash = salt_and_hash(pass, id);
@@ -45,12 +51,6 @@ pub async fn authenticated(headers: &Headers, d1: D1Database, target_id: Option<
     let Ok(query) = query.bind(&[JsValue::from(id), JsValue::from(pw_hash)]) else {
         return false;
     };
-
-    #[derive(Serialize, Deserialize)]
-    struct QueryResponse {
-        artist_id: String,
-        pw_hash: String,
-    }
 
     let Ok(Some(_)): worker::Result<Option<QueryResponse>> = query.first(None).await else {
         return false;

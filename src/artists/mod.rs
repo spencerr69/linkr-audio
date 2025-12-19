@@ -17,17 +17,17 @@ pub async fn post_create_artist(
     mut req: Request,
     ctx: RouteContext<()>,
 ) -> worker::Result<Response> {
-    let d1 = ctx.d1("prod_sr_db")?;
-
-    if !authenticated(req.headers(), d1, None).await {
-        return Response::error("Unauthorized", 401);
-    }
-
     #[derive(Serialize, Deserialize, Debug)]
     struct CreateArtistJson {
         pub id: String,
         pub artist_name: String,
         pub pw: String,
+    }
+
+    let d1 = ctx.d1("prod_sr_db")?;
+
+    if !authenticated(req.headers(), d1, None).await {
+        return Response::error("Unauthorized", 401);
     }
 
     let Ok(body) = req.json::<CreateArtistJson>().await else {
@@ -52,7 +52,7 @@ VALUES (?1, ?2, null, ?3);",
     let result = query.run().await?;
     if result.success() {
         return Response::ok("boots");
-    };
+    }
 
     Response::error("Internal Server Error", 500)
 }

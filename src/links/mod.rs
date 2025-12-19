@@ -10,6 +10,22 @@ mod apple_music;
 mod spotify;
 mod tidal;
 
+#[derive(Serialize, Deserialize)]
+struct LinkResponse {
+    upc: String,
+    title: Option<String>,
+    artist_name: Option<String>,
+    track_count: Option<u32>,
+    image_url: Option<String>,
+    release_date: Option<String>,
+    spotify: Option<String>,
+    apple_music: Option<String>,
+    tidal: Option<String>,
+    soundcloud: Option<String>,
+    bandcamp: Option<String>,
+    youtube: Option<String>,
+}
+
 pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
     let d1 = ctx.d1("prod_sr_db")?;
 
@@ -21,23 +37,7 @@ pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Re
         return Response::error("Bad Request", 400);
     };
 
-    #[derive(Serialize, Deserialize)]
-    struct LinkResponse {
-        upc: String,
-        title: Option<String>,
-        artist_name: Option<String>,
-        track_count: Option<u32>,
-        image_url: Option<String>,
-        release_date: Option<String>,
-        spotify: Option<String>,
-        apple_music: Option<String>,
-        tidal: Option<String>,
-        soundcloud: Option<String>,
-        bandcamp: Option<String>,
-        youtube: Option<String>,
-    }
-
-    let upc = upc.to_string();
+    let upc = upc.clone();
     let apple_music_client = AppleMusicClient::new();
 
     let spotify_client_id = ctx

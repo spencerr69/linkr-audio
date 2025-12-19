@@ -64,7 +64,7 @@ pub async fn get_releases_for_artist(
     _req: Request,
     ctx: RouteContext<()>,
 ) -> worker::Result<Response> {
-    let (Some(artist_id)) = ctx.param("id") else {
+    let Some(artist_id) = ctx.param("id") else {
         return Response::error("No artist id provided", 400);
     };
 
@@ -79,7 +79,7 @@ pub async fn get_releases_for_artist(
 
     let out = out
         .into_iter()
-        .map(|db_schema| ReleaseBody::from(db_schema))
+        .map(ReleaseBody::from)
         .collect::<Vec<ReleaseBody>>();
 
     Response::from_json(&out)
@@ -107,52 +107,52 @@ pub async fn get_release(_req: Request, ctx: RouteContext<()>) -> worker::Result
 fn concat_links(release: &DbSchema) -> Vec<Link> {
     let mut links = vec![];
     if let Some(spotify) = &release.spotify
-        && release.spotify != Some("".into())
+        && release.spotify != Some(String::new())
     {
         links.push(Link {
             name: "spotify".to_string(),
             url: spotify.clone(),
-        })
+        });
     }
     if let Some(apple_music) = &release.apple_music
-        && release.apple_music != Some("".into())
+        && release.apple_music != Some(String::new())
     {
         links.push(Link {
             name: "apple_music".to_string(),
             url: apple_music.clone(),
-        })
+        });
     }
     if let Some(tidal) = &release.tidal
-        && release.tidal != Some("".into())
+        && release.tidal != Some(String::new())
     {
         links.push(Link {
             name: "tidal".to_string(),
             url: tidal.clone(),
-        })
+        });
     }
     if let Some(bandcamp) = &release.bandcamp
-        && release.bandcamp != Some("".into())
+        && release.bandcamp != Some(String::new())
     {
         links.push(Link {
             name: "bandcamp".to_string(),
             url: bandcamp.clone(),
-        })
+        });
     }
     if let Some(soundcloud) = &release.soundcloud
-        && release.soundcloud != Some("".into())
+        && release.soundcloud != Some(String::new())
     {
         links.push(Link {
             name: "soundcloud".to_string(),
             url: soundcloud.clone(),
-        })
+        });
     }
     if let Some(youtube) = &release.youtube
-        && release.youtube != Some("".into())
+        && release.youtube != Some(String::new())
     {
         links.push(Link {
             name: "youtube".to_string(),
             url: youtube.clone(),
-        })
+        });
     }
     links
 }
@@ -177,16 +177,6 @@ fn concat_links(release: &DbSchema) -> Vec<Link> {
 ///     }
 ///```
 pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
-    let Some(artist_id) = ctx.param("id") else {
-        return Response::error("No artist id provided", 400);
-    };
-
-    let d1 = ctx.d1("prod_sr_db")?;
-
-    if !authenticated(req.headers(), d1, Some(artist_id)).await {
-        return Response::error("Unauthorized", 401);
-    }
-
     #[derive(Serialize, Deserialize)]
     struct PostNewReleaseBody {
         pub slug: String,
@@ -197,6 +187,16 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
         pub artwork: String,
         pub links: Vec<Link>,
         pub track_count: u32,
+    }
+
+    let Some(artist_id) = ctx.param("id") else {
+        return Response::error("No artist id provided", 400);
+    };
+
+    let d1 = ctx.d1("prod_sr_db")?;
+
+    if !authenticated(req.headers(), d1, Some(artist_id)).await {
+        return Response::error("Unauthorized", 401);
     }
 
     let Ok(new_release) = req.json::<PostNewReleaseBody>().await else {
@@ -238,7 +238,7 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
 }
 
 fn get_seperate_links(
-    links: &Vec<Link>,
+    links: &[Link],
 ) -> (
     Option<String>,
     Option<String>,
@@ -259,7 +259,7 @@ fn get_seperate_links(
                 "soundcloud" => soundcloud = Some(link.url.clone()),
                 "youtube" => youtube = Some(link.url.clone()),
                 _ => {}
-            };
+            }
 
             (spotify, apple_music, tidal, bandcamp, soundcloud, youtube)
         },
@@ -267,24 +267,6 @@ fn get_seperate_links(
 }
 
 /// Handles POST request to edit a release for an artist
-///
-/// ### Request Body
-/// ```
-/// {
-///         pub slug: String,
-///         pub upc: String,
-///         pub title: String,
-///         pub artist_name: String,
-///         pub artwork: Option<String>,
-///         pub spotify: Option<String>,
-///         pub apple_music: Option<String>,
-///         pub tidal: Option<String>,
-///         pub bandcamp: Option<String>,
-///         pub soundcloud: Option<String>,
-///         pub youtube: Option<String>,
-///         pub track_count: u32,
-///     }
-///```
 pub async fn post_edit_release(
     mut req: Request,
     ctx: RouteContext<()>,
