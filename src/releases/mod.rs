@@ -9,10 +9,31 @@ pub struct ReleaseBody {
     pub title: String,
     pub artist_name: String,
     pub release_date: String,
-    pub artwork: String,
+    pub artwork: Option<String>,
     pub links: Vec<Link>,
 
+    pub artist_id: String,
+    pub slug: String,
+
     pub track_count: u32,
+}
+
+impl From<DbSchema> for ReleaseBody {
+    fn from(db_schema: DbSchema) -> Self {
+        let links = concat_links(&db_schema);
+
+        Self {
+            upc: db_schema.upc,
+            title: db_schema.title,
+            artwork: db_schema.artwork,
+            links,
+            track_count: db_schema.track_count,
+            slug: db_schema.slug,
+            artist_id: db_schema.artist_id,
+            artist_name: db_schema.artist_name,
+            release_date: db_schema.release_date,
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize)]
@@ -21,9 +42,10 @@ pub struct Link {
     url: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct DbSchema {
     pub slug: String,
+    pub artist_id: String,
     pub upc: String,
     pub title: String,
     pub artist_name: String,
@@ -36,6 +58,31 @@ pub struct DbSchema {
     pub soundcloud: Option<String>,
     pub youtube: Option<String>,
     pub track_count: u32,
+}
+
+pub async fn get_releases_for_artist(
+    _req: Request,
+    ctx: RouteContext<()>,
+) -> worker::Result<Response> {
+    let (Some(artist_id)) = ctx.param("id") else {
+        return Response::error("No artist id provided", 400);
+    };
+
+    let d1 = ctx.d1("prod_sr_db")?;
+    let query =
+        d1.prepare("SELECT * FROM Releases WHERE artist_id = ?1 ORDER BY release_date DESC");
+    let binded = query.bind(&[JsValue::from(artist_id)])?;
+    let result = binded.run().await?;
+    let Ok(out): worker::Result<Vec<DbSchema>> = result.results() else {
+        return Response::error("No releases found for artist", 404);
+    };
+
+    let out = out
+        .into_iter()
+        .map(|db_schema| ReleaseBody::from(db_schema))
+        .collect::<Vec<ReleaseBody>>();
+
+    Response::from_json(&out)
 }
 
 pub async fn get_release(_req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
@@ -52,54 +99,56 @@ pub async fn get_release(_req: Request, ctx: RouteContext<()>) -> worker::Result
         return Response::error("Release not found", 404);
     };
 
-    let links = concat_links(&release);
-
-    let out: ReleaseBody = ReleaseBody {
-        upc: release.upc,
-        title: release.title,
-        artist_name: release.artist_name,
-        release_date: release.release_date,
-        artwork: release.artwork.unwrap_or_default(),
-        links,
-        track_count: release.track_count,
-    };
+    let out = ReleaseBody::from(release);
 
     Response::from_json(&out)
 }
 
 fn concat_links(release: &DbSchema) -> Vec<Link> {
     let mut links = vec![];
-    if let Some(spotify) = &release.spotify {
+    if let Some(spotify) = &release.spotify
+        && release.spotify != Some("".into())
+    {
         links.push(Link {
             name: "spotify".to_string(),
             url: spotify.clone(),
         })
     }
-    if let Some(apple_music) = &release.apple_music {
+    if let Some(apple_music) = &release.apple_music
+        && release.apple_music != Some("".into())
+    {
         links.push(Link {
             name: "apple_music".to_string(),
             url: apple_music.clone(),
         })
     }
-    if let Some(tidal) = &release.tidal {
+    if let Some(tidal) = &release.tidal
+        && release.tidal != Some("".into())
+    {
         links.push(Link {
             name: "tidal".to_string(),
             url: tidal.clone(),
         })
     }
-    if let Some(bandcamp) = &release.bandcamp {
+    if let Some(bandcamp) = &release.bandcamp
+        && release.bandcamp != Some("".into())
+    {
         links.push(Link {
             name: "bandcamp".to_string(),
             url: bandcamp.clone(),
         })
     }
-    if let Some(soundcloud) = &release.soundcloud {
+    if let Some(soundcloud) = &release.soundcloud
+        && release.soundcloud != Some("".into())
+    {
         links.push(Link {
             name: "soundcloud".to_string(),
             url: soundcloud.clone(),
         })
     }
-    if let Some(youtube) = &release.youtube {
+    if let Some(youtube) = &release.youtube
+        && release.youtube != Some("".into())
+    {
         links.push(Link {
             name: "youtube".to_string(),
             url: youtube.clone(),
@@ -161,7 +210,7 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
 
     let (spotify, apple_music, tidal, bandcamp, soundcloud, youtube) =
         get_seperate_links(&new_release.links);
-    let query =  d1.prepare("INSERT INTO Releases (slug, upc, title, artist_name, artist_id, artwork, spotify, apple_music, tidal, bandcamp, soundcloud, youtube, track_count, release_date) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)");
+    let query = d1.prepare("INSERT INTO Releases (slug, upc, title, artist_name, artist_id, artwork, spotify, apple_music, tidal, bandcamp, soundcloud, youtube, track_count, release_date) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)");
     let binded = query.bind(&[
         JsValue::from(new_release.slug),
         JsValue::from(new_release.upc),
@@ -261,7 +310,7 @@ pub async fn post_edit_release(
         get_seperate_links(&new_release.links);
 
     let d1 = ctx.d1("prod_sr_db")?;
-    let query =  d1.prepare("REPLACE INTO Releases (slug, upc, title, artist_name, artist_id, artwork, spotify, apple_music, tidal, bandcamp, soundcloud, youtube, track_count, release_date) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)");
+    let query = d1.prepare("REPLACE INTO Releases (slug, upc, title, artist_name, artist_id, artwork, spotify, apple_music, tidal, bandcamp, soundcloud, youtube, track_count, release_date) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)");
     let binded = query.bind(&[
         JsValue::from(slug),
         JsValue::from(new_release.upc),
