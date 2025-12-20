@@ -2,6 +2,7 @@ import { verifySession } from "@/lib/dal";
 import { apiDomain } from "@/lib/utils";
 import { ArtistResponse } from "@/lib/apihelper";
 import { Releases } from "@/app/admin/components/releases";
+import { logout } from "@/app/actions/auth";
 
 export const Dashboard = async () => {
   const session = await verifySession();
@@ -22,6 +23,9 @@ export const Dashboard = async () => {
     <div>
       dashboard {artist.master_artist_name}
       <Releases />
+      <button className={"cursor-pointer"} onClick={logout}>
+        Log out
+      </button>
     </div>
   );
 };

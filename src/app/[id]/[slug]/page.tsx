@@ -1,68 +1,60 @@
+"use server";
+
 import Image from "next/image";
-import {Metadata} from "next";
-import {apiDomain} from "@/lib/utils";
+import { Metadata } from "next";
+import { apiDomain } from "@/lib/utils";
+import { cache } from "react";
+import { Release } from "@/lib/apihelper";
 
 const BASE_API_URL = apiDomain;
 
-type Release =
-    {
-        upc: string;
-        title: string;
-        artist_name: string;
-        artwork: string;
-        spotify: string;
-        apple_music: string;
-        tidal: string;
-        bandcamp: string;
-        soundcloud: string;
-        youtube: string;
-        track_count: number;
-        release_date: string;
-    }
+const getRelease = cache(async (id: string, slug: string): Promise<Release> => {
+  const resp = await fetch(`${BASE_API_URL}/releases/${id}/${slug}`);
 
-const Page = async ({params}: { params: Promise<{ id: string, slug: string }> }) => {
-    const {id, slug} = await params;
+  if (!resp.ok) {
+    throw new Error("Could not find release");
+  }
 
+  return await resp.json();
+});
 
-    const resp = await fetch(`${BASE_API_URL}/releases/${id}/${slug}`);
+const Page = async ({
+  params,
+}: {
+  params: Promise<{ id: string; slug: string }>;
+}) => {
+  const { id, slug } = await params;
 
-    if (!resp.ok) {
-        return <h1>Release not found</h1>
-    }
+  const release = await getRelease(id, slug);
 
-    const release: Release = await resp.json();
-
-    return (<>
-        <h1>{release.title}</h1>
-        <h3>{release.artist_name}</h3>
-
-        <Image src={release.artwork} alt={release.title} width={750} height={750}/>
-
-        <a href={release.apple_music}>apple music</a>
-        <a href={release.spotify}>spotify</a>
-        <a href={release.tidal}>tidal</a>
-
-    </>);
-}
+  return (
+    <>
+      <h1>{release.title}</h1>
+      <h3>{release.artist_name}</h3>
+      <Image
+        src={release.artwork || ""}
+        alt={release.title}
+        width={750}
+        height={750}
+      />
+      {/*//TODO: Add release links*/}
+    </>
+  );
+};
 
 export default Page;
 
-export async function generateMetadata({params}: { params: Promise<{ id: string, slug: string }> }): Promise<Metadata> {
-    const {id, slug} = await params;
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string; slug: string }>;
+}): Promise<Metadata> {
+  const { id, slug } = await params;
 
-    const resp = await fetch(`${BASE_API_URL}/releases/${id}/${slug}`);
+  const release = await getRelease(id, slug);
 
-    if (!resp.ok) {
-        return {
-            title: "Release not found",
-        }
-    }
-
-
-    const release: Release = await resp.json();
-
-    return {
-        title: release.title,
-        description: release.artist_name,
-    }
+  return {
+    title: release.title,
+    description: release.artist_name,
+  };
 }

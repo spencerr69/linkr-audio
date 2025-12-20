@@ -3,6 +3,7 @@
 import { LoginFormSchema, LoginFormState } from "@/lib/definitions";
 import { apiDomain } from "@/lib/utils";
 import { createSession } from "@/lib/session";
+import { cookies } from "next/headers";
 
 export async function login(state: LoginFormState, formData: FormData) {
   "use server";
@@ -21,8 +22,6 @@ export async function login(state: LoginFormState, formData: FormData) {
     `${validatedFields.data.artistid}:${validatedFields.data.password}`,
   );
 
-  console.log(token);
-
   const data = await fetch(`${apiDomain}/auth/login`, {
     method: "GET",
     headers: {
@@ -37,4 +36,9 @@ export async function login(state: LoginFormState, formData: FormData) {
   }
 
   await createSession(token, validatedFields.data.artistid);
+}
+
+export async function logout() {
+  const cookie = await cookies();
+  cookie.delete("session");
 }
