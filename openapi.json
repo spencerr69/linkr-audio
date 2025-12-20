@@ -39,7 +39,11 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": true,
+                "required": [
+                  "id",
+                  "artist_name",
+                  "pw"
+                ],
                 "properties": {
                   "id": {
                     "type": "string"
