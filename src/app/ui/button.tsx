@@ -26,16 +26,14 @@ interface ExternalButtonProps extends React.ComponentProps<typeof Link> {
   secondary?: boolean;
 }
 
-export const Button = (props: ButtonProps) => {
+export const Button = ({ inline, secondary, ...rest }: ButtonProps) => {
   return (
     <button
-      className={
-        getClasses(!!props.inline, !!props.secondary) + " " + props.className
-      }
+      className={getClasses(!!inline, !!secondary) + " " + rest.className}
       type={"button"}
-      {...props}
+      {...rest}
     >
-      {props.children}
+      {rest.children}
     </button>
   );
 };
@@ -46,7 +44,7 @@ export const ExternalButton = (props: ExternalButtonProps) => {
       className={
         getClasses(!!props.inline, !!props.secondary) + " " + props.className
       }
-      {...props}
+      {...(props as React.ComponentProps<typeof Link>)}
     />
   );
 };

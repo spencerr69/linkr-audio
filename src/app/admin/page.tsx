@@ -8,7 +8,7 @@ const AdminPage = async () => {
   return (
     <>
       <div className={"bg-gray-50 h-screen w-screen font-sans"}>
-        {!session.isAuth ? <LoginForm /> : <Dashboard />}
+        {!session.isAuth ? <LoginForm key={1} /> : <Dashboard key={2} />}
       </div>
     </>
   );

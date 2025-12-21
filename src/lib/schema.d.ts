@@ -4,438 +4,423 @@
  */
 
 export interface paths {
-  "/auth/login": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Check login validity
+         * @description Login endpoint for authentication. Will respond 200 if login (auth header) is valid, 401 otherwise.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Login successful */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * Check login validity
-     * @description Login endpoint for authentication. Will respond 200 if login (auth header) is valid, 401 otherwise.
-     */
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description Login successful */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
+    "/artists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        /** @description Unauthorized */
-        401: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
+        get?: never;
+        put?: never;
+        /** Create a new artist */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        id: string;
+                        artist_name: string;
+                        pw: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Artist created successfully */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Invalid request body */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
         };
-      };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/artists": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/artists/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get artist details */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Artist ID */
+                    id: components["parameters"]["artistId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Artist details */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["Artist"];
+                    };
+                };
+                /** @description Artist not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /** Create a new artist */
-    post: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody: {
-        content: {
-          "application/json": {
-            id: string;
-            artist_name: string;
-            pw: string;
-          };
+    "/releases/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Artist ID */
+                id: components["parameters"]["artistId"];
+            };
+            cookie?: never;
         };
-      };
-      responses: {
-        /** @description Artist created successfully */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
+        /** Get all releases for an artist */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Artist ID */
+                    id: components["parameters"]["artistId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description List of releases */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["Release"][];
+                    };
+                };
+                /** @description No releases found for artist */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
         };
-        /** @description Invalid request body */
-        400: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
+        put?: never;
+        /** Add new release under this artist id */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Artist ID */
+                    id: components["parameters"]["artistId"];
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["Release"];
+                };
+            };
+            responses: {
+                /** @description Release created successfully */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Invalid request body */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
         };
-        /** @description Unauthorized */
-        401: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-      };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/artists/{id}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/releases/{id}/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Artist ID */
+                id: components["parameters"]["artistId"];
+                /** @description Release slug */
+                slug: components["parameters"]["releaseSlug"];
+            };
+            cookie?: never;
+        };
+        /** Get a specific release */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Artist ID */
+                    id: components["parameters"]["artistId"];
+                    /** @description Release slug */
+                    slug: components["parameters"]["releaseSlug"];
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Release details */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["Release"];
+                    };
+                };
+                /** @description Release not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        /** Edit an existing release */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Artist ID */
+                    id: components["parameters"]["artistId"];
+                    /** @description Release slug */
+                    slug: components["parameters"]["releaseSlug"];
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["Release"];
+                };
+            };
+            responses: {
+                /** @description Release updated successfully */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Invalid request body */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Get artist details */
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path: {
-          /** @description Artist ID */
-          id: components["parameters"]["artistId"];
+    "/links/{upc}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description Artist details */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "application/json": components["schemas"]["Artist"];
-          };
+        /** Get streaming links by UPC */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    upc: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Streaming links */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["LinkResponse"];
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
         };
-        /** @description Artist not found */
-        404: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/releases/{id}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        /** @description Artist ID */
-        id: components["parameters"]["artistId"];
-      };
-      cookie?: never;
-    };
-    /** Get all releases for an artist */
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path: {
-          /** @description Artist ID */
-          id: components["parameters"]["artistId"];
-        };
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description List of releases */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "application/json": components["schemas"]["Release"][];
-          };
-        };
-        /** @description No releases found for artist */
-        404: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-      };
-    };
-    put?: never;
-    /** Add new release under this artist id */
-    post: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path: {
-          /** @description Artist ID */
-          id: components["parameters"]["artistId"];
-        };
-        cookie?: never;
-      };
-      requestBody: {
-        content: {
-          "application/json": components["schemas"]["PostNewReleaseBody"];
-        };
-      };
-      responses: {
-        /** @description Release created successfully */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-        /** @description Invalid request body */
-        400: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-        /** @description Unauthorized */
-        401: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-      };
-    };
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/releases/{id}/{slug}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        /** @description Artist ID */
-        id: components["parameters"]["artistId"];
-        /** @description Release slug */
-        slug: components["parameters"]["releaseSlug"];
-      };
-      cookie?: never;
-    };
-    /** Get a specific release */
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path: {
-          /** @description Artist ID */
-          id: components["parameters"]["artistId"];
-          /** @description Release slug */
-          slug: components["parameters"]["releaseSlug"];
-        };
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description Release details */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "application/json": components["schemas"]["Release"];
-          };
-        };
-        /** @description Release not found */
-        404: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-      };
-    };
-    put?: never;
-    /** Edit an existing release */
-    post: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path: {
-          /** @description Artist ID */
-          id: components["parameters"]["artistId"];
-          /** @description Release slug */
-          slug: components["parameters"]["releaseSlug"];
-        };
-        cookie?: never;
-      };
-      requestBody: {
-        content: {
-          "application/json": components["schemas"]["Release"];
-        };
-      };
-      responses: {
-        /** @description Release updated successfully */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-        /** @description Invalid request body */
-        400: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-        /** @description Unauthorized */
-        401: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-      };
-    };
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/links/{upc}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get streaming links by UPC */
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path: {
-          upc: string;
-        };
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description Streaming links */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "application/json": components["schemas"]["LinkResponse"];
-          };
-        };
-        /** @description Unauthorized */
-        401: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-      };
-    };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    Artist: {
-      artist_id: string;
-      master_artist_name: string;
-      styling?: string | null;
+    schemas: {
+        Artist: {
+            artist_id: string;
+            master_artist_name: string;
+            styling?: string | null;
+        };
+        Release: {
+            upc: string;
+            title: string;
+            artist_name: string;
+            release_date: string;
+            artwork?: string | null;
+            links: components["schemas"]["Link"][];
+            artist_id: string;
+            slug: string;
+            track_count: number;
+        };
+        Link: {
+            name: string;
+            url: string;
+        };
+        LinkResponse: {
+            upc: string;
+            title?: string | null;
+            artist_name?: string | null;
+            track_count?: number | null;
+            artwork?: string | null;
+            release_date?: string | null;
+            links?: components["schemas"]["Link"][];
+        };
     };
-    Release: {
-      upc: string;
-      title: string;
-      artist_name: string;
-      release_date: string;
-      artwork?: string | null;
-      links: components["schemas"]["Link"][];
-      artist_id: string;
-      slug: string;
-      track_count: number;
+    responses: never;
+    parameters: {
+        /** @description Artist ID */
+        artistId: string;
+        /** @description Release slug */
+        releaseSlug: string;
     };
-    PostNewReleaseBody: {
-      slug: string;
-      upc: string;
-      title: string;
-      release_date: string;
-      artist_name: string;
-      artwork: string;
-      links: components["schemas"]["Link"][];
-      track_count: number;
-    };
-    Link: {
-      name: string;
-      url: string;
-    };
-    LinkResponse: {
-      upc: string;
-      title?: string | null;
-      artist_name?: string | null;
-      track_count?: number | null;
-      image_url?: string | null;
-      release_date?: string | null;
-      spotify?: string | null;
-      apple_music?: string | null;
-      tidal?: string | null;
-      soundcloud?: string | null;
-      bandcamp?: string | null;
-      youtube?: string | null;
-    };
-  };
-  responses: never;
-  parameters: {
-    /** @description Artist ID */
-    artistId: string;
-    /** @description Release slug */
-    releaseSlug: string;
-  };
-  requestBodies: never;
-  headers: never;
-  pathItems: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
 export type $defs = Record<string, never>;
 export type operations = Record<string, never>;

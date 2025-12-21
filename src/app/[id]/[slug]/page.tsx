@@ -9,7 +9,7 @@ import { Release } from "@/lib/apihelper";
 const BASE_API_URL = apiDomain;
 
 const getRelease = cache(async (id: string, slug: string): Promise<Release> => {
-  const resp = await fetch(`${BASE_API_URL}/releases/${id}/${slug}`);
+  const resp = await fetch(`${BASE_API_URL}/releases/${id}/${slug}`, {});
 
   if (!resp.ok) {
     throw new Error("Could not find release");
@@ -56,5 +56,8 @@ export async function generateMetadata({
   return {
     title: release.title,
     description: release.artist_name,
+    icons: {
+      icon: release.artwork || "",
+    },
   };
 }

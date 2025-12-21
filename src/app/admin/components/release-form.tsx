@@ -1,108 +1,198 @@
-import { Release } from "@/lib/apihelper";
-import { v4 as uuidv4 } from "uuid";
+import { Link, Release } from "@/lib/apihelper";
 import { Button } from "@/app/ui/button";
 import { getLinks } from "@/app/actions/getlinks";
+import { FormField } from "@/app/ui/form-field";
+import Image from "next/image";
+import React from "react";
+import { updateRelease } from "@/app/actions/update-release";
+
+const emptyRelease: Release = {
+  artwork: "",
+  slug: "",
+  artist_id: "",
+  upc: "",
+  title: "",
+  release_date: "",
+  artist_name: "",
+  links: [],
+  track_count: 0,
+};
 
 export const ReleaseForm = ({ release }: { release?: Release }) => {
+  const [editedRelease, setEditedRelease] = React.useState<Release>(
+    release || emptyRelease,
+  );
+
+  React.useEffect(() => {
+    setEditedRelease(release || emptyRelease);
+  }, [release]);
+
+  const getReleaseUpdater = (field: keyof Release) => {
+    return (value: any) => {
+      setEditedRelease((prev) => {
+        return {
+          ...prev,
+          [field]: value,
+        } as Release;
+      });
+    };
+  };
+
   return (
-    <form className={"p-4"} onSubmit={(e) => e.preventDefault()}>
-      <FormField
-        name="upc"
-        label="UPC"
-        value={release?.upc || ""}
-        button={
-          <Button
-            inline
-            secondary
-            onClick={async () =>
-              console.log(await getLinks(release?.upc || ""))
-            }
-          >
-            Get Links...
-          </Button>
-        }
-      />
-      <FormField
-        name="release-title"
-        label="Release Title"
-        value={release?.title || ""}
-      />
-      <FormField
-        name="artist-name"
-        label="Artist Name"
-        value={release?.artist_name || ""}
-      />
-      <div className={"grid grid-cols-2 gap-x-4"}>
+    <div className={"flex justify-center w-full"}>
+      <form
+        className={"p-4 h-full flex-col flex w-6xl"}
+        onSubmit={(e) => e.preventDefault()}
+      >
         <FormField
-          name="release-date"
-          label="Release Date"
-          value={release?.release_date || ""}
-        />
-        <FormField
-          name="track-count"
-          label="Track Count"
-          value={release?.track_count.toString() || ""}
-        />
-        <FormField
-          name="slug"
-          label="Slug"
-          value={release?.slug || ""}
+          name="upc"
+          label="UPC"
+          valueUpdater={getReleaseUpdater("upc")}
+          value={editedRelease.upc || ""}
           button={
-            <Button inline secondary>
-              Generate...
+            <Button
+              inline
+              secondary
+              onClick={async () => {
+                const newRelease = await getLinks(release?.upc || "");
+                setEditedRelease((prev) => {
+                  return {
+                    ...prev,
+                    ...newRelease,
+                  } as Release;
+                });
+              }}
+            >
+              Get Links...
             </Button>
           }
         />
         <FormField
-          name="artist-id"
-          label="Artist ID"
-          inactive
-          value={release?.artist_id || ""}
+          name="release-title"
+          label="Release Title"
+          valueUpdater={getReleaseUpdater("title")}
+          value={editedRelease.title}
         />
-      </div>
-    </form>
+        <FormField
+          name="artist-name"
+          label="Artist Name"
+          valueUpdater={getReleaseUpdater("artist_name")}
+          value={editedRelease.artist_name || ""}
+        />
+        <div className={"grid grid-cols-2 gap-x-4 grid-flow-row formgrid"}>
+          <FormField
+            name="release-date"
+            label="Release Date"
+            valueUpdater={getReleaseUpdater("release_date")}
+            value={editedRelease.release_date || ""}
+          />
+          <FormField
+            name="track-count"
+            label="Track Count"
+            valueUpdater={getReleaseUpdater("track_count")}
+            value={editedRelease.track_count.toString() || ""}
+          />
+          <FormField
+            name="slug"
+            label="Slug"
+            valueUpdater={getReleaseUpdater("slug")}
+            value={editedRelease.slug || ""}
+            inactive={!!release?.slug}
+            button={
+              !release?.slug ? (
+                <Button inline secondary>
+                  Generate...
+                </Button>
+              ) : (
+                <></>
+              )
+            }
+          />
+          <FormField
+            name="artist-id"
+            label="Artist ID"
+            inactive
+            valueUpdater={getReleaseUpdater("artist_id")}
+            value={editedRelease.artist_id || ""}
+          />
+          <FormLinks
+            valueUpdater={getReleaseUpdater("links")}
+            links={editedRelease.links || []}
+          />
+          <div>
+            <label
+              htmlFor="artwork"
+              className={"text-gray-500 font-light text-sm p-0 m-0"}
+            >
+              Artwork
+            </label>
+            <Image
+              id={"artwork"}
+              src={editedRelease.artwork || ""}
+              alt={"Artwork"}
+              width={200}
+              height={200}
+              className={"aspect-square h-full w-full"}
+            />
+          </div>
+        </div>
+        <div className="saveContainer flex justify-end m-6">
+          <Button
+            name={"save"}
+            onClick={async () =>
+              console.log(await updateRelease(editedRelease))
+            }
+          >
+            Save
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 };
 
-const FormField = ({
-  name,
-  label,
-  value,
-  button,
-  inactive = false,
+export const FormLinks = ({
+  links,
+  valueUpdater,
 }: {
-  name: string;
-  label: string;
-  value: string;
-  button?: React.JSX.Element;
-  inactive?: boolean;
+  links: Link[];
+  valueUpdater: (value: Link[]) => void;
 }) => {
-  return (
-    <div
-      key={uuidv4()}
-      className={
-        "p-1 flex flex-col w-full pb-0 mb-2 border-dashed " +
-        (inactive ? "bg-gray-100" : " border-b")
-      }
-    >
-      <label
-        className={"text-gray-500 font-light text-sm p-0 m-0"}
-        htmlFor={name}
-      >
-        {label}
-      </label>
-      <div className={"flex "}>
-        <input
-          type="text"
-          name={name}
-          defaultValue={value}
-          contentEditable={!inactive}
-          disabled={inactive}
-          className={
-            "flex-2  focus:outline-0 " + (inactive ? "text-gray-400" : "")
-          }
+  const getLinkUpdater = (i: number, key: keyof Link) => (value: string) => {
+    const newLinks = links;
+    newLinks[i][key] = value;
+    valueUpdater(newLinks);
+  };
+
+  const linkFields = links.map((link, i) => {
+    return (
+      <div key={i} className={"flex flex-col m-2  p-2 bg-gray-50 rounded-lg"}>
+        <FormField
+          name={"name" + i}
+          label={"Name"}
+          valueUpdater={getLinkUpdater(i, "name")}
+          value={link.name}
         />
-        {button}
+        <FormField
+          name={"url" + i}
+          label={"URL"}
+          valueUpdater={getLinkUpdater(i, "url")}
+          value={link.url}
+        />
+      </div>
+    );
+  });
+
+  return (
+    <div className={""}>
+      <label
+        htmlFor="links"
+        className={"text-gray-500 font-light text-sm p-0 m-0"}
+      >
+        Links
+      </label>
+      <div id="links" className={"bg-gray-100 p-1 h-full"}>
+        {linkFields}
       </div>
     </div>
   );

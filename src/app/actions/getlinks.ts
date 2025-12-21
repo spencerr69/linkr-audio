@@ -1,21 +1,21 @@
 "use server";
 
 import { verifySession } from "@/lib/dal";
-import { serverFetch } from "@/lib/apihelper";
+import { LinkResponse, serverFetch } from "@/lib/apihelper";
 
 export async function getLinks(upc: string) {
   "use server";
   const session = await verifySession();
 
   if (!session) {
-    return [];
+    return null;
   }
 
   const resp = await serverFetch(session.token || "", `/links/${upc}`, {});
 
   if (!resp.ok) {
-    return [];
+    return null;
   }
 
-  return await resp.json();
+  return (await resp.json()) as LinkResponse;
 }
