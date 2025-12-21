@@ -2,6 +2,7 @@ use crate::auth::authenticated;
 use crate::links::apple_music::AppleMusicClient;
 use crate::links::spotify::SpotifyClient;
 use crate::links::tidal::TidalClient;
+use crate::releases::Link;
 use futures::try_join;
 use serde::{Deserialize, Serialize};
 use worker::{Request, Response, RouteContext};
@@ -18,12 +19,7 @@ struct LinkResponse {
     track_count: Option<u32>,
     artwork: Option<String>,
     release_date: Option<String>,
-    spotify: Option<String>,
-    apple_music: Option<String>,
-    tidal: Option<String>,
-    soundcloud: Option<String>,
-    bandcamp: Option<String>,
-    youtube: Option<String>,
+    links: Vec<Link>,
 }
 
 pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
@@ -95,12 +91,20 @@ pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Re
         artwork: Some(album_art),
         artist_name: Some(artist),
         release_date: Some(spotify_release.release_date),
-        apple_music: Some(apple_music_release.collectionViewUrl),
-        spotify: Some(spotify_release.external_urls.spotify),
-        tidal: Some(tidal_link),
-        bandcamp: None,
-        youtube: None,
-        soundcloud: None,
+        links: vec![
+            Link {
+                name: "apple_music".to_string(),
+                url: apple_music_release.collectionViewUrl,
+            },
+            Link {
+                name: "spotify".to_string(),
+                url: spotify_release.external_urls.spotify,
+            },
+            Link {
+                name: "tidal".to_string(),
+                url: tidal_link,
+            },
+        ],
     };
 
     Response::from_json(&response)

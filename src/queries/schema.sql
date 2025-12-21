@@ -7,12 +7,7 @@ CREATE TABLE IF NOT EXISTS Releases
     artist_name  TEXT    not null,
     artist_id    TEXT    not null,
     artwork      TEXT,
-    spotify      TEXT,
-    apple_music  TEXT,
-    tidal        TEXT,
-    bandcamp     TEXT,
-    soundcloud   TEXT,
-    youtube      TEXT,
+    links        TEXT,
     track_count  INTEGER not null,
     release_date TEXT    not null,
     FOREIGN KEY (artist_id) REFERENCES Artists (artist_id)

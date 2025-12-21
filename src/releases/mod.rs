@@ -20,13 +20,13 @@ pub struct ReleaseBody {
 
 impl From<DbSchema> for ReleaseBody {
     fn from(db_schema: DbSchema) -> Self {
-        let links = concat_links(&db_schema);
+        let new_links = serde_json::from_str(&db_schema.links).unwrap_or(vec![]);
 
         Self {
             upc: db_schema.upc,
             title: db_schema.title,
             artwork: db_schema.artwork,
-            links,
+            links: new_links,
             track_count: db_schema.track_count,
             slug: db_schema.slug,
             artist_id: db_schema.artist_id,
@@ -36,10 +36,10 @@ impl From<DbSchema> for ReleaseBody {
     }
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct Link {
-    name: String,
-    url: String,
+    pub name: String,
+    pub url: String,
 }
 
 #[derive(Serialize, Deserialize, Clone)]
@@ -51,12 +51,7 @@ pub struct DbSchema {
     pub artist_name: String,
     pub release_date: String,
     pub artwork: Option<String>,
-    pub spotify: Option<String>,
-    pub apple_music: Option<String>,
-    pub tidal: Option<String>,
-    pub bandcamp: Option<String>,
-    pub soundcloud: Option<String>,
-    pub youtube: Option<String>,
+    pub links: String,
     pub track_count: u32,
 }
 
@@ -102,59 +97,6 @@ pub async fn get_release(_req: Request, ctx: RouteContext<()>) -> worker::Result
     let out = ReleaseBody::from(release);
 
     Response::from_json(&out)
-}
-
-fn concat_links(release: &DbSchema) -> Vec<Link> {
-    let mut links = vec![];
-    if let Some(spotify) = &release.spotify
-        && release.spotify != Some(String::new())
-    {
-        links.push(Link {
-            name: "spotify".to_string(),
-            url: spotify.clone(),
-        });
-    }
-    if let Some(apple_music) = &release.apple_music
-        && release.apple_music != Some(String::new())
-    {
-        links.push(Link {
-            name: "apple_music".to_string(),
-            url: apple_music.clone(),
-        });
-    }
-    if let Some(tidal) = &release.tidal
-        && release.tidal != Some(String::new())
-    {
-        links.push(Link {
-            name: "tidal".to_string(),
-            url: tidal.clone(),
-        });
-    }
-    if let Some(bandcamp) = &release.bandcamp
-        && release.bandcamp != Some(String::new())
-    {
-        links.push(Link {
-            name: "bandcamp".to_string(),
-            url: bandcamp.clone(),
-        });
-    }
-    if let Some(soundcloud) = &release.soundcloud
-        && release.soundcloud != Some(String::new())
-    {
-        links.push(Link {
-            name: "soundcloud".to_string(),
-            url: soundcloud.clone(),
-        });
-    }
-    if let Some(youtube) = &release.youtube
-        && release.youtube != Some(String::new())
-    {
-        links.push(Link {
-            name: "youtube".to_string(),
-            url: youtube.clone(),
-        });
-    }
-    links
 }
 
 /// Handles POST request to create a new release for an artist
@@ -208,9 +150,11 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
 
     let d1 = ctx.d1("prod_sr_db")?;
 
-    let (spotify, apple_music, tidal, bandcamp, soundcloud, youtube) =
-        get_seperate_links(&new_release.links);
-    let query = d1.prepare("INSERT INTO Releases (slug, upc, title, artist_name, artist_id, artwork, spotify, apple_music, tidal, bandcamp, soundcloud, youtube, track_count, release_date) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)");
+    let query = d1.prepare(
+        "INSERT INTO Releases (slug, upc, title, artist_name, artist_id, \
+    artwork, links, track_count, release_date) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)",
+    );
+
     let binded = query.bind(&[
         JsValue::from(new_release.slug),
         JsValue::from(new_release.upc),
@@ -218,12 +162,7 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
         JsValue::from(new_release.artist_name),
         JsValue::from(artist_id),
         JsValue::from(new_release.artwork),
-        JsValue::from(spotify),
-        JsValue::from(apple_music),
-        JsValue::from(tidal),
-        JsValue::from(bandcamp),
-        JsValue::from(soundcloud),
-        JsValue::from(youtube),
+        JsValue::from(serde_json::to_string(&new_release.links)?),
         JsValue::from(new_release.track_count),
         JsValue::from(new_release.release_date),
     ])?;
@@ -235,35 +174,6 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
     }
 
     Response::error("Release not created. Likely already exists.", 500)
-}
-
-fn get_seperate_links(
-    links: &[Link],
-) -> (
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Option<String>,
-    Option<String>,
-) {
-    links.iter().fold(
-        (None, None, None, None, None, None),
-        |(mut spotify, mut apple_music, mut tidal, mut bandcamp, mut soundcloud, mut youtube),
-         link| {
-            match link.name.as_str() {
-                "spotify" => spotify = Some(link.url.clone()),
-                "apple_music" => apple_music = Some(link.url.clone()),
-                "tidal" => tidal = Some(link.url.clone()),
-                "bandcamp" => bandcamp = Some(link.url.clone()),
-                "soundcloud" => soundcloud = Some(link.url.clone()),
-                "youtube" => youtube = Some(link.url.clone()),
-                _ => {}
-            }
-
-            (spotify, apple_music, tidal, bandcamp, soundcloud, youtube)
-        },
-    )
 }
 
 /// Handles POST request to edit a release for an artist
@@ -288,11 +198,11 @@ pub async fn post_edit_release(
         );
     };
 
-    let (spotify, apple_music, tidal, bandcamp, soundcloud, youtube) =
-        get_seperate_links(&new_release.links);
-
     let d1 = ctx.d1("prod_sr_db")?;
-    let query = d1.prepare("REPLACE INTO Releases (slug, upc, title, artist_name, artist_id, artwork, spotify, apple_music, tidal, bandcamp, soundcloud, youtube, track_count, release_date) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14)");
+    let query = d1.prepare(
+        "REPLACE INTO Releases (slug, upc, title, artist_name, artist_id, \
+    artwork, links, track_count, release_date) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)",
+    );
     let binded = query.bind(&[
         JsValue::from(slug),
         JsValue::from(new_release.upc),
@@ -300,12 +210,7 @@ pub async fn post_edit_release(
         JsValue::from(new_release.artist_name),
         JsValue::from(artist_id),
         JsValue::from(new_release.artwork),
-        JsValue::from(spotify),
-        JsValue::from(apple_music),
-        JsValue::from(tidal),
-        JsValue::from(bandcamp),
-        JsValue::from(soundcloud),
-        JsValue::from(youtube),
+        JsValue::from(serde_json::to_string(&new_release.links)?),
         JsValue::from(new_release.track_count),
         JsValue::from(new_release.release_date),
     ])?;

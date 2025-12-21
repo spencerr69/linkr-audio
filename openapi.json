@@ -426,29 +426,11 @@
             "type": "string",
             "nullable": true
           },
-          "spotify": {
-            "type": "string",
-            "nullable": true
-          },
-          "apple_music": {
-            "type": "string",
-            "nullable": true
-          },
-          "tidal": {
-            "type": "string",
-            "nullable": true
-          },
-          "soundcloud": {
-            "type": "string",
-            "nullable": true
-          },
-          "bandcamp": {
-            "type": "string",
-            "nullable": true
-          },
-          "youtube": {
-            "type": "string",
-            "nullable": true
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            }
           }
         }
       }
