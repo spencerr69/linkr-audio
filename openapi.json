@@ -418,7 +418,7 @@
             "type": "integer",
             "nullable": true
           },
-          "image_url": {
+          "artwork": {
             "type": "string",
             "nullable": true
           },
