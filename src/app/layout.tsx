@@ -10,6 +10,9 @@ const chivoSans = Chivo({
 export const metadata: Metadata = {
   title: "linkr-audio",
   description: "",
+  icons: {
+    icon: "/linkraudio.svg",
+  },
 };
 
 export default function RootLayout({
@@ -19,9 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/linkraudio.svg" type="image/svg+xml"></link>
-      </head>
+      <head></head>
       <body className={`${chivoSans.variable} antialiased`}>{children}</body>
     </html>
   );

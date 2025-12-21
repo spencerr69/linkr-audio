@@ -15,7 +15,10 @@ export const Header = (props: HeaderProps) => {
   return (
     <header
       className={
-        "bg-rose-500 flex text-white items-center content-between justify-between p-2 py-14 h-24"
+        "bg-rose-500 flex text-white items-center content-between justify-between" +
+        " p-2" +
+        " py-14" +
+        " h-24 "
       }
     >
       <div className={"flex items-center"}>
@@ -24,7 +27,7 @@ export const Header = (props: HeaderProps) => {
           alt={"logo"}
           width={100}
           height={100}
-          className={"text-white invert"}
+          className={" fill-rose-500 invert"}
         />
         <h1 className={"font-bold font-sans text-4xl"}>
           {props.artistName}
@@ -50,9 +53,9 @@ export const Header = (props: HeaderProps) => {
 
 const Popup = () => {
   return (
-    <div className={"bg-white rounded shadow p-4 absolute w-32 right-4"}>
+    <div className={"bg-white  rounded shadow p-4 absolute w-32 right-4"}>
       <a
-        className={"cursor-pointer text-black hover:bg-rose-100 p-2 w-32"}
+        className={"cursor-pointer text-black  hover:bg-rose-500 p-2 w-32"}
         onClick={logout}
       >
         Log out

@@ -29,10 +29,14 @@ export const Dashboard = async () => {
     return <div>Error</div>;
   }
 
-  const releases: Release[] = await req_releases.json();
+  let releases: Release[] = await req_releases.json();
+
+  releases = releases.sort((b, a) =>
+    a.release_date.localeCompare(b.release_date),
+  );
 
   return (
-    <div className={"flex flex-col h-screen max-h-screen"}>
+    <div className={"flex flex-col h-screen max-h-screen text-black"}>
       <Header
         artistName={artist.master_artist_name}
         artistId={artist.artist_id}

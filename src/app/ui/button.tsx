@@ -39,11 +39,12 @@ export const Button = ({ inline, secondary, ...rest }: ButtonProps) => {
 };
 
 export const ExternalButton = (props: ExternalButtonProps) => {
+  const classes =
+    getClasses(!!props.inline, !!props.secondary) + " " + props.className;
+
   return (
     <Link
-      className={
-        getClasses(!!props.inline, !!props.secondary) + " " + props.className
-      }
+      className={classes}
       {...(props as React.ComponentProps<typeof Link>)}
     />
   );

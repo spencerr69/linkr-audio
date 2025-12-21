@@ -3,16 +3,16 @@
 import { Release } from "@/lib/apihelper";
 import { baseDomain } from "@/lib/utils";
 import Image from "next/image";
-import { ExternalButton } from "@/app/ui/button";
+import { Button, ExternalButton } from "@/app/ui/button";
 import React from "react";
-import { ReleaseForm } from "@/app/admin/components/release-form";
+import { emptyRelease, ReleaseForm } from "@/app/admin/components/release-form";
 
 export const Releases = ({ releases }: { releases: Release[] }) => {
   const [editingRelease, setEditingRelease] = React.useState<Release | null>();
 
   const createReleaseForm = (release?: Release) => {
     //TODO: Add confirmation if editingRelease already exists
-    setEditingRelease(release || null);
+    setEditingRelease(release || emptyRelease);
   };
 
   const releasesList = releases.map((release, i) => {
@@ -22,11 +22,20 @@ export const Releases = ({ releases }: { releases: Release[] }) => {
   });
 
   return (
-    <div className={"flex h-full"}>
-      <div className={" h-full w-4xl border-r border-gray-300 border-dashed"}>
-        <ul>{releasesList}</ul>
+    <div className={"flex h-full overflow-scroll"}>
+      <div
+        className={
+          " h-full w-4xl border-r border-gray-300 border-dashed overflow-scroll"
+        }
+      >
+        <ul>
+          {releasesList}
+          <div className={"flex justify-center m-2"}>
+            <Button onClick={(e) => createReleaseForm()}>+</Button>
+          </div>
+        </ul>
       </div>
-      <div className={"w-full"}>
+      <div className={"w-full h-full overflow-scroll"}>
         {editingRelease && <ReleaseForm release={editingRelease} />}
       </div>
     </div>

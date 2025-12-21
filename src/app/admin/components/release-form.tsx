@@ -4,9 +4,9 @@ import { getLinks } from "@/app/actions/getlinks";
 import { FormField } from "@/app/ui/form-field";
 import Image from "next/image";
 import React from "react";
-import { updateRelease } from "@/app/actions/update-release";
+import { createRelease, updateRelease } from "@/app/actions/updateRelease";
 
-const emptyRelease: Release = {
+export const emptyRelease: Release = {
   artwork: "",
   slug: "",
   artist_id: "",
@@ -39,9 +39,13 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
   };
 
   return (
-    <div className={"flex justify-center w-full"}>
+    <div
+      className={
+        "flex justify-center max-h-full w-full  text-black overflow-scroll"
+      }
+    >
       <form
-        className={"p-4 h-full flex-col flex w-6xl"}
+        className={"p-4 h-full flex-col flex w-full max-h-full "}
         onSubmit={(e) => e.preventDefault()}
       >
         <FormField
@@ -54,7 +58,7 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
               inline
               secondary
               onClick={async () => {
-                const newRelease = await getLinks(release?.upc || "");
+                const newRelease = await getLinks(editedRelease.upc);
                 setEditedRelease((prev) => {
                   return {
                     ...prev,
@@ -128,11 +132,11 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
             </label>
             <Image
               id={"artwork"}
-              src={editedRelease.artwork || ""}
+              src={editedRelease.artwork || "/linkraudio.svg"}
               alt={"Artwork"}
               width={200}
               height={200}
-              className={"aspect-square h-full w-full"}
+              className={"aspect-square h-fit "}
             />
           </div>
         </div>
@@ -140,7 +144,9 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
           <Button
             name={"save"}
             onClick={async () =>
-              console.log(await updateRelease(editedRelease))
+              !!release?.slug
+                ? console.log(await updateRelease(editedRelease))
+                : console.log(await createRelease(editedRelease))
             }
           >
             Save
