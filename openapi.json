@@ -136,7 +136,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PostNewReleaseBody"
+                "$ref": "#/components/schemas/Release"
               }
             }
           }
@@ -334,48 +334,6 @@
           },
           "slug": {
             "type": "string"
-          },
-          "track_count": {
-            "type": "integer"
-          }
-        }
-      },
-      "PostNewReleaseBody": {
-        "type": "object",
-        "required": [
-          "slug",
-          "upc",
-          "title",
-          "release_date",
-          "artist_name",
-          "artwork",
-          "links",
-          "track_count"
-        ],
-        "properties": {
-          "slug": {
-            "type": "string"
-          },
-          "upc": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "release_date": {
-            "type": "string"
-          },
-          "artist_name": {
-            "type": "string"
-          },
-          "artwork": {
-            "type": "string"
-          },
-          "links": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Link"
-            }
           },
           "track_count": {
             "type": "integer"

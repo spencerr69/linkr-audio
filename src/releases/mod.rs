@@ -119,18 +119,6 @@ pub async fn get_release(_req: Request, ctx: RouteContext<()>) -> worker::Result
 ///     }
 ///```
 pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
-    #[derive(Serialize, Deserialize)]
-    struct PostNewReleaseBody {
-        pub slug: String,
-        pub upc: String,
-        pub title: String,
-        pub release_date: String,
-        pub artist_name: String,
-        pub artwork: String,
-        pub links: Vec<Link>,
-        pub track_count: u32,
-    }
-
     let Some(artist_id) = ctx.param("id") else {
         return Response::error("No artist id provided", 400);
     };
@@ -141,7 +129,7 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
         return Response::error("Unauthorized", 401);
     }
 
-    let Ok(new_release) = req.json::<PostNewReleaseBody>().await else {
+    let Ok(new_release) = req.json::<ReleaseBody>().await else {
         return Response::error(
             "JSON incorrectly formatted. Please ensure you meet the schema.",
             400,
