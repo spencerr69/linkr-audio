@@ -84,6 +84,27 @@ pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Re
         .name
         .clone();
 
+    let mut links = Vec::new();
+
+    if apple_music_release.collectionViewUrl != "" {
+        links.push(Link {
+            name: "Apple Music".into(),
+            url: apple_music_release.collectionViewUrl,
+        })
+    }
+    if spotify_release.external_urls.spotify != "" {
+        links.push(Link {
+            name: "Spotify".into(),
+            url: spotify_release.external_urls.spotify,
+        })
+    }
+    if tidal_link != "" {
+        links.push(Link {
+            name: "Tidal".into(),
+            url: tidal_link,
+        })
+    }
+
     let response = LinkResponse {
         upc,
         title: Some(tidal_release.title),
@@ -91,20 +112,7 @@ pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Re
         artwork: Some(album_art),
         artist_name: Some(artist),
         release_date: Some(spotify_release.release_date),
-        links: vec![
-            Link {
-                name: "apple_music".to_string(),
-                url: apple_music_release.collectionViewUrl,
-            },
-            Link {
-                name: "spotify".to_string(),
-                url: spotify_release.external_urls.spotify,
-            },
-            Link {
-                name: "tidal".to_string(),
-                url: tidal_link,
-            },
-        ],
+        links,
     };
 
     Response::from_json(&response)
