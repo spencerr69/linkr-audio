@@ -18,7 +18,7 @@ export const Header = (props: HeaderProps) => {
         "bg-rose-500 flex text-white items-center content-between justify-between" +
         " p-2" +
         " py-14" +
-        " h-24 "
+        " h-3 "
       }
     >
       <div className={"flex items-center"}>

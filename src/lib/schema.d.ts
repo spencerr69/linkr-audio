@@ -143,7 +143,50 @@ export interface paths {
             };
         };
         put?: never;
-        post?: never;
+        /** Edit an artist */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Artist ID */
+                    id: components["parameters"]["artistId"];
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        master_artist_name: string;
+                        links: components["schemas"]["Link"][];
+                        styling?: string | null;
+                    };
+                };
+            };
+            responses: {
+                /** @description Artist updated successfully */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Invalid artist ID */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
         delete?: never;
         options?: never;
         head?: never;
@@ -326,7 +369,44 @@ export interface paths {
                 };
             };
         };
-        delete?: never;
+        /** Delete a release */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Artist ID */
+                    id: components["parameters"]["artistId"];
+                    /** @description Release slug */
+                    slug: components["parameters"]["releaseSlug"];
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Release deleted successfully */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Release not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
         options?: never;
         head?: never;
         patch?: never;
@@ -384,6 +464,7 @@ export interface components {
         Artist: {
             artist_id: string;
             master_artist_name: string;
+            links: components["schemas"]["Link"][];
             styling?: string | null;
         };
         Release: {

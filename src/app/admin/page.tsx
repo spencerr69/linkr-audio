@@ -9,7 +9,11 @@ const AdminPage = async () => {
 
   return (
     <>
-      <main className={"bg-gray-50  h-screen  overflow-scroll font-sans"}>
+      <main
+        className={
+          "bg-gray-50 h-screen  overflow-hidden font-sans flex flex-col"
+        }
+      >
         {!session.isAuth ? <LoginForm /> : <Dashboard />}
       </main>
     </>

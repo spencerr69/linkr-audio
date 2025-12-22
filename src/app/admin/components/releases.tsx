@@ -22,10 +22,10 @@ export const Releases = ({ releases }: { releases: Release[] }) => {
   });
 
   return (
-    <div className={"flex h-full overflow-scroll"}>
+    <div className={"flex min-h-0 h-full"}>
       <div
         className={
-          " h-full w-4xl border-r border-gray-300 border-dashed overflow-scroll"
+          " w-4xl border-r border-gray-300 border-dashed overflow-y-scroll"
         }
       >
         <ul>
@@ -35,7 +35,7 @@ export const Releases = ({ releases }: { releases: Release[] }) => {
           </div>
         </ul>
       </div>
-      <div className={"w-full h-full overflow-scroll"}>
+      <div className={"w-full overflow-y-scroll"}>
         {editingRelease && <ReleaseForm release={editingRelease} />}
       </div>
     </div>

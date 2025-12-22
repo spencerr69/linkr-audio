@@ -36,12 +36,14 @@ export const Dashboard = async () => {
   );
 
   return (
-    <div className={"flex flex-col h-screen max-h-screen text-black"}>
+    <div className={"flex flex-col h-full  text-black"}>
       <Header
         artistName={artist.master_artist_name}
         artistId={artist.artist_id}
       />
-      <Releases releases={releases} />
+      <div className={"flex-1 min-h-0"}>
+        <Releases releases={releases} />
+      </div>
     </div>
   );
 };

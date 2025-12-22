@@ -3,7 +3,7 @@ import { Button } from "@/app/ui/button";
 import { getLinks } from "@/app/actions/getlinks";
 import { FormField } from "@/app/ui/form-field";
 import Image from "next/image";
-import React from "react";
+import React, { useRef } from "react";
 import { createRelease, updateRelease } from "@/app/actions/updateRelease";
 
 export const emptyRelease: Release = {
@@ -23,6 +23,8 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
     release || emptyRelease,
   );
 
+  const statusRef = useRef<HTMLParagraphElement>(null);
+
   React.useEffect(() => {
     setEditedRelease(release || emptyRelease);
   }, [release]);
@@ -39,13 +41,9 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
   };
 
   return (
-    <div
-      className={
-        "flex justify-center max-h-full w-full  text-black overflow-scroll"
-      }
-    >
+    <div className={"flex justify-center max-h-full w-full  text-black "}>
       <form
-        className={"p-4 h-full flex-col flex w-full max-h-full "}
+        className={"p-4 h-full flex-col flex w-full  "}
         onSubmit={(e) => e.preventDefault()}
       >
         <FormField
@@ -143,14 +141,22 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
         <div className="saveContainer flex justify-end m-6">
           <Button
             name={"save"}
-            onClick={async () =>
-              !!release?.slug
-                ? console.log(await updateRelease(editedRelease))
-                : console.log(await createRelease(editedRelease))
-            }
+            onClick={async (e) => {
+              const promise = !!release?.slug
+                ? updateRelease(editedRelease)
+                : createRelease(editedRelease);
+              const result = await promise;
+              if (result.success) {
+                statusRef.current!.innerText = "Saved!";
+              } else {
+                statusRef.current!.innerText = result.error!;
+              }
+              return;
+            }}
           >
             Save
           </Button>
+          <p ref={statusRef}></p>
         </div>
       </form>
     </div>
