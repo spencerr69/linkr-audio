@@ -69,7 +69,7 @@ pub async fn get_artist(_req: Request, ctx: RouteContext<()>) -> worker::Result<
 
     impl From<DbSchema> for GetArtistResponse {
         fn from(value: DbSchema) -> Self {
-            let links = serde_json::from_str(&value.links).unwrap_or(vec![]);
+            let links = serde_json::from_str(&value.links.unwrap_or("[]".into())).unwrap_or(vec![]);
 
             Self {
                 styling: value.styling,
@@ -84,7 +84,7 @@ pub async fn get_artist(_req: Request, ctx: RouteContext<()>) -> worker::Result<
     struct DbSchema {
         pub artist_id: String,
         pub master_artist_name: String,
-        pub links: String,
+        pub links: Option<String>,
         pub styling: Option<String>,
     }
 
@@ -95,7 +95,8 @@ pub async fn get_artist(_req: Request, ctx: RouteContext<()>) -> worker::Result<
     let d1 = ctx.d1("prod_sr_db")?;
 
     let statement = d1
-        .prepare("SELECT artist_id, master_artist_name, styling FROM Artists WHERE artist_id = ?1");
+        .prepare("SELECT artist_id, master_artist_name, links, styling FROM Artists WHERE artist_id\
+         = ?1");
 
     let binded = statement.bind(&[JsValue::from(id)])?;
 
@@ -136,7 +137,8 @@ pub async fn post_edit_artist(mut req: Request, ctx: RouteContext<()>) -> worker
     let binded = statement.bind(&[
         JsValue::from(request.master_artist_name),
         JsValue::from(serde_json::to_string(&request.links)?),
-        JsValue::from(request.styling)
+        JsValue::from(request.styling),
+        JsValue::from(id)
     ])?;
 
     let result = binded.run().await?;
