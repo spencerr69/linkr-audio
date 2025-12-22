@@ -95,6 +95,59 @@
             "description": "Artist not found"
           }
         }
+      },
+      "post": {
+        "summary": "Edit an artist",
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/artistId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "master_artist_name",
+                  "links"
+                ],
+                "properties": {
+                  "master_artist_name": {
+                    "type": "string"
+                  },
+                  "links": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Link"
+                    }
+                  },
+                  "styling": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Artist updated successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Invalid artist ID"
+          }
+        }
       }
     },
     "/releases/{id}": {
@@ -209,6 +262,25 @@
             "description": "Invalid request body"
           }
         }
+      },
+      "delete": {
+        "summary": "Delete a release",
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Release deleted successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Release not found"
+          }
+        }
       }
     },
     "/links/{upc}": {
@@ -279,7 +351,8 @@
         "type": "object",
         "required": [
           "artist_id",
-          "master_artist_name"
+          "master_artist_name",
+          "links"
         ],
         "properties": {
           "artist_id": {
@@ -287,6 +360,12 @@
           },
           "master_artist_name": {
             "type": "string"
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            }
           },
           "styling": {
             "type": "string",

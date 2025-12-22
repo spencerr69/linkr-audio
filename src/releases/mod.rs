@@ -12,8 +12,8 @@ pub struct ReleaseBody {
     pub artwork: Option<String>,
     pub links: Vec<Link>,
 
-    pub artist_id: String,
-    pub slug: String,
+    pub artist_id: Option<String>,
+    pub slug: Option<String>,
 
     pub track_count: u32,
 }
@@ -28,8 +28,8 @@ impl From<DbSchema> for ReleaseBody {
             artwork: db_schema.artwork,
             links: new_links,
             track_count: db_schema.track_count,
-            slug: db_schema.slug,
-            artist_id: db_schema.artist_id,
+            slug: Some(db_schema.slug),
+            artist_id: Some(db_schema.artist_id),
             artist_name: db_schema.artist_name,
             release_date: db_schema.release_date,
         }
@@ -136,6 +136,14 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
         );
     };
 
+    let Some(slug) = new_release.slug else {
+        return Response::error("Release slug not provided", 400)
+    };
+
+    if slug.trim() == "" {
+        return Response::error("Release slug cannot be empty", 400);
+    }
+
     let d1 = ctx.d1("prod_sr_db")?;
 
     let query = d1.prepare(
@@ -144,7 +152,7 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
     );
 
     let binded = query.bind(&[
-        JsValue::from(new_release.slug),
+        JsValue::from(slug),
         JsValue::from(new_release.upc),
         JsValue::from(new_release.title),
         JsValue::from(new_release.artist_name),
@@ -188,19 +196,20 @@ pub async fn post_edit_release(
 
     let d1 = ctx.d1("prod_sr_db")?;
     let query = d1.prepare(
-        "REPLACE INTO Releases (slug, upc, title, artist_name, artist_id, \
-    artwork, links, track_count, release_date) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)",
+        "UPDATE Releases SET ( upc, title, artist_name,  \
+    artwork, links, track_count, release_date) = (?2, ?3, ?4, ?5, ?6, ?7, ?8) WHERE slug \
+    = ?1 and artist_id = ?9",
     );
     let binded = query.bind(&[
         JsValue::from(slug),
         JsValue::from(new_release.upc),
         JsValue::from(new_release.title),
         JsValue::from(new_release.artist_name),
-        JsValue::from(artist_id),
         JsValue::from(new_release.artwork),
         JsValue::from(serde_json::to_string(&new_release.links)?),
         JsValue::from(new_release.track_count),
         JsValue::from(new_release.release_date),
+        JsValue::from(artist_id),
     ])?;
 
     let result = binded.run().await?;
@@ -209,5 +218,37 @@ pub async fn post_edit_release(
         return Response::ok("Release created successfully");
     }
 
-    Response::error("Release not created. Likely already exists.", 500)
+    Response::error("Could not edit release.", 500)
+}
+/// Handles POST request to edit a release for an artist
+pub async fn delete_release(
+     req: Request,
+    ctx: RouteContext<()>,
+) -> worker::Result<Response> {
+    let (Some(artist_id), Some(slug)) = (ctx.param("id"), ctx.param("slug")) else {
+        return Response::error("No artist id or slug provided", 400);
+    };
+
+    let d1 = ctx.d1("prod_sr_db")?;
+
+    if !authenticated(req.headers(), d1, Some(artist_id)).await {
+        return Response::error("Unauthorized", 401);
+    }
+
+    let d1 = ctx.d1("prod_sr_db")?;
+    let query = d1.prepare(
+        "DELETE FROM Releases WHERE slug = ?1 AND artist_id = ?2",
+    );
+    let binded = query.bind(&[
+        JsValue::from(slug),
+        JsValue::from(artist_id),
+    ])?;
+
+    let result = binded.run().await?;
+
+    if result.success() {
+        return Response::ok("Release deleted successfully");
+    }
+
+    Response::error("Could not edit release.", 500)
 }

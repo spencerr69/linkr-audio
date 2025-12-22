@@ -86,23 +86,23 @@ pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Re
 
     let mut links = Vec::new();
 
-    if apple_music_release.collectionViewUrl != "" {
+    if !apple_music_release.collectionViewUrl.is_empty() {
         links.push(Link {
             name: "Apple Music".into(),
             url: apple_music_release.collectionViewUrl,
-        })
+        });
     }
-    if spotify_release.external_urls.spotify != "" {
+    if !spotify_release.external_urls.spotify.is_empty() {
         links.push(Link {
             name: "Spotify".into(),
             url: spotify_release.external_urls.spotify,
-        })
+        });
     }
-    if tidal_link != "" {
+    if !tidal_link.is_empty() {
         links.push(Link {
             name: "Tidal".into(),
             url: tidal_link,
-        })
+        });
     }
 
     let response = LinkResponse {
