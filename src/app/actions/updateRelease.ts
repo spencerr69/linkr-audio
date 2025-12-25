@@ -70,3 +70,31 @@ export async function createRelease(release: Release) {
     success: true,
   };
 }
+
+export async function deleteRelease(release: Release) {
+  "use server";
+
+  const session = await verifySession();
+
+  if (!session) {
+    return {
+      error: "Not logged in.",
+    };
+  }
+
+  const req = await serverFetch(
+    session.token || "",
+    `/releases/${release.artist_id}/${release.slug}`,
+    {
+      method: "DELETE",
+    },
+  );
+
+  if (!req.ok) {
+    return {
+      error: "Could not delete release.",
+    };
+  }
+
+  return { success: true };
+}

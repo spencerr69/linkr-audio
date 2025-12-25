@@ -1,10 +1,17 @@
+"use client";
+
 import { Link, Release } from "@/lib/apihelper";
 import { Button } from "@/app/ui/button";
 import { getLinks } from "@/app/actions/getlinks";
 import { FormField } from "@/app/ui/form-field";
 import Image from "next/image";
-import React, { useRef } from "react";
-import { createRelease, updateRelease } from "@/app/actions/updateRelease";
+import React from "react";
+import {
+  createRelease,
+  deleteRelease,
+  updateRelease,
+} from "@/app/actions/updateRelease";
+import { useRouter } from "next/navigation";
 
 export const emptyRelease: Release = {
   artwork: "",
@@ -23,11 +30,20 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
     release || emptyRelease,
   );
 
-  const statusRef = useRef<HTMLParagraphElement>(null);
+  const router = useRouter();
+
+  const [status, setStatus] = React.useState<string>("");
 
   React.useEffect(() => {
     setEditedRelease(release || emptyRelease);
   }, [release]);
+
+  React.useEffect(() => {
+    router.refresh();
+    setTimeout(() => {
+      setStatus("");
+    }, 5000);
+  }, [status]);
 
   const getReleaseUpdater = (field: keyof Release) => {
     return (value: any) => {
@@ -102,7 +118,20 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
             inactive={!!release?.slug}
             button={
               !release?.slug ? (
-                <Button inline secondary>
+                <Button
+                  inline
+                  secondary
+                  onClick={() => {
+                    const slug = editedRelease.title
+                      .split(" ")
+                      .map(
+                        (word) => word.toLowerCase().replace(/[()'"]/g, "")[0],
+                      )
+                      .join("");
+
+                    getReleaseUpdater("slug")(slug);
+                  }}
+                >
                   Generate...
                 </Button>
               ) : (
@@ -138,25 +167,50 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
             />
           </div>
         </div>
-        <div className="saveContainer flex justify-end m-6">
-          <Button
-            name={"save"}
-            onClick={async (e) => {
-              const promise = !!release?.slug
-                ? updateRelease(editedRelease)
-                : createRelease(editedRelease);
-              const result = await promise;
-              if (result.success) {
-                statusRef.current!.innerText = "Saved!";
-              } else {
-                statusRef.current!.innerText = result.error!;
+        <div className="saveContainer flex-col flex items-end  m-6">
+          <div>
+            <Button
+              secondary
+              name={"delete"}
+              className={"mr-4"}
+              onClick={async () => {
+                const result = await deleteRelease(editedRelease);
+
+                if (result.success) {
+                  setStatus("Successfully deleted release.");
+                } else {
+                  setStatus(result.error!);
+                }
+              }}
+            >
+              Delete
+            </Button>
+            <Button
+              name={"save"}
+              onClick={async () => {
+                const result = !!release?.slug
+                  ? await updateRelease(editedRelease)
+                  : await createRelease(editedRelease);
+                if (result.success) {
+                  setStatus("Successfully saved release.");
+                } else {
+                  setStatus(result.error!);
+                }
+                return;
+              }}
+            >
+              Save
+            </Button>
+          </div>
+          {status != "" && (
+            <p
+              className={
+                "text-right bg-rose-50 rounded-md p-4 m-4 absolute left-4 bottom-0"
               }
-              return;
-            }}
-          >
-            Save
-          </Button>
-          <p ref={statusRef}></p>
+            >
+              {status}
+            </p>
+          )}
         </div>
       </form>
     </div>
@@ -184,6 +238,16 @@ export const FormLinks = ({
           label={"Name"}
           valueUpdater={getLinkUpdater(i, "name")}
           value={link.name}
+          button={
+            <Button
+              className={""}
+              inline
+              secondary
+              onClick={() => valueUpdater(links.filter((_, j) => j !== i))}
+            >
+              Remove
+            </Button>
+          }
         />
         <FormField
           name={"url" + i}
@@ -205,6 +269,13 @@ export const FormLinks = ({
       </label>
       <div id="links" className={"bg-gray-100 p-1 h-full"}>
         {linkFields}
+        <Button
+          onClick={() => {
+            valueUpdater([...links, { name: "", url: "" }]);
+          }}
+        >
+          +
+        </Button>
       </div>
     </div>
   );
