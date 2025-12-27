@@ -43,10 +43,10 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
     setTimeout(() => {
       setStatus("");
     }, 5000);
-  }, [status]);
+  }, [router, status]);
 
   const getReleaseUpdater = (field: keyof Release) => {
-    return (value: any) => {
+    return (value: string | number | Link[]) => {
       setEditedRelease((prev) => {
         return {
           ...prev,

@@ -3,8 +3,14 @@ import { apiDomain } from "@/lib/utils";
 import { ArtistResponse, Release, serverFetch } from "@/lib/apihelper";
 import { Releases } from "@/app/admin/components/releases";
 import { Header } from "@/app/admin/components/header";
+import { AdminPages } from "@/lib/definitions";
+import { Artist } from "@/app/admin/components/artist";
 
-export const Dashboard = async () => {
+export const Dashboard = async ({
+  currentPage,
+}: {
+  currentPage: AdminPages;
+}) => {
   const session = await verifySession();
 
   if (!session || !session.jwt) {
@@ -13,6 +19,12 @@ export const Dashboard = async () => {
 
   const req_artist = await fetch(
     `${apiDomain}/artists/${session.jwt.artistId}`,
+    {
+      cache: "force-cache",
+      next: {
+        revalidate: 10 * 100000,
+      },
+    },
   );
 
   if (!req_artist.ok) {
@@ -24,7 +36,12 @@ export const Dashboard = async () => {
   const req_releases = await serverFetch(
     session.jwt,
     `/releases/${session.jwt.artistId}`,
-    {},
+    {
+      cache: "force-cache",
+      next: {
+        revalidate: 1000000,
+      },
+    },
   );
 
   if (!req_releases.ok) {
@@ -44,7 +61,8 @@ export const Dashboard = async () => {
         artistId={artist.artist_id}
       />
       <div className={"flex-1 min-h-0"}>
-        <Releases releases={releases} />
+        {currentPage == AdminPages.Releases && <Releases releases={releases} />}
+        {currentPage == AdminPages.Artist && <Artist artist={artist} />}
       </div>
     </div>
   );

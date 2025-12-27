@@ -18,3 +18,8 @@ export type LoginFormState =
 export type SessionPayload = {
   artistId: string;
 };
+
+export enum AdminPages {
+  Releases,
+  Artist,
+}

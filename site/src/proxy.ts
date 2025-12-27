@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { rootDomain } from "@/lib/utils";
+import { verifySession } from "@/lib/dal";
 
 function extractSubdomain(request: NextRequest): string | null {
   const url = request.url;
@@ -51,6 +52,14 @@ export async function proxy(request: NextRequest) {
     return NextResponse.rewrite(
       new URL(`/${subdomain}${pathname}`, request.url),
     );
+  } else {
+    if (pathname.startsWith("/admin/")) {
+      const session = await verifySession();
+
+      return session.isAuth
+        ? NextResponse.next()
+        : NextResponse.redirect(new URL("/admin", request.url));
+    }
   }
 
   // On the root domain, allow normal access
