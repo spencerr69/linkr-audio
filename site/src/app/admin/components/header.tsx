@@ -28,7 +28,7 @@ export const Header = (props: HeaderProps) => {
           alt={"logo"}
           width={100}
           height={100}
-          className={" fill-rose-500 invert"}
+          className={" fill-rose-500 "}
         />
         <h1 className={"font-bold font-sans text-4xl"}>
           {props.artistName}
