@@ -53,7 +53,7 @@ export async function proxy(request: NextRequest) {
       new URL(`/${subdomain}${pathname}`, request.url),
     );
   } else {
-    if (pathname.startsWith("/admin/")) {
+    if (pathname.startsWith("/admin/") && pathname !== "/admin/") {
       const session = await verifySession();
 
       return session.isAuth

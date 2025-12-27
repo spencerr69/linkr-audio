@@ -6,11 +6,7 @@ import { getLinks } from "@/app/actions/getlinks";
 import { FormField } from "@/app/ui/form-field";
 import Image from "next/image";
 import React from "react";
-import {
-  createRelease,
-  deleteRelease,
-  updateRelease,
-} from "@/app/actions/updateRelease";
+import { createRelease, deleteRelease, updateRelease } from "@/app/actions/updateRelease";
 import { useRouter } from "next/navigation";
 
 export const emptyRelease: Release = {
@@ -39,11 +35,10 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
   }, [release]);
 
   React.useEffect(() => {
-    router.refresh();
     setTimeout(() => {
       setStatus("");
     }, 5000);
-  }, [router, status]);
+  }, [status]);
 
   const getReleaseUpdater = (field: keyof Release) => {
     return (value: string | number | Link[]) => {
@@ -181,6 +176,7 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
                 } else {
                   setStatus(result.error!);
                 }
+                router.refresh();
               }}
             >
               Delete
@@ -196,6 +192,8 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
                 } else {
                   setStatus(result.error!);
                 }
+
+                router.refresh();
                 return;
               }}
             >

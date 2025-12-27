@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { logout } from "@/app/actions/auth";
+import Link from "next/link";
 
 type HeaderProps = {
   artistName: string;
@@ -39,6 +40,13 @@ export const Header = (props: HeaderProps) => {
       </div>
 
       <div>
+        <Link href={"/admin"} className={"mr-4"}>
+          Releases
+        </Link>
+        <Link href={"/admin/artist"} className={"mr-4"}>
+          Artist
+        </Link>
+
         <button
           onClick={() => setPopup(!popup)}
           className={"text-4xl -translate-y-2 p-2 hover:bg-rose-300"}

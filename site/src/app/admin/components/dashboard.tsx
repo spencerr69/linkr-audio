@@ -19,12 +19,6 @@ export const Dashboard = async ({
 
   const req_artist = await fetch(
     `${apiDomain}/artists/${session.jwt.artistId}`,
-    {
-      cache: "force-cache",
-      next: {
-        revalidate: 10 * 100000,
-      },
-    },
   );
 
   if (!req_artist.ok) {
@@ -36,12 +30,7 @@ export const Dashboard = async ({
   const req_releases = await serverFetch(
     session.jwt,
     `/releases/${session.jwt.artistId}`,
-    {
-      cache: "force-cache",
-      next: {
-        revalidate: 1000000,
-      },
-    },
+    {},
   );
 
   if (!req_releases.ok) {

@@ -33,12 +33,12 @@ export const serverFetch = async (
   return await fetch(url, newFetchOptions);
 };
 
-export type ArtistResponse = {
-  master_artist_name: string;
-  artist_id: string;
-  styling: null | string;
-};
-
 export type Release = components["schemas"]["Release"];
 export type Link = components["schemas"]["Link"];
 export type LinkResponse = components["schemas"]["LinkResponse"];
+export type ArtistResponse = components["schemas"]["Artist"];
+export type EditArtist = {
+  master_artist_name: string;
+  links: components["schemas"]["Link"][];
+  styling?: string;
+};

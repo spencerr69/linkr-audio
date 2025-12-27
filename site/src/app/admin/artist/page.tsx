@@ -6,7 +6,13 @@ export default async function ArtistPage() {
 
   return (
     <>
-      <Dashboard currentPage={AdminPages.Artist} />
+      <main
+        className={
+          "bg-gray-50 h-screen  overflow-hidden font-sans flex flex-col"
+        }
+      >
+        <Dashboard currentPage={AdminPages.Artist} />
+      </main>
     </>
   );
 }
