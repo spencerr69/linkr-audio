@@ -16,6 +16,5 @@ export type LoginFormState =
   | undefined;
 
 export type SessionPayload = {
-  token: string;
   artistId: string;
 };

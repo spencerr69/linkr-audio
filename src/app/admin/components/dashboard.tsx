@@ -7,11 +7,13 @@ import { Header } from "@/app/admin/components/header";
 export const Dashboard = async () => {
   const session = await verifySession();
 
-  if (!session) {
+  if (!session || !session.jwt) {
     return <></>;
   }
 
-  const req_artist = await fetch(`${apiDomain}/artists/${session.artistId}`);
+  const req_artist = await fetch(
+    `${apiDomain}/artists/${session.jwt.artistId}`,
+  );
 
   if (!req_artist.ok) {
     return <div>stinky error</div>;
@@ -20,8 +22,8 @@ export const Dashboard = async () => {
   const artist: ArtistResponse = await req_artist.json();
 
   const req_releases = await serverFetch(
-    session.token || "",
-    `/releases/${session.artistId}`,
+    session.jwt,
+    `/releases/${session.jwt.artistId}`,
     {},
   );
 

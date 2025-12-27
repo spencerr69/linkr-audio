@@ -2,23 +2,30 @@
 
 import { apiDomain } from "@/lib/utils";
 import { components } from "@/lib/schema";
+import { SessionPayload } from "@/lib/definitions";
+import { encrypt } from "@/lib/session";
+import { JWTPayload } from "jose";
 
 /**
  * Do a fetch request on the server side.
- * @param token
+ * @param session
  * @param path Path should begin with /
  * @param fetchOptions
  */
 export const serverFetch = async (
-  token: string,
+  session: JWTPayload,
   path: string,
   fetchOptions: RequestInit,
 ) => {
   "use server";
 
+  const sessionPure = { artistId: session.artistId } as SessionPayload;
+
+  const out = await encrypt(sessionPure);
+
   const newFetchOptions = {
     ...fetchOptions,
-    headers: { ...fetchOptions.headers, Authorization: `Basic ${token}` },
+    headers: { ...fetchOptions.headers, Authorization: `Bearer ${out}` },
   };
 
   const url = apiDomain + path;

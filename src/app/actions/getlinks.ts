@@ -7,11 +7,11 @@ export async function getLinks(upc: string) {
   "use server";
   const session = await verifySession();
 
-  if (!session) {
+  if (!session || !session.jwt) {
     return null;
   }
 
-  const resp = await serverFetch(session.token || "", `/links/${upc}`, {});
+  const resp = await serverFetch(session.jwt, `/links/${upc}`, {});
 
   if (!resp.ok) {
     return null;

@@ -147,7 +147,7 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
             value={editedRelease.artist_id || ""}
           />
           <FormLinks
-            valueUpdater={getReleaseUpdater("links")}
+            valueUpdateAction={getReleaseUpdater("links")}
             links={editedRelease.links || []}
           />
           <div>
@@ -219,15 +219,15 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
 
 export const FormLinks = ({
   links,
-  valueUpdater,
+  valueUpdateAction,
 }: {
   links: Link[];
-  valueUpdater: (value: Link[]) => void;
+  valueUpdateAction: (value: Link[]) => void;
 }) => {
   const getLinkUpdater = (i: number, key: keyof Link) => (value: string) => {
     const newLinks = links;
     newLinks[i][key] = value;
-    valueUpdater(newLinks);
+    valueUpdateAction(newLinks);
   };
 
   const linkFields = links.map((link, i) => {
@@ -243,7 +243,7 @@ export const FormLinks = ({
               className={""}
               inline
               secondary
-              onClick={() => valueUpdater(links.filter((_, j) => j !== i))}
+              onClick={() => valueUpdateAction(links.filter((_, j) => j !== i))}
             >
               Remove
             </Button>
@@ -271,7 +271,7 @@ export const FormLinks = ({
         {linkFields}
         <Button
           onClick={() => {
-            valueUpdater([...links, { name: "", url: "" }]);
+            valueUpdateAction([...links, { name: "", url: "" }]);
           }}
         >
           +

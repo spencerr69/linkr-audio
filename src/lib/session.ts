@@ -27,10 +27,9 @@ export const decrypt = async (session: string | undefined = "") => {
   }
 };
 
-export const createSession = async (token: string, artistId: string) => {
+export const createSession = async (artistId: string) => {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   const session = await encrypt({
-    token,
     artistId,
   });
 

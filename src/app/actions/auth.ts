@@ -35,7 +35,7 @@ export async function login(state: LoginFormState, formData: FormData) {
     };
   }
 
-  await createSession(token, validatedFields.data.artistid);
+  await createSession(validatedFields.data.artistid);
 }
 
 export async function logout() {

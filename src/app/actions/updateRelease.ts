@@ -8,15 +8,15 @@ export async function updateRelease(release: Release) {
 
   const session = await verifySession();
 
-  if (!session) {
+  if (!session || !session.jwt) {
     return {
       error: "Not logged in.",
     };
   }
 
   const resp = await serverFetch(
-    session.token || "",
-    `/releases/${session.artistId}/${release.slug}`,
+    session.jwt,
+    `/releases/${session.jwt.artistId}/${release.slug}`,
     {
       method: "POST",
       headers: {
@@ -42,15 +42,15 @@ export async function createRelease(release: Release) {
 
   const session = await verifySession();
 
-  if (!session) {
+  if (!session || !session.jwt) {
     return {
       error: "Not logged in.",
     };
   }
 
   const resp = await serverFetch(
-    session.token || "",
-    `/releases/${session.artistId}`,
+    session.jwt,
+    `/releases/${session.jwt.artistId}`,
     {
       method: "POST",
       headers: {
@@ -76,14 +76,14 @@ export async function deleteRelease(release: Release) {
 
   const session = await verifySession();
 
-  if (!session) {
+  if (!session || !session.jwt) {
     return {
       error: "Not logged in.",
     };
   }
 
   const req = await serverFetch(
-    session.token || "",
+    session.jwt,
     `/releases/${release.artist_id}/${release.slug}`,
     {
       method: "DELETE",
