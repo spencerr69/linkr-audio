@@ -13,6 +13,9 @@
         "security": [
           {
             "basicAuth": []
+          },
+          {
+            "bearerAuth": []
           }
         ],
         "responses": {
@@ -31,6 +34,9 @@
         "security": [
           {
             "basicAuth": []
+          },
+          {
+            "bearerAuth": []
           }
         ],
         "requestBody": {
@@ -101,6 +107,9 @@
         "security": [
           {
             "basicAuth": []
+          },
+          {
+            "bearerAuth": []
           }
         ],
         "parameters": [
@@ -182,6 +191,9 @@
         "security": [
           {
             "basicAuth": []
+          },
+          {
+            "bearerAuth": []
           }
         ],
         "requestBody": {
@@ -239,6 +251,9 @@
         "security": [
           {
             "basicAuth": []
+          },
+          {
+            "bearerAuth": []
           }
         ],
         "requestBody": {
@@ -268,6 +283,9 @@
         "security": [
           {
             "basicAuth": []
+          },
+          {
+            "bearerAuth": []
           }
         ],
         "responses": {
@@ -289,6 +307,9 @@
         "security": [
           {
             "basicAuth": []
+          },
+          {
+            "bearerAuth": []
           }
         ],
         "parameters": [
@@ -317,6 +338,53 @@
           }
         }
       }
+    },
+    "/artists/{id}/password": {
+      "post": {
+        "summary": "Change artist password",
+        "security": [
+          {
+            "basicAuth": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/artistId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "new_password"
+                ],
+                "properties": {
+                  "new_password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password updated successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Invalid request body"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -324,6 +392,11 @@
       "basicAuth": {
         "type": "http",
         "scheme": "basic"
+      },
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     },
     "parameters": {
