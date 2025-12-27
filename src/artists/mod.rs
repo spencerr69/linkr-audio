@@ -27,7 +27,7 @@ pub async fn post_create_artist(
 
     let d1 = ctx.d1("prod_sr_db")?;
 
-    if !authenticated(req.headers(), &d1, Some("sr")).await {
+    if !authenticated(req.headers(), &d1, Some("sr"), &ctx).await {
         return Response::error("Unauthorized", 401);
     }
 
@@ -35,7 +35,7 @@ pub async fn post_create_artist(
         return Response::error("Invalid request body", 400);
     };
 
-    let pw_hash = crate::auth::salt_and_hash(&body.pw, &body.id);
+    let pw_hash = salt_and_hash(&body.pw, &body.id);
 
     let statement = d1.prepare(
         "INSERT INTO Artists (artist_id, master_artist_name, pw_hash)
@@ -122,7 +122,7 @@ pub async fn post_edit_artist(mut req: Request, ctx: RouteContext<()>) -> worker
 
     let d1 = ctx.d1("prod_sr_db")?;
 
-    if !authenticated(req.headers(), &d1, Some(id)).await {
+    if !authenticated(req.headers(), &d1, Some(id), &ctx).await {
         return Response::error("Unauthorized", 401);
     }
 
@@ -164,7 +164,7 @@ pub async fn post_change_password(
 
     let d1 = ctx.d1("prod_sr_db")?;
 
-    if !authenticated(req.headers(), &d1, Some(id)).await {
+    if !authenticated(req.headers(), &d1, Some(id), &ctx).await {
         return Response::error("Unauthorized", 401);
     }
 

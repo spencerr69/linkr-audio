@@ -25,7 +25,7 @@ struct LinkResponse {
 pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
     let d1 = ctx.d1("prod_sr_db")?;
 
-    if !authenticated(req.headers(), &d1, None).await {
+    if !authenticated(req.headers(), &d1, None, &ctx).await {
         return Response::error("Unauthorized", 401);
     }
 

@@ -123,9 +123,9 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
         return Response::error("No artist id provided", 400);
     };
 
-    let mut d1 = ctx.d1("prod_sr_db")?;
+    let d1 = ctx.d1("prod_sr_db")?;
 
-    if !authenticated(req.headers(), &d1, Some(artist_id)).await {
+    if !authenticated(req.headers(), &d1, Some(artist_id), &ctx).await {
         return Response::error("Unauthorized", 401);
     }
 
@@ -137,7 +137,7 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
     };
 
     let Some(slug) = new_release.slug else {
-        return Response::error("Release slug not provided", 400)
+        return Response::error("Release slug not provided", 400);
     };
 
     if slug.trim() == "" {
@@ -181,7 +181,7 @@ pub async fn post_edit_release(
 
     let d1 = ctx.d1("prod_sr_db")?;
 
-    if !authenticated(req.headers(), &d1, Some(artist_id)).await {
+    if !authenticated(req.headers(), &d1, Some(artist_id), &ctx).await {
         return Response::error("Unauthorized", 401);
     }
 
@@ -218,27 +218,19 @@ pub async fn post_edit_release(
     Response::error("Could not edit release.", 500)
 }
 /// Handles POST request to edit a release for an artist
-pub async fn delete_release(
-     req: Request,
-    ctx: RouteContext<()>,
-) -> worker::Result<Response> {
+pub async fn delete_release(req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
     let (Some(artist_id), Some(slug)) = (ctx.param("id"), ctx.param("slug")) else {
         return Response::error("No artist id or slug provided", 400);
     };
 
     let d1 = ctx.d1("prod_sr_db")?;
 
-    if !authenticated(req.headers(), &d1, Some(artist_id)).await {
+    if !authenticated(req.headers(), &d1, Some(artist_id), &ctx).await {
         return Response::error("Unauthorized", 401);
     }
 
-    let query = d1.prepare(
-        "DELETE FROM Releases WHERE slug = ?1 AND artist_id = ?2",
-    );
-    let binded = query.bind(&[
-        JsValue::from(slug),
-        JsValue::from(artist_id),
-    ])?;
+    let query = d1.prepare("DELETE FROM Releases WHERE slug = ?1 AND artist_id = ?2");
+    let binded = query.bind(&[JsValue::from(slug), JsValue::from(artist_id)])?;
 
     let result = binded.run().await?;
 
