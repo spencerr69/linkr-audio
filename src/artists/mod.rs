@@ -1,8 +1,8 @@
-use crate::auth::authenticated;
+use crate::auth::{authenticated, salt_and_hash};
+use crate::releases::Link;
 use serde::{Deserialize, Serialize};
 use worker::wasm_bindgen::JsValue;
 use worker::{Request, Response, RouteContext};
-use crate::releases::Link;
 
 /// Handles POST request to create a new artist account.
 ///
@@ -27,7 +27,7 @@ pub async fn post_create_artist(
 
     let d1 = ctx.d1("prod_sr_db")?;
 
-    if !authenticated(req.headers(), d1, Some("sr")).await {
+    if !authenticated(req.headers(), &d1, Some("sr")).await {
         return Response::error("Unauthorized", 401);
     }
 
@@ -37,11 +37,9 @@ pub async fn post_create_artist(
 
     let pw_hash = crate::auth::salt_and_hash(&body.pw, &body.id);
 
-    let d1 = ctx.d1("prod_sr_db")?;
-
     let statement = d1.prepare(
-        "REPLACE INTO Artists (artist_id, master_artist_name, styling, pw_hash)
-VALUES (?1, ?2, null, ?3);",
+        "INSERT INTO Artists (artist_id, master_artist_name, pw_hash)
+VALUES (?1, ?2, ?3);",
     );
 
     let query = statement.bind(&[
@@ -75,7 +73,7 @@ pub async fn get_artist(_req: Request, ctx: RouteContext<()>) -> worker::Result<
                 styling: value.styling,
                 artist_id: value.artist_id,
                 master_artist_name: value.master_artist_name,
-                links
+                links,
             }
         }
     }
@@ -94,9 +92,10 @@ pub async fn get_artist(_req: Request, ctx: RouteContext<()>) -> worker::Result<
 
     let d1 = ctx.d1("prod_sr_db")?;
 
-    let statement = d1
-        .prepare("SELECT artist_id, master_artist_name, links, styling FROM Artists WHERE artist_id\
-         = ?1");
+    let statement = d1.prepare(
+        "SELECT artist_id, master_artist_name, links, styling FROM Artists WHERE artist_id\
+         = ?1",
+    );
 
     let binded = statement.bind(&[JsValue::from(id)])?;
 
@@ -123,22 +122,22 @@ pub async fn post_edit_artist(mut req: Request, ctx: RouteContext<()>) -> worker
 
     let d1 = ctx.d1("prod_sr_db")?;
 
-    if !authenticated(req.headers(), d1, Some(id)).await {
-        return Response::error("Unauthorized", 401)
+    if !authenticated(req.headers(), &d1, Some(id)).await {
+        return Response::error("Unauthorized", 401);
     }
 
     let request = req.json::<EditArtistRequest>().await?;
 
-    let d1 = ctx.d1("prod_sr_db")?;
-
-    let statement = d1.prepare("UPDATE Artists SET (master_artist_name, links, styling) = (?1, \
-    ?2, ?3) WHERE artist_id = ?4");
+    let statement = d1.prepare(
+        "UPDATE Artists SET (master_artist_name, links, styling) = (?1, \
+    ?2, ?3) WHERE artist_id = ?4",
+    );
 
     let binded = statement.bind(&[
         JsValue::from(request.master_artist_name),
         JsValue::from(serde_json::to_string(&request.links)?),
         JsValue::from(request.styling),
-        JsValue::from(id)
+        JsValue::from(id),
     ])?;
 
     let result = binded.run().await?;
@@ -148,4 +147,40 @@ pub async fn post_edit_artist(mut req: Request, ctx: RouteContext<()>) -> worker
     }
 
     Response::ok("Artist updated successfully")
+}
+
+pub async fn post_change_password(
+    mut req: Request,
+    ctx: RouteContext<()>,
+) -> worker::Result<Response> {
+    #[derive(Serialize, Deserialize)]
+    struct EditPasswordRequest {
+        pub new_password: String,
+    }
+
+    let Some(id) = ctx.param("id") else {
+        return Response::error("Invalid artist ID", 400);
+    };
+
+    let d1 = ctx.d1("prod_sr_db")?;
+
+    if !authenticated(req.headers(), &d1, Some(id)).await {
+        return Response::error("Unauthorized", 401);
+    }
+
+    let request = req.json::<EditPasswordRequest>().await?;
+
+    let pw_hash = salt_and_hash(&request.new_password, &id);
+
+    let statement = d1.prepare("UPDATE Artists SET (pw_hash) = (?1) WHERE artist_id = ?2");
+
+    let binded = statement.bind(&[JsValue::from(pw_hash), JsValue::from(id)])?;
+
+    let response = binded.run().await?;
+
+    if !response.success() {
+        return Response::error("Failed to update password", 500);
+    }
+
+    Response::ok("Password updated successfully")
 }

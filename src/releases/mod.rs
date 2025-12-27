@@ -123,9 +123,9 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
         return Response::error("No artist id provided", 400);
     };
 
-    let d1 = ctx.d1("prod_sr_db")?;
+    let mut d1 = ctx.d1("prod_sr_db")?;
 
-    if !authenticated(req.headers(), d1, Some(artist_id)).await {
+    if !authenticated(req.headers(), &d1, Some(artist_id)).await {
         return Response::error("Unauthorized", 401);
     }
 
@@ -143,8 +143,6 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
     if slug.trim() == "" {
         return Response::error("Release slug cannot be empty", 400);
     }
-
-    let d1 = ctx.d1("prod_sr_db")?;
 
     let query = d1.prepare(
         "INSERT INTO Releases (slug, upc, title, artist_name, artist_id, \
@@ -183,7 +181,7 @@ pub async fn post_edit_release(
 
     let d1 = ctx.d1("prod_sr_db")?;
 
-    if !authenticated(req.headers(), d1, Some(artist_id)).await {
+    if !authenticated(req.headers(), &d1, Some(artist_id)).await {
         return Response::error("Unauthorized", 401);
     }
 
@@ -194,7 +192,6 @@ pub async fn post_edit_release(
         );
     };
 
-    let d1 = ctx.d1("prod_sr_db")?;
     let query = d1.prepare(
         "UPDATE Releases SET ( upc, title, artist_name,  \
     artwork, links, track_count, release_date) = (?2, ?3, ?4, ?5, ?6, ?7, ?8) WHERE slug \
@@ -231,11 +228,10 @@ pub async fn delete_release(
 
     let d1 = ctx.d1("prod_sr_db")?;
 
-    if !authenticated(req.headers(), d1, Some(artist_id)).await {
+    if !authenticated(req.headers(), &d1, Some(artist_id)).await {
         return Response::error("Unauthorized", 401);
     }
 
-    let d1 = ctx.d1("prod_sr_db")?;
     let query = d1.prepare(
         "DELETE FROM Releases WHERE slug = ?1 AND artist_id = ?2",
     );

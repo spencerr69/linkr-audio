@@ -11,7 +11,8 @@ pub fn salt_and_hash(raw_pw: &str, raw_id: &str) -> String {
     format!("{out:x}")
 }
 
-pub async fn authenticated(headers: &Headers, d1: D1Database, target_id: Option<&str>) -> bool {
+pub async fn authenticated(headers: &Headers, d1: &D1Database, target_id: Option<&str>) ->
+                                                                                            bool {
     #[derive(Serialize, Deserialize)]
     struct QueryResponse {
         artist_id: String,
@@ -60,8 +61,8 @@ pub async fn authenticated(headers: &Headers, d1: D1Database, target_id: Option<
 }
 
 pub async fn login(req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
-    let d1 = ctx.d1("prod_sr_db")?;
-    if !authenticated(req.headers(), d1, None).await {
+    let mut d1 = ctx.d1("prod_sr_db")?;
+    if !authenticated(req.headers(), &d1, None).await {
         return Response::error("Unauthorized", 401);
     }
 
