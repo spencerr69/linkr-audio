@@ -1,8 +1,8 @@
 import { verifySession } from "@/lib/dal";
 import { apiDomain } from "@/lib/utils";
-import { ArtistResponse } from "@/lib/apihelper";
+import { ArtistResponse, Release, serverFetch } from "@/lib/apihelper";
 import { Releases } from "@/app/admin/components/releases";
-import { logout } from "@/app/actions/auth";
+import { Header } from "@/app/admin/components/header";
 
 export const Dashboard = async () => {
   const session = await verifySession();
@@ -19,13 +19,31 @@ export const Dashboard = async () => {
 
   const artist: ArtistResponse = await req_artist.json();
 
+  const req_releases = await serverFetch(
+    session.token || "",
+    `/releases/${session.artistId}`,
+    {},
+  );
+
+  if (!req_releases.ok) {
+    return <div>Error</div>;
+  }
+
+  let releases: Release[] = await req_releases.json();
+
+  releases = releases.sort((b, a) =>
+    a.release_date.localeCompare(b.release_date),
+  );
+
   return (
-    <div>
-      dashboard {artist.master_artist_name}
-      <Releases />
-      <button className={"cursor-pointer"} onClick={logout}>
-        Log out
-      </button>
+    <div className={"flex flex-col h-full  text-black"}>
+      <Header
+        artistName={artist.master_artist_name}
+        artistId={artist.artist_id}
+      />
+      <div className={"flex-1 min-h-0"}>
+        <Releases releases={releases} />
+      </div>
     </div>
   );
 };

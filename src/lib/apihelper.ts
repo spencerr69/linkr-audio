@@ -33,3 +33,5 @@ export type ArtistResponse = {
 };
 
 export type Release = components["schemas"]["Release"];
+export type Link = components["schemas"]["Link"];
+export type LinkResponse = components["schemas"]["LinkResponse"];
