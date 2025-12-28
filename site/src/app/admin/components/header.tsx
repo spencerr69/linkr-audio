@@ -1,9 +1,6 @@
-"use client";
-
 import { logout } from "@/app/actions/auth";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 type HeaderProps = {
   artistName: string;
@@ -11,8 +8,6 @@ type HeaderProps = {
 };
 
 export const Header = (props: HeaderProps) => {
-  const [popup, setPopup] = useState<boolean>(false);
-
   return (
     <header
       className={
@@ -46,28 +41,14 @@ export const Header = (props: HeaderProps) => {
         <Link href={"/admin/artist"} className={"mr-4"}>
           Artist
         </Link>
-
-        <button
-          onClick={() => setPopup(!popup)}
-          className={"text-4xl -translate-y-2 p-2 hover:bg-rose-300"}
+        <a
+          href="#"
+          className={"mr-4 hover:bg-white hover:text-rose-500 p-2"}
+          onClick={logout}
         >
-          ...
-        </button>
-        {popup && <Popup />}
+          Log out
+        </a>
       </div>
     </header>
-  );
-};
-
-const Popup = () => {
-  return (
-    <div className={"bg-white  rounded shadow p-4 absolute w-32 right-4"}>
-      <a
-        className={"cursor-pointer text-black  hover:bg-rose-500 p-2 w-32"}
-        onClick={logout}
-      >
-        Log out
-      </a>
-    </div>
   );
 };
