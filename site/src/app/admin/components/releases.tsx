@@ -1,11 +1,11 @@
 "use client";
 
+import { emptyRelease, ReleaseForm } from "@/app/admin/components/release-form";
+import { Button, ExternalButton } from "@/app/ui/button";
 import { Release } from "@/lib/apihelper";
 import { baseDomain } from "@/lib/utils";
 import Image from "next/image";
-import { Button, ExternalButton } from "@/app/ui/button";
 import React from "react";
-import { emptyRelease, ReleaseForm } from "@/app/admin/components/release-form";
 
 export const Releases = ({ releases }: { releases: Release[] }) => {
   const [editingRelease, setEditingRelease] = React.useState<Release | null>();
@@ -31,7 +31,7 @@ export const Releases = ({ releases }: { releases: Release[] }) => {
         <ul>
           {releasesList}
           <div className={"flex justify-center m-2"}>
-            <Button onClick={(e) => createReleaseForm()}>+</Button>
+            <Button onClick={() => createReleaseForm()}>+</Button>
           </div>
         </ul>
       </div>

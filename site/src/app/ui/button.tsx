@@ -1,4 +1,5 @@
 import Link from "next/link";
+import React from "react";
 
 const classes =
   "bg-rose-500    rounded-md  hover:text-rose-500 border-2" +

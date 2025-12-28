@@ -41,26 +41,6 @@ declare var onmessage: never;
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMException)
  */
 declare class DOMException extends Error {
-    constructor(message?: string, name?: string);
-    /**
-     * The **`message`** read-only property of the a message or description associated with the given error name.
-     *
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMException/message)
-     */
-    readonly message: string;
-    /**
-     * The **`name`** read-only property of the one of the strings associated with an error name.
-     *
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMException/name)
-     */
-    readonly name: string;
-    /**
-     * The **`code`** read-only property of the DOMException interface returns one of the legacy error code constants, or `0` if none match.
-     * @deprecated
-     *
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMException/code)
-     */
-    readonly code: number;
     static readonly INDEX_SIZE_ERR: number;
     static readonly DOMSTRING_SIZE_ERR: number;
     static readonly HIERARCHY_REQUEST_ERR: number;
@@ -86,6 +66,28 @@ declare class DOMException extends Error {
     static readonly TIMEOUT_ERR: number;
     static readonly INVALID_NODE_TYPE_ERR: number;
     static readonly DATA_CLONE_ERR: number;
+    /**
+     * The **`message`** read-only property of the a message or description associated with the given error name.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMException/message)
+     */
+    readonly message: string;
+    /**
+     * The **`name`** read-only property of the one of the strings associated with an error name.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMException/name)
+     */
+    readonly name: string;
+    /**
+     * The **`code`** read-only property of the DOMException interface returns one of the legacy error code constants, or `0` if none match.
+     * @deprecated
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DOMException/code)
+     */
+    readonly code: number;
+
+    constructor(message?: string, name?: string);
+
     get stack(): any;
     set stack(value: any);
 }
@@ -232,8 +234,10 @@ declare namespace WebAssembly {
         mutable?: boolean;
     }
     class Global {
-        constructor(descriptor: GlobalDescriptor, value?: any);
         value: any;
+
+        constructor(descriptor: GlobalDescriptor, value?: any);
+
         valueOf(): any;
     }
     type ImportValue = ExportValue | number;
@@ -242,8 +246,9 @@ declare namespace WebAssembly {
     type ExportValue = Function | Global | Memory | Table;
     type Exports = Record<string, ExportValue>;
     class Instance {
-        constructor(module: Module, imports?: Imports);
         readonly exports: Exports;
+
+        constructor(module: Module, imports?: Imports);
     }
     interface MemoryDescriptor {
         initial: number;
@@ -251,8 +256,10 @@ declare namespace WebAssembly {
         shared?: boolean;
     }
     class Memory {
-        constructor(descriptor: MemoryDescriptor);
         readonly buffer: ArrayBuffer;
+
+        constructor(descriptor: MemoryDescriptor);
+
         grow(delta: number): number;
     }
     type ImportExportKind = "function" | "global" | "memory" | "table";
@@ -277,8 +284,10 @@ declare namespace WebAssembly {
         maximum?: number;
     }
     class Table {
-        constructor(descriptor: TableDescriptor, value?: any);
         readonly length: number;
+
+        constructor(descriptor: TableDescriptor, value?: any);
+
         get(index: number): any;
         grow(delta: number, value?: any): number;
         set(index: number, value?: any): void;
@@ -295,18 +304,6 @@ declare namespace WebAssembly {
 interface ServiceWorkerGlobalScope extends WorkerGlobalScope {
     DOMException: typeof DOMException;
     WorkerGlobalScope: typeof WorkerGlobalScope;
-    btoa(data: string): string;
-    atob(data: string): string;
-    setTimeout(callback: (...args: any[]) => void, msDelay?: number): number;
-    setTimeout<Args extends any[]>(callback: (...args: Args) => void, msDelay?: number, ...args: Args): number;
-    clearTimeout(timeoutId: number | null): void;
-    setInterval(callback: (...args: any[]) => void, msDelay?: number): number;
-    setInterval<Args extends any[]>(callback: (...args: Args) => void, msDelay?: number, ...args: Args): number;
-    clearInterval(timeoutId: number | null): void;
-    queueMicrotask(task: Function): void;
-    structuredClone<T>(value: T, options?: StructuredSerializeOptions): T;
-    reportError(error: any): void;
-    fetch(input: RequestInfo | URL, init?: RequestInit<RequestInitCfProperties>): Promise<Response>;
     self: ServiceWorkerGlobalScope;
     crypto: Crypto;
     caches: CacheStorage;
@@ -372,6 +369,30 @@ interface ServiceWorkerGlobalScope extends WorkerGlobalScope {
     FixedLengthStream: typeof FixedLengthStream;
     IdentityTransformStream: typeof IdentityTransformStream;
     HTMLRewriter: typeof HTMLRewriter;
+
+    btoa(data: string): string;
+
+    atob(data: string): string;
+
+    setTimeout(callback: (...args: any[]) => void, msDelay?: number): number;
+
+    setTimeout<Args extends any[]>(callback: (...args: Args) => void, msDelay?: number, ...args: Args): number;
+
+    clearTimeout(timeoutId: number | null): void;
+
+    setInterval(callback: (...args: any[]) => void, msDelay?: number): number;
+
+    setInterval<Args extends any[]>(callback: (...args: Args) => void, msDelay?: number, ...args: Args): number;
+
+    clearInterval(timeoutId: number | null): void;
+
+    queueMicrotask(task: Function): void;
+
+    structuredClone<T>(value: T, options?: StructuredSerializeOptions): T;
+
+    reportError(error: any): void;
+
+    fetch(input: RequestInfo | URL, init?: RequestInit<RequestInitCfProperties>): Promise<Response>;
 }
 declare function addEventListener<Type extends keyof WorkerGlobalScopeEventMap>(type: Type, handler: EventListenerOrEventListenerObject<WorkerGlobalScopeEventMap[Type]>, options?: EventTargetAddEventListenerOptions | boolean): void;
 declare function removeEventListener<Type extends keyof WorkerGlobalScopeEventMap>(type: Type, handler: EventListenerOrEventListenerObject<WorkerGlobalScopeEventMap[Type]>, options?: EventTargetEventListenerOptions | boolean): void;
@@ -435,10 +456,12 @@ declare const navigator: Navigator;
 interface TestController {
 }
 interface ExecutionContext<Props = unknown> {
-    waitUntil(promise: Promise<any>): void;
-    passThroughOnException(): void;
     readonly exports: Cloudflare.Exports;
     readonly props: Props;
+
+    waitUntil(promise: Promise<any>): void;
+
+    passThroughOnException(): void;
 }
 type ExportedHandlerFetchHandler<Env = unknown, CfHostMetadata = unknown> = (request: Request<CfHostMetadata, IncomingRequestCfProperties<CfHostMetadata>>, env: Env, ctx: ExecutionContext) => Response | Promise<Response>;
 type ExportedHandlerTailHandler<Env = unknown> = (events: TraceItem[], env: Env, ctx: ExecutionContext) => void | Promise<void>;
@@ -461,11 +484,12 @@ interface StructuredSerializeOptions {
     transfer?: any[];
 }
 declare abstract class Navigator {
-    sendBeacon(url: string, body?: BodyInit): boolean;
     readonly userAgent: string;
     readonly hardwareConcurrency: number;
     readonly language: string;
     readonly languages: string[];
+
+    sendBeacon(url: string, body?: BodyInit): boolean;
 }
 interface AlarmInvocationInfo {
     readonly isRetry: boolean;
@@ -486,9 +510,11 @@ type DurableObjectStub<T extends Rpc.DurableObjectBranded | undefined = undefine
     readonly name?: string;
 };
 interface DurableObjectId {
-    toString(): string;
-    equals(other: DurableObjectId): boolean;
     readonly name?: string;
+
+    toString(): string;
+
+    equals(other: DurableObjectId): boolean;
 }
 declare abstract class DurableObjectNamespace<T extends Rpc.DurableObjectBranded | undefined = undefined> {
     newUniqueId(options?: DurableObjectNamespaceNewUniqueIdOptions): DurableObjectId;
@@ -509,12 +535,14 @@ interface DurableObjectNamespaceGetDurableObjectOptions {
 interface DurableObjectClass<_T extends Rpc.DurableObjectBranded | undefined = undefined> {
 }
 interface DurableObjectState<Props = unknown> {
-    waitUntil(promise: Promise<any>): void;
     readonly exports: Cloudflare.Exports;
     readonly props: Props;
     readonly id: DurableObjectId;
     readonly storage: DurableObjectStorage;
     container?: Container;
+
+    waitUntil(promise: Promise<any>): void;
+
     blockConcurrencyWhile<T>(callback: () => Promise<T>): Promise<T>;
     acceptWebSocket(ws: WebSocket, tags?: string[]): void;
     getWebSockets(tag?: string): WebSocket[];
@@ -540,21 +568,35 @@ interface DurableObjectTransaction {
     deleteAlarm(options?: DurableObjectSetAlarmOptions): Promise<void>;
 }
 interface DurableObjectStorage {
-    get<T = unknown>(key: string, options?: DurableObjectGetOptions): Promise<T | undefined>;
-    get<T = unknown>(keys: string[], options?: DurableObjectGetOptions): Promise<Map<string, T>>;
-    list<T = unknown>(options?: DurableObjectListOptions): Promise<Map<string, T>>;
-    put<T>(key: string, value: T, options?: DurableObjectPutOptions): Promise<void>;
-    put<T>(entries: Record<string, T>, options?: DurableObjectPutOptions): Promise<void>;
-    delete(key: string, options?: DurableObjectPutOptions): Promise<boolean>;
-    delete(keys: string[], options?: DurableObjectPutOptions): Promise<number>;
-    deleteAll(options?: DurableObjectPutOptions): Promise<void>;
-    transaction<T>(closure: (txn: DurableObjectTransaction) => Promise<T>): Promise<T>;
-    getAlarm(options?: DurableObjectGetAlarmOptions): Promise<number | null>;
-    setAlarm(scheduledTime: number | Date, options?: DurableObjectSetAlarmOptions): Promise<void>;
-    deleteAlarm(options?: DurableObjectSetAlarmOptions): Promise<void>;
-    sync(): Promise<void>;
     sql: SqlStorage;
     kv: SyncKvStorage;
+
+    get<T = unknown>(key: string, options?: DurableObjectGetOptions): Promise<T | undefined>;
+
+    get<T = unknown>(keys: string[], options?: DurableObjectGetOptions): Promise<Map<string, T>>;
+
+    list<T = unknown>(options?: DurableObjectListOptions): Promise<Map<string, T>>;
+
+    put<T>(key: string, value: T, options?: DurableObjectPutOptions): Promise<void>;
+
+    put<T>(entries: Record<string, T>, options?: DurableObjectPutOptions): Promise<void>;
+
+    delete(key: string, options?: DurableObjectPutOptions): Promise<boolean>;
+
+    delete(keys: string[], options?: DurableObjectPutOptions): Promise<number>;
+
+    deleteAll(options?: DurableObjectPutOptions): Promise<void>;
+
+    transaction<T>(closure: (txn: DurableObjectTransaction) => Promise<T>): Promise<T>;
+
+    getAlarm(options?: DurableObjectGetAlarmOptions): Promise<number | null>;
+
+    setAlarm(scheduledTime: number | Date, options?: DurableObjectSetAlarmOptions): Promise<void>;
+
+    deleteAlarm(options?: DurableObjectSetAlarmOptions): Promise<void>;
+
+    sync(): Promise<void>;
+
     transactionSync<T>(closure: () => T): T;
     getCurrentBookmark(): Promise<string>;
     getBookmarkForTime(timestamp: number | Date): Promise<string>;
@@ -605,43 +647,55 @@ interface AnalyticsEngineDataPoint {
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event)
  */
 declare class Event {
+    static readonly NONE: number;
+    static readonly CAPTURING_PHASE: number;
+    static readonly AT_TARGET: number;
+    static readonly BUBBLING_PHASE: number;
+
     constructor(type: string, init?: EventInit);
+
     /**
      * The **`type`** read-only property of the Event interface returns a string containing the event's type.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/type)
      */
     get type(): string;
+
     /**
      * The **`eventPhase`** read-only property of the being evaluated.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/eventPhase)
      */
     get eventPhase(): number;
+
     /**
      * The read-only **`composed`** property of the or not the event will propagate across the shadow DOM boundary into the standard DOM.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/composed)
      */
     get composed(): boolean;
+
     /**
      * The **`bubbles`** read-only property of the Event interface indicates whether the event bubbles up through the DOM tree or not.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/bubbles)
      */
     get bubbles(): boolean;
+
     /**
      * The **`cancelable`** read-only property of the Event interface indicates whether the event can be canceled, and therefore prevented as if the event never happened.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/cancelable)
      */
     get cancelable(): boolean;
+
     /**
      * The **`defaultPrevented`** read-only property of the Event interface returns a boolean value indicating whether or not the call to Event.preventDefault() canceled the event.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/defaultPrevented)
      */
     get defaultPrevented(): boolean;
+
     /**
      * The Event property **`returnValue`** indicates whether the default action for this event has been prevented or not.
      * @deprecated
@@ -649,18 +703,21 @@ declare class Event {
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/returnValue)
      */
     get returnValue(): boolean;
+
     /**
      * The **`currentTarget`** read-only property of the Event interface identifies the element to which the event handler has been attached.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/currentTarget)
      */
     get currentTarget(): EventTarget | undefined;
+
     /**
      * The read-only **`target`** property of the dispatched.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/target)
      */
     get target(): EventTarget | undefined;
+
     /**
      * The deprecated **`Event.srcElement`** is an alias for the Event.target property.
      * @deprecated
@@ -668,18 +725,21 @@ declare class Event {
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/srcElement)
      */
     get srcElement(): EventTarget | undefined;
+
     /**
      * The **`timeStamp`** read-only property of the Event interface returns the time (in milliseconds) at which the event was created.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/timeStamp)
      */
     get timeStamp(): number;
+
     /**
      * The **`isTrusted`** read-only property of the when the event was generated by the user agent (including via user actions and programmatic methods such as HTMLElement.focus()), and `false` when the event was dispatched via The only exception is the `click` event, which initializes the `isTrusted` property to `false` in user agents.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/isTrusted)
      */
     get isTrusted(): boolean;
+
     /**
      * The **`cancelBubble`** property of the Event interface is deprecated.
      * @deprecated
@@ -687,6 +747,7 @@ declare class Event {
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/cancelBubble)
      */
     get cancelBubble(): boolean;
+
     /**
      * The **`cancelBubble`** property of the Event interface is deprecated.
      * @deprecated
@@ -694,34 +755,34 @@ declare class Event {
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/cancelBubble)
      */
     set cancelBubble(value: boolean);
+
     /**
      * The **`stopImmediatePropagation()`** method of the If several listeners are attached to the same element for the same event type, they are called in the order in which they were added.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/stopImmediatePropagation)
      */
     stopImmediatePropagation(): void;
+
     /**
      * The **`preventDefault()`** method of the Event interface tells the user agent that if the event does not get explicitly handled, its default action should not be taken as it normally would be.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/preventDefault)
      */
     preventDefault(): void;
+
     /**
      * The **`stopPropagation()`** method of the Event interface prevents further propagation of the current event in the capturing and bubbling phases.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/stopPropagation)
      */
     stopPropagation(): void;
+
     /**
      * The **`composedPath()`** method of the Event interface returns the event's path which is an array of the objects on which listeners will be invoked.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Event/composedPath)
      */
     composedPath(): EventTarget[];
-    static readonly NONE: number;
-    static readonly CAPTURING_PHASE: number;
-    static readonly AT_TARGET: number;
-    static readonly BUBBLING_PHASE: number;
 }
 interface EventInit {
     bubbles?: boolean;
@@ -798,39 +859,46 @@ declare class AbortController {
  */
 declare abstract class AbortSignal extends EventTarget {
     /**
-     * The **`AbortSignal.abort()`** static method returns an AbortSignal that is already set as aborted (and which does not trigger an AbortSignal/abort_event event).
-     *
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/abort_static)
-     */
-    static abort(reason?: any): AbortSignal;
-    /**
-     * The **`AbortSignal.timeout()`** static method returns an AbortSignal that will automatically abort after a specified time.
-     *
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/timeout_static)
-     */
-    static timeout(delay: number): AbortSignal;
-    /**
-     * The **`AbortSignal.any()`** static method takes an iterable of abort signals and returns an AbortSignal.
-     *
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/any_static)
-     */
-    static any(signals: AbortSignal[]): AbortSignal;
-    /**
      * The **`aborted`** read-only property returns a value that indicates whether the asynchronous operations the signal is communicating with are aborted (`true`) or not (`false`).
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/aborted)
      */
     get aborted(): boolean;
+
     /**
      * The **`reason`** read-only property returns a JavaScript value that indicates the abort reason.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/reason)
      */
     get reason(): any;
+
     /* [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/abort_event) */
     get onabort(): any | null;
+
     /* [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/abort_event) */
     set onabort(value: any | null);
+
+    /**
+     * The **`AbortSignal.abort()`** static method returns an AbortSignal that is already set as aborted (and which does not trigger an AbortSignal/abort_event event).
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/abort_static)
+     */
+    static abort(reason?: any): AbortSignal;
+
+    /**
+     * The **`AbortSignal.timeout()`** static method returns an AbortSignal that will automatically abort after a specified time.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/timeout_static)
+     */
+    static timeout(delay: number): AbortSignal;
+
+    /**
+     * The **`AbortSignal.any()`** static method takes an iterable of abort signals and returns an AbortSignal.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/AbortSignal/any_static)
+     */
+    static any(signals: AbortSignal[]): AbortSignal;
+
     /**
      * The **`throwIfAborted()`** method throws the signal's abort AbortSignal.reason if the signal has been aborted; otherwise it does nothing.
      *
@@ -960,13 +1028,14 @@ interface FileOptions {
 * [Cloudflare Docs Reference](https://developers.cloudflare.com/workers/runtime-apis/cache/)
 */
 declare abstract class CacheStorage {
+    readonly default: Cache;
+
     /**
      * The **`open()`** method of the the Cache object matching the `cacheName`.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CacheStorage/open)
      */
     open(cacheName: string): Promise<Cache>;
-    readonly default: Cache;
 }
 /**
 * The Cache API allows fine grained control of reading and writing from the Cloudflare global network cache.
@@ -993,6 +1062,8 @@ interface CacheQueryOptions {
 * [Cloudflare Docs Reference](https://developers.cloudflare.com/workers/runtime-apis/web-crypto/)
 */
 declare abstract class Crypto {
+    DigestStream: typeof DigestStream;
+
     /**
      * The **`Crypto.subtle`** read-only property returns a cryptographic operations.
      * Available only in secure contexts.
@@ -1000,12 +1071,14 @@ declare abstract class Crypto {
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Crypto/subtle)
      */
     get subtle(): SubtleCrypto;
+
     /**
      * The **`Crypto.getRandomValues()`** method lets you get cryptographically strong random values.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Crypto/getRandomValues)
      */
     getRandomValues<T extends Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array | BigInt64Array | BigUint64Array>(buffer: T): T;
+
     /**
      * The **`randomUUID()`** method of the Crypto interface is used to generate a v4 UUID using a cryptographically secure random number generator.
      * Available only in secure contexts.
@@ -1013,7 +1086,6 @@ declare abstract class Crypto {
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Crypto/randomUUID)
      */
     randomUUID(): string;
-    DigestStream: typeof DigestStream;
 }
 /**
  * The **`SubtleCrypto`** interface of the Web Crypto API provides a number of low-level cryptographic functions.
@@ -1227,8 +1299,10 @@ interface CryptoKeyArbitraryKeyAlgorithm {
     length?: number;
 }
 declare class DigestStream extends WritableStream<ArrayBuffer | ArrayBufferView> {
-    constructor(algorithm: string | SubtleCryptoHashAlgorithm);
     readonly digest: Promise<ArrayBuffer>;
+
+    constructor(algorithm: string | SubtleCryptoHashAlgorithm);
+
     get bytesWritten(): number | bigint;
 }
 /**
@@ -1238,15 +1312,19 @@ declare class DigestStream extends WritableStream<ArrayBuffer | ArrayBufferView>
  */
 declare class TextDecoder {
     constructor(label?: string, options?: TextDecoderConstructorOptions);
+
+    get encoding(): string;
+
+    get fatal(): boolean;
+
+    get ignoreBOM(): boolean;
+
     /**
      * The **`TextDecoder.decode()`** method returns a string containing text decoded from the buffer passed as a parameter.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/TextDecoder/decode)
      */
     decode(input?: (ArrayBuffer | ArrayBufferView), options?: TextDecoderDecodeOptions): string;
-    get encoding(): string;
-    get fatal(): boolean;
-    get ignoreBOM(): boolean;
 }
 /**
  * The **`TextEncoder`** interface takes a stream of code points as input and emits a stream of UTF-8 bytes.
@@ -1255,19 +1333,22 @@ declare class TextDecoder {
  */
 declare class TextEncoder {
     constructor();
+
+    get encoding(): string;
+
     /**
      * The **`TextEncoder.encode()`** method takes a string as input, and returns a Global_Objects/Uint8Array containing the text given in parameters encoded with the specific method for that TextEncoder object.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/TextEncoder/encode)
      */
     encode(input?: string): Uint8Array;
+
     /**
      * The **`TextEncoder.encodeInto()`** method takes a string to encode and a destination Uint8Array to put resulting UTF-8 encoded text into, and returns a dictionary object indicating the progress of the encoding.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/TextEncoder/encodeInto)
      */
     encodeInto(input: string, buffer: Uint8Array): TextEncoderEncodeIntoResult;
-    get encoding(): string;
 }
 interface TextDecoderConstructorOptions {
     fatal: boolean;
@@ -1331,7 +1412,6 @@ interface ErrorEventErrorEventInit {
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MessageEvent)
  */
 declare class MessageEvent extends Event {
-    constructor(type: string, initializer: MessageEventInit);
     /**
      * The **`data`** read-only property of the The data sent by the message emitter; this can be any data type, depending on what originated this event.
      *
@@ -1362,6 +1442,8 @@ declare class MessageEvent extends Event {
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MessageEvent/ports)
      */
     readonly ports: MessagePort[];
+
+    constructor(type: string, initializer: MessageEventInit);
 }
 interface MessageEventInit {
     data: ArrayBuffer | string;
@@ -1643,12 +1725,6 @@ declare var Response: {
  */
 interface Response extends Body {
     /**
-     * The **`clone()`** method of the Response interface creates a clone of a response object, identical in every way, but stored in a different variable.
-     *
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/clone)
-     */
-    clone(): Response;
-    /**
      * The **`status`** read-only property of the Response interface contains the HTTP status codes of the response.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/status)
@@ -1692,6 +1768,13 @@ interface Response extends Body {
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/type)
      */
     type: "default" | "error";
+
+    /**
+     * The **`clone()`** method of the Response interface creates a clone of a response object, identical in every way, but stored in a different variable.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Response/clone)
+     */
+    clone(): Response;
 }
 interface ResponseInit {
     status?: number;
@@ -1717,12 +1800,6 @@ declare var Request: {
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request)
  */
 interface Request<CfHostMetadata = unknown, Cf = CfProperties<CfHostMetadata>> extends Body {
-    /**
-     * The **`clone()`** method of the Request interface creates a copy of the current `Request` object.
-     *
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/clone)
-     */
-    clone(): Request<CfHostMetadata, Cf>;
     /**
      * The **`method`** read-only property of the `POST`, etc.) A String indicating the method of the request.
      *
@@ -1773,6 +1850,13 @@ interface Request<CfHostMetadata = unknown, Cf = CfProperties<CfHostMetadata>> e
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/cache)
      */
     cache?: "no-store" | "no-cache";
+
+    /**
+     * The **`clone()`** method of the Request interface creates a copy of the current `Request` object.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/clone)
+     */
+    clone(): Request<CfHostMetadata, Cf>;
 }
 interface RequestInit<Cf = CfProperties> {
     /* A string to set request's method. */
@@ -2250,19 +2334,22 @@ declare abstract class ReadableStreamBYOBRequest {
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStreamBYOBRequest/view)
      */
     get view(): Uint8Array | null;
+
+    get atLeast(): number | null;
+
     /**
      * The **`respond()`** method of the ReadableStreamBYOBRequest interface is used to signal to the associated readable byte stream that the specified number of bytes were written into the ReadableStreamBYOBRequest.view.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStreamBYOBRequest/respond)
      */
     respond(bytesWritten: number): void;
+
     /**
      * The **`respondWithNewView()`** method of the ReadableStreamBYOBRequest interface specifies a new view that the consumer of the associated readable byte stream should write to instead of ReadableStreamBYOBRequest.view.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStreamBYOBRequest/respondWithNewView)
      */
     respondWithNewView(view: ArrayBuffer | ArrayBufferView): void;
-    get atLeast(): number | null;
 }
 /**
  * The **`ReadableStreamDefaultController`** interface of the Streams API represents a controller allowing control of a ReadableStream's state and internal queue.
@@ -2829,38 +2916,44 @@ declare class URL {
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/searchParams)
      */
     get searchParams(): URLSearchParams;
-    /**
-     * The **`toJSON()`** method of the URL interface returns a string containing a serialized version of the URL, although in practice it seems to have the same effect as ```js-nolint toJSON() ``` None.
-     *
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/toJSON)
-     */
-    toJSON(): string;
-    /*function toString() { [native code] }*/
-    toString(): string;
+
     /**
      * The **`URL.canParse()`** static method of the URL interface returns a boolean indicating whether or not an absolute URL, or a relative URL combined with a base URL, are parsable and valid.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/canParse_static)
      */
     static canParse(url: string, base?: string): boolean;
+
     /**
      * The **`URL.parse()`** static method of the URL interface returns a newly created URL object representing the URL defined by the parameters.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/parse_static)
      */
     static parse(url: string, base?: string): URL | null;
+
     /**
      * The **`createObjectURL()`** static method of the URL interface creates a string containing a URL representing the object given in the parameter.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/createObjectURL_static)
      */
     static createObjectURL(object: File | Blob): string;
+
     /**
      * The **`revokeObjectURL()`** static method of the URL interface releases an existing object URL which was previously created by calling Call this method when you've finished using an object URL to let the browser know not to keep the reference to the file any longer.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/revokeObjectURL_static)
      */
     static revokeObjectURL(object_url: string): void;
+
+    /**
+     * The **`toJSON()`** method of the URL interface returns a string containing a serialized version of the URL, although in practice it seems to have the same effect as ```js-nolint toJSON() ``` None.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/URL/toJSON)
+     */
+    toJSON(): string;
+
+    /*function toString() { [native code] }*/
+    toString(): string;
 }
 /**
  * The **`URLSearchParams`** interface defines utility methods to work with the query string of a URL.
@@ -2983,7 +3076,6 @@ interface URLPatternOptions {
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CloseEvent)
  */
 declare class CloseEvent extends Event {
-    constructor(type: string, initializer?: CloseEventInit);
     /**
      * The **`code`** read-only property of the CloseEvent interface returns a WebSocket connection close code indicating the reason the connection was closed.
      *
@@ -3002,6 +3094,8 @@ declare class CloseEvent extends Event {
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/CloseEvent/wasClean)
      */
     readonly wasClean: boolean;
+
+    constructor(type: string, initializer?: CloseEventInit);
 }
 interface CloseEventInit {
     code?: number;
@@ -3037,21 +3131,6 @@ declare var WebSocket: {
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket)
  */
 interface WebSocket extends EventTarget<WebSocketEventMap> {
-    accept(): void;
-    /**
-     * The **`WebSocket.send()`** method enqueues the specified data to be transmitted to the server over the WebSocket connection, increasing the value of `bufferedAmount` by the number of bytes needed to contain the data.
-     *
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/send)
-     */
-    send(message: (ArrayBuffer | ArrayBufferView) | string): void;
-    /**
-     * The **`WebSocket.close()`** method closes the already `CLOSED`, this method does nothing.
-     *
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/close)
-     */
-    close(code?: number, reason?: string): void;
-    serializeAttachment(attachment: any): void;
-    deserializeAttachment(): any | null;
     /**
      * The **`WebSocket.readyState`** read-only property returns the current state of the WebSocket connection.
      *
@@ -3076,6 +3155,26 @@ interface WebSocket extends EventTarget<WebSocketEventMap> {
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/extensions)
      */
     extensions: string | null;
+
+    accept(): void;
+
+    /**
+     * The **`WebSocket.send()`** method enqueues the specified data to be transmitted to the server over the WebSocket connection, increasing the value of `bufferedAmount` by the number of bytes needed to contain the data.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/send)
+     */
+    send(message: (ArrayBuffer | ArrayBufferView) | string): void;
+
+    /**
+     * The **`WebSocket.close()`** method closes the already `CLOSED`, this method does nothing.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/close)
+     */
+    close(code?: number, reason?: string): void;
+
+    serializeAttachment(attachment: any): void;
+
+    deserializeAttachment(): any | null;
 }
 declare const WebSocketPair: {
     new (): {
@@ -3084,15 +3183,23 @@ declare const WebSocketPair: {
     };
 };
 interface SqlStorage {
-    exec<T extends Record<string, SqlStorageValue>>(query: string, ...bindings: any[]): SqlStorageCursor<T>;
-    get databaseSize(): number;
     Cursor: typeof SqlStorageCursor;
     Statement: typeof SqlStorageStatement;
+
+    exec<T extends Record<string, SqlStorageValue>>(query: string, ...bindings: any[]): SqlStorageCursor<T>;
+
+    get databaseSize(): number;
 }
 declare abstract class SqlStorageStatement {
 }
 type SqlStorageValue = ArrayBuffer | string | number | null;
 declare abstract class SqlStorageCursor<T extends Record<string, SqlStorageValue>> {
+    columnNames: string[];
+
+    get rowsRead(): number;
+
+    get rowsWritten(): number;
+
     next(): {
         done?: false;
         value: T;
@@ -3100,12 +3207,13 @@ declare abstract class SqlStorageCursor<T extends Record<string, SqlStorageValue
         done: true;
         value?: never;
     };
+
     toArray(): T[];
+
     one(): T;
+
     raw<U extends SqlStorageValue[]>(): IterableIterator<U>;
-    columnNames: string[];
-    get rowsRead(): number;
-    get rowsWritten(): number;
+
     [Symbol.iterator](): IterableIterator<T>;
 }
 interface Socket {
@@ -3140,47 +3248,59 @@ interface SocketInfo {
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource)
  */
 declare class EventSource extends EventTarget {
+    static readonly CONNECTING: number;
+    static readonly OPEN: number;
+    static readonly CLOSED: number;
+
     constructor(url: string, init?: EventSourceEventSourceInit);
-    /**
-     * The **`close()`** method of the EventSource interface closes the connection, if one is made, and sets the ```js-nolint close() ``` None.
-     *
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/close)
-     */
-    close(): void;
+
     /**
      * The **`url`** read-only property of the URL of the source.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/url)
      */
     get url(): string;
+
     /**
      * The **`withCredentials`** read-only property of the the `EventSource` object was instantiated with CORS credentials set.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/withCredentials)
      */
     get withCredentials(): boolean;
+
     /**
      * The **`readyState`** read-only property of the connection.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/readyState)
      */
     get readyState(): number;
+
     /* [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/open_event) */
     get onopen(): any | null;
+
     /* [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/open_event) */
     set onopen(value: any | null);
+
     /* [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/message_event) */
     get onmessage(): any | null;
+
     /* [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/message_event) */
     set onmessage(value: any | null);
+
     /* [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/error_event) */
     get onerror(): any | null;
+
     /* [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/error_event) */
     set onerror(value: any | null);
-    static readonly CONNECTING: number;
-    static readonly OPEN: number;
-    static readonly CLOSED: number;
+
     static from(stream: ReadableStream): EventSource;
+
+    /**
+     * The **`close()`** method of the EventSource interface closes the connection, if one is made, and sets the ```js-nolint close() ``` None.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/EventSource/close)
+     */
+    close(): void;
 }
 interface EventSourceEventSourceInit {
     withCredentials?: boolean;
@@ -3207,26 +3327,30 @@ interface ContainerStartupOptions {
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MessagePort)
  */
 declare abstract class MessagePort extends EventTarget {
+    get onmessage(): any | null;
+
+    set onmessage(value: any | null);
+
     /**
      * The **`postMessage()`** method of the transfers ownership of objects to other browsing contexts.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MessagePort/postMessage)
      */
     postMessage(data?: any, options?: (any[] | MessagePortPostMessageOptions)): void;
+
     /**
      * The **`close()`** method of the MessagePort interface disconnects the port, so it is no longer active.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MessagePort/close)
      */
     close(): void;
+
     /**
      * The **`start()`** method of the MessagePort interface starts the sending of messages queued on the port.
      *
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MessagePort/start)
      */
     start(): void;
-    get onmessage(): any | null;
-    set onmessage(value: any | null);
 }
 /**
  * The **`MessageChannel`** interface of the Channel Messaging API allows us to create a new message channel and send data through it via its two MessagePort properties.
@@ -3234,7 +3358,6 @@ declare abstract class MessagePort extends EventTarget {
  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MessageChannel)
  */
 declare class MessageChannel {
-    constructor();
     /**
      * The **`port1`** read-only property of the the port attached to the context that originated the channel.
      *
@@ -3247,6 +3370,8 @@ declare class MessageChannel {
      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MessageChannel/port2)
      */
     readonly port2: MessagePort;
+
+    constructor();
 }
 interface MessagePortPostMessageOptions {
     transfer?: any[];
@@ -8597,7 +8722,7 @@ type AIGatewayHeaders = {
     [key: string]: string | number | boolean | object;
 };
 type AIGatewayUniversalRequest = {
-    provider: AIGatewayProviders | string; // eslint-disable-line
+    provider: AIGatewayProviders | string;
     endpoint: string;
     headers: Partial<AIGatewayHeaders>;
     query: unknown;
@@ -8613,7 +8738,7 @@ declare abstract class AiGateway {
         gateway?: UniversalGatewayOptions;
         extraHeaders?: object;
     }): Promise<Response>;
-    getUrl(provider?: AIGatewayProviders | string): Promise<string>; // eslint-disable-line
+    getUrl(provider?: AIGatewayProviders | string): Promise<string>;
 }
 interface AutoRAGInternalError extends Error {
 }
@@ -9608,18 +9733,6 @@ interface HelloWorldBinding {
 }
 interface Hyperdrive {
     /**
-     * Connect directly to Hyperdrive as if it's your database, returning a TCP socket.
-     *
-     * Calling this method returns an idential socket to if you call
-     * `connect("host:port")` using the `host` and `port` fields from this object.
-     * Pick whichever approach works better with your preferred DB client library.
-     *
-     * Note that this socket is not yet authenticated -- it's expected that your
-     * code (or preferably, the client library of your choice) will authenticate
-     * using the information in this class's readonly fields.
-     */
-    connect(): Socket;
-    /**
      * A valid DB connection string that can be passed straight into the typical
      * client library/driver/ORM. This will typically be the easiest way to use
      * Hyperdrive.
@@ -9652,6 +9765,19 @@ interface Hyperdrive {
      * The name of the database to connect to.
      */
     readonly database: string;
+
+    /**
+     * Connect directly to Hyperdrive as if it's your database, returning a TCP socket.
+     *
+     * Calling this method returns an idential socket to if you call
+     * `connect("host:port")` using the `host` and `port` fields from this object.
+     * Pick whichever approach works better with your preferred DB client library.
+     *
+     * Note that this socket is not yet authenticated -- it's expected that your
+     * code (or preferably, the client library of your choice) will authenticate
+     * using the information in this class's readonly fields.
+     */
+    connect(): Socket;
 }
 // Copyright (c) 2024 Cloudflare, Inc.
 // Licensed under the Apache 2.0 license found in the LICENSE file or at:
@@ -10215,10 +10341,13 @@ declare namespace CloudflareWorkersModule {
         type: string;
     };
     export abstract class WorkflowStep {
-        do<T extends Rpc.Serializable<T>>(name: string, callback: () => Promise<T>): Promise<T>;
-        do<T extends Rpc.Serializable<T>>(name: string, config: WorkflowStepConfig, callback: () => Promise<T>): Promise<T>;
         sleep: (name: string, duration: WorkflowSleepDuration) => Promise<void>;
         sleepUntil: (name: string, timestamp: Date | number) => Promise<void>;
+
+        do<T extends Rpc.Serializable<T>>(name: string, callback: () => Promise<T>): Promise<T>;
+
+        do<T extends Rpc.Serializable<T>>(name: string, config: WorkflowStepConfig, callback: () => Promise<T>): Promise<T>;
+
         waitForEvent<T extends Rpc.Serializable<T>>(name: string, options: {
             type: string;
             timeout?: WorkflowTimeoutDuration | number;

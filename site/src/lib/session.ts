@@ -22,7 +22,8 @@ export const decrypt = async (session: string | undefined = "") => {
       algorithms: ["HS256"],
     });
     return payload;
-  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_) {
     console.log("Couldn't verify session.");
   }
 };

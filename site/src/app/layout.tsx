@@ -1,6 +1,9 @@
+// noinspection HtmlRequiredTitleElement
+
 import type { Metadata } from "next";
 import { Chivo } from "next/font/google";
 import "./globals.css";
+import React from "react";
 
 const chivoSans = Chivo({
   variable: "--font-chivo",

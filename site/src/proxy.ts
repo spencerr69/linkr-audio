@@ -1,6 +1,8 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { rootDomain } from "@/lib/utils";
+// noinspection JSUnusedGlobalSymbols
+
 import { verifySession } from "@/lib/dal";
+import { rootDomain } from "@/lib/utils";
+import { type NextRequest, NextResponse } from "next/server";
 
 function extractSubdomain(request: NextRequest): string | null {
   const url = request.url;
