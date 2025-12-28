@@ -1,13 +1,17 @@
 "use client";
 
-import { Link, Release } from "@/lib/apihelper";
-import { Button } from "@/app/ui/button";
 import { getLinks } from "@/app/actions/getlinks";
+import {
+  createRelease,
+  deleteRelease,
+  updateRelease,
+} from "@/app/actions/updateRelease";
+import { Button } from "@/app/ui/button";
 import { FormField } from "@/app/ui/form-field";
+import { Link, Release } from "@/lib/apihelper";
 import Image from "next/image";
-import React from "react";
-import { createRelease, deleteRelease, updateRelease } from "@/app/actions/updateRelease";
 import { useRouter } from "next/navigation";
+import React from "react";
 
 export const emptyRelease: Release = {
   artwork: "",

@@ -1,12 +1,12 @@
 "use client";
 
-import { ArtistResponse, EditArtist, Link } from "@/lib/apihelper";
-import React from "react";
-import { useRouter } from "next/navigation";
-import { FormField } from "@/app/ui/form-field";
+import { updateArtist } from "@/app/actions/updateArtist";
 import { FormLinks } from "@/app/admin/components/release-form";
 import { Button } from "@/app/ui/button";
-import { updateArtist } from "@/app/actions/updateArtist";
+import { FormField } from "@/app/ui/form-field";
+import { ArtistResponse, EditArtist, Link } from "@/lib/apihelper";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 const editArtistFromArtist = (artist: ArtistResponse) => {
   return {

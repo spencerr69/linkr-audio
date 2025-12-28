@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
 import { logout } from "@/app/actions/auth";
+import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 type HeaderProps = {
   artistName: string;

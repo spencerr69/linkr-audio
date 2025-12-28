@@ -1,8 +1,8 @@
 "use server";
 
 import { LoginFormSchema, LoginFormState } from "@/lib/definitions";
-import { apiDomain } from "@/lib/utils";
 import { createSession } from "@/lib/session";
+import { apiDomain } from "@/lib/utils";
 import { cookies } from "next/headers";
 
 export async function login(state: LoginFormState, formData: FormData) {

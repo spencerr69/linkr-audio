@@ -23,6 +23,6 @@ CREATE TABLE IF NOT EXISTS Artists
     pw_hash            TEXT
 );
 INSERT INTO Artists (artist_id, master_artist_name, pw_hash)
-VALUES ('sr', 'Spencer Raymond',  '1a8db61ffa4484cd0174da464a69e4a1c5585d50fa2dad9055b1b24b49578508');
+VALUES ('sr', 'Spencer Raymond', '1a8db61ffa4484cd0174da464a69e4a1c5585d50fa2dad9055b1b24b49578508');
 
 

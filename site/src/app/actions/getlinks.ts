@@ -1,7 +1,7 @@
 "use server";
 
-import { verifySession } from "@/lib/dal";
 import { LinkResponse, serverFetch } from "@/lib/apihelper";
+import { verifySession } from "@/lib/dal";
 
 export async function getLinks(upc: string) {
   "use server";

@@ -1,8 +1,8 @@
 "use server";
 
+import { Dashboard } from "@/app/admin/components/dashboard";
 import { LoginForm } from "@/app/ui/login-form";
 import { verifySession } from "@/lib/dal";
-import { Dashboard } from "@/app/admin/components/dashboard";
 import { AdminPages } from "@/lib/definitions";
 
 const AdminPage = async () => {

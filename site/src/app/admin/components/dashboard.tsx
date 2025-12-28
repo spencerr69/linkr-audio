@@ -1,10 +1,10 @@
-import { verifySession } from "@/lib/dal";
-import { apiDomain } from "@/lib/utils";
-import { ArtistResponse, Release, serverFetch } from "@/lib/apihelper";
-import { Releases } from "@/app/admin/components/releases";
-import { Header } from "@/app/admin/components/header";
-import { AdminPages } from "@/lib/definitions";
 import { Artist } from "@/app/admin/components/artist";
+import { Header } from "@/app/admin/components/header";
+import { Releases } from "@/app/admin/components/releases";
+import { ArtistResponse, Release, serverFetch } from "@/lib/apihelper";
+import { verifySession } from "@/lib/dal";
+import { AdminPages } from "@/lib/definitions";
+import { apiDomain } from "@/lib/utils";
 
 export const Dashboard = async ({
   currentPage,

@@ -1,11 +1,11 @@
 "use server";
 
-import Image from "next/image";
-import { Metadata } from "next";
-import { apiDomain } from "@/lib/utils";
-import { cache } from "react";
-import { Release } from "@/lib/apihelper";
 import { ExternalButton } from "@/app/ui/button";
+import { Release } from "@/lib/apihelper";
+import { apiDomain } from "@/lib/utils";
+import { Metadata } from "next";
+import Image from "next/image";
+import { cache } from "react";
 
 const BASE_API_URL = apiDomain;
 
