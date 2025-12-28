@@ -62,22 +62,24 @@ export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {
           valueUpdateAction={getArtistUpdater("links")}
           links={editedArtist.links || []}
         />
-        <Button
-          name={"save"}
-          onClick={async () => {
-            const result = await updateArtist(editedArtist);
-            if (result.success) {
-              setStatus("Successfully saved artist.");
-            } else {
-              setStatus(result.error!);
-            }
+        <div className={"justify-end w-full flex"}>
+          <Button
+            name={"save"}
+            onClick={async () => {
+              const result = await updateArtist(editedArtist);
+              if (result.success) {
+                setStatus("Successfully saved artist.");
+              } else {
+                setStatus(result.error!);
+              }
 
-            router.refresh();
-            return;
-          }}
-        >
-          Save
-        </Button>
+              router.refresh();
+              return;
+            }}
+          >
+            Save
+          </Button>
+        </div>
         <p>{status}</p>
       </form>
     </div>
