@@ -35,10 +35,16 @@ export const Header = (props: HeaderProps) => {
       </div>
 
       <div>
-        <Link href={"/admin"} className={"mr-4"}>
+        <Link
+          href={"/admin"}
+          className={"mr-4 hover:bg-white hover:text-rose-500 p-2"}
+        >
           Releases
         </Link>
-        <Link href={"/admin/artist"} className={"mr-4"}>
+        <Link
+          href={"/admin/artist"}
+          className={"mr-4 hover:bg-white hover:text-rose-500 p-2"}
+        >
           Artist
         </Link>
         <a
