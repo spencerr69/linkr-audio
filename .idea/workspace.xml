@@ -11,12 +11,11 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="chore(api): Cargo update, .idea stuff">
-      <change beforePath="$PROJECT_DIR$/.idea/developer-tools.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/developer-tools.xml" afterDir="false" />
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="chore(idea): update workspace and developer-tools settings">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist-form.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/api/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/site/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +200,7 @@
       <workItem from="1766835470643" duration="643000" />
       <workItem from="1766920260452" duration="43000" />
       <workItem from="1766920309529" duration="627000" />
-      <workItem from="1766920958111" duration="3269000" />
+      <workItem from="1766920958111" duration="4062000" />
     </task>
     <task id="LOCAL-00001" summary="auth works now">
       <option name="closed" value="true" />
@@ -315,7 +314,47 @@
       <option name="project" value="LOCAL" />
       <updated>1766921310773</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="refactor(header): simplify Header component by removing popup logic and unused state">
+      <option name="closed" value="true" />
+      <created>1766925697308</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1766925697308</updated>
+    </task>
+    <task id="LOCAL-00016" summary="style(header): enhance admin navigation links with hover effects and padding adjustments">
+      <option name="closed" value="true" />
+      <created>1766925721274</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1766925721274</updated>
+    </task>
+    <task id="LOCAL-00017" summary="style(globals): add new gray color variables">
+      <option name="closed" value="true" />
+      <created>1766925727114</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1766925727114</updated>
+    </task>
+    <task id="LOCAL-00018" summary="refactor(artist-form): wrap save button in a flex container for improved alignment">
+      <option name="closed" value="true" />
+      <created>1766925744859</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1766925744859</updated>
+    </task>
+    <task id="LOCAL-00019" summary="chore(idea): update workspace and developer-tools settings">
+      <option name="closed" value="true" />
+      <created>1766925756316</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1766925756316</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -341,19 +380,14 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="auth works now" />
-    <MESSAGE value="deps" />
-    <MESSAGE value="begin reimplementing auth" />
-    <MESSAGE value="Implemented auth&#10;&#10;use verifySession() to get current session from cookie&#10;added schema.d.ts built from openapi spec from bend" />
-    <MESSAGE value="add logout, delete index" />
-    <MESSAGE value="A Lot ! now looks decent. need to make links" />
-    <MESSAGE value="resolve errors" />
-    <MESSAGE value="update cloudflare. apparently will suppport next 16.1 in 2026" />
-    <MESSAGE value="implement createRelease and add support for creating new releases across the app" />
-    <MESSAGE value="Add Artist management support in Admin Dashboard &#10;&#10;- Introduce Artist form with edit/save functionality.&#10;- Add navigation links for Admin pages in header.&#10;- Implement `updateArtist` action for server-side artist updates.&#10;- Refactor and enhance Dashboard and related components." />
-    <MESSAGE value="Clean up Header component styles and reformat imports in Release Form" />
     <MESSAGE value="chore(api): Cargo update, .idea stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore(api): Cargo update, .idea stuff" />
+    <MESSAGE value="Refactor Header component: remove unused popup logic and simplify logout link" />
+    <MESSAGE value="refactor(header): simplify Header component by removing popup logic and unused state" />
+    <MESSAGE value="style(header): enhance admin navigation links with hover effects and padding adjustments" />
+    <MESSAGE value="refactor(artist-form): wrap save button in a flex container for improved alignment" />
+    <MESSAGE value="style(globals): add new gray color variables" />
+    <MESSAGE value="chore(idea): update workspace and developer-tools settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore(idea): update workspace and developer-tools settings" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
