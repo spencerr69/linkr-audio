@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CargoProjects">
+    <cargoProject FILE="$PROJECT_DIR$/api/Cargo.toml">
+      <package file="$PROJECT_DIR$/api">
+        <feature name="default" enabled="true" />
+      </package>
+    </cargoProject>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="Clean up Header component styles and reformat imports in Release Form">
+      <change beforePath="$PROJECT_DIR$/api/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/api/Cargo.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="78" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="main" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;spencerr69&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/spencerr69/linkr-audio.git&quot;,
+    &quot;accountId&quot;: &quot;b74ec2e4-3bcb-4cad-b234-c38931ae37e9&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;spencerr69&quot;,
+    &quot;repository&quot;: &quot;linkr-audio&quot;
+  }
+}</component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="Ci8PDHaC" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;ff066aff&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="36rSw4tpoEj4K7DyseQ9GlpN7jA" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "JavaScript Debug.sr.executor": "Debug",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.rust.reset.selective.auto.import": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "code.cleanup.on.save": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "javascript.preferred.runtime.type.id": "node",
+    "js.debugger.nextJs.config.created.client": "true",
+    "js.debugger.nextJs.config.created.server": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "pnpm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "prettierjs.PrettierConfiguration.Package": "/Users/spence/Development/linkr-audio/site/node_modules/prettier",
+    "rearrange.code.on.save": "true",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.ConventionalCommit",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "/Users/spence/Development/linkr-audio/site/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/site" />
+      <recent name="$PROJECT_DIR$/site/src" />
+      <recent name="$PROJECT_DIR$/public" />
+    </key>
+  </component>
+  <component name="RsExternalLinterProjectSettings">
+    <option name="additionalArguments" value="-- --Wclippy::pedantic" />
+    <option name="tool" value="Clippy" />
+  </component>
+  <component name="RunManager" selected="JavaScript Debug.sr">
+    <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
+      <method v="2" />
+    </configuration>
+    <configuration name="sr" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:8787/releases/sr">
+      <method v="2" />
+    </configuration>
+    <configuration name="Next.js: server-side" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.sr" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="RustProjectSettings">
+    <option name="rustcTarget" value="wasm32-unknown-unknown" />
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-WS-253.29346.143" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="" />
+      <created>1765763434234</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1765763434234</updated>
+      <workItem from="1765763436356" duration="7091000" />
+      <workItem from="1765965653986" duration="6365000" />
+      <workItem from="1766138519826" duration="81000" />
+      <workItem from="1766138614018" duration="2861000" />
+      <workItem from="1766197168334" duration="12693000" />
+      <workItem from="1766271172054" duration="19958000" />
+      <workItem from="1766355531653" duration="1368000" />
+      <workItem from="1766831551705" duration="1106000" />
+      <workItem from="1766832696941" duration="211000" />
+      <workItem from="1766832918801" duration="2538000" />
+      <workItem from="1766835470643" duration="643000" />
+      <workItem from="1766920260452" duration="43000" />
+      <workItem from="1766920309529" duration="627000" />
+      <workItem from="1766920958111" duration="229000" />
+    </task>
+    <task id="LOCAL-00001" summary="auth works now">
+      <option name="closed" value="true" />
+      <created>1766141293353</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1766141293353</updated>
+    </task>
+    <task id="LOCAL-00002" summary="deps">
+      <option name="closed" value="true" />
+      <created>1766200486408</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1766200486408</updated>
+    </task>
+    <task id="LOCAL-00003" summary="begin reimplementing auth">
+      <option name="closed" value="true" />
+      <created>1766200510638</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1766200510638</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Implemented auth&#10;&#10;use verifySession() to get current session from cookie&#10;added schema.d.ts built from openapi spec from bend">
+      <option name="closed" value="true" />
+      <created>1766207845406</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1766207845406</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add logout, delete index">
+      <option name="closed" value="true" />
+      <created>1766209741842</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1766209741842</updated>
+    </task>
+    <task id="LOCAL-00006" summary="A Lot ! now looks decent. need to make links">
+      <option name="closed" value="true" />
+      <created>1766282589461</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1766282589461</updated>
+    </task>
+    <task id="LOCAL-00007" summary="resolve errors">
+      <option name="closed" value="true" />
+      <created>1766282679223</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1766282679223</updated>
+    </task>
+    <task id="LOCAL-00008" summary="update cloudflare. apparently will suppport next 16.1 in 2026">
+      <option name="closed" value="true" />
+      <created>1766284252646</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1766284252646</updated>
+    </task>
+    <task id="LOCAL-00009" summary="implement createRelease and add support for creating new releases across the app">
+      <option name="closed" value="true" />
+      <created>1766321958171</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1766321958171</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Add Artist management support in Admin Dashboard &#10;&#10;- Introduce Artist form with edit/save functionality.&#10;- Add navigation links for Admin pages in header.&#10;- Implement `updateArtist` action for server-side artist updates.&#10;- Refactor and enhance Dashboard and related components.">
+      <option name="closed" value="true" />
+      <created>1766835264235</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1766835264235</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Clean up Header component styles and reformat imports in Release Form">
+      <option name="closed" value="true" />
+      <created>1766835326471</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1766835326471</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Clean up Header component styles and reformat imports in Release Form">
+      <option name="closed" value="true" />
+      <created>1766835402633</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1766835402633</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ID_WIDTH">
+                <map>
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="103" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="105" />
+                  <entry key="Table.GitHub.CommitStatus.ColumnIdWidth" value="104" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="auth works now" />
+    <MESSAGE value="deps" />
+    <MESSAGE value="begin reimplementing auth" />
+    <MESSAGE value="Implemented auth&#10;&#10;use verifySession() to get current session from cookie&#10;added schema.d.ts built from openapi spec from bend" />
+    <MESSAGE value="add logout, delete index" />
+    <MESSAGE value="A Lot ! now looks decent. need to make links" />
+    <MESSAGE value="resolve errors" />
+    <MESSAGE value="update cloudflare. apparently will suppport next 16.1 in 2026" />
+    <MESSAGE value="implement createRelease and add support for creating new releases across the app" />
+    <MESSAGE value="Add Artist management support in Admin Dashboard &#10;&#10;- Introduce Artist form with edit/save functionality.&#10;- Add navigation links for Admin pages in header.&#10;- Implement `updateArtist` action for server-side artist updates.&#10;- Refactor and enhance Dashboard and related components." />
+    <MESSAGE value="Clean up Header component styles and reformat imports in Release Form" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clean up Header component styles and reformat imports in Release Form" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
