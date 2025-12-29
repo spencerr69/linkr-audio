@@ -34,3 +34,7 @@ body {
 .formgrid {
     grid-template-columns: auto max-content;
 }
+
+.releasegrid {
+    grid-template-columns: 20rem auto;
+}
