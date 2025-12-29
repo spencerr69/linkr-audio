@@ -38,7 +38,7 @@ pub struct TidalRelease {
 #[derive(Serialize, Deserialize, Default, Debug)]
 pub struct ExternalLinks {
    pub href: String,
-   meta: HashMap<String, String>,
+   pub meta: HashMap<String, String>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
