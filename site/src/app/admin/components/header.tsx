@@ -18,13 +18,15 @@ export const Header = (props: HeaderProps) => {
       }
     >
       <div className={"flex items-center"}>
-        <Image
-          src={"/linkraudio.svg"}
-          alt={"logo"}
-          width={100}
-          height={100}
-          className={" fill-rose-500 "}
-        />
+        <Link href={"/"}>
+          <Image
+            src={"/linkraudio.svg"}
+            alt={"logo"}
+            width={100}
+            height={100}
+            className={" fill-rose-500 "}
+          />
+        </Link>
         <h1 className={"font-bold font-sans text-4xl"}>
           {props.artistName}
           {"  "}

@@ -28,18 +28,12 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="chore(idea): clean up workspace.xml and update recent branch/task history">
-      <change afterPath="$PROJECT_DIR$/site/src/app/[id]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="chore(idea)">
+      <change afterPath="$PROJECT_DIR$/site/src/app/not-found.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/site/src/app/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/releases/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/releases/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/actions/updateArtist.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/artists.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/actions/updateRelease.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/releases.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist-form.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release-form.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/actions/releases.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/releases.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/header.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -444,7 +438,47 @@
       <option name="project" value="LOCAL" />
       <updated>1766980039466</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="feat(site): add cached getArtist, getRelease, and getLatestRelease functions">
+      <option name="closed" value="true" />
+      <created>1767000903916</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1767000903916</updated>
+    </task>
+    <task id="LOCAL-00024" summary="feat(site): redirect when going to {id}.url/">
+      <option name="closed" value="true" />
+      <created>1767000927359</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1767000927359</updated>
+    </task>
+    <task id="LOCAL-00025" summary="feat(api): support pagination in get releases for artists">
+      <option name="closed" value="true" />
+      <created>1767000951384</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1767000951384</updated>
+    </task>
+    <task id="LOCAL-00026" summary="refactor(release-page): improve layout styles and replace `&lt;a&gt;` with `&lt;Link&gt;` components">
+      <option name="closed" value="true" />
+      <created>1767000962152</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1767000962152</updated>
+    </task>
+    <task id="LOCAL-00027" summary="chore(idea)">
+      <option name="closed" value="true" />
+      <created>1767000976148</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1767000976148</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers>
       <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375">
         <option name="preferredOpenTaskState">
@@ -488,7 +522,12 @@
     <MESSAGE value="feat(release-page): enhance layout and add artist details integration" />
     <MESSAGE value="docs: add README to each directory." />
     <MESSAGE value="chore(idea): clean up workspace.xml and update recent branch/task history" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore(idea): clean up workspace.xml and update recent branch/task history" />
+    <MESSAGE value="feat(site): add cached getArtist, getRelease, and getLatestRelease functions" />
+    <MESSAGE value="feat(site): redirect when going to {id}.url/" />
+    <MESSAGE value="refactor(release-page): improve layout styles and replace `&lt;a&gt;` with `&lt;Link&gt;` components" />
+    <MESSAGE value="feat(api): support pagination in get releases for artists" />
+    <MESSAGE value="chore(idea)" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore(idea)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -136,5 +136,9 @@ export const getLatestRelease = cache(async (id: string): Promise<Release> => {
 
   const result: Release[] = await resp.json();
 
+  if (result.length === 0) {
+    notFound();
+  }
+
   return result[0];
 });
