@@ -1,10 +1,11 @@
 use crate::auth::authenticated;
 use crate::links::apple_music::AppleMusicClient;
-use crate::links::spotify::SpotifyClient;
-use crate::links::tidal::TidalClient;
+use crate::links::spotify::{ImageResponse, SpotifyClient};
+use crate::links::tidal::{ExternalLinks, TidalClient};
 use crate::releases::Link;
 use futures::try_join;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use worker::{Request, Response, RouteContext};
 
 mod apple_music;
@@ -71,10 +72,17 @@ pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Re
       return Response::error("BANANA : Internal Server Error".to_string(), 500);
    };
    
-   let tidal_link = tidal_release.externalLinks.first().unwrap().href.clone();
+   let tidal_link = tidal_release.externalLinks.first().unwrap_or(&ExternalLinks {
+      href: "".into(),
+      meta: HashMap::new(),
+   }).href.clone();
    
    // let album_art = apple_music_release.get_album_art_url(750);
-   let album_art = spotify_release.clone().images.first().unwrap().url.clone();
+   let album_art = spotify_release.clone().images.first().unwrap_or(&ImageResponse {
+      url: "".into(),
+      height: 0,
+      width: 0,
+   }).url.clone();
    
    let artist = spotify_release
       .clone()
@@ -107,8 +115,8 @@ pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Re
    
    let response = LinkResponse {
       upc,
-      title: Some(tidal_release.title),
-      track_count: Some(tidal_release.numberOfItems),
+      title: Some(spotify_release.name),
+      track_count: Some(spotify_release.total_tracks),
       artwork: Some(album_art),
       artist_name: Some(artist),
       release_date: Some(spotify_release.release_date),

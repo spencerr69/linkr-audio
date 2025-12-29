@@ -1,12 +1,17 @@
 // noinspection HtmlRequiredTitleElement
 
 import type { Metadata } from "next";
-import { Chivo } from "next/font/google";
+import { Chivo, Chivo_Mono } from "next/font/google";
 import "./globals.css";
 import React from "react";
 
 const chivoSans = Chivo({
   variable: "--font-chivo",
+  subsets: ["latin"],
+});
+
+const chivoMono = Chivo_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
@@ -26,7 +31,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head></head>
-      <body className={`${chivoSans.variable} antialiased`}>{children}</body>
+      <body
+        className={`${chivoSans.variable} ${chivoMono.variable} antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
