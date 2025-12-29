@@ -55,18 +55,26 @@ pub struct DbSchema {
    pub track_count: u32,
 }
 
+#[derive(Serialize, Deserialize, Clone)]
+pub struct QueryParams {
+   pub limit: Option<u32>,
+   pub offset: Option<u32>,
+}
+
 pub async fn get_releases_for_artist(
-   _req: Request,
+   req: Request,
    ctx: RouteContext<()>,
 ) -> worker::Result<Response> {
    let Some(artist_id) = ctx.param("id") else {
       return Response::error("No artist id provided", 400);
    };
    
+   let params: QueryParams = req.query()?;
+   
    let d1 = ctx.d1("prod_sr_db")?;
    let query =
-      d1.prepare("SELECT * FROM Releases WHERE artist_id = ?1 ORDER BY release_date DESC");
-   let binded = query.bind(&[JsValue::from(artist_id)])?;
+      d1.prepare("SELECT * FROM Releases WHERE artist_id = ?1 ORDER BY release_date DESC LIMIT ?2 OFFSET ?3");
+   let binded = query.bind(&[JsValue::from(artist_id), JsValue::from(params.limit.unwrap_or(100)), JsValue::from(params.offset.unwrap_or(0))])?;
    let result = binded.run().await?;
    let Ok(out): worker::Result<Vec<DbSchema>> = result.results() else {
       return Response::error("No releases found for artist", 404);
