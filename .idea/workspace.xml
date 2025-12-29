@@ -28,11 +28,16 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="chore(idea): update workspace and developer-tools settings">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="8e481adf-0471-49a5-bb28-c4e1330a248b" name="86d1b97b2 Make release pages look better" comment="feat(release-page): enhance layout and add artist details integration">
+      <change beforePath="$PROJECT_DIR$/api/src/links/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/links/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/links/tidal.rs" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/links/tidal.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/layout.tsx" afterDir="false" />
+    </list>
+    <list id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="docs: add README to each directory.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/api/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/site/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +45,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="78" />
+    <option name="cachedIndexableFilesCount" value="74" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -77,6 +82,31 @@
     &quot;assignee&quot;: &quot;spencerr69&quot;
   }
 }</component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="86d1b97b2" />
+                    <option name="lastUsedInstant" value="1766973151" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1766973150" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/spencerr69/linkr-audio.git&quot;,
@@ -93,6 +123,24 @@
     &quot;repository&quot;: &quot;linkr-audio&quot;
   }
 }</component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx">
+      <ranges>
+        <range start1="3" end1="4" start2="3" end2="4" changelist="8e481adf-0471-49a5-bb28-c4e1330a248b" />
+        <range start1="7" end1="7" start2="7" end2="8" changelist="8e481adf-0471-49a5-bb28-c4e1330a248b" />
+        <range start1="25" end1="25" start2="26" end2="41" changelist="8e481adf-0471-49a5-bb28-c4e1330a248b" />
+        <range start1="32" end1="34" start2="48" end2="50" changelist="c416d33b-9015-4291-91e5-42e43d57cb4d" />
+        <range start1="37" end1="38" start2="53" end2="54" changelist="8e481adf-0471-49a5-bb28-c4e1330a248b" />
+        <range start1="42" end1="42" start2="58" end2="70" changelist="8e481adf-0471-49a5-bb28-c4e1330a248b" />
+        <range start1="44" end1="49" start2="72" end2="73" changelist="8e481adf-0471-49a5-bb28-c4e1330a248b" />
+        <range start1="52" end1="53" start2="76" end2="76" changelist="8e481adf-0471-49a5-bb28-c4e1330a248b" />
+        <range start1="54" end1="54" start2="77" end2="81" changelist="8e481adf-0471-49a5-bb28-c4e1330a248b" />
+        <range start1="57" end1="62" start2="84" end2="149" changelist="8e481adf-0471-49a5-bb28-c4e1330a248b" />
+        <range start1="63" end1="64" start2="150" end2="150" changelist="8e481adf-0471-49a5-bb28-c4e1330a248b" />
+        <range start1="67" end1="67" start2="153" end2="173" changelist="8e481adf-0471-49a5-bb28-c4e1330a248b" />
+      </ranges>
+    </file>
+  </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="Ci8PDHaC" />
   </component>
@@ -130,7 +178,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "code.cleanup.on.save": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "86d1b97b2",
     "javascript.preferred.runtime.type.id": "node",
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
@@ -147,9 +195,15 @@
     "rearrange.code.on.save": "true",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "zielu.gittoolbox.app.config.v2",
+    "tasks.open.task.update.state.enabled": "true",
     "to.speed.mode.migration.done": "true",
     "ts.external.directory.path": "/Users/spence/Development/linkr-audio/site/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "java.sql.Driver"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -198,12 +252,13 @@
     </attachedChunks>
   </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
+    <task id="Default" summary="Default task">
+      <branch name="main" repository="$PROJECT_DIR$" />
       <changelist id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="" />
       <created>1765763434234</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1765763434234</updated>
+      <updated>1766973151571</updated>
       <workItem from="1765763436356" duration="7091000" />
       <workItem from="1765965653986" duration="6365000" />
       <workItem from="1766138519826" duration="81000" />
@@ -217,7 +272,8 @@
       <workItem from="1766835470643" duration="643000" />
       <workItem from="1766920260452" duration="43000" />
       <workItem from="1766920309529" duration="627000" />
-      <workItem from="1766920958111" duration="4062000" />
+      <workItem from="1766920958111" duration="5071000" />
+      <workItem from="1766971670848" duration="1476000" />
     </task>
     <task id="LOCAL-00001" summary="auth works now">
       <option name="closed" value="true" />
@@ -371,8 +427,44 @@
       <option name="project" value="LOCAL" />
       <updated>1766925756316</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
-    <servers />
+    <task id="LOCAL-00020" summary="docs: add README to each directory.">
+      <option name="closed" value="true" />
+      <created>1766926417860</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1766926417860</updated>
+    </task>
+    <task id="LOCAL-00021" summary="chore(idea): update workspace">
+      <option name="closed" value="true" />
+      <created>1766926430451</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1766926430451</updated>
+    </task>
+    <task active="true" id="86d1b97b2" summary="Make release pages look better">
+      <branch name="main" repository="$PROJECT_DIR$" original="true" />
+      <branch name="86d1b97b2" repository="$PROJECT_DIR$" />
+      <changelist id="8e481adf-0471-49a5-bb28-c4e1330a248b" name="86d1b97b2 Make release pages look better" comment="" />
+      <created>1766189350227</created>
+      <option name="issue" value="true" />
+      <url>https://app.clickup.com/t/86d1b97b2</url>
+      <option name="number" value="86d1b97b2" />
+      <option name="presentableId" value="86d1b97b2" />
+      <option name="type" value="FEATURE" />
+      <updated>1766973151571</updated>
+      <workItem from="1766973151650" duration="5263000" />
+      <workItem from="1766978783381" duration="920000" />
+    </task>
+    <option name="localTasksCounter" value="22" />
+    <servers>
+      <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375">
+        <option name="preferredOpenTaskState">
+          <CustomTaskState id="p90165489669_j9Xl9lo2" name="in progress" />
+        </option>
+      </ClickUp>
+    </servers>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
@@ -404,7 +496,11 @@
     <MESSAGE value="refactor(artist-form): wrap save button in a flex container for improved alignment" />
     <MESSAGE value="style(globals): add new gray color variables" />
     <MESSAGE value="chore(idea): update workspace and developer-tools settings" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore(idea): update workspace and developer-tools settings" />
+    <MESSAGE value="docs: add README to each directory." />
+    <MESSAGE value="chore(idea): update workspace" />
+    <MESSAGE value="86d1b97b2 Make release pages look better" />
+    <MESSAGE value="feat(release-page): enhance layout and add artist details integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(release-page): enhance layout and add artist details integration" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
