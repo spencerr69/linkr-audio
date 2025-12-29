@@ -13,8 +13,8 @@ const Page = async ({
   params: Promise<{ id: string; slug: string }>;
 }) => {
   const { id, slug } = await params;
-  const release = await getRelease(id, slug).catch(() => notFound());
-  const artist = await getArtist(id).catch(() => notFound());
+  const release = await getRelease(id, slug);
+  const artist = await getArtist(id);
 
   const links = release.links.map((link) => {
     return (
@@ -26,13 +26,13 @@ const Page = async ({
 
   const artistLinks = artist.links.map((link) => {
     return (
-      <a
+      <Link
         key={link.name}
         href={link.url}
         className={"hover:text-rose-500 w-fit text-right"}
       >
         {link.name}
-      </a>
+      </Link>
     );
   });
 
@@ -49,7 +49,7 @@ const Page = async ({
       />
       <div
         className={
-          "releasegrid bg-gray-50 w-4xl grid grid-cols-2 font-sans rounded-2xl"
+          "releasegrid bg-gray-50 w-4xl grid grid-cols-2 font-sans rounded-2xl shadow-xl"
         }
       >
         <div

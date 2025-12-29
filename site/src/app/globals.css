@@ -36,5 +36,5 @@ body {
 }
 
 .releasegrid {
-    grid-template-columns: 20rem auto;
+    grid-template-columns: 20em auto;
 }
