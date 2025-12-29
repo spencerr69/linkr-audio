@@ -28,10 +28,19 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e481adf-0471-49a5-bb28-c4e1330a248b" name="86d1b97b2 Make release pages look better" comment="feat(release-page): enhance layout and add artist details integration">
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="chore(idea): clean up workspace.xml and update recent branch/task history">
+      <change afterPath="$PROJECT_DIR$/site/src/app/[id]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/releases/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/releases/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/actions/updateArtist.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/artists.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/actions/updateRelease.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/releases.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist-form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release-form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/globals.css" afterDir="false" />
     </list>
-    <list id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="docs: add README to each directory." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -123,9 +132,6 @@
     <commands />
     <urls />
   </component>
-  <component name="OptimizeOnSaveOptions">
-    <option name="myRunOnSave" value="true" />
-  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -151,7 +157,6 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.rust.reset.selective.auto.import": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "code.cleanup.on.save": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
     "javascript.preferred.runtime.type.id": "node",
@@ -167,9 +172,8 @@
     "nodejs_package_manager_path": "pnpm",
     "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
     "prettierjs.PrettierConfiguration.Package": "/Users/spence/Development/linkr-audio/site/node_modules/prettier",
-    "rearrange.code.on.save": "true",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "zielu.gittoolbox.app.config.v2",
+    "settings.editor.selected.configurable": "actions.on.save",
     "tasks.open.task.update.state.enabled": "true",
     "to.speed.mode.migration.done": "true",
     "ts.external.directory.path": "/Users/spence/Development/linkr-audio/site/node_modules/typescript/lib",
@@ -421,7 +425,7 @@
     <task active="true" id="86d1b97b2" summary="Make release pages look better">
       <branch name="main" repository="$PROJECT_DIR$" original="true" />
       <branch name="86d1b97b2" repository="$PROJECT_DIR$" />
-      <changelist id="8e481adf-0471-49a5-bb28-c4e1330a248b" name="86d1b97b2 Make release pages look better" comment="" />
+      <changelist id="" name="86d1b97b2 Make release pages look better" comment="" />
       <created>1766189350227</created>
       <option name="issue" value="true" />
       <url>https://app.clickup.com/t/86d1b97b2</url>
@@ -432,7 +436,15 @@
       <workItem from="1766973151650" duration="5263000" />
       <workItem from="1766978783381" duration="920000" />
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="chore(idea): clean up workspace.xml and update recent branch/task history">
+      <option name="closed" value="true" />
+      <created>1766980039466</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1766980039466</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers>
       <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375">
         <option name="preferredOpenTaskState">
@@ -471,11 +483,12 @@
     <MESSAGE value="refactor(artist-form): wrap save button in a flex container for improved alignment" />
     <MESSAGE value="style(globals): add new gray color variables" />
     <MESSAGE value="chore(idea): update workspace and developer-tools settings" />
-    <MESSAGE value="docs: add README to each directory." />
     <MESSAGE value="chore(idea): update workspace" />
     <MESSAGE value="86d1b97b2 Make release pages look better" />
     <MESSAGE value="feat(release-page): enhance layout and add artist details integration" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(release-page): enhance layout and add artist details integration" />
+    <MESSAGE value="docs: add README to each directory." />
+    <MESSAGE value="chore(idea): clean up workspace.xml and update recent branch/task history" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore(idea): clean up workspace.xml and update recent branch/task history" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
