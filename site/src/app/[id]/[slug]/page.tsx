@@ -1,44 +1,11 @@
 "use server";
 
+import { getArtist } from "@/app/actions/artists";
+import { getRelease } from "@/app/actions/releases";
 import { ExternalButton } from "@/app/ui/button";
-import { ArtistResponse, Release } from "@/lib/apihelper";
-import { apiDomain } from "@/lib/utils";
 import { Metadata } from "next";
 import Image from "next/image";
-import { notFound } from "next/navigation";
-import { cache } from "react";
-
-const BASE_API_URL = apiDomain;
-
-const getRelease = cache(async (id: string, slug: string): Promise<Release> => {
-  const resp = await fetch(`${BASE_API_URL}/releases/${id}/${slug}`, {
-    cache: "force-cache",
-    next: {
-      revalidate: 10,
-    },
-  });
-
-  if (!resp.ok) {
-    throw new Error("Could not find release");
-  }
-
-  return await resp.json();
-});
-
-const getArtist = cache(async (id: string): Promise<ArtistResponse> => {
-  const resp = await fetch(`${BASE_API_URL}/artists/${id}`, {
-    cache: "force-cache",
-    next: {
-      revalidate: 10,
-    },
-  });
-
-  if (!resp.ok) {
-    throw new Error("Could not find release");
-  }
-
-  return await resp.json();
-});
+import Link from "next/link";
 
 const Page = async ({
   params,

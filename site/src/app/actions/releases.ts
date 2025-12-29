@@ -2,6 +2,9 @@
 
 import { Release, serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
+import { apiDomain } from "@/lib/utils";
+import { notFound } from "next/navigation";
+import { cache } from "react";
 
 export async function updateRelease(release: Release) {
   "use server";
@@ -98,3 +101,40 @@ export async function deleteRelease(release: Release) {
 
   return { success: true };
 }
+
+export const getRelease = cache(
+  async (id: string, slug: string): Promise<Release> => {
+    "use server";
+    const resp = await fetch(`${apiDomain}/releases/${id}/${slug}`, {
+      cache: "force-cache",
+      next: {
+        revalidate: 10,
+      },
+    });
+
+    if (!resp.ok) {
+      notFound();
+    }
+
+    return await resp.json();
+  },
+);
+
+export const getLatestRelease = cache(async (id: string): Promise<Release> => {
+  "use server";
+
+  const resp = await fetch(`${apiDomain}/releases/${id}?limit=1`, {
+    cache: "force-cache",
+    next: {
+      revalidate: 10,
+    },
+  });
+
+  if (!resp.ok) {
+    notFound();
+  }
+
+  const result: Release[] = await resp.json();
+
+  return result[0];
+});

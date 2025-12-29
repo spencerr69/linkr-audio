@@ -5,7 +5,7 @@ import {
   createRelease,
   deleteRelease,
   updateRelease,
-} from "@/app/actions/updateRelease";
+} from "@/app/actions/releases";
 import { Button } from "@/app/ui/button";
 import { FormField } from "@/app/ui/form-field";
 import { Link, Release } from "@/lib/apihelper";

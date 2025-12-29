@@ -1,6 +1,6 @@
 "use client";
 
-import { updateArtist } from "@/app/actions/updateArtist";
+import { updateArtist } from "@/app/actions/artists";
 import { FormLinks } from "@/app/admin/components/release-form";
 import { Button } from "@/app/ui/button";
 import { FormField } from "@/app/ui/form-field";
