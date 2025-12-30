@@ -28,13 +28,11 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="chore(idea)">
-      <change beforePath="$PROJECT_DIR$/.idea/scopes/Handcode.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/scopes/Handcode.xml" afterDir="false" />
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="style(site): make images no longer draggable">
+      <change afterPath="$PROJECT_DIR$/api/open_in_dev.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,6 +154,8 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.rust.reset.selective.auto.import": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHELLCHECK.PATH": "/home/spence/.local/share/JetBrains/RustRover2025.3/Shell Script/shellcheck",
+    "Shell Script.Start api.executor": "Run",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
     "javascript.nodejs.core.library.configured.version": "25.2.1",
@@ -164,7 +164,7 @@
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/home/spence/.nvm/current/bin/node",
+    "last_opened_file_path": "/home/spence/dev/linkr-audio/api/open_in_dev.sh",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
@@ -173,10 +173,11 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_interpreter_path": "/home/spence/.nvm/current/bin/node",
     "nodejs_package_manager_path": "pnpm",
+    "npm.Start site.executor": "Run",
     "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
     "prettierjs.PrettierConfiguration.Package": "/home/spence/dev/linkr-audio/site/node_modules/prettier",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "terminal",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "tasks.open.task.update.state.enabled": "true",
     "to.speed.mode.migration.done": "true",
     "ts.external.directory.path": "/home/spence/dev/linkr-audio/site/node_modules/typescript/lib",
@@ -185,6 +186,9 @@
   "keyToStringList": {
     "DatabaseDriversLRU": [
       "java.sql.Driver"
+    ],
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "Rust"
     ]
   }
 }]]></component>
@@ -199,28 +203,12 @@
     <option name="additionalArguments" value="-- --Wclippy::pedantic" />
     <option name="tool" value="Clippy" />
   </component>
-  <component name="RunManager" selected="JavaScript Debug.sr">
-    <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
-      <method v="2" />
-    </configuration>
-    <configuration name="sr" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:8787/releases/sr">
-      <method v="2" />
-    </configuration>
-    <configuration name="Next.js: server-side" type="js.build_tools.npm">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="dev" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JavaScript Debug.sr" />
-      </list>
-    </recent_temporary>
+  <component name="RunManager" selected="Compound.Dev">
+    <list>
+      <item itemvalue="Compound.Dev" />
+      <item itemvalue="npm.Start site" />
+      <item itemvalue="Shell Script.Start api" />
+    </list>
   </component>
   <component name="RustProjectSettings">
     <option name="rustcTarget" value="wasm32-unknown-unknown" />
@@ -258,7 +246,8 @@
       <workItem from="1766971670848" duration="1476000" />
       <workItem from="1767057693234" duration="41000" />
       <workItem from="1767057902547" duration="108000" />
-      <workItem from="1767058093235" duration="3101000" />
+      <workItem from="1767058093235" duration="4225000" />
+      <workItem from="1767062988003" duration="5241000" />
     </task>
     <task id="LOCAL-00001" summary="auth works now">
       <option name="closed" value="true" />
@@ -492,8 +481,18 @@
       <option name="project" value="LOCAL" />
       <updated>1767000976148</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
-    <servers />
+    <task id="LOCAL-00028" summary="style(site): make images no longer draggable">
+      <option name="closed" value="true" />
+      <created>1767061616070</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1767061616070</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
+    <servers>
+      <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375" />
+    </servers>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
@@ -535,7 +534,8 @@
     <MESSAGE value="refactor(release-page): improve layout styles and replace `&lt;a&gt;` with `&lt;Link&gt;` components" />
     <MESSAGE value="feat(api): support pagination in get releases for artists" />
     <MESSAGE value="chore(idea)" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore(idea)" />
+    <MESSAGE value="style(site): make images no longer draggable" />
+    <option name="LAST_COMMIT_MESSAGE" value="style(site): make images no longer draggable" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
