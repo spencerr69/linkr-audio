@@ -3,7 +3,7 @@ import React from "react";
 
 const classes =
   "bg-rose-500    rounded-md  hover:text-rose-500 border-2" +
-  " border-rose-500 cursor-pointer";
+  " border-rose-500 cursor-pointer duration-100";
 
 const getClasses = (inline: boolean, secondary: boolean) => {
   let inner_classes = inline

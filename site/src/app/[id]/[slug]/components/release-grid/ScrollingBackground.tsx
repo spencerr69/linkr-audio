@@ -23,12 +23,14 @@ export const ScrollingBackground: React.FC<ScrollingBackgroundProps> = ({
   useEffect(() => {
     setTimeout(() => {
       setTextP((t) => shuffleArray(t));
-    }, 75 * speed);
+    }, 300 * speed);
   }, [speed, textP]);
 
   return (
     <div
-      className={"font-mono text-black opacity-25  "}
+      className={
+        " font-mono text-black opacity-25 overflow-hidden w-full line-clamp-26  sm:line-clamp-48"
+      }
       style={{
         fontSize: "0.6rem",
         textOverflow: "clip",

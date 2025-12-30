@@ -38,3 +38,14 @@ body {
 .releasegrid {
     grid-template-columns: 20em auto;
 }
+
+.mob-art,
+.mob-flavour {
+    grid-area: 1/ 1 / 2 / 2;
+}
+
+.mob-cont {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+}

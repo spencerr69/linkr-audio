@@ -28,23 +28,15 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="style(site): update styling so it works on short screens">
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="refactor(site): move components out of pages to be more modular. changed flavour text to scroll but idk if thats the vibe">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/site/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/site/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseArtwork.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseArtwork.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseGrid.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/artist/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/artist/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist-form.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/dashboard.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/header.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release-form.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/releases.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/ui/button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/Button.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/ui/form-field.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormField.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/ui/login-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/LoginForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/ui/popup-container.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/PopupContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/ui/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/Button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/ui/ScrollingBackground.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ScrollingBackground.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +44,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="122" />
+    <option name="cachedIndexableFilesCount" value="125" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -157,56 +149,57 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;JavaScript Debug.sr.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHELLCHECK.PATH&quot;: &quot;/home/spence/.local/share/JetBrains/RustRover2025.3/Shell Script/shellcheck&quot;,
-    &quot;Shell Script.Start api.executor&quot;: &quot;Run&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;25.2.1&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;25.0.3&quot;,
-    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
-    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
-    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/spence/dev/linkr-audio/api/open_in_dev.sh&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;/home/spence/.nvm/current/bin/node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
-    &quot;npm.Start site.executor&quot;: &quot;Run&quot;,
-    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/spence/dev/linkr-audio/site/node_modules/prettier&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
-    &quot;tasks.open.task.update.state.enabled&quot;: &quot;true&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/spence/dev/linkr-audio/site/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "JavaScript Debug.sr.executor": "Debug",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.rust.reset.selective.auto.import": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHELLCHECK.PATH": "/home/spence/.local/share/JetBrains/RustRover2025.3/Shell Script/shellcheck",
+    "Shell Script.Start api.executor": "Run",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "javascript.nodejs.core.library.configured.version": "25.2.1",
+    "javascript.nodejs.core.library.typings.version": "25.0.3",
+    "javascript.preferred.runtime.type.id": "node",
+    "js.debugger.nextJs.config.created.client": "true",
+    "js.debugger.nextJs.config.created.server": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/home/spence/dev/linkr-audio/api/open_in_dev.sh",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "/home/spence/.nvm/current/bin/node",
+    "nodejs_package_manager_path": "pnpm",
+    "npm.Start site.executor": "Run",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "prettierjs.PrettierConfiguration.Package": "/home/spence/dev/linkr-audio/site/node_modules/prettier",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "tasks.open.task.update.state.enabled": "true",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "/home/spence/dev/linkr-audio/site/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;java.sql.Driver&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "java.sql.Driver"
     ],
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;Rust&quot;
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "Rust"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid" />
       <recent name="$PROJECT_DIR$/site" />
       <recent name="$PROJECT_DIR$/site/src" />
       <recent name="$PROJECT_DIR$/public" />
@@ -264,7 +257,8 @@
       <workItem from="1767057693234" duration="41000" />
       <workItem from="1767057902547" duration="108000" />
       <workItem from="1767058093235" duration="4225000" />
-      <workItem from="1767062988003" duration="14175000" />
+      <workItem from="1767062988003" duration="14935000" />
+      <workItem from="1767096003372" duration="4981000" />
     </task>
     <task id="LOCAL-00001" summary="auth works now">
       <option name="closed" value="true" />
@@ -530,7 +524,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767074961072</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="refactor(site): move components out of pages to be more modular. changed flavour text to scroll but idk if thats the vibe">
+      <option name="closed" value="true" />
+      <created>1767080248916</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1767080248916</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers>
       <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375" />
     </servers>
@@ -579,7 +581,8 @@
     <MESSAGE value="chore(idea): add run configurations for development setup" />
     <MESSAGE value="feat(site): add noise overlay to release page and adjust z-index styling" />
     <MESSAGE value="style(site): update styling so it works on short screens" />
-    <option name="LAST_COMMIT_MESSAGE" value="style(site): update styling so it works on short screens" />
+    <MESSAGE value="refactor(site): move components out of pages to be more modular. changed flavour text to scroll but idk if thats the vibe" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor(site): move components out of pages to be more modular. changed flavour text to scroll but idk if thats the vibe" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
