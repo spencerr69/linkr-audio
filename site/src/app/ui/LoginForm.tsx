@@ -1,7 +1,7 @@
 "use client";
 
 import { login } from "@/app/actions/auth";
-import PopupContainer from "@/app/ui/popup-container";
+import PopupContainer from "@/app/ui/PopupContainer";
 import { useActionState } from "react";
 
 export function LoginForm() {

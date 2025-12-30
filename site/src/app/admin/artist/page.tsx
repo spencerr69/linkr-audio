@@ -1,4 +1,4 @@
-import { Dashboard } from "@/app/admin/components/dashboard";
+import { Dashboard } from "@/app/admin/components/layout/Dashboard";
 import { AdminPages } from "@/lib/definitions";
 
 export default async function ArtistPage() {

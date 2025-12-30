@@ -1,4 +1,4 @@
-import { ArtistForm } from "@/app/admin/components/artist-form";
+import { ArtistForm } from "@/app/admin/components/artist/ArtistForm";
 import { ArtistResponse } from "@/lib/apihelper";
 
 export const Artist = ({ artist }: { artist: ArtistResponse }) => {

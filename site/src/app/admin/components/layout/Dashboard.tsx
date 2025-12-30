@@ -1,6 +1,6 @@
-import { Artist } from "@/app/admin/components/artist";
-import { Header } from "@/app/admin/components/header";
-import { Releases } from "@/app/admin/components/releases";
+import { Artist } from "@/app/admin/components/artist/Artist";
+import { Header } from "./Header";
+import { Releases } from "@/app/admin/components/release/Releases";
 import { ArtistResponse, Release, serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
 import { AdminPages } from "@/lib/definitions";

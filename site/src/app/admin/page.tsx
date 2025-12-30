@@ -1,7 +1,7 @@
 "use server";
 
-import { Dashboard } from "@/app/admin/components/dashboard";
-import { LoginForm } from "@/app/ui/login-form";
+import { Dashboard } from "@/app/admin/components/layout/Dashboard";
+import { LoginForm } from "@/app/ui/LoginForm";
 import { verifySession } from "@/lib/dal";
 import { AdminPages } from "@/lib/definitions";
 

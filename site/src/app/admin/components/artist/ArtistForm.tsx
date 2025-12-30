@@ -1,9 +1,9 @@
 "use client";
 
 import { updateArtist } from "@/app/actions/artists";
-import { FormLinks } from "@/app/admin/components/release-form";
-import { Button } from "@/app/ui/button";
-import { FormField } from "@/app/ui/form-field";
+import { Button } from "@/app/ui/Button";
+import { FormField } from "@/app/ui/FormField";
+import { FormLinks } from "@/app/ui/FormLinks";
 import { ArtistResponse, EditArtist, Link } from "@/lib/apihelper";
 import { useRouter } from "next/navigation";
 import React from "react";
