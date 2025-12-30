@@ -54,16 +54,26 @@ const Page = async ({
       >
         <div
           className={
-            "titles align-middle flex flex-col justify-center border-b-2 border-gray-300 border-dashed text-center p-4"
+            "titles align-middle flex flex-col justify-center border-b-2 border-gray-300 border-dashed text-center" +
+            " p-4 text-black"
           }
-          style={{ lineHeight: "0.5rem" }}
+          style={{ lineHeight: "1rem" }}
         >
-          <h1 className={"text-lg font-bold"}>{release.title}</h1>
-          <h3 className={"italic"}>{release.artist_name}</h3>
+          <h1 className={"text-lg font-bold"} style={{ lineHeight: "inherit" }}>
+            {release.title}
+          </h1>
+          <h3
+            className={"italic"}
+            style={{
+              lineHeight: "inherit",
+            }}
+          >
+            {release.artist_name}
+          </h3>
         </div>
         <div
           className={
-            "overflow-hidden border-l-2 border-b-2 border-dashed border-gray-300"
+            "overflow-hidden border-l-2 border-b-2 border-dashed border-gray-300 select-none"
           }
         >
           {repeatDiv(release.artist_id, 8)}
@@ -86,6 +96,7 @@ const Page = async ({
             height={500}
             width={500}
             className={"rounded-md"}
+            draggable={false}
           />
         </div>
         <div className={"p-4 flex w-full font-mono text-xs"}>
@@ -110,7 +121,9 @@ const Page = async ({
           </div>
         </div>
         <div
-          className={"overflow-hidden border-l-2 border-dashed border-gray-300"}
+          className={
+            "overflow-hidden border-l-2 border-dashed border-gray-300 select-none"
+          }
         >
           {repeatDiv(release.slug, 8)}
         </div>

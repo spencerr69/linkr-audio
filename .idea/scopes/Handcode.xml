@@ -1,3 +1,3 @@
 <component name="DependencyValidationManager">
-  <scope name="Handcode" pattern="!file[sr-api]:.idea//*&amp;&amp;!file:site/cloudflare-env.d.ts&amp;&amp;!file:site/eslint.config.mjs&amp;&amp;!file:site/next-env.d.ts&amp;&amp;!file:site/next.config.ts&amp;&amp;!file:site/open-next.config.ts&amp;&amp;!file:site/postcss.config.mjs&amp;&amp;!file:site/src/lib/schema.d.ts" />
+  <scope name="Handcode" pattern="file[linkr-audio]:site/src//*&amp;&amp;!file:site/src/lib/schema.d.ts||file[linkr-audio]:api/src//*" />
 </component>

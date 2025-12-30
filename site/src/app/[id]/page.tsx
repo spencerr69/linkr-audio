@@ -12,6 +12,4 @@ export default async function Page({
   const latest_release = await getLatestRelease(id);
 
   redirect(`/${latest_release.slug}`);
-
-  return <></>;
 }

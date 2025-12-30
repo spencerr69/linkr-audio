@@ -16,6 +16,7 @@ export default function Page() {
               alt={"linkr.audio"}
               height={100}
               width={100}
+              draggable={false}
             />
             <h3 className={" align-middle font-bold  text-3xl "}>
               linkr.audio

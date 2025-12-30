@@ -29,11 +29,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="chore(idea)">
-      <change afterPath="$PROJECT_DIR$/site/src/app/not-found.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/site/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/scopes/Handcode.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/scopes/Handcode.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/actions/releases.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/releases.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +43,6 @@
   </component>
   <component name="EmbeddingIndexingInfo">
     <option name="cachedIndexableFilesCount" value="74" />
-    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -67,7 +67,7 @@
     </excluded-from-favorite>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="86d1b97b2" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -126,8 +126,13 @@
     <commands />
     <urls />
   </component>
+  <component name="NamedScopeManager">
+    <order>
+      <scope name="Handcode" />
+    </order>
+  </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;ff066aff&quot;,
@@ -153,24 +158,28 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
+    "javascript.nodejs.core.library.configured.version": "25.2.1",
+    "javascript.nodejs.core.library.typings.version": "25.0.3",
     "javascript.preferred.runtime.type.id": "node",
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
     "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/home/spence/.nvm/current/bin/node",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.standard": "",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "/home/spence/.nvm/current/bin/node",
     "nodejs_package_manager_path": "pnpm",
     "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "prettierjs.PrettierConfiguration.Package": "/Users/spence/Development/linkr-audio/site/node_modules/prettier",
+    "prettierjs.PrettierConfiguration.Package": "/home/spence/dev/linkr-audio/site/node_modules/prettier",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "actions.on.save",
+    "settings.editor.selected.configurable": "terminal",
     "tasks.open.task.update.state.enabled": "true",
     "to.speed.mode.migration.done": "true",
-    "ts.external.directory.path": "/Users/spence/Development/linkr-audio/site/node_modules/typescript/lib",
+    "ts.external.directory.path": "/home/spence/dev/linkr-audio/site/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -225,13 +234,13 @@
     </attachedChunks>
   </component>
   <component name="TaskManager">
-    <task id="Default" summary="Default task">
+    <task active="true" id="Default" summary="Default task">
       <branch name="main" repository="$PROJECT_DIR$" />
       <changelist id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="" />
       <created>1765763434234</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1766973151571</updated>
+      <updated>1767057692398</updated>
       <workItem from="1765763436356" duration="7091000" />
       <workItem from="1765965653986" duration="6365000" />
       <workItem from="1766138519826" duration="81000" />
@@ -247,6 +256,9 @@
       <workItem from="1766920309529" duration="627000" />
       <workItem from="1766920958111" duration="5071000" />
       <workItem from="1766971670848" duration="1476000" />
+      <workItem from="1767057693234" duration="41000" />
+      <workItem from="1767057902547" duration="108000" />
+      <workItem from="1767058093235" duration="3101000" />
     </task>
     <task id="LOCAL-00001" summary="auth works now">
       <option name="closed" value="true" />
@@ -416,19 +428,21 @@
       <option name="project" value="LOCAL" />
       <updated>1766926430451</updated>
     </task>
-    <task active="true" id="86d1b97b2" summary="Make release pages look better">
+    <task id="86d1b97b2" summary="Make release pages look better">
       <branch name="main" repository="$PROJECT_DIR$" original="true" />
       <branch name="86d1b97b2" repository="$PROJECT_DIR$" />
-      <changelist id="" name="86d1b97b2 Make release pages look better" comment="" />
       <created>1766189350227</created>
       <option name="issue" value="true" />
       <url>https://app.clickup.com/t/86d1b97b2</url>
       <option name="number" value="86d1b97b2" />
       <option name="presentableId" value="86d1b97b2" />
       <option name="type" value="FEATURE" />
-      <updated>1766973151571</updated>
+      <updated>1767057692398</updated>
       <workItem from="1766973151650" duration="5263000" />
       <workItem from="1766978783381" duration="920000" />
+      <workItem from="1767057429120" duration="127000" />
+      <workItem from="1767057572966" duration="74000" />
+      <workItem from="1767057653240" duration="40000" />
     </task>
     <task id="LOCAL-00022" summary="chore(idea): clean up workspace.xml and update recent branch/task history">
       <option name="closed" value="true" />
@@ -479,13 +493,7 @@
       <updated>1767000976148</updated>
     </task>
     <option name="localTasksCounter" value="28" />
-    <servers>
-      <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375">
-        <option name="preferredOpenTaskState">
-          <CustomTaskState id="p90165489669_j9Xl9lo2" name="in progress" />
-        </option>
-      </ClickUp>
-    </servers>
+    <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
