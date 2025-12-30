@@ -37,19 +37,23 @@ const Page = async ({
   });
 
   return (
-    <main className={"h-screen flex flex-col justify-center items-center"}>
+    <main className={"h-screen flex flex-col justify-center items-center "}>
+      <div
+        className="absolute top-0 left-0 w-full h-full content-[''] z-10 pointer-events-none bg-[url('https://www.ui-layouts.com/noise.gif')]"
+        style={{ opacity: "5%" }}
+      ></div>
       <Image
         src={release.artwork || ""}
         alt={release.title}
         height={500}
         width={500}
         draggable={false}
-        className={"blur-3xl w-full aspect-square fixed -z-10"}
+        className={"blur-3xl w-full aspect-square fixed -z-10 "}
         style={{ transform: "scale(1.25)" }}
       />
       <div
         className={
-          "releasegrid bg-gray-50 w-4xl grid grid-cols-2 font-sans rounded-2xl shadow-xl"
+          "releasegrid bg-gray-50 w-4xl grid grid-cols-2 font-sans rounded-2xl shadow-xl z-20"
         }
       >
         <div
