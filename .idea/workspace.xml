@@ -28,9 +28,7 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="style(site): make images no longer draggable">
-      <change afterPath="$PROJECT_DIR$/api/open_in_dev.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="feat(site): add noise overlay to release page and adjust z-index styling">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" afterDir="false" />
     </list>
@@ -40,7 +38,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="74" />
+    <option name="cachedIndexableFilesCount" value="114" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -177,7 +176,7 @@
     "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
     "prettierjs.PrettierConfiguration.Package": "/home/spence/dev/linkr-audio/site/node_modules/prettier",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "preferences.sourceCode.TypeScript",
     "tasks.open.task.update.state.enabled": "true",
     "to.speed.mode.migration.done": "true",
     "ts.external.directory.path": "/home/spence/dev/linkr-audio/site/node_modules/typescript/lib",
@@ -247,7 +246,7 @@
       <workItem from="1767057693234" duration="41000" />
       <workItem from="1767057902547" duration="108000" />
       <workItem from="1767058093235" duration="4225000" />
-      <workItem from="1767062988003" duration="5241000" />
+      <workItem from="1767062988003" duration="9146000" />
     </task>
     <task id="LOCAL-00001" summary="auth works now">
       <option name="closed" value="true" />
@@ -489,7 +488,23 @@
       <option name="project" value="LOCAL" />
       <updated>1767061616070</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="chore(idea): add run configurations for development setup">
+      <option name="closed" value="true" />
+      <created>1767069962074</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1767069962075</updated>
+    </task>
+    <task id="LOCAL-00030" summary="feat(site): add noise overlay to release page and adjust z-index styling">
+      <option name="closed" value="true" />
+      <created>1767069976161</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1767069976161</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers>
       <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375" />
     </servers>
@@ -535,7 +550,9 @@
     <MESSAGE value="feat(api): support pagination in get releases for artists" />
     <MESSAGE value="chore(idea)" />
     <MESSAGE value="style(site): make images no longer draggable" />
-    <option name="LAST_COMMIT_MESSAGE" value="style(site): make images no longer draggable" />
+    <MESSAGE value="chore(idea): add run configurations for development setup" />
+    <MESSAGE value="feat(site): add noise overlay to release page and adjust z-index styling" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(site): add noise overlay to release page and adjust z-index styling" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

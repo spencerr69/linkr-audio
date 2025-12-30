@@ -37,10 +37,10 @@ const Page = async ({
   });
 
   return (
-    <main className={"h-screen flex flex-col justify-center items-center "}>
+    <main className={"min-h-screen flex flex-col justify-center items-center "}>
       <div
         className="absolute top-0 left-0 w-full h-full content-[''] z-10 pointer-events-none bg-[url('https://www.ui-layouts.com/noise.gif')]"
-        style={{ opacity: "5%" }}
+        style={{ opacity: "6%" }}
       ></div>
       <Image
         src={release.artwork || ""}
@@ -53,7 +53,7 @@ const Page = async ({
       />
       <div
         className={
-          "releasegrid bg-gray-50 w-4xl grid grid-cols-2 font-sans rounded-2xl shadow-xl z-20"
+          "m-16 releasegrid bg-gray-50 w-4xl grid grid-cols-2 font-sans rounded-2xl shadow-xl z-20 "
         }
       >
         <div
