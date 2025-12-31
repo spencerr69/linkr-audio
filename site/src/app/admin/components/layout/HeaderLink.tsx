@@ -33,7 +33,9 @@ export const HeaderLink = ({
         e.currentTarget.style.color = styling.colours.accent;
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = styling.colours.accent;
+        e.currentTarget.style.backgroundColor = active
+          ? styling.colours.background + "AA"
+          : "transparent";
         e.currentTarget.style.color = styling.colours.background;
       }}
       onClick={onClick}

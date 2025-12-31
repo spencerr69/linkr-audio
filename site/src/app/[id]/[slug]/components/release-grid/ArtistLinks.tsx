@@ -24,7 +24,7 @@ export const ArtistLinks: React.FC<ArtistLinksProps> = ({
         <Link
           key={link.name}
           href={link.url}
-          className={" w-fit text-right"}
+          className={" w-fit text-right duration-100"}
           onMouseEnter={(e) => {
             e.currentTarget.style.color = styling.colours.accent;
           }}

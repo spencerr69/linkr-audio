@@ -30,10 +30,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="style(site): admin now responsive to artist styling">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/Dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/Dashboard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ArtistLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ArtistLinks.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +65,7 @@
     </excluded-from-favorite>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="implement-styling-admin" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -136,7 +134,7 @@
     </order>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="AISelfReview" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;ff066aff&quot;,
@@ -163,7 +161,7 @@
     "SHELLCHECK.PATH": "/home/spence/.local/share/JetBrains/RustRover2025.3/Shell Script/shellcheck",
     "Shell Script.Start api.executor": "Run",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "implement-styling-admin",
+    "git-widget-placeholder": "main",
     "javascript.nodejs.core.library.configured.version": "25.2.1",
     "javascript.nodejs.core.library.typings.version": "25.0.3",
     "javascript.preferred.runtime.type.id": "node",
@@ -183,10 +181,11 @@
     "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
     "prettierjs.PrettierConfiguration.Package": "/home/spence/dev/linkr-audio/site/node_modules/prettier",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "actions.on.save",
+    "settings.editor.selected.configurable": "editor.preferences.tabs",
     "tasks.open.task.update.state.enabled": "true",
     "to.speed.mode.migration.done": "true",
     "ts.external.directory.path": "/home/spence/dev/linkr-audio/site/node_modules/typescript/lib",
+    "typescript.add.unambiguous.imports.on.the.fly": "true",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -625,6 +624,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="style(header): enhance admin navigation links with hover effects and padding adjustments" />
     <MESSAGE value="refactor(artist-form): wrap save button in a flex container for improved alignment" />
     <MESSAGE value="style(globals): add new gray color variables" />
