@@ -1,7 +1,10 @@
+"use client";
+
 import { logout } from "@/app/actions/auth";
 import { HeaderLink } from "@/app/admin/components/layout/HeaderLink";
-import Image from "next/image";
+import { StylingContext } from "@/app/ui/StylingProvider";
 import Link from "next/link";
+import { useContext } from "react";
 
 type HeaderProps = {
   artistName: string;
@@ -9,24 +12,28 @@ type HeaderProps = {
 };
 
 export const Header = (props: HeaderProps) => {
+  const styling = useContext(StylingContext);
+
   return (
     <header
       className={
-        "bg-rose-500 flex text-white items-center content-between justify-between" +
+        " flex  items-center content-between justify-between" +
         " p-2" +
         " py-14" +
         " h-3 "
       }
+      style={{
+        backgroundColor: styling.colours.accent,
+        color: styling.colours.background,
+      }}
     >
       <div className={"flex items-center"}>
         <Link href={"/"}>
-          <Image
-            src={"/linkraudio.svg"}
-            alt={"logo"}
-            width={100}
-            height={100}
-            className={" fill-rose-500 "}
-            draggable={false}
+          <i
+            className={"logo block"}
+            style={{
+              backgroundColor: styling.colours.background,
+            }}
           />
         </Link>
         <h1 className={"font-bold font-sans text-4xl"}>
