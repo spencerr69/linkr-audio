@@ -28,21 +28,18 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="feat(site): support changing styling colours in artist admin area">
-      <change afterPath="$PROJECT_DIR$/site/src/app/ui/StylingProvider.tsx" afterDir="false" />
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="style(site): change logo to &lt;i&gt; block so i can change background colour.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ArtistLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ArtistLinks.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseArtwork.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseArtwork.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseGrid.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseInfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseLinks.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ScrollingBackground.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ScrollingBackground.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/ui/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/Button.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/lib/apihelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/apihelper.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/lib/schema.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/schema.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/lib/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/utils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/Dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/Dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseListItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/ui/FormField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormField.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/ui/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/LoginForm.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +47,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="131" />
+    <option name="cachedIndexableFilesCount" value="135" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -95,6 +92,10 @@
             <RecentBranchesForRepo>
               <option name="branches">
                 <list>
+                  <RecentBranch>
+                    <option name="branchName" value="implement-styling-admin" />
+                    <option name="lastUsedInstant" value="1767159641" />
+                  </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="implement-styling-linkpage" />
                     <option name="lastUsedInstant" value="1767156945" />
@@ -168,7 +169,7 @@
     "SHELLCHECK.PATH": "/home/spence/.local/share/JetBrains/RustRover2025.3/Shell Script/shellcheck",
     "Shell Script.Start api.executor": "Run",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "implement-styling-linkpage",
+    "git-widget-placeholder": "implement-styling-admin",
     "javascript.nodejs.core.library.configured.version": "25.2.1",
     "javascript.nodejs.core.library.typings.version": "25.0.3",
     "javascript.preferred.runtime.type.id": "node",
@@ -575,7 +576,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767156855784</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="style(site): change logo to &lt;i&gt; block so i can change background colour.">
+      <option name="closed" value="true" />
+      <created>1767161070635</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1767161070635</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers>
       <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375" />
     </servers>
@@ -596,6 +605,17 @@
                   <entry key="Table.GitHub.CommitStatus.ColumnIdWidth" value="104" />
                 </map>
               </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
             </State>
           </value>
         </entry>
@@ -603,7 +623,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactor Header component: remove unused popup logic and simplify logout link" />
     <MESSAGE value="refactor(header): simplify Header component by removing popup logic and unused state" />
     <MESSAGE value="style(header): enhance admin navigation links with hover effects and padding adjustments" />
     <MESSAGE value="refactor(artist-form): wrap save button in a flex container for improved alignment" />
@@ -628,7 +647,8 @@
     <MESSAGE value="feat(site): animations, make artwork move with mouse and vinyl pop out yay" />
     <MESSAGE value="feat: Implement support for Styling object in APIs." />
     <MESSAGE value="feat(site): support changing styling colours in artist admin area" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(site): support changing styling colours in artist admin area" />
+    <MESSAGE value="style(site): change logo to &lt;i&gt; block so i can change background colour." />
+    <option name="LAST_COMMIT_MESSAGE" value="style(site): change logo to &lt;i&gt; block so i can change background colour." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

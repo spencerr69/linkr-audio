@@ -2,7 +2,9 @@
 
 import { Button } from "@/app/ui/Button";
 import { FormField } from "@/app/ui/FormField";
+import { StylingContext } from "@/app/ui/StylingProvider";
 import { Link } from "@/lib/apihelper";
+import { useContext } from "react";
 
 export const FormLinks = ({
   links,
@@ -11,6 +13,8 @@ export const FormLinks = ({
   links: Link[];
   valueUpdateAction: (value: Link[]) => void;
 }) => {
+  const styling = useContext(StylingContext);
+
   const getLinkUpdater = (i: number, key: keyof Link) => (value: string) => {
     const newLinks = [...links];
     newLinks[i][key] = value;
@@ -19,7 +23,11 @@ export const FormLinks = ({
 
   const linkFields = links.map((link, i) => {
     return (
-      <div key={i} className={"flex flex-col m-2  p-2 bg-gray-50 rounded-lg"}>
+      <div
+        key={i}
+        className={"flex flex-col m-2  p-2 rounded-lg"}
+        style={{ backgroundColor: styling.colours.background }}
+      >
         <FormField
           name={"name" + i}
           label={"Name"}
@@ -50,11 +58,18 @@ export const FormLinks = ({
     <div className={""}>
       <label
         htmlFor="links"
-        className={"text-gray-500 font-light text-sm p-0 m-0"}
+        className={" font-light text-sm p-0 m-0"}
+        style={{ color: styling.colours.foreground + "AA" }}
       >
         Links
       </label>
-      <div id="links" className={"bg-gray-100 p-1 h-full"}>
+      <div
+        id="links"
+        className={" p-1 h-full"}
+        style={{
+          backgroundColor: styling.colours.foreground + "11",
+        }}
+      >
         {linkFields}
         <div className={"flex justify-center mt-4"}>
           <Button

@@ -1,8 +1,9 @@
 import { ExternalButton } from "@/app/ui/Button";
+import { StylingContext } from "@/app/ui/StylingProvider";
 import { Release } from "@/lib/apihelper";
 import { baseDomain } from "@/lib/utils";
 import Image from "next/image";
-import React from "react";
+import React, { useContext } from "react";
 
 export const ReleaseListItem = ({
   release,
@@ -13,13 +14,28 @@ export const ReleaseListItem = ({
   onClick: (release: Release) => void;
   active?: boolean;
 }) => {
+  const styling = useContext(StylingContext);
+
   return (
     <div
       className={
-        "p-4 flex items-center justify-between border-b cursor-pointer duration-100 border-dashed border-gray-300" +
-        " hover:bg-gray-300 " +
-        (active ? "bg-gray-200" : "")
+        "p-4 flex items-center justify-between border-b cursor-pointer duration-100 border-dashed "
       }
+      style={{
+        borderColor: `${styling.colours.foreground}22`,
+        backgroundColor: active
+          ? styling.colours.foreground + "22"
+          : "transparent",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor =
+          styling.colours.foreground + "33";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = active
+          ? styling.colours.foreground + "22"
+          : "transparent";
+      }}
       onClick={() => onClick(release)}
     >
       <div>

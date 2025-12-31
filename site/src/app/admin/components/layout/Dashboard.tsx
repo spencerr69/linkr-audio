@@ -1,10 +1,11 @@
 import { Artist } from "@/app/admin/components/artist/Artist";
+import StylingProvider from "@/app/ui/StylingProvider";
 import { Header } from "./Header";
 import { Releases } from "@/app/admin/components/release/Releases";
 import { ArtistResponse, Release, serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
 import { AdminPages } from "@/lib/definitions";
-import { apiDomain } from "@/lib/utils";
+import { apiDomain, stylingComp } from "@/lib/utils";
 
 export const Dashboard = async ({
   currentPage,
@@ -27,6 +28,8 @@ export const Dashboard = async ({
 
   const artist: ArtistResponse = await req_artist.json();
 
+  const styling = stylingComp(artist.styling || {});
+
   const req_releases = await serverFetch(
     session.jwt,
     `/releases/${session.jwt.artistId}`,
@@ -44,15 +47,25 @@ export const Dashboard = async ({
   );
 
   return (
-    <div className={"flex flex-col h-full  text-black"}>
-      <Header
-        artistName={artist.master_artist_name}
-        artistId={artist.artist_id}
-      />
-      <div className={"flex-1 min-h-0"}>
-        {currentPage == AdminPages.Releases && <Releases releases={releases} />}
-        {currentPage == AdminPages.Artist && <Artist artist={artist} />}
-      </div>
+    <div
+      className={"flex flex-col h-full  "}
+      style={{
+        color: styling.colours.foreground,
+        backgroundColor: styling.colours.background,
+      }}
+    >
+      <StylingProvider styling={styling}>
+        <Header
+          artistName={artist.master_artist_name}
+          artistId={artist.artist_id}
+        />
+        <div className={"flex-1 min-h-0"}>
+          {currentPage == AdminPages.Releases && (
+            <Releases releases={releases} />
+          )}
+          {currentPage == AdminPages.Artist && <Artist artist={artist} />}
+        </div>
+      </StylingProvider>
     </div>
   );
 };

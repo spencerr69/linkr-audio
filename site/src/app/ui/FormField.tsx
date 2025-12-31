@@ -1,4 +1,5 @@
-import React from "react";
+import { StylingContext } from "@/app/ui/StylingProvider";
+import React, { useContext } from "react";
 
 export const FormField = ({
   name,
@@ -15,16 +16,25 @@ export const FormField = ({
   inactive?: boolean;
   valueUpdater?: (value: string) => void;
 }) => {
+  const styling = useContext(StylingContext);
+
   return (
     <div
       // key={uuidv4()}
       className={
         "p-1 flex flex-col w-full pb-0 mb-2 border-dashed " +
-        (inactive ? "bg-gray-100" : " border-b")
+        (inactive || " border-b")
       }
+      style={{
+        backgroundColor: inactive
+          ? styling.colours.foreground + "11"
+          : "transparent",
+        borderColor: styling.colours.foreground + "AA",
+      }}
     >
       <label
-        className={"text-gray-500 font-light text-sm p-0 m-0"}
+        className={" font-light text-sm p-0 m-0"}
+        style={{ color: styling.colours.foreground + "AA" }}
         htmlFor={name}
       >
         {label}
@@ -37,9 +47,12 @@ export const FormField = ({
           value={value}
           contentEditable={!inactive}
           disabled={inactive}
-          className={
-            "flex-2  focus:outline-0 " + (inactive ? "text-gray-400" : "")
-          }
+          className={"flex-2  focus:outline-0 "}
+          style={{
+            color: inactive
+              ? styling.colours.foreground + "AA"
+              : styling.colours.foreground,
+          }}
           onInput={(e) => valueUpdater && valueUpdater(e.currentTarget.value)}
         />
         {button}

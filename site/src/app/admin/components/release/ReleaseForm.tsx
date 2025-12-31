@@ -9,10 +9,11 @@ import {
 import { Button } from "@/app/ui/Button";
 import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
+import { StylingContext } from "@/app/ui/StylingProvider";
 import { Link, Release } from "@/lib/apihelper";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useContext } from "react";
 
 export const emptyRelease: Release = {
   artwork: "",
@@ -30,6 +31,8 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
   const [editedRelease, setEditedRelease] = React.useState<Release>(
     release || emptyRelease,
   );
+
+  const styling = useContext(StylingContext);
 
   const router = useRouter();
 
@@ -57,7 +60,12 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
   };
 
   return (
-    <div className={"flex justify-center max-h-full w-full  text-black "}>
+    <div
+      className={"flex justify-center max-h-full w-full  "}
+      style={{
+        color: styling.colours.foreground,
+      }}
+    >
       <form
         className={"p-4 h-full flex-col flex w-full  "}
         onSubmit={(e) => e.preventDefault()}
@@ -153,7 +161,8 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
           <div>
             <label
               htmlFor="artwork"
-              className={"text-gray-500 font-light text-sm p-0 m-0"}
+              className={" font-light text-sm p-0 m-0"}
+              style={{ color: styling.colours.foreground + "AA" }}
             >
               Artwork
             </label>
@@ -208,8 +217,12 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
           {status != "" && (
             <p
               className={
-                "text-right bg-rose-50 rounded-md p-4 m-4 absolute left-4 bottom-0"
+                "text-right  rounded-md p-4 m-4 absolute left-4 bottom-0"
               }
+              style={{
+                backgroundColor: styling.colours.accent,
+                color: styling.colours.background,
+              }}
             >
               {status}
             </p>

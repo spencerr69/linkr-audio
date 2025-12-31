@@ -53,3 +53,13 @@ body {
 .ease-custom {
     transition-timing-function: cubic-bezier(0.1, 0.23, 0.85, 0.9);
 }
+
+.logo {
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    -webkit-mask-image: url("/linkraudio.svg");
+    mask-image: url("/linkraudio.svg");
+    background-color: #fff;
+    width: 100px;
+    height: 100px;
+}
