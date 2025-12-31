@@ -28,10 +28,11 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="style(site): admin now responsive to artist styling">
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="style(site): update header and button components, remove unused styles">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ArtistLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ArtistLinks.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseArtwork.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseArtwork.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/ui/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/Button.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +78,29 @@
   }
 }</component>
   <component name="GitToolBoxStore">
+    <option name="branchesCleanupHistory">
+      <BranchesCleanupHistory>
+        <option name="history">
+          <list>
+            <BranchCleanupEntry>
+              <option name="deletions">
+                <list>
+                  <BranchDeletion>
+                    <option name="hash" value="cbcf413b3f82a7b7294afa460da1d57400f23209" />
+                    <option name="name" value="implement-styling-linkpage" />
+                  </BranchDeletion>
+                  <BranchDeletion>
+                    <option name="hash" value="3f4ab9d336d7db163f96ee004a28398123a8ca91" />
+                    <option name="name" value="implement-styling-admin" />
+                  </BranchDeletion>
+                </list>
+              </option>
+              <option name="timestamp" value="1767181673987" />
+            </BranchCleanupEntry>
+          </list>
+        </option>
+      </BranchesCleanupHistory>
+    </option>
     <option name="recentBranches">
       <RecentBranches>
         <option name="branchesForRepo">
@@ -585,7 +609,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767162527857</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="style(header): improve hover and active visual effects for admin links">
+      <option name="closed" value="true" />
+      <created>1767168880394</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1767168880394</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers>
       <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375" />
     </servers>
@@ -625,9 +657,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="style(header): enhance admin navigation links with hover effects and padding adjustments" />
-    <MESSAGE value="refactor(artist-form): wrap save button in a flex container for improved alignment" />
-    <MESSAGE value="style(globals): add new gray color variables" />
     <MESSAGE value="chore(idea): update workspace and developer-tools settings" />
     <MESSAGE value="chore(idea): update workspace" />
     <MESSAGE value="86d1b97b2 Make release pages look better" />
@@ -650,7 +679,10 @@
     <MESSAGE value="feat(site): support changing styling colours in artist admin area" />
     <MESSAGE value="style(site): change logo to &lt;i&gt; block so i can change background colour." />
     <MESSAGE value="style(site): admin now responsive to artist styling" />
-    <option name="LAST_COMMIT_MESSAGE" value="style(site): admin now responsive to artist styling" />
+    <MESSAGE value="style(header): add active state and hover styles to admin navigation links" />
+    <MESSAGE value="style(header): improve hover and active visual effects for admin links" />
+    <MESSAGE value="style(site): update header and button components, remove unused styles" />
+    <option name="LAST_COMMIT_MESSAGE" value="style(site): update header and button components, remove unused styles" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

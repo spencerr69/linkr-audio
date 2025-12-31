@@ -1,12 +1,12 @@
+import { ExternalButton } from "@/app/ui/Button";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className={"h-screen"}>
+    <div className={""}>
       <header
         className={
-          "w-full flex  justify-center bg-rose-500 font-sans text-white"
+          "fixed top-0 w-full flex  justify-center font-sans text-white"
         }
       >
         <div className={"flex align-middle items-center w-6xl justify-between"}>
@@ -23,24 +23,23 @@ export default function Page() {
             </h3>
           </div>
           <div>
-            <Link
+            <ExternalButton secondary href={"/apply"} className={"m-2"}>
+              Apply
+            </ExternalButton>
+            <ExternalButton
               href={"/admin"}
-              className={"hover:bg-white hover:text-rose-500 p-2"}
+              className={"m-2 "}
+              style={{
+                borderColor: "white",
+              }}
             >
               Log In
-            </Link>
+            </ExternalButton>
           </div>
         </div>
       </header>
-      <main>
-        <div
-          className={
-            "font-sans font-bold text-black flex flex-col justify-around text-center h-screen"
-          }
-        >
-          <h1 className={"text-8xl"}>Linksites without the bullshit</h1>
-        </div>
-      </main>
+      <div className={"h-[90vh] bg-blue-500"}></div>
+      <div className={"recentreleases"}></div>
     </div>
   );
 }

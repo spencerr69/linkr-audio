@@ -1,3 +1,5 @@
+"use client";
+
 import { StylingContext } from "@/app/ui/StylingProvider";
 import Link from "next/link";
 import React, { useContext } from "react";
@@ -27,6 +29,7 @@ export const Button = ({
   inline,
   secondary,
   className,
+  style,
   ...rest
 }: ButtonProps) => {
   const styling = useContext(StylingContext);
@@ -41,6 +44,7 @@ export const Button = ({
           ? styling.colours.accent
           : styling.colours.background,
         borderColor: styling.colours.accent,
+        ...style,
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.color = !secondary
@@ -85,6 +89,7 @@ export const ExternalButton = ({
           ? styling.colours.accent
           : styling.colours.background,
         borderColor: styling.colours.accent,
+        ...style,
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.color = !secondary

@@ -39,7 +39,7 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
 
         if (!vinylRef.current) return;
 
-        vinylRef.current.style.transform = `perspective(1000px) rotateZ(${rotateX}deg) rotateX(${rotateY}deg) rotateY(${rotateX}deg) scale3d(0.995, 0.995, 0.995) translateX(100px)`;
+        vinylRef.current.style.transform = `perspective(1000px) rotateX(${rotateY}deg) rotateY(${rotateX}deg) scale3d(0.995, 0.995, 0.995) translateX(100px)`;
       }}
       onMouseLeave={() => {
         if (!ref.current) return;
@@ -47,7 +47,7 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
         ref.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
         if (!vinylRef.current) return;
         // Reset position when mouse leaves
-        vinylRef.current.style.transform = `perspective(1000px) rotateZ(0deg) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) translateX(0)`;
+        vinylRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) translateX(0)`;
       }}
       className={
         "w-full border-b-2 flex items-center justify-center p-8 border-l-2 border-dashed "
