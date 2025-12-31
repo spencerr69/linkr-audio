@@ -3,6 +3,8 @@
 import { ReleaseGrid } from "@/app/[id]/[slug]/components/release-grid/ReleaseGrid";
 import { getArtist } from "@/app/actions/artists";
 import { getRelease } from "@/app/actions/releases";
+import StylingProvider from "@/app/ui/StylingProvider";
+import { stylingComp } from "@/lib/utils";
 import { Metadata } from "next";
 
 export async function generateMetadata({
@@ -31,15 +33,21 @@ const Page = async ({
   const release = await getRelease(id, slug);
   const artist = await getArtist(id);
 
-  return (
-    <main className={"min-h-screen flex flex-col justify-center items-center "}>
-      <div
-        className="absolute top-0 left-0 w-full h-full content-[''] z-10 pointer-events-none bg-[url('https://www.ui-layouts.com/noise.gif')]"
-        style={{ opacity: "6%" }}
-      ></div>
+  const styling = stylingComp(artist.styling || {});
 
-      <ReleaseGrid release={release} artist={artist} />
-    </main>
+  return (
+    <StylingProvider styling={styling}>
+      <main
+        className={"min-h-screen flex flex-col justify-center items-center "}
+      >
+        <div
+          className="absolute top-0 left-0 w-full h-full content-[''] z-10 pointer-events-none bg-[url('https://www.ui-layouts.com/noise.gif')]"
+          style={{ opacity: "6%" }}
+        ></div>
+
+        <ReleaseGrid release={release} artist={artist} />
+      </main>
+    </StylingProvider>
   );
 };
 

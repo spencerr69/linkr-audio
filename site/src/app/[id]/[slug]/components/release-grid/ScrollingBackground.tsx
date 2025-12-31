@@ -1,6 +1,7 @@
 "use client";
 
-import React, { JSX, useEffect } from "react";
+import { StylingContext } from "@/app/ui/StylingProvider";
+import React, { JSX, useContext, useEffect } from "react";
 
 interface ScrollingBackgroundProps {
   text: string;
@@ -20,6 +21,8 @@ export const ScrollingBackground: React.FC<ScrollingBackgroundProps> = ({
 
   const [textP, setTextP] = React.useState<JSX.Element[]>(initText);
 
+  const styling = useContext(StylingContext);
+
   useEffect(() => {
     setTimeout(() => {
       setTextP((t) => shuffleArray(t));
@@ -29,12 +32,13 @@ export const ScrollingBackground: React.FC<ScrollingBackgroundProps> = ({
   return (
     <div
       className={
-        " font-mono text-black opacity-25 overflow-hidden w-full line-clamp-26  sm:line-clamp-48"
+        " font-mono  opacity-25 overflow-hidden w-full line-clamp-26  sm:line-clamp-48"
       }
       style={{
         fontSize: "0.6rem",
         textOverflow: "clip",
         textWrap: "nowrap",
+        color: styling.colours.foreground,
       }}
     >
       {textP}

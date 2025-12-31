@@ -1,5 +1,6 @@
+import { StylingContext } from "@/app/ui/StylingProvider";
 import Image from "next/image";
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 
 interface ReleaseArtworkProps {
   artwork: string | null | undefined;
@@ -12,6 +13,8 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
 }) => {
   const ref = useRef<HTMLImageElement>(null);
   const vinylRef = useRef<HTMLImageElement>(null);
+
+  const styling = useContext(StylingContext);
 
   return (
     <div
@@ -47,8 +50,11 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
         vinylRef.current.style.transform = `perspective(1000px) rotateZ(0deg) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) translateX(0)`;
       }}
       className={
-        "w-full border-b-2 flex items-center justify-center p-8 border-l-2 border-dashed border-gray-300"
+        "w-full border-b-2 flex items-center justify-center p-8 border-l-2 border-dashed "
       }
+      style={{
+        borderColor: `${styling.colours.foreground}22`,
+      }}
     >
       <Image
         ref={ref}

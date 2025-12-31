@@ -6,8 +6,10 @@ import { ReleaseHeader } from "@/app/[id]/[slug]/components/release-grid/Release
 import { ReleaseInfo } from "@/app/[id]/[slug]/components/release-grid/ReleaseInfo";
 import { ReleaseLinks } from "@/app/[id]/[slug]/components/release-grid/ReleaseLinks";
 import { ScrollingBackground } from "@/app/[id]/[slug]/components/release-grid/ScrollingBackground";
+import { StylingContext } from "@/app/ui/StylingProvider";
 import { ArtistResponse, Release } from "@/lib/apihelper";
 import Image from "next/image";
+import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
 
 export const ReleaseGrid = (props: {
@@ -17,6 +19,8 @@ export const ReleaseGrid = (props: {
   const isMobileLayout = useMediaQuery({
     query: "(max-width: 923px)",
   });
+
+  const styling = useContext(StylingContext);
 
   return !isMobileLayout ? (
     <>
@@ -31,8 +35,11 @@ export const ReleaseGrid = (props: {
       />
       <div
         className={
-          "m-16 releasegrid bg-gray-50 w-4xl grid grid-cols-2 font-sans rounded-2xl shadow-2xl drop-shadow-2xl z-20 "
+          "m-16 releasegrid  w-4xl grid grid-cols-2 font-sans rounded-2xl shadow-2xl drop-shadow-2xl z-20 "
         }
+        style={{
+          backgroundColor: styling.colours.background,
+        }}
       >
         <ReleaseHeader
           title={props.release.title}
@@ -40,10 +47,13 @@ export const ReleaseGrid = (props: {
         />
         <div
           className={
-            " overflow-hidden border-l-2 border-b-2 border-dashed border-gray-300 select-none"
+            " overflow-hidden border-l-2 border-b-2 border-dashed  select-none"
           }
+          style={{
+            borderColor: `${styling.colours.foreground}22`,
+          }}
         >
-          <ScrollingBackground text={props.release.artist_id} />
+          <ScrollingBackground text={props.release.artist_id || ""} />
         </div>
         <ReleaseLinks links={props.release.links} />
         <ReleaseArtwork
@@ -62,11 +72,12 @@ export const ReleaseGrid = (props: {
           />
         </div>
         <div
-          className={
-            "overflow-hidden border-l-2 border-dashed border-gray-300 select-none"
-          }
+          className={"overflow-hidden border-l-2 border-dashed select-none"}
+          style={{
+            borderColor: `${styling.colours.foreground}22`,
+          }}
         >
-          <ScrollingBackground text={props.release.slug} />
+          <ScrollingBackground text={props.release.slug || ""} />
         </div>
       </div>
     </>
@@ -83,8 +94,11 @@ export const ReleaseGrid = (props: {
       />
       <div
         className={
-          "m-4 releasegridmob bg-gray-50 max-w-2xl grid grid-cols-1 font-sans rounded-2xl shadow-xl z-20 "
+          "m-4 releasegridmob  max-w-2xl grid grid-cols-1 font-sans rounded-2xl shadow-xl z-20 "
         }
+        style={{
+          backgroundColor: styling.colours.background,
+        }}
       >
         <ReleaseHeader
           title={props.release.title}
@@ -96,11 +110,6 @@ export const ReleaseGrid = (props: {
               "w-full z-10 flex items-center justify-center mob-art overflow-hidden"
             }
           >
-            {/*<div*/}
-            {/*  className={*/}
-            {/*    "w-full border-b-2 flex items-center justify-center p-8 border-l-2 border-dashed border-gray-300"*/}
-            {/*  }*/}
-            {/*>*/}
             <Image
               src={props.release.artwork || ""}
               alt={`${props.release.title} artwork`}
@@ -115,19 +124,18 @@ export const ReleaseGrid = (props: {
           <div className={"flex w-full mob-flavour overflow-hidden"}>
             <div className={"overflow-hidden flex-1"}>
               <ScrollingBackground
-                text={props.release.artist_id}
+                text={props.release.artist_id || ""}
                 rows={40}
                 speed={0.5}
               />
             </div>
             <div className={"overflow-hidden flex-1"}>
               <ScrollingBackground
-                text={props.release.slug}
+                text={props.release.slug || ""}
                 rows={40}
                 speed={0.5}
               />
             </div>
-            {/*</div>*/}
           </div>
         </div>
         <ReleaseLinks links={props.release.links} />

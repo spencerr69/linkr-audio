@@ -44,3 +44,6 @@ export type EditArtist = {
 };
 export type Styling = components["schemas"]["Styling"];
 export type Colours = components["schemas"]["Colours"];
+export type StylingGuaranteed = {
+  colours: Required<Colours>;
+};
