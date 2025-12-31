@@ -34,7 +34,7 @@ export const Releases = ({ releases }: { releases: Release[] }) => {
   return (
     <div className={"flex min-h-0 h-full"}>
       <div
-        className={" w-4xl border-r border-dashed overflow-y-scroll"}
+        className={" w-4xl border-r border-dashed overflow-y-auto"}
         style={{
           borderColor: `${styling.colours.foreground}22`,
         }}
@@ -46,7 +46,7 @@ export const Releases = ({ releases }: { releases: Release[] }) => {
           </div>
         </ul>
       </div>
-      <div className={"w-full overflow-y-scroll"}>
+      <div className={"w-full overflow-y-auto"}>
         {editingRelease && <ReleaseForm release={editingRelease} />}
       </div>
     </div>

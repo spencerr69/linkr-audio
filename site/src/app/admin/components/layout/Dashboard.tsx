@@ -56,6 +56,7 @@ export const Dashboard = async ({
     >
       <StylingProvider styling={styling}>
         <Header
+          currentPage={currentPage}
           artistName={artist.master_artist_name}
           artistId={artist.artist_id}
         />

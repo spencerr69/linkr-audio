@@ -3,12 +3,14 @@
 import { logout } from "@/app/actions/auth";
 import { HeaderLink } from "@/app/admin/components/layout/HeaderLink";
 import { StylingContext } from "@/app/ui/StylingProvider";
+import { AdminPages } from "@/lib/definitions";
 import Link from "next/link";
-import { useContext } from "react";
+import React, { useContext } from "react";
 
 type HeaderProps = {
   artistName: string;
   artistId: string;
+  currentPage: AdminPages;
 };
 
 export const Header = (props: HeaderProps) => {
@@ -46,8 +48,18 @@ export const Header = (props: HeaderProps) => {
       </div>
 
       <div>
-        <HeaderLink href={"/admin"}>Releases</HeaderLink>
-        <HeaderLink href={"/admin/artist"}>Artist</HeaderLink>
+        <HeaderLink
+          href={"/admin"}
+          active={props.currentPage == AdminPages.Releases}
+        >
+          Releases
+        </HeaderLink>
+        <HeaderLink
+          href={"/admin/artist"}
+          active={props.currentPage == AdminPages.Artist}
+        >
+          Artist
+        </HeaderLink>
         <HeaderLink href="#" onClick={logout}>
           Log out
         </HeaderLink>

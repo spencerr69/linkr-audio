@@ -28,18 +28,12 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="style(site): change logo to &lt;i&gt; block so i can change background colour.">
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="style(site): admin now responsive to artist styling">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/Dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/Dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseListItem.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/ui/FormField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormField.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/ui/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/LoginForm.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -584,7 +578,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767161070635</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="style(site): admin now responsive to artist styling">
+      <option name="closed" value="true" />
+      <created>1767162527857</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1767162527857</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers>
       <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375" />
     </servers>
@@ -623,7 +625,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor(header): simplify Header component by removing popup logic and unused state" />
     <MESSAGE value="style(header): enhance admin navigation links with hover effects and padding adjustments" />
     <MESSAGE value="refactor(artist-form): wrap save button in a flex container for improved alignment" />
     <MESSAGE value="style(globals): add new gray color variables" />
@@ -648,7 +649,8 @@
     <MESSAGE value="feat: Implement support for Styling object in APIs." />
     <MESSAGE value="feat(site): support changing styling colours in artist admin area" />
     <MESSAGE value="style(site): change logo to &lt;i&gt; block so i can change background colour." />
-    <option name="LAST_COMMIT_MESSAGE" value="style(site): change logo to &lt;i&gt; block so i can change background colour." />
+    <MESSAGE value="style(site): admin now responsive to artist styling" />
+    <option name="LAST_COMMIT_MESSAGE" value="style(site): admin now responsive to artist styling" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
