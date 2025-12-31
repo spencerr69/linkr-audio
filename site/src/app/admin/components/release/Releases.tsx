@@ -19,7 +19,12 @@ export const Releases = ({ releases }: { releases: Release[] }) => {
 
   const releasesList = releases.map((release, i) => {
     return (
-      <ReleaseListItem onClick={createReleaseForm} release={release} key={i} />
+      <ReleaseListItem
+        onClick={createReleaseForm}
+        release={release}
+        key={i}
+        active={editingRelease?.slug == release.slug}
+      />
     );
   });
 

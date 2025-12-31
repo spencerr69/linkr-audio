@@ -7,14 +7,18 @@ import React from "react";
 export const ReleaseListItem = ({
   release,
   onClick,
+  active = false,
 }: {
   release: Release;
   onClick: (release: Release) => void;
+  active?: boolean;
 }) => {
   return (
     <div
       className={
-        "p-4 flex items-center justify-between border-b border-dashed border-gray-300 hover:bg-gray-200"
+        "p-4 flex items-center justify-between border-b cursor-pointer duration-100 border-dashed border-gray-300" +
+        " hover:bg-gray-300 " +
+        (active ? "bg-gray-200" : "")
       }
       onClick={() => onClick(release)}
     >

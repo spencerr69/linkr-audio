@@ -49,3 +49,7 @@ body {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto;
 }
+
+.ease-custom {
+    transition-timing-function: cubic-bezier(0.1, 0.23, 0.85, 0.9);
+}

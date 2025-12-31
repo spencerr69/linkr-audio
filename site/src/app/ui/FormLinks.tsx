@@ -56,13 +56,15 @@ export const FormLinks = ({
       </label>
       <div id="links" className={"bg-gray-100 p-1 h-full"}>
         {linkFields}
-        <Button
-          onClick={() => {
-            valueUpdateAction([...links, { name: "", url: "" }]);
-          }}
-        >
-          +
-        </Button>
+        <div className={"flex justify-center mt-4"}>
+          <Button
+            onClick={() => {
+              valueUpdateAction([...links, { name: "", url: "" }]);
+            }}
+          >
+            +
+          </Button>
+        </div>
       </div>
     </div>
   );

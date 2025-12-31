@@ -28,15 +28,19 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="refactor(site): move components out of pages to be more modular. changed flavour text to scroll but idk if thats the vibe">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="feat(site): implement mobile support!">
+      <change afterPath="$PROJECT_DIR$/site/public/vinyl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/saveactions_settings.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseArtwork.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseArtwork.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseGrid.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseListItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/ui/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/Button.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/ui/ScrollingBackground.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ScrollingBackground.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/lib/apihelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/apihelper.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +48,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="125" />
+    <option name="cachedIndexableFilesCount" value="128" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -169,7 +173,7 @@
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/home/spence/dev/linkr-audio/api/open_in_dev.sh",
+    "last_opened_file_path": "/home/spence/dev/linkr-audio/site/public",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
@@ -182,7 +186,7 @@
     "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
     "prettierjs.PrettierConfiguration.Package": "/home/spence/dev/linkr-audio/site/node_modules/prettier",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "actions.on.save",
     "tasks.open.task.update.state.enabled": "true",
     "to.speed.mode.migration.done": "true",
     "ts.external.directory.path": "/home/spence/dev/linkr-audio/site/node_modules/typescript/lib",
@@ -198,6 +202,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/site/public" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid" />
       <recent name="$PROJECT_DIR$/site" />
@@ -258,7 +265,8 @@
       <workItem from="1767057902547" duration="108000" />
       <workItem from="1767058093235" duration="4225000" />
       <workItem from="1767062988003" duration="14935000" />
-      <workItem from="1767096003372" duration="4981000" />
+      <workItem from="1767096003372" duration="5398000" />
+      <workItem from="1767148460318" duration="6675000" />
     </task>
     <task id="LOCAL-00001" summary="auth works now">
       <option name="closed" value="true" />
@@ -532,7 +540,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767080248916</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="feat(site): implement mobile support!">
+      <option name="closed" value="true" />
+      <created>1767101084091</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1767101084091</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers>
       <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375" />
     </servers>
@@ -582,7 +598,8 @@
     <MESSAGE value="feat(site): add noise overlay to release page and adjust z-index styling" />
     <MESSAGE value="style(site): update styling so it works on short screens" />
     <MESSAGE value="refactor(site): move components out of pages to be more modular. changed flavour text to scroll but idk if thats the vibe" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor(site): move components out of pages to be more modular. changed flavour text to scroll but idk if thats the vibe" />
+    <MESSAGE value="feat(site): implement mobile support!" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(site): implement mobile support!" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

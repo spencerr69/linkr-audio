@@ -1,4 +1,5 @@
 import { logout } from "@/app/actions/auth";
+import { HeaderLink } from "@/app/admin/components/layout/HeaderLink";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -38,25 +39,11 @@ export const Header = (props: HeaderProps) => {
       </div>
 
       <div>
-        <Link
-          href={"/admin"}
-          className={"mr-4 hover:bg-white hover:text-rose-500 p-2"}
-        >
-          Releases
-        </Link>
-        <Link
-          href={"/admin/artist"}
-          className={"mr-4 hover:bg-white hover:text-rose-500 p-2"}
-        >
-          Artist
-        </Link>
-        <a
-          href="#"
-          className={"mr-4 hover:bg-white hover:text-rose-500 p-2"}
-          onClick={logout}
-        >
+        <HeaderLink href={"/admin"}>Releases</HeaderLink>
+        <HeaderLink href={"/admin/artist"}>Artist</HeaderLink>
+        <HeaderLink href="#" onClick={logout}>
           Log out
-        </a>
+        </HeaderLink>
       </div>
     </header>
   );
