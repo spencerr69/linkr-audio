@@ -1,10 +1,12 @@
 "use client";
 
 import { updateArtist } from "@/app/actions/artists";
+import { FormStyling } from "@/app/admin/components/artist/FormStyling";
 import { Button } from "@/app/ui/Button";
 import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
-import { ArtistResponse, EditArtist, Link } from "@/lib/apihelper";
+import { ArtistResponse, EditArtist, Link, Styling } from "@/lib/apihelper";
+import { stylingComp } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -12,7 +14,7 @@ const editArtistFromArtist = (artist: ArtistResponse) => {
   return {
     links: artist.links,
     master_artist_name: artist.master_artist_name,
-    styling: artist.styling || "",
+    styling: stylingComp(artist.styling || {}),
   } as EditArtist;
 };
 
@@ -36,7 +38,7 @@ export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {
   }, [status]);
 
   const getArtistUpdater = (field: keyof EditArtist) => {
-    return (value: string | Link[]) => {
+    return (value: string | Link[] | Styling) => {
       setEditedArtist((prev) => {
         return {
           ...prev,
@@ -58,6 +60,12 @@ export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {
           value={editedArtist.master_artist_name}
           valueUpdater={getArtistUpdater("master_artist_name")}
         />
+        <div className={"flex "}>
+          <FormStyling
+            editedArtist={editedArtist}
+            artistUpdater={getArtistUpdater("styling")}
+          />
+        </div>
         <FormLinks
           valueUpdateAction={getArtistUpdater("links")}
           links={editedArtist.links || []}
