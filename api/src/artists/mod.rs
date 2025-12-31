@@ -4,6 +4,18 @@ use serde::{Deserialize, Serialize};
 use worker::wasm_bindgen::JsValue;
 use worker::{Request, Response, RouteContext};
 
+#[derive(Deserialize, Serialize, Clone)]
+pub struct Styling {
+   pub colours: Option<Colours>
+}
+
+#[derive(Deserialize, Serialize, Clone)]
+pub struct Colours {
+   pub background: Option<String>,
+   pub foreground: Option<String>,
+   pub accent: Option<String>,
+}
+
 /// Handles POST request to create a new artist account.
 ///
 /// ### Request Body:
@@ -62,15 +74,16 @@ pub async fn get_artist(_req: Request, ctx: RouteContext<()>) -> worker::Result<
       pub artist_id: String,
       pub master_artist_name: String,
       pub links: Vec<Link>,
-      pub styling: Option<String>,
+      pub styling: Option<Styling>,
    }
    
    impl From<DbSchema> for GetArtistResponse {
       fn from(value: DbSchema) -> Self {
          let links = serde_json::from_str(&value.links.unwrap_or("[]".into())).unwrap_or(vec![]);
+         let styling = serde_json::from_str(&value.styling.unwrap_or("null".into())).unwrap_or(Styling { colours: None });
          
          Self {
-            styling: value.styling,
+            styling: Some(styling),
             artist_id: value.artist_id,
             master_artist_name: value.master_artist_name,
             links,
@@ -113,7 +126,7 @@ pub async fn post_edit_artist(mut req: Request, ctx: RouteContext<()>) -> worker
    struct EditArtistRequest {
       pub master_artist_name: String,
       pub links: Vec<Link>,
-      pub styling: Option<String>,
+      pub styling: Option<Styling>,
    }
    
    let Some(id) = ctx.param("id") else {
@@ -136,7 +149,7 @@ pub async fn post_edit_artist(mut req: Request, ctx: RouteContext<()>) -> worker
    let binded = statement.bind(&[
       JsValue::from(request.master_artist_name),
       JsValue::from(serde_json::to_string(&request.links)?),
-      JsValue::from(request.styling),
+      JsValue::from(serde_json::to_string(&request.styling)?),
       JsValue::from(id),
    ])?;
    

@@ -1,6 +1,18 @@
+import { Styling } from "@/lib/apihelper";
+
 export const rootDomain =
   process.env.PUBLIC_ROOT_DOMAIN || "http://localhost:3000";
 
 export const apiDomain = process.env.API_ROOT_DOMAIN || "http://localhost:8787";
 
 export const baseDomain = rootDomain.split("//")[1];
+
+export const stylingComp = (styling: Styling) => {
+  return {
+    colours: {
+      accent: styling.colours?.accent || "#FF066A",
+      foreground: styling.colours?.foreground || "#000000",
+      background: styling.colours?.background || "#F5F5F5",
+    },
+  } as Styling;
+};

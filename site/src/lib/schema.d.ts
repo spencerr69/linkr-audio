@@ -159,7 +159,7 @@ export interface paths {
                     "application/json": {
                         master_artist_name: string;
                         links: components["schemas"]["Link"][];
-                        styling?: string | null;
+                        styling?: components["schemas"]["Styling"];
                     };
                 };
             };
@@ -206,7 +206,10 @@ export interface paths {
         /** Get all releases for an artist */
         get: {
             parameters: {
-                query?: never;
+                query?: {
+                    limit?: number;
+                    offset?: number;
+                };
                 header?: never;
                 path: {
                     /** @description Artist ID */
@@ -522,7 +525,15 @@ export interface components {
             artist_id: string;
             master_artist_name: string;
             links: components["schemas"]["Link"][];
-            styling?: string | null;
+            styling?: components["schemas"]["Styling"];
+        };
+        Styling: {
+            colours?: components["schemas"]["Colours"];
+        };
+        Colours: {
+            background?: string | null;
+            foreground?: string | null;
+            accent?: string | null;
         };
         Release: {
             upc: string;
@@ -531,8 +542,8 @@ export interface components {
             release_date: string;
             artwork?: string | null;
             links: components["schemas"]["Link"][];
-            artist_id: string;
-            slug: string;
+            artist_id?: string | null;
+            slug?: string | null;
             track_count: number;
         };
         Link: {

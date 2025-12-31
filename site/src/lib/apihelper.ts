@@ -40,5 +40,6 @@ export type ArtistResponse = components["schemas"]["Artist"];
 export type EditArtist = {
   master_artist_name: string;
   links: components["schemas"]["Link"][];
-  styling?: string;
+  styling?: Styling;
 };
+export type Styling = components["schemas"]["Styling"];

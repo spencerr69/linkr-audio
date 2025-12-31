@@ -138,8 +138,7 @@
                     }
                   },
                   "styling": {
-                    "type": "string",
-                    "nullable": true
+                    "$ref": "#/components/schemas/Styling"
                   }
                 }
               }
@@ -167,6 +166,26 @@
       ],
       "get": {
         "summary": "Get all releases for an artist",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "List of releases",
@@ -441,6 +460,30 @@
             }
           },
           "styling": {
+            "$ref": "#/components/schemas/Styling"
+          }
+        }
+      },
+      "Styling": {
+        "type": "object",
+        "properties": {
+          "colours": {
+            "$ref": "#/components/schemas/Colours"
+          }
+        }
+      },
+      "Colours": {
+        "type": "object",
+        "properties": {
+          "background": {
+            "type": "string",
+            "nullable": true
+          },
+          "foreground": {
+            "type": "string",
+            "nullable": true
+          },
+          "accent": {
             "type": "string",
             "nullable": true
           }
@@ -454,8 +497,6 @@
           "artist_name",
           "release_date",
           "links",
-          "artist_id",
-          "slug",
           "track_count"
         ],
         "properties": {
@@ -482,10 +523,12 @@
             }
           },
           "artist_id": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "slug": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "track_count": {
             "type": "integer"

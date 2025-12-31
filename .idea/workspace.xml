@@ -28,19 +28,13 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="feat(site): implement mobile support!">
-      <change afterPath="$PROJECT_DIR$/site/public/vinyl.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/saveactions_settings.xml" beforeDir="false" />
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="feat(site): animations, make artwork move with mouse and vinyl pop out yay">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseArtwork.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseArtwork.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseListItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/openapi.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/openapi.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/artists/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/artists/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/lib/apihelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/apihelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/lib/schema.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/schema.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/lib/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +42,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="128" />
+    <option name="cachedIndexableFilesCount" value="131" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -266,7 +260,7 @@
       <workItem from="1767058093235" duration="4225000" />
       <workItem from="1767062988003" duration="14935000" />
       <workItem from="1767096003372" duration="5398000" />
-      <workItem from="1767148460318" duration="6675000" />
+      <workItem from="1767148460318" duration="7320000" />
     </task>
     <task id="LOCAL-00001" summary="auth works now">
       <option name="closed" value="true" />
@@ -548,7 +542,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767101084091</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="feat(site): animations, make artwork move with mouse and vinyl pop out yay">
+      <option name="closed" value="true" />
+      <created>1767155173531</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1767155173531</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers>
       <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375" />
     </servers>
@@ -599,7 +601,8 @@
     <MESSAGE value="style(site): update styling so it works on short screens" />
     <MESSAGE value="refactor(site): move components out of pages to be more modular. changed flavour text to scroll but idk if thats the vibe" />
     <MESSAGE value="feat(site): implement mobile support!" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(site): implement mobile support!" />
+    <MESSAGE value="feat(site): animations, make artwork move with mouse and vinyl pop out yay" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(site): animations, make artwork move with mouse and vinyl pop out yay" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
