@@ -3,13 +3,10 @@
 import { login } from "@/app/actions/auth";
 import { Button } from "@/app/ui/Button";
 import PopupContainer from "@/app/ui/PopupContainer";
-import { stylingComp } from "@/lib/utils";
 import { useActionState } from "react";
 
 export function LoginForm() {
   const [state, action, pending] = useActionState(login, undefined);
-
-  const styling = stylingComp({});
 
   return (
     <PopupContainer>

@@ -1,3 +1,4 @@
+import { ColourPicker } from "@/app/ui/ColourPicker";
 import { FormField } from "@/app/ui/FormField";
 import { Colours, EditArtist, Link, Styling } from "@/lib/definitions";
 import React from "react";
@@ -21,12 +22,10 @@ export function FormStyling(props: {
         value={props.editedArtist.styling?.colours?.accent || ""}
         valueUpdater={getColourUpdater("accent")}
         button={
-          <div
-            style={{
-              backgroundColor: `${props.editedArtist.styling?.colours?.accent}`,
-            }}
-            className={"w-4 h-4 rounded-full border border-black"}
-          ></div>
+          <ColourPicker
+            value={props.editedArtist.styling?.colours?.accent || ""}
+            valueUpdaterAction={getColourUpdater("accent")}
+          />
         }
       />
       <FormField
@@ -35,12 +34,10 @@ export function FormStyling(props: {
         value={props.editedArtist.styling?.colours?.background || ""}
         valueUpdater={getColourUpdater("background")}
         button={
-          <div
-            style={{
-              backgroundColor: `${props.editedArtist.styling?.colours?.background}`,
-            }}
-            className={"w-4 h-4 rounded-full border border-black"}
-          ></div>
+          <ColourPicker
+            value={props.editedArtist.styling?.colours?.background || ""}
+            valueUpdaterAction={getColourUpdater("background")}
+          />
         }
       />
       <FormField
@@ -49,12 +46,10 @@ export function FormStyling(props: {
         value={props.editedArtist.styling?.colours?.foreground || ""}
         valueUpdater={getColourUpdater("foreground")}
         button={
-          <div
-            style={{
-              backgroundColor: `${props.editedArtist.styling?.colours?.foreground}`,
-            }}
-            className={"w-4 h-4 rounded-full border border-black"}
-          ></div>
+          <ColourPicker
+            value={props.editedArtist.styling?.colours?.foreground || ""}
+            valueUpdaterAction={getColourUpdater("foreground")}
+          />
         }
       />
     </div>

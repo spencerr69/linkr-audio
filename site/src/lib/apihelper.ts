@@ -1,7 +1,6 @@
 "use server";
 
 import { SessionPayload } from "@/lib/definitions";
-import { components } from "@/lib/schema";
 import { encrypt } from "@/lib/session";
 import { apiDomain } from "@/lib/utils";
 import { JWTPayload } from "jose";
