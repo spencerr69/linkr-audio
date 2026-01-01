@@ -1,13 +1,22 @@
 "use server";
 
-import { Release, serverFetch } from "@/lib/apihelper";
+import { serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
+import { Release, releaseFormSchema } from "@/lib/definitions";
 import { apiDomain } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
 export async function updateRelease(release: Release) {
   "use server";
+
+  const validated = releaseFormSchema.safeParse(release);
+
+  if (!validated.success) {
+    return { error: validated.error.message };
+  }
+
+  const validatedRelease = validated.data;
 
   const session = await verifySession();
 
@@ -25,7 +34,7 @@ export async function updateRelease(release: Release) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(release),
+      body: JSON.stringify(validatedRelease),
     },
   );
 
@@ -43,6 +52,14 @@ export async function updateRelease(release: Release) {
 export async function createRelease(release: Release) {
   "use server";
 
+  const validated = releaseFormSchema.safeParse(release);
+
+  if (!validated.success) {
+    return { error: validated.error.message };
+  }
+
+  const validatedRelease = validated.data;
+
   const session = await verifySession();
 
   if (!session || !session.jwt) {
@@ -59,7 +76,7 @@ export async function createRelease(release: Release) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(release),
+      body: JSON.stringify(validatedRelease),
     },
   );
 

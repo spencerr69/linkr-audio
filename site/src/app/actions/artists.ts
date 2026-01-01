@@ -1,12 +1,26 @@
 "use server";
 
-import { ArtistResponse, EditArtist, serverFetch } from "@/lib/apihelper";
+import { serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
+import {
+  ArtistResponse,
+  EditArtist,
+  editArtistSchema,
+} from "@/lib/definitions";
 import { apiDomain } from "@/lib/utils";
 import { cache } from "react";
 
 export const updateArtist = async (artist: EditArtist) => {
   "use server";
+
+  const validated = editArtistSchema.safeParse(artist);
+
+  if (!validated.success) {
+    return { error: validated.error.message };
+  }
+
+  const validatedArtist = validated.data;
+
   const session = await verifySession();
 
   if (!session.isAuth || !session.jwt) {
@@ -20,7 +34,7 @@ export const updateArtist = async (artist: EditArtist) => {
     `/artists/${session.jwt.artistId}`,
     {
       method: "POST",
-      body: JSON.stringify(artist),
+      body: JSON.stringify(validatedArtist),
     },
   );
 
