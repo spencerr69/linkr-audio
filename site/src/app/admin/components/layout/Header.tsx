@@ -6,6 +6,9 @@ import { StylingContext } from "@/app/ui/StylingProvider";
 import { AdminPages } from "@/lib/definitions";
 import Link from "next/link";
 import React, { useContext } from "react";
+import AlbumIcon from "@mui/icons-material/Album";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 type HeaderProps = {
   artistName: string;
@@ -47,21 +50,21 @@ export const Header = (props: HeaderProps) => {
         </h1>
       </div>
 
-      <div>
+      <div className={"flex items-center"} style={{ gap: "1rem" }}>
         <HeaderLink
           href={"/admin"}
           active={props.currentPage == AdminPages.Releases}
         >
-          Releases
+          <AlbumIcon fontSize={"large"} />
         </HeaderLink>
         <HeaderLink
           href={"/admin/artist"}
           active={props.currentPage == AdminPages.Artist}
         >
-          Artist
+          <AccountCircleIcon fontSize={"large"} />
         </HeaderLink>
         <HeaderLink href="#" onClick={logout}>
-          Log out
+          <MoreHorizIcon fontSize={"large"} />
         </HeaderLink>
       </div>
     </header>

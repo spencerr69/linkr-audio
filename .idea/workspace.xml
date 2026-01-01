@@ -17,193 +17,6 @@
   <component name="AIDiffSettings">
     <option name="showAIDiff" value="true" />
   </component>
-  <component name="AIDiffStorage" id="1">
-    <groups>
-      <group changeListId="5a231cb2-44e5-4ac2-a9cb-718e1d6a64f1" id="1" name="Refactor data definitions from 'apihelper.ts' to 'definitions.ts'" description="Centralize data type definitions in `definitions.ts` for better organization and consistency." importance="0.9">
-        <files>
-          <file summary="Removes type definitions for `Release`, `Link`, `LinkResponse`, `ArtistResponse`, `EditArtist`, `Styling`, `Colours`, and `StylingGuaranteed` as they are moved to `definitions.ts`." importance="0.9" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/lib/apihelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/apihelper.ts" afterDir="false" />
-            <ranges>
-              <range afterLine1="34" afterLine2="34" beforeLine1="34" beforeLine2="49" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Adds type definitions for `Release`, `Link`, `LinkResponse`, `ArtistResponse`, `EditArtist`, `Styling`, `Colours`, and `StylingGuaranteed` by importing from `components` schema." importance="0.9" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/lib/definitions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/definitions.ts" afterDir="false" />
-            <ranges>
-              <range afterLine1="0" afterLine2="1" beforeLine1="0" beforeLine2="0" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Updates import path for `Release` type from `apihelper` to `definitions`." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseListItem.tsx" afterDir="false" />
-            <ranges>
-              <range afterLine1="2" afterLine2="3" beforeLine1="2" beforeLine2="3" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Updates import path for `StylingGuaranteed` type from `apihelper` to `definitions`." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/ui/StylingProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/StylingProvider.tsx" afterDir="false" />
-            <ranges>
-              <range afterLine1="2" afterLine2="3" beforeLine1="2" beforeLine2="3" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Updates import path for `Release` type from `apihelper` to `definitions`." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" afterDir="false" />
-            <ranges>
-              <range afterLine1="9" afterLine2="10" beforeLine1="9" beforeLine2="10" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Updates import paths for `AdminPages`, `ArtistResponse`, and `Release` types from `apihelper` to `definitions`." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/Dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/Dashboard.tsx" afterDir="false" />
-            <ranges>
-              <range afterLine1="4" afterLine2="5" beforeLine1="4" beforeLine2="5" groupId="1" />
-              <range afterLine1="6" afterLine2="7" beforeLine1="6" beforeLine2="7" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Updates import path for `Link` type from `apihelper` to `definitions`." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" afterDir="false" />
-            <ranges>
-              <range afterLine1="5" afterLine2="6" beforeLine1="5" beforeLine2="6" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Updates import path for `LinkResponse` type from `apihelper` to `definitions`." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/actions/getlinks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/getlinks.ts" afterDir="false" />
-            <ranges>
-              <range afterLine1="2" afterLine2="3" beforeLine1="2" beforeLine2="3" groupId="1" />
-              <range afterLine1="4" afterLine2="5" beforeLine1="4" beforeLine2="4" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Updates import paths for `ArtistResponse` and `Release` types from `apihelper` to `definitions`." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseGrid.tsx" afterDir="false" />
-            <ranges>
-              <range afterLine1="9" afterLine2="10" beforeLine1="9" beforeLine2="10" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Updates import path for `Link` type from `apihelper` to `definitions`." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseLinks.tsx" afterDir="false" />
-            <ranges>
-              <range afterLine1="2" afterLine2="3" beforeLine1="2" beforeLine2="3" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Updates import path for `ApiLink` type from `apihelper` to `definitions`." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ArtistLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ArtistLinks.tsx" afterDir="false" />
-            <ranges>
-              <range afterLine1="3" afterLine2="4" beforeLine1="3" beforeLine2="4" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Updates import paths for `Styling` and `StylingGuaranteed` types from `apihelper` to `definitions`." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/lib/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/utils.ts" afterDir="false" />
-            <ranges>
-              <range afterLine1="0" afterLine2="1" beforeLine1="0" beforeLine2="1" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Updates import paths for `ArtistResponse`, `EditArtist`, `Link`, and `Styling` types from `apihelper` to `definitions`." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" afterDir="false" />
-            <ranges>
-              <range afterLine1="7" afterLine2="9" beforeLine1="7" beforeLine2="8" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Updates import path for `ArtistResponse` type from `apihelper` to `definitions`." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist/Artist.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist/Artist.tsx" afterDir="false" />
-            <ranges>
-              <range afterLine1="1" afterLine2="2" beforeLine1="1" beforeLine2="2" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Updates import paths for `Link` and `Release` types from `apihelper` to `definitions`." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" afterDir="false" />
-            <ranges>
-              <range afterLine1="12" afterLine2="13" beforeLine1="12" beforeLine2="13" groupId="1" />
-            </ranges>
-          </file>
-          <file summary="Updates import paths for `Colours`, `EditArtist`, `Link`, and `Styling` types from `apihelper` to `definitions`." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist/FormStyling.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist/FormStyling.tsx" afterDir="false" />
-            <ranges>
-              <range afterLine1="1" afterLine2="2" beforeLine1="1" beforeLine2="2" groupId="1" />
-            </ranges>
-          </file>
-        </files>
-      </group>
-      <group changeListId="55d93fd5-e558-4c19-961c-12dc2c8fb89c" id="2" name="Add Zod schemas for 'releaseFormSchema' and 'editArtistSchema' validation" description="Implement Zod schemas for `Release` and `EditArtist` to enforce data validation." importance="0.9">
-        <files>
-          <file summary="Adds `releaseFormSchema` and `editArtistSchema` using Zod for data validation, including a `hexRegex` for color validation." importance="0.9" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/lib/definitions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/definitions.ts" afterDir="false" />
-            <ranges>
-              <range afterLine1="26" afterLine2="88" beforeLine1="25" beforeLine2="25" groupId="2" />
-            </ranges>
-          </file>
-          <file summary="Integrates `releaseFormSchema.safeParse` into `updateRelease` and `createRelease` functions to validate incoming `Release` objects, returning an error if validation fails." importance="0.9" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/actions/releases.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/releases.ts" afterDir="false" />
-            <ranges>
-              <range afterLine1="2" afterLine2="3" beforeLine1="2" beforeLine2="3" groupId="2" />
-              <range afterLine1="4" afterLine2="5" beforeLine1="4" beforeLine2="4" groupId="2" />
-              <range afterLine1="12" afterLine2="20" beforeLine1="11" beforeLine2="11" groupId="2" />
-              <range afterLine1="36" afterLine2="37" beforeLine1="27" beforeLine2="28" groupId="2" />
-              <range afterLine1="54" afterLine2="62" beforeLine1="45" beforeLine2="45" groupId="2" />
-              <range afterLine1="78" afterLine2="79" beforeLine1="61" beforeLine2="62" groupId="2" />
-            </ranges>
-          </file>
-          <file summary="Integrates `editArtistSchema.safeParse` into `updateArtist` function to validate incoming `EditArtist` objects, returning an error if validation fails." importance="0.9" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/actions/artists.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/artists.ts" afterDir="false" />
-            <ranges>
-              <range afterLine1="2" afterLine2="3" beforeLine1="2" beforeLine2="3" groupId="2" />
-              <range afterLine1="4" afterLine2="9" beforeLine1="4" beforeLine2="4" groupId="2" />
-              <range afterLine1="14" afterLine2="23" beforeLine1="9" beforeLine2="9" groupId="2" />
-              <range afterLine1="36" afterLine2="37" beforeLine1="22" beforeLine2="23" groupId="2" />
-            </ranges>
-          </file>
-        </files>
-      </group>
-      <group changeListId="fce605ff-a941-4d16-8655-f8d8296204ca" id="3" name="Update 'ArtistForm.tsx' to display status messages with styling" description="Enhance `ArtistForm.tsx` to show styled status messages using `StylingContext`." importance="0.7">
-        <files>
-          <file summary="Adds `StylingContext` import and usage to apply dynamic styling to status messages, and wraps the status message in a styled `p` tag." importance="0.7" isPending="false">
-            <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" afterDir="false" />
-            <ranges>
-              <range afterLine1="10" afterLine2="11" beforeLine1="9" beforeLine2="9" groupId="3" />
-              <range afterLine1="12" afterLine2="13" beforeLine1="10" beforeLine2="11" groupId="3" />
-              <range afterLine1="27" afterLine2="29" beforeLine1="25" beforeLine2="25" groupId="3" />
-              <range afterLine1="94" afterLine2="107" beforeLine1="90" beforeLine2="91" groupId="3" />
-            </ranges>
-          </file>
-        </files>
-      </group>
-      <group changeListId="1f2b8c6f-c126-41ee-b1bc-6b82f41e1841" id="4" name="Update 'README.md' with expanded project description" description="Expand the project description in `README.md` to clarify the project's purpose." importance="0.3">
-        <files>
-          <file summary="Adds a new paragraph to the `README.md` explaining the purpose of linkr.audio." importance="0.3" isPending="false">
-            <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-            <ranges>
-              <range afterLine1="4" afterLine2="7" beforeLine1="4" beforeLine2="4" groupId="4" />
-            </ranges>
-          </file>
-        </files>
-      </group>
-      <group changeListId="dc9f2ace-bc64-4cba-bdb3-0831570482df" id="5" name="Miscellaneous IDE Configuration Updates in '.idea/' files" description="Update IDE configuration files for developer tools and workspace settings." importance="0.1">
-        <files>
-          <file summary="Updates `developer-tools.xml` to change the `lastSelectedContentNodeId` and add a new `developerToolConfiguration` for 'regular-expression-matcher'." importance="0.1" isPending="false">
-            <change beforePath="$PROJECT_DIR$/.idea/developer-tools.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/developer-tools.xml" afterDir="false" />
-            <ranges>
-              <range afterLine1="2" afterLine2="3" beforeLine1="2" beforeLine2="3" groupId="5" />
-              <range afterLine1="4" afterLine2="11" beforeLine1="4" beforeLine2="4" groupId="5" />
-              <range afterLine1="23" afterLine2="24" beforeLine1="16" beforeLine2="16" groupId="5" />
-            </ranges>
-          </file>
-          <file summary="Updates `workspace.xml` with various changes including `cachedIndexableFilesCount`, `ChangeListManager` entries, `OptimizeOnSaveOptions`, `ProblemsViewState`, and `PropertiesComponent` keys." importance="0.1" isPending="false">
-            <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-            <ranges>
-              <range afterLine1="31" afterLine2="32" beforeLine1="31" beforeLine2="31" groupId="5" />
-              <range afterLine1="33" afterLine2="52" beforeLine1="32" beforeLine2="35" groupId="5" />
-              <range afterLine1="59" afterLine2="60" beforeLine1="42" beforeLine2="43" groupId="5" />
-              <range afterLine1="175" afterLine2="178" beforeLine1="158" beforeLine2="158" groupId="5" />
-              <range afterLine1="180" afterLine2="181" beforeLine1="160" beforeLine2="161" groupId="5" />
-              <range afterLine1="194" afterLine2="235" beforeLine1="174" beforeLine2="213" groupId="5" />
-              <range afterLine1="236" afterLine2="239" beforeLine1="214" beforeLine2="217" groupId="5" />
-              <range afterLine1="240" afterLine2="242" beforeLine1="218" beforeLine2="220" groupId="5" />
-              <range afterLine1="244" afterLine2="245" beforeLine1="222" beforeLine2="223" groupId="5" />
-              <range afterLine1="312" afterLine2="313" beforeLine1="290" beforeLine2="290" groupId="5" />
-              <range afterLine1="642" afterLine2="651" beforeLine1="619" beforeLine2="620" groupId="5" />
-            </ranges>
-          </file>
-        </files>
-      </group>
-    </groups>
-  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
@@ -215,39 +28,22 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="style(site): update header and button components, remove unused styles" />
-    <list id="55d93fd5-e558-4c19-961c-12dc2c8fb89c" name="Add Zod schemas for 'releaseFormSchema' and 'editArtistSchema' validation" comment="Implement Zod schemas for `Release` and `EditArtist` to enforce data validation.">
-      <change beforePath="$PROJECT_DIR$/site/src/app/actions/artists.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/artists.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/actions/releases.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/releases.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/lib/definitions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/definitions.ts" afterDir="false" />
-    </list>
-    <list id="dc9f2ace-bc64-4cba-bdb3-0831570482df" name="Miscellaneous IDE Configuration Updates in '.idea/' files" comment="Update IDE configuration files for developer tools and workspace settings.">
-      <change beforePath="$PROJECT_DIR$/.idea/developer-tools.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/developer-tools.xml" afterDir="false" />
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="style(admin): enhance visuals and improve UX for forms and navigation&#10;&#10;Updated admin header with icons and better spacing. Improved artist/release form layout and visuals. Adjusted hover/active styles for better consistency. Added artist styling form colour previews.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
-    <list id="5a231cb2-44e5-4ac2-a9cb-718e1d6a64f1" name="Refactor data definitions from 'apihelper.ts' to 'definitions.ts'" comment="Centralize data type definitions in `definitions.ts` for better organization and consistency.">
+      <change beforePath="$PROJECT_DIR$/site/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/site/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/site/pnpm-lock.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ArtistLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ArtistLinks.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseGrid.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseLinks.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/actions/getlinks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/getlinks.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist/Artist.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist/Artist.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist/FormStyling.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist/FormStyling.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/Dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/Dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseListItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/ui/FormField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormField.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/ui/StylingProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/StylingProvider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/lib/apihelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/apihelper.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/lib/definitions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/definitions.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/lib/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/utils.ts" afterDir="false" />
-    </list>
-    <list id="fce605ff-a941-4d16-8655-f8d8296204ca" name="Update 'ArtistForm.tsx' to display status messages with styling" comment="Enhance `ArtistForm.tsx` to show styled status messages using `StylingContext`.">
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" afterDir="false" />
-    </list>
-    <list id="1f2b8c6f-c126-41ee-b1bc-6b82f41e1841" name="Update 'README.md' with expanded project description" comment="Expand the project description in `README.md` to clarify the project's purpose.">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -360,23 +156,6 @@
     &quot;repository&quot;: &quot;linkr-audio&quot;
   }
 }</component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx">
-      <ranges>
-        <range start1="7" end1="8" start2="7" end2="9" changelist="5a231cb2-44e5-4ac2-a9cb-718e1d6a64f1" />
-        <range start1="9" end1="9" start2="10" end2="11" changelist="fce605ff-a941-4d16-8655-f8d8296204ca" />
-        <range start1="10" end1="11" start2="12" end2="13" changelist="fce605ff-a941-4d16-8655-f8d8296204ca" />
-        <range start1="25" end1="25" start2="27" end2="29" changelist="fce605ff-a941-4d16-8655-f8d8296204ca" />
-        <range start1="90" end1="91" start2="94" end2="107" changelist="fce605ff-a941-4d16-8655-f8d8296204ca" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/site/src/lib/definitions.ts">
-      <ranges>
-        <range start1="0" end1="0" start2="0" end2="1" changelist="5a231cb2-44e5-4ac2-a9cb-718e1d6a64f1" />
-        <range start1="25" end1="25" start2="26" end2="88" changelist="55d93fd5-e558-4c19-961c-12dc2c8fb89c" />
-      </ranges>
-    </file>
-  </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="Ci8PDHaC" />
   </component>
@@ -388,9 +167,6 @@
     <order>
       <scope name="Handcode" />
     </order>
-  </component>
-  <component name="OptimizeOnSaveOptions">
-    <option name="myRunOnSave" value="true" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -419,7 +195,6 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHELLCHECK.PATH": "/home/spence/.local/share/JetBrains/RustRover2025.3/Shell Script/shellcheck",
     "Shell Script.Start api.executor": "Run",
-    "code.cleanup.on.save": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
     "javascript.nodejs.core.library.configured.version": "25.2.1",
@@ -428,7 +203,7 @@
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/home/spence/dev/linkr-audio/site/public",
+    "last_opened_file_path": "/home/spence/dev/linkr-audio/site/public/icons",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
@@ -442,7 +217,7 @@
     "prettierjs.PrettierConfiguration.Package": "/home/spence/dev/linkr-audio/site/node_modules/prettier",
     "rearrange.code.on.save": "true",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "ml.llm.LLMAIWorkflowsConfigurable",
+    "settings.editor.selected.configurable": "actions.on.save",
     "tasks.open.task.update.state.enabled": "true",
     "to.speed.mode.migration.done": "true",
     "ts.external.directory.path": "/home/spence/dev/linkr-audio/site/node_modules/typescript/lib",
@@ -460,6 +235,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/site/public/icons" />
       <recent name="$PROJECT_DIR$/site/public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -525,7 +301,7 @@
       <workItem from="1767062988003" duration="14935000" />
       <workItem from="1767096003372" duration="5398000" />
       <workItem from="1767148460318" duration="10839000" />
-      <workItem from="1767236468021" duration="3595000" />
+      <workItem from="1767236468021" duration="8734000" />
     </task>
     <task id="LOCAL-00001" summary="auth works now">
       <option name="closed" value="true" />
@@ -863,7 +639,55 @@
       <option name="project" value="LOCAL" />
       <updated>1767183453724</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="docs(README): add clarification on linkr.audio purpose">
+      <option name="closed" value="true" />
+      <created>1767241831588</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1767241831588</updated>
+    </task>
+    <task id="LOCAL-00042" summary="feat(artist-form): use artist styling for status message background and text color">
+      <option name="closed" value="true" />
+      <created>1767241844439</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1767241844439</updated>
+    </task>
+    <task id="LOCAL-00043" summary="refactor(types): migrate shared types from apihelper to definitions module">
+      <option name="closed" value="true" />
+      <created>1767241853093</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1767241853093</updated>
+    </task>
+    <task id="LOCAL-00044" summary="feat(forms): add schema validation for release and artist actions">
+      <option name="closed" value="true" />
+      <created>1767241861914</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1767241861914</updated>
+    </task>
+    <task id="LOCAL-00045" summary="chore(ide): update developer-tools and workspace configuration files">
+      <option name="closed" value="true" />
+      <created>1767241867836</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1767241867836</updated>
+    </task>
+    <task id="LOCAL-00046" summary="chore(ide): add code style configuration for Rust projects">
+      <option name="closed" value="true" />
+      <created>1767241879485</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1767241879485</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers>
       <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375" />
     </servers>
@@ -903,13 +727,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="chore(idea): update workspace and developer-tools settings" />
-    <MESSAGE value="chore(idea): update workspace" />
-    <MESSAGE value="86d1b97b2 Make release pages look better" />
-    <MESSAGE value="feat(release-page): enhance layout and add artist details integration" />
-    <MESSAGE value="docs: add README to each directory." />
-    <MESSAGE value="chore(idea): clean up workspace.xml and update recent branch/task history" />
-    <MESSAGE value="feat(site): add cached getArtist, getRelease, and getLatestRelease functions" />
     <MESSAGE value="feat(site): redirect when going to {id}.url/" />
     <MESSAGE value="refactor(release-page): improve layout styles and replace `&lt;a&gt;` with `&lt;Link&gt;` components" />
     <MESSAGE value="feat(api): support pagination in get releases for artists" />
@@ -928,7 +745,14 @@
     <MESSAGE value="style(header): add active state and hover styles to admin navigation links" />
     <MESSAGE value="style(header): improve hover and active visual effects for admin links" />
     <MESSAGE value="style(site): update header and button components, remove unused styles" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="docs(README): add clarification on linkr.audio purpose" />
+    <MESSAGE value="feat(artist-form): use artist styling for status message background and text color" />
+    <MESSAGE value="refactor(types): migrate shared types from apihelper to definitions module" />
+    <MESSAGE value="chore(ide): update developer-tools and workspace configuration files" />
+    <MESSAGE value="feat(forms): add schema validation for release and artist actions" />
+    <MESSAGE value="chore(ide): add code style configuration for Rust projects" />
+    <MESSAGE value="style(admin): enhance visuals and improve UX for forms and navigation&#10;&#10;Updated admin header with icons and better spacing. Improved artist/release form layout and visuals. Adjusted hover/active styles for better consistency. Added artist styling form colour previews." />
+    <option name="LAST_COMMIT_MESSAGE" value="style(admin): enhance visuals and improve UX for forms and navigation&#10;&#10;Updated admin header with icons and better spacing. Improved artist/release form layout and visuals. Adjusted hover/active styles for better consistency. Added artist styling form colour previews." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

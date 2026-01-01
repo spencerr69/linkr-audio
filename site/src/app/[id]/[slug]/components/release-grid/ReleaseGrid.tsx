@@ -60,7 +60,7 @@ export const ReleaseGrid = (props: {
           artwork={props.release.artwork}
           title={props.release.title}
         />
-        <div className={"p-4 flex w-full font-mono text-xs"}>
+        <div className={"p-4 flex w-full font-mono text-xs h-28"}>
           <ReleaseInfo
             releaseDate={props.release.release_date}
             trackCount={props.release.track_count}
@@ -138,7 +138,9 @@ export const ReleaseGrid = (props: {
             </div>
           </div>
         </div>
-        <ReleaseLinks links={props.release.links} />
+        <div className={"max-h-90 "}>
+          <ReleaseLinks links={props.release.links} />
+        </div>
         <div className={"p-4 flex w-full font-mono text-xs"}>
           <ReleaseInfo
             releaseDate={props.release.release_date}

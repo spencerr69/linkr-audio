@@ -38,30 +38,33 @@ export const ReleaseListItem = ({
       }}
       onClick={() => onClick(release)}
     >
-      <div>
-        <div className={"pb-4"}>
-          <h2 className={" font-medium text-2xl"}>{release.title}</h2>
-          <h4 className={"text-xl italic"}>{release.artist_name}</h4>
-          <p>{release.release_date}</p>
-          <p>{release.links.length + " links"}</p>
+      <div className={"flex justify-between w-full items-center"}>
+        <div className={"flex-3"}>
+          <div className={"pb-4"}>
+            <h2 className={" font-medium text-2xl"}>{release.title}</h2>
+            <h4 className={"text-xl italic"}>{release.artist_name}</h4>
+            <p>{release.release_date}</p>
+            <p>{release.links.length + " links"}</p>
+          </div>
+          <ExternalButton
+            href={
+              "//" + release.artist_id + "." + baseDomain + "/" + release.slug
+            }
+            onClick={(e) => e.stopPropagation()}
+          >
+            View
+          </ExternalButton>
         </div>
-        <ExternalButton
-          href={
-            "//" + release.artist_id + "." + baseDomain + "/" + release.slug
-          }
-          onClick={(e) => e.stopPropagation()}
-        >
-          View
-        </ExternalButton>
-      </div>
-      <div className={"flex items-center"}>
-        <Image
-          src={release.artwork || ""}
-          alt={release.title + " Artwork"}
-          width={100}
-          height={100}
-        />
-        <p className={"p-4"}>{">"}</p>
+        <div className={"flex flex-1 items-center"}>
+          <Image
+            src={release.artwork || ""}
+            alt={release.title + " Artwork"}
+            width={100}
+            height={100}
+            className={"rounded-md"}
+          />
+          <p className={"p-4"}>{">"}</p>
+        </div>
       </div>
     </div>
   );

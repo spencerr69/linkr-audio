@@ -8,7 +8,6 @@ import { FormLinks } from "@/app/ui/FormLinks";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { ArtistResponse, EditArtist, Link, Styling } from "@/lib/definitions";
 import { stylingComp } from "@/lib/utils";
-import { router } from "next/dist/client";
 import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 
@@ -74,7 +73,7 @@ export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {
           valueUpdateAction={getArtistUpdater("links")}
           links={editedArtist.links || []}
         />
-        <div className={"justify-end w-full flex"}>
+        <div className={"justify-end w-full my-4 flex"}>
           <Button
             name={"save"}
             onClick={async () => {

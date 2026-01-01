@@ -172,11 +172,11 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
               alt={"Artwork"}
               width={200}
               height={200}
-              className={"aspect-square h-fit "}
+              className={"aspect-square h-fit rounded-md"}
             />
           </div>
         </div>
-        <div className="saveContainer flex-col flex items-end  m-6">
+        <div className="saveContainer flex-col flex items-end  my-12">
           <div>
             <Button
               secondary

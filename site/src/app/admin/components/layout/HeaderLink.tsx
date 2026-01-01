@@ -21,11 +21,12 @@ export const HeaderLink = ({
 
   return (
     <Link
-      className={"mr-4  p-2 rounded-md duration-100 " + className}
+      className={"mr-2 p-2  rounded-md duration-100 " + className}
       style={{
         backgroundColor: active
           ? styling.colours.background + "AA"
           : "transparent",
+        color: active ? styling.colours.accent : styling.colours.background,
       }}
       href={href}
       onMouseEnter={(e) => {
@@ -36,7 +37,9 @@ export const HeaderLink = ({
         e.currentTarget.style.backgroundColor = active
           ? styling.colours.background + "AA"
           : "transparent";
-        e.currentTarget.style.color = styling.colours.background;
+        e.currentTarget.style.color = active
+          ? styling.colours.accent
+          : styling.colours.background;
       }}
       onClick={onClick}
     >

@@ -37,6 +37,12 @@ body {
 
 .releasegrid {
     grid-template-columns: 20em auto;
+    grid-template-rows: auto 36em auto;
+}
+
+* {
+    scrollbar-color: #00000022 #AAAAAA11;
+    scrollbar-width: thin;
 }
 
 .mob-art,
