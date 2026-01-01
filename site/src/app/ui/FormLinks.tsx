@@ -74,7 +74,7 @@ export const FormLinks = ({
         }}
       >
         {linkFields}
-        <div className={"flex justify-center my-4"}>
+        <div className={"flex justify-center mt-4"}>
           <Button
             squish
             onClick={() => {

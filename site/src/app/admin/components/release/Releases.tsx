@@ -34,9 +34,11 @@ export const Releases = ({ releases }: { releases: Release[] }) => {
   });
 
   return (
-    <div className={"flex flex-col-reverse lg:flex-row min-h-0 h-full"}>
+    <div className={"flex flex-col lg:flex-row min-h-0 h-full overflow-hidden"}>
       <div
-        className={" lg:w-4xl border-r border-dashed overflow-y-auto"}
+        className={
+          " lg:w-xl border-r border-dashed overflow-x-auto lg:overflow-y-auto shrink-0"
+        }
         style={{
           borderColor: `${styling.colours.foreground}22`,
         }}

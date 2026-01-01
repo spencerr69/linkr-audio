@@ -73,7 +73,7 @@ export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {
           valueUpdateAction={getArtistUpdater("links")}
           links={editedArtist.links || []}
         />
-        <div className={"justify-end w-full my-4 flex"}>
+        <div className={"justify-center lg:justify-end w-full my-4 flex"}>
           <Button
             name={"save"}
             onClick={async () => {

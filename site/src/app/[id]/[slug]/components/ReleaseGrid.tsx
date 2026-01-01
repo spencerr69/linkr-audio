@@ -1,11 +1,11 @@
 "use client";
 
-import { ArtistLinks } from "@/app/[id]/[slug]/components/release-grid/ArtistLinks";
-import { ReleaseArtwork } from "@/app/[id]/[slug]/components/release-grid/ReleaseArtwork";
-import { ReleaseHeader } from "@/app/[id]/[slug]/components/release-grid/ReleaseHeader";
-import { ReleaseInfo } from "@/app/[id]/[slug]/components/release-grid/ReleaseInfo";
-import { ReleaseLinks } from "@/app/[id]/[slug]/components/release-grid/ReleaseLinks";
-import { ScrollingBackground } from "@/app/[id]/[slug]/components/release-grid/ScrollingBackground";
+import { ArtistLinks } from "@/app/[id]/[slug]/components/ArtistLinks";
+import { ReleaseArtwork } from "@/app/[id]/[slug]/components/ReleaseArtwork";
+import { ReleaseHeader } from "@/app/[id]/[slug]/components/ReleaseHeader";
+import { ReleaseInfo } from "@/app/[id]/[slug]/components/ReleaseInfo";
+import { ReleaseLinks } from "@/app/[id]/[slug]/components/ReleaseLinks";
+import { ScrollingBackground } from "@/app/[id]/[slug]/components/ScrollingBackground";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { ArtistResponse, Release } from "@/lib/definitions";
 import Image from "next/image";
@@ -89,12 +89,14 @@ export const ReleaseGrid = (props: {
         height={500}
         width={500}
         draggable={false}
-        className={"blur-3xl w-full aspect-square fixed -z-10 "}
+        className={
+          "blur-3xl w-full aspect-square fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 "
+        }
         style={{ transform: "scale(3)" }}
       />
       <div
         className={
-          "m-4 releasegridmob  max-w-2xl grid grid-cols-1 font-sans rounded-2xl shadow-xl z-20 "
+          "mx-4 my-8 releasegridmob  max-w-2xl grid grid-cols-1 font-sans rounded-2xl shadow-xl z-20 "
         }
         style={{
           backgroundColor: styling.colours.background,
@@ -104,10 +106,10 @@ export const ReleaseGrid = (props: {
           title={props.release.title}
           artistName={props.release.artist_name}
         />
-        <div className={"grid w-full mob-cont overflow-hidden"}>
+        <div className={"grid w-full mob-cont overflow-hidden min-w-0"}>
           <div
             className={
-              "w-full z-10 flex items-center justify-center mob-art overflow-hidden"
+              "w-full z-10 flex items-center justify-center mob-art overflow-hidden min-w-0"
             }
           >
             <Image
@@ -116,12 +118,12 @@ export const ReleaseGrid = (props: {
               height={500}
               width={500}
               className={
-                "aspect-square rounded-md w-full max-w-4/5 h-auto object-cover"
+                "aspect-square rounded-md w-full max-w-[80%] h-auto object-cover"
               }
               draggable={false}
             />
           </div>
-          <div className={"flex w-full mob-flavour overflow-hidden"}>
+          <div className={"flex w-full mob-flavour overflow-hidden min-w-0"}>
             <div className={"overflow-hidden flex-1"}>
               <ScrollingBackground
                 text={props.release.artist_id || ""}

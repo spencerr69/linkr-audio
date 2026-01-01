@@ -28,14 +28,25 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="style(admin): enhance visuals and improve UX for forms and navigation&#10;&#10;Updated admin header with icons and better spacing. Improved artist/release form layout and visuals. Adjusted hover/active styles for better consistency. Added artist styling form colour previews.">
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="style(admin): adjust HeaderLink styles for better spacing and consistency">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseLinks.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ArtistLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ArtistLinks.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseArtwork.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseArtwork.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseGrid.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseInfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ReleaseLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseLinks.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid/ScrollingBackground.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ScrollingBackground.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist/FormStyling.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist/FormStyling.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseListItem.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/ui/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/Button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/globals.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/ui/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/LoginForm.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +80,7 @@
     </excluded-from-favorite>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="implement-styling-admin" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -112,12 +123,8 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="implement-styling-admin" />
-                    <option name="lastUsedInstant" value="1767159641" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="implement-styling-linkpage" />
-                    <option name="lastUsedInstant" value="1767156945" />
+                    <option name="branchName" value="hmm" />
+                    <option name="lastUsedInstant" value="1767251677" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="main" />
@@ -188,7 +195,7 @@
     "SHELLCHECK.PATH": "/home/spence/.local/share/JetBrains/RustRover2025.3/Shell Script/shellcheck",
     "Shell Script.Start api.executor": "Run",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "hmm",
     "javascript.nodejs.core.library.configured.version": "25.2.1",
     "javascript.nodejs.core.library.typings.version": "25.0.3",
     "javascript.preferred.runtime.type.id": "node",
@@ -209,7 +216,7 @@
     "prettierjs.PrettierConfiguration.Package": "/home/spence/dev/linkr-audio/site/node_modules/prettier",
     "rearrange.code.on.save": "true",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "actions.on.save",
+    "settings.editor.selected.configurable": "ml.llm.LLMThirdPartyAiProvidersConfigurable",
     "tasks.open.task.update.state.enabled": "true",
     "to.speed.mode.migration.done": "true",
     "ts.external.directory.path": "/home/spence/dev/linkr-audio/site/node_modules/typescript/lib",
@@ -231,6 +238,7 @@
       <recent name="$PROJECT_DIR$/site/public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/site/src/app/[id]/[slug]/components" />
       <recent name="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid" />
       <recent name="$PROJECT_DIR$/site" />
       <recent name="$PROJECT_DIR$/site/src" />
@@ -293,15 +301,7 @@
       <workItem from="1767062988003" duration="14935000" />
       <workItem from="1767096003372" duration="5398000" />
       <workItem from="1767148460318" duration="10839000" />
-      <workItem from="1767236468021" duration="10742000" />
-    </task>
-    <task id="LOCAL-00001" summary="auth works now">
-      <option name="closed" value="true" />
-      <created>1766141293353</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1766141293353</updated>
+      <workItem from="1767236468021" duration="14982000" />
     </task>
     <task id="LOCAL-00002" summary="deps">
       <option name="closed" value="true" />
@@ -687,7 +687,23 @@
       <option name="project" value="LOCAL" />
       <updated>1767246987612</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="style(admin): enhance buttons and layouts for consistent UX&#10;&#10;Refined button styles with new props (`squish`, `fill`) and updated layouts for admin releases, release list items, and form links. Added material icons for actions. Improved responsiveness and spacing.">
+      <option name="closed" value="true" />
+      <created>1767249204292</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1767249204292</updated>
+    </task>
+    <task id="LOCAL-00049" summary="style(admin): adjust HeaderLink styles for better spacing and consistency">
+      <option name="closed" value="true" />
+      <created>1767251579181</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1767251579181</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers>
       <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375" />
     </servers>
@@ -727,21 +743,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="feat(site): redirect when going to {id}.url/" />
-    <MESSAGE value="refactor(release-page): improve layout styles and replace `&lt;a&gt;` with `&lt;Link&gt;` components" />
-    <MESSAGE value="feat(api): support pagination in get releases for artists" />
-    <MESSAGE value="chore(idea)" />
-    <MESSAGE value="style(site): make images no longer draggable" />
-    <MESSAGE value="chore(idea): add run configurations for development setup" />
-    <MESSAGE value="feat(site): add noise overlay to release page and adjust z-index styling" />
-    <MESSAGE value="style(site): update styling so it works on short screens" />
-    <MESSAGE value="refactor(site): move components out of pages to be more modular. changed flavour text to scroll but idk if thats the vibe" />
-    <MESSAGE value="feat(site): implement mobile support!" />
-    <MESSAGE value="feat(site): animations, make artwork move with mouse and vinyl pop out yay" />
-    <MESSAGE value="feat: Implement support for Styling object in APIs." />
-    <MESSAGE value="feat(site): support changing styling colours in artist admin area" />
-    <MESSAGE value="style(site): change logo to &lt;i&gt; block so i can change background colour." />
-    <MESSAGE value="style(site): admin now responsive to artist styling" />
     <MESSAGE value="style(header): add active state and hover styles to admin navigation links" />
     <MESSAGE value="style(header): improve hover and active visual effects for admin links" />
     <MESSAGE value="style(site): update header and button components, remove unused styles" />
@@ -752,7 +753,22 @@
     <MESSAGE value="feat(forms): add schema validation for release and artist actions" />
     <MESSAGE value="chore(ide): add code style configuration for Rust projects" />
     <MESSAGE value="style(admin): enhance visuals and improve UX for forms and navigation&#10;&#10;Updated admin header with icons and better spacing. Improved artist/release form layout and visuals. Adjusted hover/active styles for better consistency. Added artist styling form colour previews." />
-    <option name="LAST_COMMIT_MESSAGE" value="style(admin): enhance visuals and improve UX for forms and navigation&#10;&#10;Updated admin header with icons and better spacing. Improved artist/release form layout and visuals. Adjusted hover/active styles for better consistency. Added artist styling form colour previews." />
+    <MESSAGE value="style(admin): enhance buttons and layouts for consistent UX&#10;&#10;Refined button styles with new props (`squish`, `fill`) and updated layouts for admin releases, release list items, and form links. Added material icons for actions. Improved responsiveness and spacing." />
+    <MESSAGE value="style(layout): adjust padding and border-radius for HeaderLink consistency" />
+    <MESSAGE value="chore(admin): update header link styles for better UX and spacing" />
+    <MESSAGE value="refactor(admin): adjust HeaderLink component classes for improved spacing and styling consistency" />
+    <MESSAGE value="Refined spacing and roundedness of HeaderLink component for improved aesthetic consistency." />
+    <MESSAGE value="chore(admin): adjust HeaderLink component styling" />
+    <MESSAGE value="chore(admin-site): adjust header link styles for improved consistency" />
+    <MESSAGE value="Refine admin link component styling" />
+    <MESSAGE value="style(admin): adjust HeaderLink styles for better spacing and consistency" />
+    <MESSAGE value="Refined HeaderLink component styles for better spacing and consistency. Adjusted padding, border-radius, and added hover effects." />
+    <MESSAGE value="Refine HeaderLink styles for better spacing and consistency." />
+    <MESSAGE value="```markdown&#10;style(admin): adjust HeaderLink styles for better spacing and consistency&#10;```" />
+    <MESSAGE value="Refined admin layout consistency and improved UX. Adjusted HeaderLink styles, button props, and form layouts. Added material icons and enhanced responsiveness." />
+    <MESSAGE value="Refined spacing and roundedness of HeaderLink component for improved aesthetic consistency. Adjusted padding and border-radius for better visual harmony across the admin interface." />
+    <MESSAGE value="Refined spacing and roundedness of HeaderLink component for improved aesthetic consistency. Adjusted padding and border-radius for better visual harmony across admin components." />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

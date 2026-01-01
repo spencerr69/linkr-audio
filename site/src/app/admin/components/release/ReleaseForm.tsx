@@ -79,6 +79,7 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
             <Button
               inline
               secondary
+              className="text-xs lg:text-base whitespace-nowrap"
               onClick={async () => {
                 const newRelease = await getLinks(editedRelease.upc);
                 setEditedRelease((prev) => {
@@ -105,7 +106,11 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
           valueUpdater={getReleaseUpdater("artist_name")}
           value={editedRelease.artist_name || ""}
         />
-        <div className={"grid grid-cols-2 gap-x-4 grid-flow-row formgrid"}>
+        <div
+          className={
+            "grid grid-cols-1 lg:grid-cols-[auto_max-content] gap-x-4 grid-flow-row"
+          }
+        >
           <FormField
             name="release-date"
             label="Release Date"
@@ -129,6 +134,7 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
                 <Button
                   inline
                   secondary
+                  className="text-xs lg:text-base whitespace-nowrap"
                   onClick={() => {
                     const slug = editedRelease.title
                       .split(" ")
@@ -158,7 +164,7 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
             valueUpdateAction={getReleaseUpdater("links")}
             links={editedRelease.links || []}
           />
-          <div>
+          <div className="flex flex-col items-start mt-8 lg:mt-0">
             <label
               htmlFor="artwork"
               className={" font-light text-sm p-0 m-0"}
@@ -172,11 +178,11 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
               alt={"Artwork"}
               width={200}
               height={200}
-              className={"aspect-square h-fit rounded-md"}
+              className={"aspect-square h-fit rounded-md max-w-full "}
             />
           </div>
         </div>
-        <div className="saveContainer flex-col flex items-end  my-12">
+        <div className="saveContainer flex-col flex items-center lg:items-end my-12">
           <div>
             <Button
               secondary

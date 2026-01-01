@@ -1,6 +1,6 @@
 "use server";
 
-import { ReleaseGrid } from "@/app/[id]/[slug]/components/release-grid/ReleaseGrid";
+import { ReleaseGrid } from "@/app/[id]/[slug]/components/ReleaseGrid";
 import { getArtist } from "@/app/actions/artists";
 import { getRelease } from "@/app/actions/releases";
 import StylingProvider from "@/app/ui/StylingProvider";
@@ -38,7 +38,9 @@ const Page = async ({
   return (
     <StylingProvider styling={styling}>
       <main
-        className={"min-h-screen flex flex-col justify-center items-center "}
+        className={
+          "min-h-screen flex flex-col justify-center items-center overflow-x-hidden "
+        }
       >
         <div
           className="absolute top-0 left-0 w-full h-full content-[''] z-10 pointer-events-none bg-[url('https://www.ui-layouts.com/noise.gif')]"

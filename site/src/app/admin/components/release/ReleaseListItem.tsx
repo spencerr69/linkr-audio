@@ -21,7 +21,7 @@ export const ReleaseListItem = ({
   return (
     <div
       className={
-        "p-1 lg:p-4 flex items-center justify-between border-b cursor-pointer duration-100 border-dashed "
+        "p-2 lg:p-4 flex items-center justify-between border-b cursor-pointer duration-100 border-dashed "
       }
       style={{
         borderColor: `${styling.colours.foreground}22`,
@@ -42,17 +42,25 @@ export const ReleaseListItem = ({
     >
       <div
         className={
-          "flex flex-col-reverse lg:flex-row justify-between w-full items-center"
+          "flex flex-col-reverse lg:flex-row justify-between w-full items-center min-w-[120px]"
         }
       >
-        <div className={"flex-3"}>
+        <div className={"flex-3 text-center lg:text-left"}>
           <div className={"pb-4"}>
-            <h2 className={" font-medium lg:text-2xl"}>{release.title}</h2>
+            <h2
+              className={
+                " font-medium lg:text-2xl truncate max-w-[120px] sm:max-w-[200px] lg:max-w-none"
+              }
+            >
+              {release.title}
+            </h2>
             <h4 className={"hidden lg:block lg:text-xl italic"}>
               {release.artist_name}
             </h4>
-            <p>{release.release_date}</p>
-            <p>{release.links.length + " links"}</p>
+            <p className="text-xs lg:text-base">{release.release_date}</p>
+            <p className="text-xs lg:text-base">
+              {release.links.length + " links"}
+            </p>
           </div>
           <ExternalButton
             squish
@@ -67,14 +75,19 @@ export const ReleaseListItem = ({
             <VisibilityIcon />
           </ExternalButton>
         </div>
-        <div className={"flex flex-1 lg:items-center"}>
-          <Image
-            src={release.artwork || ""}
-            alt={release.title + " Artwork"}
-            width={100}
-            height={100}
-            className={"rounded-md"}
-          />
+        <div
+          className={
+            "flex flex-1 lg:items-center justify-center lg:justify-start"
+          }
+        >
+          <div className="relative w-16 h-16 lg:w-[100px] lg:h-[100px]">
+            <Image
+              src={release.artwork || ""}
+              alt={release.title + " Artwork"}
+              fill
+              className={"rounded-md object-cover"}
+            />
+          </div>
           <p className={"p-4 hidden lg:block"}>
             <ChevronRightIcon
               style={{ color: styling.colours.foreground + "44" }}

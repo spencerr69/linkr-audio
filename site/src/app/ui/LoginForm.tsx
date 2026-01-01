@@ -15,7 +15,7 @@ export function LoginForm() {
     <PopupContainer>
       <form
         className={
-          "text-black flex flex-col items-center w-1/4 h-1/4 bg-white justify-center"
+          "text-black flex flex-col items-center w-full lg:w-1/4 h-1/2 lg:h-1/4 bg-white justify-center"
         }
         action={action}
       >

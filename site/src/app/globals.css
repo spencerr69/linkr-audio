@@ -31,9 +31,6 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.formgrid {
-    grid-template-columns: auto max-content;
-}
 
 .releasegrid {
     grid-template-columns: 20em auto;

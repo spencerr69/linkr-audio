@@ -14,7 +14,7 @@ export function FormStyling(props: {
   };
 
   return (
-    <div className={"grid grid-cols-3 gap-4 w-full"}>
+    <div className={"grid lg:grid-cols-3 gap-4 w-full"}>
       <FormField
         name={"accent-colour"}
         label={"Accent Colour"}

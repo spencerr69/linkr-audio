@@ -20,7 +20,10 @@ export const ReleaseLinks: React.FC<ReleaseLinksProps> = ({ links }) => {
       }}
     >
       {links.map((link) => (
-        <div key={link.name} className={"w-7/8 flex flex-col text-center py-3"}>
+        <div
+          key={link.name}
+          className={"w-[87.5%] flex flex-col text-center py-3"}
+        >
           <ExternalButton fill href={link.url}>
             {link.name}
           </ExternalButton>

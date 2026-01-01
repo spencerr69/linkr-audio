@@ -22,9 +22,9 @@ export const Header = (props: HeaderProps) => {
   return (
     <header
       className={
-        " flex  items-center content-between justify-between" +
-        " p-2" +
-        " py-14" +
+        " flex items-center content-between justify-between" +
+        " p-4 lg:p-2" +
+        " py-8 lg:py-14" +
         " h-3 "
       }
       style={{
@@ -41,10 +41,10 @@ export const Header = (props: HeaderProps) => {
             }}
           />
         </Link>
-        <h1 className={"font-bold font-sans text-4xl"}>
+        <h1 className={"font-bold font-sans text-xl lg:text-4xl ml-2"}>
           {props.artistName}
           {"  "}
-          <span className={"font-light italic text-2xl opacity-50"}>
+          <span className={"font-light italic text-sm lg:text-2xl opacity-50"}>
             {props.artistId}
           </span>
         </h1>
