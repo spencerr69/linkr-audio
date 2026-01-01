@@ -1,3 +1,4 @@
+import { components } from "@/lib/schema";
 import * as z from "zod";
 
 export const LoginFormSchema = z.object({

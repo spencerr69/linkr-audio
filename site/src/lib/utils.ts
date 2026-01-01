@@ -1,4 +1,4 @@
-import { Styling, StylingGuaranteed } from "@/lib/apihelper";
+import { Styling, StylingGuaranteed } from "@/lib/definitions";
 
 export const rootDomain =
   process.env.PUBLIC_ROOT_DOMAIN || "http://localhost:3000";

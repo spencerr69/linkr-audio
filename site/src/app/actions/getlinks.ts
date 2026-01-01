@@ -1,7 +1,8 @@
 "use server";
 
-import { LinkResponse, serverFetch } from "@/lib/apihelper";
+import { serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
+import { LinkResponse } from "@/lib/definitions";
 
 export async function getLinks(upc: string) {
   "use server";

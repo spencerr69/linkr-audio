@@ -1,6 +1,6 @@
 "use client";
 
-import { Styling, StylingGuaranteed } from "@/lib/apihelper";
+import { StylingGuaranteed } from "@/lib/definitions";
 import { stylingComp } from "@/lib/utils";
 import React, { createContext } from "react";
 

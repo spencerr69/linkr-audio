@@ -2,9 +2,9 @@ import { Artist } from "@/app/admin/components/artist/Artist";
 import StylingProvider from "@/app/ui/StylingProvider";
 import { Header } from "./Header";
 import { Releases } from "@/app/admin/components/release/Releases";
-import { ArtistResponse, Release, serverFetch } from "@/lib/apihelper";
+import { serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
-import { AdminPages } from "@/lib/definitions";
+import { AdminPages, ArtistResponse, Release } from "@/lib/definitions";
 import { apiDomain, stylingComp } from "@/lib/utils";
 
 export const Dashboard = async ({

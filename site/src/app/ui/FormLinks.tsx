@@ -3,7 +3,7 @@
 import { Button } from "@/app/ui/Button";
 import { FormField } from "@/app/ui/FormField";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { Link } from "@/lib/apihelper";
+import { Link } from "@/lib/definitions";
 import { useContext } from "react";
 
 export const FormLinks = ({

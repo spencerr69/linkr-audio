@@ -1,5 +1,5 @@
 import { ArtistForm } from "@/app/admin/components/artist/ArtistForm";
-import { ArtistResponse } from "@/lib/apihelper";
+import { ArtistResponse } from "@/lib/definitions";
 
 export const Artist = ({ artist }: { artist: ArtistResponse }) => {
   return (

@@ -1,7 +1,7 @@
 import { StylingContext } from "@/app/ui/StylingProvider";
 import React, { useContext } from "react";
 import Link from "next/link";
-import { Link as ApiLink } from "@/lib/apihelper";
+import { Link as ApiLink } from "@/lib/definitions";
 
 interface ArtistLinksProps {
   artistName: string;

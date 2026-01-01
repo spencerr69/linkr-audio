@@ -7,7 +7,7 @@ import {
 import { ReleaseListItem } from "@/app/admin/components/release/ReleaseListItem";
 import { Button } from "@/app/ui/Button";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { Release } from "@/lib/apihelper";
+import { Release } from "@/lib/definitions";
 import React, { useContext } from "react";
 
 export const Releases = ({ releases }: { releases: Release[] }) => {

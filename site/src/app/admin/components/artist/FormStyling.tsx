@@ -1,5 +1,5 @@
 import { FormField } from "@/app/ui/FormField";
-import { Colours, EditArtist, Link, Styling } from "@/lib/apihelper";
+import { Colours, EditArtist, Link, Styling } from "@/lib/definitions";
 import React from "react";
 
 export function FormStyling(props: {

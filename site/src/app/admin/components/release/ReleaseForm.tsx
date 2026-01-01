@@ -10,7 +10,7 @@ import { Button } from "@/app/ui/Button";
 import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { Link, Release } from "@/lib/apihelper";
+import { Link, Release } from "@/lib/definitions";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useContext } from "react";

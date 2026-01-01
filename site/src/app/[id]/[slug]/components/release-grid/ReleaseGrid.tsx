@@ -7,7 +7,7 @@ import { ReleaseInfo } from "@/app/[id]/[slug]/components/release-grid/ReleaseIn
 import { ReleaseLinks } from "@/app/[id]/[slug]/components/release-grid/ReleaseLinks";
 import { ScrollingBackground } from "@/app/[id]/[slug]/components/release-grid/ScrollingBackground";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { ArtistResponse, Release } from "@/lib/apihelper";
+import { ArtistResponse, Release } from "@/lib/definitions";
 import Image from "next/image";
 import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";

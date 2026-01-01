@@ -32,18 +32,3 @@ export const serverFetch = async (
 
   return await fetch(url, newFetchOptions);
 };
-
-export type Release = components["schemas"]["Release"];
-export type Link = components["schemas"]["Link"];
-export type LinkResponse = components["schemas"]["LinkResponse"];
-export type ArtistResponse = components["schemas"]["Artist"];
-export type EditArtist = {
-  master_artist_name: string;
-  links: components["schemas"]["Link"][];
-  styling?: Styling;
-};
-export type Styling = components["schemas"]["Styling"];
-export type Colours = components["schemas"]["Colours"];
-export type StylingGuaranteed = {
-  colours: Required<Colours>;
-};

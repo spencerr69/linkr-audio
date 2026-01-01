@@ -1,6 +1,6 @@
 import { ExternalButton } from "@/app/ui/Button";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { Release } from "@/lib/apihelper";
+import { Release } from "@/lib/definitions";
 import { baseDomain } from "@/lib/utils";
 import Image from "next/image";
 import React, { useContext } from "react";
