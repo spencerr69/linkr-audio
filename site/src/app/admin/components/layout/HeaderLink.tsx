@@ -21,7 +21,7 @@ export const HeaderLink = ({
 
   return (
     <Link
-      className={"mr-2 p-2  rounded-md duration-100 " + className}
+      className={"mr-3 p-1  rounded-sm duration-100 " + className}
       style={{
         backgroundColor: active
           ? styling.colours.background + "AA"
