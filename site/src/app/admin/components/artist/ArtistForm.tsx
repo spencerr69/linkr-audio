@@ -7,8 +7,9 @@ import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
 import { ArtistResponse, EditArtist, Link, Styling } from "@/lib/apihelper";
 import { stylingComp } from "@/lib/utils";
+import { router } from "next/dist/client";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useContext } from "react";
 
 const editArtistFromArtist = (artist: ArtistResponse) => {
   return {
@@ -22,6 +23,8 @@ export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {
   const [editedArtist, setEditedArtist] = React.useState<EditArtist>(
     editArtistFromArtist(artist),
   );
+
+  const styling = useContext(StylingContext);
 
   const router = useRouter();
 
@@ -88,7 +91,19 @@ export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {
             Save
           </Button>
         </div>
-        <p>{status}</p>
+        {status != "" && (
+          <p
+            className={
+              "text-right  rounded-md p-4 m-4 absolute left-4 bottom-0"
+            }
+            style={{
+              backgroundColor: styling.colours.accent,
+              color: styling.colours.background,
+            }}
+          >
+            {status}
+          </p>
+        )}
       </form>
     </div>
   );
