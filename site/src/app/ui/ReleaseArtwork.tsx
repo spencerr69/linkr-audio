@@ -1,3 +1,5 @@
+"use client";
+
 import { StylingContext } from "@/app/ui/StylingProvider";
 import Image from "next/image";
 import React, { useContext, useRef } from "react";
@@ -5,11 +7,13 @@ import React, { useContext, useRef } from "react";
 interface ReleaseArtworkProps {
   artwork: string | null | undefined;
   title: string;
+  small: boolean;
 }
 
 export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
   artwork,
   title,
+  small,
 }) => {
   const ref = useRef<HTMLImageElement>(null);
   const vinylRef = useRef<HTMLImageElement>(null);
@@ -50,7 +54,7 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
         vinylRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) translateX(0)`;
       }}
       className={
-        "w-full border-b-2 flex items-center justify-center p-8 border-l-2 border-dashed "
+        "relative w-full border-b-2 flex items-center justify-center p-8 border-l-2 border-dashed "
       }
       style={{
         borderColor: `${styling.colours.foreground}22`,
@@ -63,7 +67,8 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
         height={500}
         width={500}
         className={
-          "aspect-square rounded-md w-full max-w-[500px] h-auto object-cover transition-all duration-200  ease-custom " +
+          `aspect-square rounded-md w-full max-w-[${small ? "250px" : "500px"}] h-auto object-cover transition-all duration-200` +
+          "  ease-custom " +
           " hover:shadow-lg hover:drop-shadow-lg z-10"
         }
         draggable={false}
@@ -72,11 +77,13 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
         src={"/vinyl.png"}
         ref={vinylRef}
         alt={"vinyl"}
-        height={500}
-        width={500}
+        height={small ? 250 : 500}
+        width={small ? 250 : 500}
         className={
-          "absolute -z-10 duration-200 ease-custom drop-shadow-2xl transition-all object-cover"
+          `aspect-square rounded-md w-full max-w-[${small ? "250px" : "500px"}] ${small ? "scale-75" : ""} h-auto absolute -z-10 duration-200 ease-custom` +
+          " drop-shadow-2xl transition-all object-cover"
         }
+        draggable={false}
       />
     </div>
   );

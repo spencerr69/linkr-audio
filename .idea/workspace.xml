@@ -28,16 +28,16 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="feat(admin): Add colour pickers to styling area">
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="feat(admin): Add PostHog tracking to admin forms and UI elements">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/site/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/site/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ArtistLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ArtistLinks.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseLinks.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/openapi.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/openapi.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/releases/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/releases/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseArtwork.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/ReleaseArtwork.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseGrid.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/actions/releases.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/releases.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/ui/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/lib/schema.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/schema.d.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +45,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="132" />
+    <option name="cachedIndexableFilesCount" value="159" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -229,11 +229,11 @@
       <recent name="$PROJECT_DIR$/site/public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/site/src/app/ui" />
       <recent name="$PROJECT_DIR$/site/src/app/[id]/[slug]/components" />
       <recent name="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/release-grid" />
       <recent name="$PROJECT_DIR$/site" />
       <recent name="$PROJECT_DIR$/site/src" />
-      <recent name="$PROJECT_DIR$/public" />
     </key>
     <key name="es6.move.members.recent.items">
       <recent name="$PROJECT_DIR$/site/src/app/admin/components/artist/FormStyling.tsx" />
@@ -293,14 +293,6 @@
       <workItem from="1767096003372" duration="5398000" />
       <workItem from="1767148460318" duration="10839000" />
       <workItem from="1767236468021" duration="14982000" />
-    </task>
-    <task id="LOCAL-00003" summary="begin reimplementing auth">
-      <option name="closed" value="true" />
-      <created>1766200510638</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1766200510638</updated>
     </task>
     <task id="LOCAL-00004" summary="Implemented auth&#10;&#10;use verifySession() to get current session from cookie&#10;added schema.d.ts built from openapi spec from bend">
       <option name="closed" value="true" />
@@ -694,7 +686,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767255753675</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="feat(admin): Add PostHog tracking to admin forms and UI elements">
+      <option name="closed" value="true" />
+      <created>1767257791652</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1767257791652</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers>
       <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375" />
     </servers>
@@ -734,7 +734,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="style(header): improve hover and active visual effects for admin links" />
     <MESSAGE value="style(site): update header and button components, remove unused styles" />
     <MESSAGE value="docs(README): add clarification on linkr.audio purpose" />
     <MESSAGE value="feat(artist-form): use artist styling for status message background and text color" />
@@ -759,7 +758,8 @@
     <MESSAGE value="Refined spacing and roundedness of HeaderLink component for improved aesthetic consistency. Adjusted padding and border-radius for better visual harmony across the admin interface." />
     <MESSAGE value="Refined spacing and roundedness of HeaderLink component for improved aesthetic consistency. Adjusted padding and border-radius for better visual harmony across admin components." />
     <MESSAGE value="feat(admin): Add colour pickers to styling area" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(admin): Add colour pickers to styling area" />
+    <MESSAGE value="feat(admin): Add PostHog tracking to admin forms and UI elements" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(admin): Add PostHog tracking to admin forms and UI elements" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

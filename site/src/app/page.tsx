@@ -1,12 +1,32 @@
-"use client";
-
+import { ReleaseArtwork } from "@/app/ui/ReleaseArtwork";
+import { getRecentReleases } from "@/app/actions/releases";
 import { ExternalButton } from "@/app/ui/Button";
+import { baseDomain, rootDomain } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 import posthog from "posthog-js";
 
-export default function Page() {
+export default async function Page() {
+  const recentReleases = await getRecentReleases();
+
+  const releasesList = recentReleases.map((release) => {
+    return (
+      <div key={release.slug} className={"w-4xl "}>
+        <Link href={`//${release.artist_id}.${baseDomain}/${release.slug}`}>
+          <ReleaseArtwork
+            small
+            artwork={release.artwork}
+            title={release.title}
+          />
+          <h3>{release.title}</h3>
+          <h4>{release.artist_name}</h4>
+        </Link>
+      </div>
+    );
+  });
+
   return (
-    <div className={""}>
+    <div className={"w-screen"}>
       <header
         className={
           "fixed top-0 w-full flex  justify-center font-sans text-white"
@@ -26,12 +46,7 @@ export default function Page() {
             </h3>
           </div>
           <div>
-            <ExternalButton
-              secondary
-              href={"/apply"}
-              className={"m-2"}
-              onClick={() => posthog.capture("apply_button_clicked")}
-            >
+            <ExternalButton secondary href={"/apply"} className={"m-2"}>
               Apply
             </ExternalButton>
             <ExternalButton
@@ -40,7 +55,6 @@ export default function Page() {
               style={{
                 borderColor: "white",
               }}
-              onClick={() => posthog.capture("homepage_login_clicked")}
             >
               Log In
             </ExternalButton>
@@ -48,7 +62,12 @@ export default function Page() {
         </div>
       </header>
       <div className={"h-[90vh] bg-blue-500"}></div>
-      <div className={"recentreleases"}></div>
+      <div className={"recentreleases w-full overflow-x-auto"}>
+        <h1>Recent Releases</h1>
+        <div className={"flex "} style={{ width: "200%" }}>
+          {releasesList}
+        </div>
+      </div>
     </div>
   );
 }

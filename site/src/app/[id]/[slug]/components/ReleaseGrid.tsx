@@ -1,7 +1,7 @@
 "use client";
 
 import { ArtistLinks } from "@/app/[id]/[slug]/components/ArtistLinks";
-import { ReleaseArtwork } from "@/app/[id]/[slug]/components/ReleaseArtwork";
+import { ReleaseArtwork } from "@/app/ui/ReleaseArtwork";
 import { ReleaseHeader } from "@/app/[id]/[slug]/components/ReleaseHeader";
 import { ReleaseInfo } from "@/app/[id]/[slug]/components/ReleaseInfo";
 import { ReleaseLinks } from "@/app/[id]/[slug]/components/ReleaseLinks";

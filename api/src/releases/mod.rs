@@ -88,6 +88,25 @@ pub async fn get_releases_for_artist(
    Response::from_json(&out)
 }
 
+pub async fn get_recent_releases(req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
+   let params: QueryParams = req.query()?;
+   
+   let d1 = ctx.d1("prod_sr_db")?;
+   let query = d1.prepare("SELECT * FROM Releases ORDER BY release_date DESC LIMIT ?1");
+   let binded = query.bind(&[JsValue::from(params.limit.unwrap_or(10))])?;
+   let result = binded.run().await?;
+   let Ok(out): worker::Result<Vec<DbSchema>> = result.results() else {
+      return Response::error("No releases found", 404);
+   };
+   
+   let out = out
+      .into_iter()
+      .map(ReleaseBody::from)
+      .collect::<Vec<ReleaseBody>>();
+   
+   Response::from_json(&out)
+}
+
 pub async fn get_release(_req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
    let (Some(artist_id), Some(slug)) = (ctx.param("id"), ctx.param("slug")) else {
       return Response::error("Missing artist id or slug", 400);

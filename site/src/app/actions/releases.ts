@@ -159,3 +159,15 @@ export const getLatestRelease = cache(async (id: string): Promise<Release> => {
 
   return result[0];
 });
+
+export const getRecentReleases = cache(async (): Promise<Release[]> => {
+  "use server";
+
+  const resp = await fetch(`${apiDomain}/releases/recent`);
+
+  if (!resp.ok) {
+    return [];
+  }
+
+  return await resp.json();
+});

@@ -8,9 +8,7 @@ use worker::{Context, Env, Request, Response, Router};
 
 use crate::artists::{get_artist, post_change_password, post_create_artist, post_edit_artist};
 use crate::auth::login;
-use crate::releases::{
-   delete_release, get_release, get_releases_for_artist, post_edit_release, post_new_release,
-};
+use crate::releases::{delete_release, get_recent_releases, get_release, get_releases_for_artist, post_edit_release, post_new_release};
 use worker_macros::event;
 
 #[event(fetch)]
@@ -30,6 +28,7 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> worker::Result<Response
       //Release Management
       .get_async("/releases/:id/:slug", get_release)
       .get_async("/releases/:id", get_releases_for_artist)
+      .get_async("/releases/recent", get_recent_releases)
       .post_async("/releases/:id", post_new_release)
       .post_async("/releases/:id/:slug", post_edit_release)
       .delete_async("/releases/:id/:slug", delete_release)
