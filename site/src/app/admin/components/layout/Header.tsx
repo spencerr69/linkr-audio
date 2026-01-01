@@ -50,7 +50,7 @@ export const Header = (props: HeaderProps) => {
         </h1>
       </div>
 
-      <div className={"flex items-center"} style={{ gap: "1rem" }}>
+      <div className={"flex items-center"} style={{}}>
         <HeaderLink
           href={"/admin"}
           active={props.currentPage == AdminPages.Releases}

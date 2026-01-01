@@ -10,6 +10,8 @@ import { StylingContext } from "@/app/ui/StylingProvider";
 import { Release } from "@/lib/definitions";
 import React, { useContext } from "react";
 
+import AddIcon from "@mui/icons-material/Add";
+
 export const Releases = ({ releases }: { releases: Release[] }) => {
   const [editingRelease, setEditingRelease] = React.useState<Release | null>();
 
@@ -32,17 +34,19 @@ export const Releases = ({ releases }: { releases: Release[] }) => {
   });
 
   return (
-    <div className={"flex min-h-0 h-full"}>
+    <div className={"flex flex-col-reverse lg:flex-row min-h-0 h-full"}>
       <div
-        className={" w-4xl border-r border-dashed overflow-y-auto"}
+        className={" lg:w-4xl border-r border-dashed overflow-y-auto"}
         style={{
           borderColor: `${styling.colours.foreground}22`,
         }}
       >
-        <ul>
+        <ul className={"flex lg:flex-col"}>
           {releasesList}
           <div className={"flex justify-center m-2"}>
-            <Button onClick={() => createReleaseForm()}>+</Button>
+            <Button squish onClick={() => createReleaseForm()}>
+              <AddIcon />
+            </Button>
           </div>
         </ul>
       </div>

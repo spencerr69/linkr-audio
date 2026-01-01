@@ -4,6 +4,8 @@ import { Release } from "@/lib/definitions";
 import { baseDomain } from "@/lib/utils";
 import Image from "next/image";
 import React, { useContext } from "react";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 export const ReleaseListItem = ({
   release,
@@ -19,7 +21,7 @@ export const ReleaseListItem = ({
   return (
     <div
       className={
-        "p-4 flex items-center justify-between border-b cursor-pointer duration-100 border-dashed "
+        "p-1 lg:p-4 flex items-center justify-between border-b cursor-pointer duration-100 border-dashed "
       }
       style={{
         borderColor: `${styling.colours.foreground}22`,
@@ -38,24 +40,34 @@ export const ReleaseListItem = ({
       }}
       onClick={() => onClick(release)}
     >
-      <div className={"flex justify-between w-full items-center"}>
+      <div
+        className={
+          "flex flex-col-reverse lg:flex-row justify-between w-full items-center"
+        }
+      >
         <div className={"flex-3"}>
           <div className={"pb-4"}>
-            <h2 className={" font-medium text-2xl"}>{release.title}</h2>
-            <h4 className={"text-xl italic"}>{release.artist_name}</h4>
+            <h2 className={" font-medium lg:text-2xl"}>{release.title}</h2>
+            <h4 className={"hidden lg:block lg:text-xl italic"}>
+              {release.artist_name}
+            </h4>
             <p>{release.release_date}</p>
             <p>{release.links.length + " links"}</p>
           </div>
           <ExternalButton
+            squish
+            inline
+            secondary
+            className={"p-1"}
             href={
               "//" + release.artist_id + "." + baseDomain + "/" + release.slug
             }
             onClick={(e) => e.stopPropagation()}
           >
-            View
+            <VisibilityIcon />
           </ExternalButton>
         </div>
-        <div className={"flex flex-1 items-center"}>
+        <div className={"flex flex-1 lg:items-center"}>
           <Image
             src={release.artwork || ""}
             alt={release.title + " Artwork"}
@@ -63,7 +75,11 @@ export const ReleaseListItem = ({
             height={100}
             className={"rounded-md"}
           />
-          <p className={"p-4"}>{">"}</p>
+          <p className={"p-4 hidden lg:block"}>
+            <ChevronRightIcon
+              style={{ color: styling.colours.foreground + "44" }}
+            />
+          </p>
         </div>
       </div>
     </div>

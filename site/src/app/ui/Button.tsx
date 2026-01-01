@@ -4,30 +4,46 @@ import { StylingContext } from "@/app/ui/StylingProvider";
 import Link from "next/link";
 import React, { useContext } from "react";
 
-const classes = " rounded-md  border-2" + " cursor-pointer duration-100";
+const classes = " rounded-md " + " cursor-pointer duration-100 p-0.5 ";
 
-const getClasses = (inline: boolean, secondary: boolean) => {
+const getClasses = (
+  inline: boolean,
+  secondary: boolean,
+  squish: boolean,
+  fill: boolean,
+) => {
   let inner_classes = inline
-    ? classes + " px-4 -translate-y-2"
-    : classes + " p-1 px-6";
+    ? classes + "  -translate-y-2"
+    : classes + "  border-2";
 
   inner_classes = secondary ? inner_classes + " " : inner_classes + " ";
+
+  inner_classes = squish ? inner_classes + " " : inner_classes + " w-30 px-3";
+
+  inner_classes = fill ? inner_classes + " w-full" : inner_classes + " ";
+
   return inner_classes;
 };
 
 interface ButtonProps extends React.ComponentProps<"button"> {
   inline?: boolean;
   secondary?: boolean;
+  squish?: boolean;
+  fill?: boolean;
 }
 
 interface ExternalButtonProps extends React.ComponentProps<typeof Link> {
   inline?: boolean;
   secondary?: boolean;
+  squish?: boolean;
+  fill?: boolean;
 }
 
 export const Button = ({
   inline,
   secondary,
+  squish,
+  fill,
   className,
   style,
   ...rest
@@ -36,13 +52,17 @@ export const Button = ({
 
   return (
     <button
-      className={getClasses(!!inline, !!secondary) + " " + className}
+      className={
+        getClasses(!!inline, !!secondary, !!squish, !!fill) + " " + className
+      }
       type={"button"}
       style={{
         color: !secondary ? styling.colours.background : styling.colours.accent,
-        backgroundColor: !secondary
-          ? styling.colours.accent
-          : styling.colours.background,
+        backgroundColor: inline
+          ? "transparent"
+          : !secondary
+            ? styling.colours.accent
+            : styling.colours.background,
         borderColor: styling.colours.accent,
         ...style,
       }}
@@ -58,9 +78,11 @@ export const Button = ({
         e.currentTarget.style.color = secondary
           ? styling.colours.accent
           : styling.colours.background;
-        e.currentTarget.style.backgroundColor = secondary
-          ? styling.colours.background
-          : styling.colours.accent;
+        e.currentTarget.style.backgroundColor = inline
+          ? "transparent"
+          : secondary
+            ? styling.colours.background
+            : styling.colours.accent;
       }}
       {...rest}
     >
@@ -72,11 +94,14 @@ export const Button = ({
 export const ExternalButton = ({
   inline,
   secondary,
+  squish,
+  fill,
   className,
   style,
   ...rest
 }: ExternalButtonProps) => {
-  const classes = getClasses(!!inline, !!secondary) + " " + className;
+  const classes =
+    getClasses(!!inline, !!secondary, !!squish, !!fill) + " " + className;
 
   const styling = useContext(StylingContext);
 
@@ -85,9 +110,11 @@ export const ExternalButton = ({
       className={classes}
       style={{
         color: !secondary ? styling.colours.background : styling.colours.accent,
-        backgroundColor: !secondary
-          ? styling.colours.accent
-          : styling.colours.background,
+        backgroundColor: inline
+          ? "transparent"
+          : !secondary
+            ? styling.colours.accent
+            : styling.colours.background,
         borderColor: styling.colours.accent,
         ...style,
       }}
@@ -103,9 +130,11 @@ export const ExternalButton = ({
         e.currentTarget.style.color = secondary
           ? styling.colours.accent
           : styling.colours.background;
-        e.currentTarget.style.backgroundColor = secondary
-          ? styling.colours.background
-          : styling.colours.accent;
+        e.currentTarget.style.backgroundColor = inline
+          ? "transparent"
+          : secondary
+            ? styling.colours.background
+            : styling.colours.accent;
       }}
       {...rest}
     />

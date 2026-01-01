@@ -5,6 +5,8 @@ import { FormField } from "@/app/ui/FormField";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { Link } from "@/lib/definitions";
 import { useContext } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 export const FormLinks = ({
   links,
@@ -38,9 +40,10 @@ export const FormLinks = ({
               className={""}
               inline
               secondary
+              squish
               onClick={() => valueUpdateAction(links.filter((_, j) => j !== i))}
             >
-              Remove
+              <RemoveIcon />
             </Button>
           }
         />
@@ -73,11 +76,12 @@ export const FormLinks = ({
         {linkFields}
         <div className={"flex justify-center my-4"}>
           <Button
+            squish
             onClick={() => {
               valueUpdateAction([...links, { name: "", url: "" }]);
             }}
           >
-            +
+            <AddIcon />
           </Button>
         </div>
       </div>

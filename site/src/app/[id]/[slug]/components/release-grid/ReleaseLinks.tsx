@@ -21,7 +21,9 @@ export const ReleaseLinks: React.FC<ReleaseLinksProps> = ({ links }) => {
     >
       {links.map((link) => (
         <div key={link.name} className={"w-7/8 flex flex-col text-center py-3"}>
-          <ExternalButton href={link.url}>{link.name}</ExternalButton>
+          <ExternalButton fill href={link.url}>
+            {link.name}
+          </ExternalButton>
         </div>
       ))}
     </div>
