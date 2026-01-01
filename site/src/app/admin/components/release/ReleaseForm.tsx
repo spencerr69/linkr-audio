@@ -13,6 +13,7 @@ import { StylingContext } from "@/app/ui/StylingProvider";
 import { Link, Release } from "@/lib/definitions";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import posthog from "posthog-js";
 import React, { useContext } from "react";
 
 export const emptyRelease: Release = {
@@ -81,6 +82,9 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
               secondary
               className="text-xs lg:text-base whitespace-nowrap"
               onClick={async () => {
+                posthog.capture("get_links_clicked", {
+                  upc: editedRelease.upc,
+                });
                 const newRelease = await getLinks(editedRelease.upc);
                 setEditedRelease((prev) => {
                   return {
@@ -192,6 +196,11 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
                 const result = await deleteRelease(editedRelease);
 
                 if (result.success) {
+                  posthog.capture("release_deleted", {
+                    release_title: editedRelease.title,
+                    release_slug: editedRelease.slug,
+                    artist_id: editedRelease.artist_id,
+                  });
                   setStatus("Successfully deleted release.");
                 } else {
                   setStatus(result.error!);
@@ -204,10 +213,21 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
             <Button
               name={"save"}
               onClick={async () => {
-                const result = !!release?.slug
+                const isUpdate = !!release?.slug;
+                const result = isUpdate
                   ? await updateRelease(editedRelease)
                   : await createRelease(editedRelease);
                 if (result.success) {
+                  posthog.capture(
+                    isUpdate ? "release_updated" : "release_created",
+                    {
+                      release_title: editedRelease.title,
+                      release_slug: editedRelease.slug,
+                      artist_id: editedRelease.artist_id,
+                      track_count: editedRelease.track_count,
+                      link_count: editedRelease.links.length,
+                    },
+                  );
                   setStatus("Successfully saved release.");
                 } else {
                   setStatus(result.error!);

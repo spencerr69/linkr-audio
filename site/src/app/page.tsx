@@ -1,5 +1,8 @@
+"use client";
+
 import { ExternalButton } from "@/app/ui/Button";
 import Image from "next/image";
+import posthog from "posthog-js";
 
 export default function Page() {
   return (
@@ -23,7 +26,12 @@ export default function Page() {
             </h3>
           </div>
           <div>
-            <ExternalButton secondary href={"/apply"} className={"m-2"}>
+            <ExternalButton
+              secondary
+              href={"/apply"}
+              className={"m-2"}
+              onClick={() => posthog.capture("apply_button_clicked")}
+            >
               Apply
             </ExternalButton>
             <ExternalButton
@@ -32,6 +40,7 @@ export default function Page() {
               style={{
                 borderColor: "white",
               }}
+              onClick={() => posthog.capture("homepage_login_clicked")}
             >
               Log In
             </ExternalButton>

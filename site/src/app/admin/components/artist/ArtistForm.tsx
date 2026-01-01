@@ -9,6 +9,7 @@ import { StylingContext } from "@/app/ui/StylingProvider";
 import { ArtistResponse, EditArtist, Link, Styling } from "@/lib/definitions";
 import { stylingComp } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import posthog from "posthog-js";
 import React, { useContext } from "react";
 
 const editArtistFromArtist = (artist: ArtistResponse) => {
@@ -79,6 +80,10 @@ export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {
             onClick={async () => {
               const result = await updateArtist(editedArtist);
               if (result.success) {
+                posthog.capture("artist_profile_updated", {
+                  artist_name: editedArtist.master_artist_name,
+                  links_count: editedArtist.links?.length || 0,
+                });
                 setStatus("Successfully saved artist.");
               } else {
                 setStatus(result.error!);

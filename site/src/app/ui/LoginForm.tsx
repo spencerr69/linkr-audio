@@ -3,10 +3,32 @@
 import { login } from "@/app/actions/auth";
 import { Button } from "@/app/ui/Button";
 import PopupContainer from "@/app/ui/PopupContainer";
+import { LoginFormState } from "@/lib/definitions";
+import posthog from "posthog-js";
 import { useActionState } from "react";
 
 export function LoginForm() {
-  const [state, action, pending] = useActionState(login, undefined);
+  const [state, action, pending] = useActionState(
+    async (prevState: LoginFormState, formData: FormData) => {
+      const artistId = formData.get("artistid") as string;
+
+      posthog.capture("login_submitted", {
+        artist_id: artistId,
+      });
+
+      const result = await login(prevState, formData);
+
+      // If login succeeded (no error message), identify the user
+      if (!result?.message && !result?.errors) {
+        posthog.identify(artistId, {
+          artist_id: artistId,
+        });
+      }
+
+      return result;
+    },
+    undefined,
+  );
 
   return (
     <PopupContainer>
