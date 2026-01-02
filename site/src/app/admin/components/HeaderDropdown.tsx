@@ -1,5 +1,5 @@
 import { logout } from "@/app/actions/auth";
-import { HeaderLink } from "@/app/admin/components/layout/HeaderLink";
+import { HeaderLink } from "@/app/admin/components/HeaderLink";
 import { ChangePasswordDialog } from "@/app/ui/Dialogs/ChangePasswordDialog";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import {

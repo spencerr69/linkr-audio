@@ -1,7 +1,7 @@
 "use client";
 
-import { HeaderDropdown } from "@/app/admin/components/layout/HeaderDropdown";
-import { HeaderLink } from "@/app/admin/components/layout/HeaderLink";
+import { HeaderDropdown } from "@/app/admin/components/HeaderDropdown";
+import { HeaderLink } from "@/app/admin/components/HeaderLink";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { AdminPages } from "@/lib/definitions";
 import Link from "next/link";
@@ -32,7 +32,7 @@ export const Header = (props: HeaderProps) => {
       }}
     >
       <div className={"flex items-center"}>
-        <Link href={"/"}>
+        <Link href={"/site/public"}>
           <i
             className={"logo block scale-50 lg:scale-100"}
             style={{
