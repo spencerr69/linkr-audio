@@ -58,7 +58,7 @@ export const getArtist = cache(async (id: string): Promise<ArtistResponse> => {
   });
 
   if (!resp.ok) {
-    throw new Error("Could not find release");
+    throw new Error("Could not find artist");
   }
 
   return await resp.json();

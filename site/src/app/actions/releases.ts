@@ -165,7 +165,12 @@ export const getLatestRelease = cache(async (id: string): Promise<Release> => {
 export const getRecentReleases = cache(async (): Promise<Release[]> => {
   "use server";
 
-  const resp = await fetch(`${apiDomain}/releases/recent?limit=9`);
+  const resp = await fetch(`${apiDomain}/releases/recent?limit=9`, {
+    cache: "force-cache",
+    next: {
+      revalidate: 600,
+    },
+  });
 
   if (!resp.ok) {
     return [];

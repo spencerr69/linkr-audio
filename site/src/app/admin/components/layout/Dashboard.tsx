@@ -1,11 +1,12 @@
+import { getArtist } from "@/app/actions/artists";
 import { Artist } from "@/app/admin/components/artist/Artist";
 import StylingProvider from "@/app/ui/StylingProvider";
 import { Header } from "./Header";
 import { Releases } from "@/app/admin/components/release/Releases";
 import { serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
-import { AdminPages, ArtistResponse, Release } from "@/lib/definitions";
-import { apiDomain, stylingComp } from "@/lib/utils";
+import { AdminPages, Release } from "@/lib/definitions";
+import { stylingComp } from "@/lib/utils";
 
 export const Dashboard = async ({
   currentPage,
@@ -18,15 +19,7 @@ export const Dashboard = async ({
     return <></>;
   }
 
-  const req_artist = await fetch(
-    `${apiDomain}/artists/${session.jwt.artistId}`,
-  );
-
-  if (!req_artist.ok) {
-    return <div>stinky error</div>;
-  }
-
-  const artist: ArtistResponse = await req_artist.json();
+  const artist = await getArtist(`${session.jwt?.artistId}`);
 
   const styling = stylingComp(artist.styling || {});
 
