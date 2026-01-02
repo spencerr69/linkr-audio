@@ -1,5 +1,6 @@
 import { logout } from "@/app/actions/auth";
 import { HeaderLink } from "@/app/admin/components/layout/HeaderLink";
+import { ChangePasswordModal } from "@/app/ui/ChangePasswordModal";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import {
   MenuButton,
@@ -9,39 +10,55 @@ import {
   MenuItem,
 } from "@headlessui/react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { AnchorHTMLAttributes, DetailedHTMLProps, useContext } from "react";
+import {
+  AnchorHTMLAttributes,
+  DetailedHTMLProps,
+  useContext,
+  useState,
+} from "react";
 
 export const HeaderDropdown = () => {
   const styling = useContext(StylingContext);
+  const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
 
   return (
-    <Menu>
-      <MenuButton as={HeaderLink} href={"#"}>
-        <MoreHorizIcon fontSize={"large"} />
-      </MenuButton>
-      <MenuItems
-        className={" absolute top-22 right-5 drop-shadow-xl rounded-md"}
-        style={{
-          backgroundColor: styling.colours.background,
-          color: styling.colours.foreground,
-        }}
-      >
-        <div className={"w-full flex flex-col"}>
-          <MenuItem>
-            <MenuA>Change Password</MenuA>
-          </MenuItem>
-          <MenuSeparator
-            className={"border-b-2 border-accent"}
-            style={{
-              borderColor: `${styling.colours.background}22`,
-            }}
-          />
-          <MenuItem>
-            <MenuA onClick={logout}>Log out</MenuA>
-          </MenuItem>
-        </div>
-      </MenuItems>
-    </Menu>
+    <>
+      <Menu>
+        <MenuButton as={HeaderLink} href={"#"}>
+          <MoreHorizIcon fontSize={"large"} />
+        </MenuButton>
+        <MenuItems
+          className={" absolute top-22 right-5 drop-shadow-xl rounded-md z-20"}
+          style={{
+            backgroundColor: styling.colours.background,
+            color: styling.colours.foreground,
+          }}
+        >
+          <div className={"w-full flex flex-col"}>
+            <MenuItem>
+              <MenuA
+                onClick={() => setIsChangePasswordOpen(!isChangePasswordOpen)}
+              >
+                Change Password
+              </MenuA>
+            </MenuItem>
+            <MenuSeparator
+              className={"border-b-2 border-accent"}
+              style={{
+                borderColor: `${styling.colours.background}22`,
+              }}
+            />
+            <MenuItem>
+              <MenuA onClick={logout}>Log out</MenuA>
+            </MenuItem>
+          </div>
+        </MenuItems>
+      </Menu>
+      <ChangePasswordModal
+        isOpen={isChangePasswordOpen}
+        onClose={() => setIsChangePasswordOpen(false)}
+      />
+    </>
   );
 };
 
