@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
         hostname: "i.scdn.co",
       },
     ],
+    loader: "custom",
+    loaderFile: "./src/lib/imageLoader.ts",
   },
   logging: {
     fetches: {

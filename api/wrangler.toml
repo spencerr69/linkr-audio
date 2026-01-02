@@ -1,4 +1,4 @@
-name = "sr-api"
+name = "linkr-audio-api"
 main = "build/index.js"
 compatibility_date = "2025-12-12"
 placement = {mode = "smart"}

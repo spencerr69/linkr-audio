@@ -32,7 +32,7 @@ export const Header = (props: HeaderProps) => {
       }}
     >
       <div className={"flex items-center"}>
-        <Link href={"/site/public"}>
+        <Link href={"/"}>
           <i
             className={"logo block scale-50 lg:scale-100"}
             style={{
