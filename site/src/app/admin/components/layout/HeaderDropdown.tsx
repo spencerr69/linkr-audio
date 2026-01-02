@@ -61,16 +61,23 @@ const MenuA = ({
     <a
       className={"w-full cursor-pointer p-2  " + className}
       style={{
+        ...style,
         backgroundColor: `transparent`,
         color: `${styling.colours.foreground}`,
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.backgroundColor = `${styling.colours.accent}AA`;
         e.currentTarget.style.color = `${styling.colours.background}`;
+        if (onMouseEnter) {
+          onMouseEnter(e);
+        }
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.backgroundColor = `transparent`;
         e.currentTarget.style.color = `${styling.colours.foreground}`;
+        if (onMouseLeave) {
+          onMouseLeave(e);
+        }
       }}
       {...rest}
     ></a>
