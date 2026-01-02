@@ -12,6 +12,7 @@ database_name = "prod-sr-db"
 database_id = "9fe15959-f4dd-4b76-810f-42ca521b697e"
 remote = true
 
+
 [observability]
 enabled = false
 head_sampling_rate = 1
