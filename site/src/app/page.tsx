@@ -1,12 +1,15 @@
 import { getRecentReleases } from "@/app/actions/releases";
 import { ExternalButton } from "@/app/ui/Button";
 import { ReleaseArtwork } from "@/app/ui/ReleaseArtwork";
+import { verifySession } from "@/lib/dal";
 import { baseDomain } from "@/lib/utils";
 import { LoginButton } from "@/app/ui/LoginButton";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function Page() {
+  const session = await verifySession();
+
   const recentReleases = await getRecentReleases();
 
   const releasesList = recentReleases.map((release) => {
@@ -31,7 +34,7 @@ export default async function Page() {
     <div className={"w-full"}>
       <header
         className={
-          "fixed top-0 w-full flex  justify-center font-sans text-white"
+          "fixed top-0 w-full flex  justify-center font-sans text-white z-10"
         }
       >
         <div className={"flex align-middle items-center w-6xl justify-between"}>
@@ -51,7 +54,11 @@ export default async function Page() {
             <ExternalButton secondary href={"/apply"} className={"m-2"}>
               Apply
             </ExternalButton>
-            <LoginButton />
+            {session.isAuth ? (
+              <ExternalButton href={"/admin"}>Admin</ExternalButton>
+            ) : (
+              <LoginButton />
+            )}
           </div>
         </div>
       </header>
@@ -66,7 +73,7 @@ export default async function Page() {
         }
       >
         <h1>Recent Releases</h1>
-        <div className={"w-6xl overflow-hidden"}>
+        <div className={"w-6xl overflow-hidden z-0"}>
           <div className={" grid grid-cols-3 w-full "}>{releasesList}</div>
         </div>
       </div>

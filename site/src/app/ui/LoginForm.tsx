@@ -4,18 +4,28 @@ import { login } from "@/app/actions/auth";
 import { Button } from "@/app/ui/Button";
 import { FormField } from "@/app/ui/FormField";
 import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
-import { verifySession } from "@/lib/dal";
-import { CloseButton, PopoverBackdrop, PopoverPanel } from "@headlessui/react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { StylingContext } from "@/app/ui/StylingProvider";
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  DialogTitle,
+} from "@headlessui/react";
+import { useContext, useState } from "react";
 
 export type LoginData = {
   artist_id: string;
   password: string;
 };
 
-export function LoginForm({ open = false }: { open?: boolean }) {
-  const router = useRouter();
+export function LoginForm({
+  isOpen,
+  onCloseAction,
+}: {
+  isOpen: boolean;
+  onCloseAction: (value: boolean) => void;
+}) {
+  const styling = useContext(StylingContext);
 
   const [loginData, setLoginData] = useState<LoginData>({
     artist_id: "",
@@ -33,47 +43,35 @@ export function LoginForm({ open = false }: { open?: boolean }) {
     });
   };
 
-  useEffect(() => {
-    const checkIfAuthed = async () => {
-      const session = await verifySession();
-
-      if (session.isAuth) {
-        router.push("/admin");
-      }
-    };
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    open && checkIfAuthed();
-  }, [open]);
-
   return (
-    <div className={""}>
-      <PopoverBackdrop
-        className={"fixed inset-0 bg-black/15 backdrop-blur-xl"}
+    <Dialog
+      transition
+      open={isOpen}
+      onClose={onCloseAction}
+      className={"relative z-50 duration-100 "}
+    >
+      <DialogBackdrop
+        transition
+        className={
+          "duration-200 ease-in-out fixed inset-0 bg-black/15 backdrop-blur-lg data-closed:opacity-0" +
+          " data-closed:backdrop-blur-none"
+        }
       />
-      <PopoverPanel
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          height: "100vh",
-          width: "100vw",
-          position: "fixed",
-          top: "0px",
-          left: "0px",
-        }}
-      >
-        <div className={""}>
-          <form
-            className={
-              " text-black flex flex-col items-center w-4xl p-4 bg-white"
-            }
-          >
-            <CloseButton className={"self-end cursor-pointer"}>
-              Close
-            </CloseButton>
+      <div className="fixed inset-0 flex w-screen items-center justify-center p-4 ">
+        <DialogPanel
+          transition
+          className="rounded-lg max-w-2xl space-y-4 shadow-xl drop-shadow-xl data-closed:opacity-0 duration-200 font-sans text-center p-4"
+          style={{
+            backgroundColor: styling.colours.background,
+            color: styling.colours.foreground,
+          }}
+        >
+          <DialogTitle className="font-bold font-sans text-xl">
+            Log In
+          </DialogTitle>
+          <form>
             <FormField
-              name={"artist_id"}
+              name={"artist-id"}
               label={"Artist ID"}
               value={loginData.artist_id}
               valueUpdater={loginDataChanger("artist_id")}
@@ -85,24 +83,28 @@ export function LoginForm({ open = false }: { open?: boolean }) {
               value={loginData.password}
               valueUpdater={loginDataChanger("password")}
             />
-
             <Button
-              className={"m-4"}
+              className={"w-xs mt-4"}
               type={"submit"}
               onClick={async (e) => {
                 e.preventDefault();
-                const result = await login(loginData);
-                if (result?.error) {
-                  setStatus(result.error);
+
+                const attempt = await login(loginData);
+
+                if (!attempt.success) {
+                  setStatus(attempt.error || "");
+                  return;
                 }
+
+                setStatus("Logging in...");
               }}
             >
               Log In
             </Button>
-            <StatusPopup status={status} />
           </form>
-        </div>
-      </PopoverPanel>
-    </div>
+        </DialogPanel>
+        <StatusPopup status={status} />
+      </div>
+    </Dialog>
   );
 }
