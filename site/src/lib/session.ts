@@ -25,7 +25,8 @@ export const decrypt = async (session: string | undefined = "") => {
     return payload;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (_) {
-    return {};
+    console.log("Couldn't verify session.");
+    return null;
   }
 };
 
