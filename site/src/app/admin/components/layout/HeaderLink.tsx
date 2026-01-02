@@ -15,7 +15,7 @@ export const HeaderLink = ({
   href,
   active = false,
   children,
-  onClick,
+  onClick = () => {},
 }: HeaderLinkProps) => {
   const styling = useContext(StylingContext);
 
