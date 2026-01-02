@@ -1,21 +1,21 @@
 "use server";
 
 import { Dashboard } from "@/app/admin/components/layout/Dashboard";
-import { LoginForm } from "@/app/ui/LoginForm";
 import { verifySession } from "@/lib/dal";
 import { AdminPages } from "@/lib/definitions";
+import { redirect } from "next/navigation";
 
 const AdminPage = async () => {
   const session = await verifySession();
 
+  if (!session.isAuth) {
+    redirect("/");
+  }
+
   return (
     <>
       <main className={" h-screen  overflow-hidden font-sans flex flex-col"}>
-        {!session.isAuth ? (
-          <LoginForm />
-        ) : (
-          <Dashboard currentPage={AdminPages.Releases} />
-        )}
+        {session.isAuth && <Dashboard currentPage={AdminPages.Releases} />}
       </main>
     </>
   );

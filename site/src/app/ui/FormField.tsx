@@ -6,12 +6,14 @@ export const FormField = ({
   label,
   value,
   button,
+  type = "text",
   inactive = false,
   valueUpdater,
 }: {
   name: string;
   label: string;
   value: string;
+  type?: string;
   button?: React.JSX.Element;
   inactive?: boolean;
   valueUpdater?: (value: string) => void;
@@ -41,7 +43,7 @@ export const FormField = ({
       </label>
       <div className={"flex "}>
         <input
-          type="text"
+          type={type}
           id={name}
           name={name}
           value={value}

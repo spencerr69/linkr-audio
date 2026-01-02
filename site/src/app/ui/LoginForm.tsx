@@ -2,67 +2,107 @@
 
 import { login } from "@/app/actions/auth";
 import { Button } from "@/app/ui/Button";
-import PopupContainer from "@/app/ui/PopupContainer";
-import { LoginFormState } from "@/lib/definitions";
-import posthog from "posthog-js";
-import { useActionState } from "react";
+import { FormField } from "@/app/ui/FormField";
+import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
+import { verifySession } from "@/lib/dal";
+import { CloseButton, PopoverBackdrop, PopoverPanel } from "@headlessui/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-export function LoginForm() {
-  const [state, action, pending] = useActionState(
-    async (prevState: LoginFormState, formData: FormData) => {
-      const artistId = formData.get("artistid") as string;
+export type LoginData = {
+  artist_id: string;
+  password: string;
+};
 
-      posthog.capture("login_submitted", {
-        artist_id: artistId,
-      });
+export function LoginForm({ open = false }: { open?: boolean }) {
+  const router = useRouter();
 
-      const result = await login(prevState, formData);
+  const [loginData, setLoginData] = useState<LoginData>({
+    artist_id: "",
+    password: "",
+  });
 
-      // If login succeeded (no error message), identify the user
-      if (!result?.message && !result?.errors) {
-        posthog.identify(artistId, {
-          artist_id: artistId,
-        });
+  const [status, setStatus] = useStatus();
+
+  const loginDataChanger = (field: keyof LoginData) => (value: string) => {
+    setLoginData((old) => {
+      return {
+        ...old,
+        [field]: value,
+      } as LoginData;
+    });
+  };
+
+  useEffect(() => {
+    const checkIfAuthed = async () => {
+      const session = await verifySession();
+
+      if (session.isAuth) {
+        router.push("/admin");
       }
-
-      return result;
-    },
-    undefined,
-  );
+    };
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    open && checkIfAuthed();
+  }, [open]);
 
   return (
-    <PopupContainer>
-      <form
-        className={
-          "text-black flex flex-col items-center w-full lg:w-1/4 h-1/2 lg:h-1/4 bg-white justify-center"
-        }
-        action={action}
+    <div className={""}>
+      <PopoverBackdrop
+        className={"fixed inset-0 bg-black/15 backdrop-blur-xl"}
+      />
+      <PopoverPanel
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          height: "100vh",
+          width: "100vw",
+          position: "fixed",
+          top: "0px",
+          left: "0px",
+        }}
       >
-        <div className={"flex flex-col"}>
-          <label htmlFor="artistid">Artist ID </label>
-          <input
-            className={"  border-b-2 border-dashed"}
-            type="text"
-            name={"artistid"}
-            placeholder={"Artist ID"}
-          />
+        <div className={""}>
+          <form
+            className={
+              " text-black flex flex-col items-center w-4xl p-4 bg-white"
+            }
+          >
+            <CloseButton className={"self-end cursor-pointer"}>
+              Close
+            </CloseButton>
+            <FormField
+              name={"artist_id"}
+              label={"Artist ID"}
+              value={loginData.artist_id}
+              valueUpdater={loginDataChanger("artist_id")}
+            />
+            <FormField
+              name={"password"}
+              label={"Password"}
+              type={"password"}
+              value={loginData.password}
+              valueUpdater={loginDataChanger("password")}
+            />
+
+            <Button
+              className={"m-4"}
+              type={"submit"}
+              onClick={async (e) => {
+                e.preventDefault();
+                const result = await login(loginData);
+                if (result?.error) {
+                  setStatus(result.error);
+                }
+              }}
+            >
+              Log In
+            </Button>
+            <StatusPopup status={status} />
+          </form>
         </div>
-        {state?.errors?.artistid && <p>{state.errors.artistid}</p>}
-        <div className={"flex flex-col p-4"}>
-          <label htmlFor="password">Password </label>
-          <input
-            className={" border-b-2 border-dashed"}
-            type="password"
-            name={"password"}
-            placeholder={"Password"}
-          />
-        </div>
-        {state?.errors?.password && <p>{state.errors.password}</p>}
-        <Button className={"m-4"} disabled={pending} type={"submit"}>
-          Log In
-        </Button>
-        {state?.message && <p>{state.message}</p>}
-      </form>
-    </PopupContainer>
+      </PopoverPanel>
+    </div>
   );
 }
