@@ -7,7 +7,7 @@ import { type NextRequest, NextResponse } from "next/server";
 function extractSubdomain(request: NextRequest): string | null {
   const url = request.url;
   const host = request.headers.get("host") || "";
-  const hostname = host.split(":")[0];
+  const hostname = host.split(":")[0] || "";
 
   // Local development environment
   if (url.includes("localhost") || url.includes("127.0.0.1")) {
@@ -19,7 +19,7 @@ function extractSubdomain(request: NextRequest): string | null {
 
     // Fallback to host header approach
     if (hostname.includes(".localhost")) {
-      return hostname.split(".")[0];
+      return hostname.split(".")[0] || "";
     }
 
     return null;
