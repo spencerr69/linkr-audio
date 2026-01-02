@@ -61,12 +61,29 @@ export default async function Page() {
           </div>
         </div>
       </header>
-      <div className={"h-[90vh] bg-blue-500"}></div>
-      <div className={"recentreleases w-full overflow-x-auto"}>
-        <h1>Recent Releases</h1>
-        <div className={"flex "} style={{ width: "200%" }}>
-          {releasesList}
+      <div className={"h-[90vh] w-full bg-blue-500"}>
+        <div className={"flex justify-center items-center h-full"}>
+          <h1>linkr.audio</h1>
         </div>
+      </div>
+      <div
+        className={
+          "text-center flex flex-col items-center w-full p-4 font-sans"
+        }
+      >
+        <h1>Recent Releases</h1>
+        <div className={"w-6xl overflow-hidden"}>
+          <div className={" grid grid-cols-3 w-full "}>{releasesList}</div>
+        </div>
+      </div>
+      <div className={"w-6xl"}>
+        <h1>The story</h1>
+        <p>
+          linkr.audio is a site i made for me and my friends to share new
+          releases with the world ! i plan to keep the amount of artists on this
+          site fairly small, but i will also make this website open source, so
+          you can easily self host or fork the site.
+        </p>
       </div>
     </div>
   );
