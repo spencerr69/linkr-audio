@@ -5,12 +5,12 @@ import { FormStyling } from "@/app/admin/components/artist/FormStyling";
 import { Button } from "@/app/ui/Button";
 import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
-import { StylingContext } from "@/app/ui/StylingProvider";
+import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { ArtistResponse, EditArtist, Link, Styling } from "@/lib/definitions";
 import { stylingComp } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
-import React, { useContext } from "react";
+import { useEffect, useState } from "react";
 
 const editArtistFromArtist = (artist: ArtistResponse) => {
   return {
@@ -21,25 +21,17 @@ const editArtistFromArtist = (artist: ArtistResponse) => {
 };
 
 export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {
-  const [editedArtist, setEditedArtist] = React.useState<EditArtist>(
+  const [editedArtist, setEditedArtist] = useState<EditArtist>(
     editArtistFromArtist(artist),
   );
 
-  const styling = useContext(StylingContext);
-
   const router = useRouter();
 
-  const [status, setStatus] = React.useState<string>("");
+  const [status, setStatus] = useStatus();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setEditedArtist(editArtistFromArtist(artist));
   }, [artist]);
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setStatus("");
-    }, 5000);
-  }, [status]);
 
   const getArtistUpdater = (field: keyof EditArtist) => {
     return (value: string | Link[] | Styling) => {
@@ -96,19 +88,7 @@ export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {
             Save
           </Button>
         </div>
-        {status != "" && (
-          <p
-            className={
-              "text-right  rounded-md p-4 m-4 absolute left-4 bottom-0"
-            }
-            style={{
-              backgroundColor: styling.colours.accent,
-              color: styling.colours.background,
-            }}
-          >
-            {status}
-          </p>
-        )}
+        <StatusPopup status={status} />
       </form>
     </div>
   );

@@ -9,6 +9,7 @@ import {
 import { Button } from "@/app/ui/Button";
 import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
+import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { Link, Release } from "@/lib/definitions";
 import Image from "next/image";
@@ -37,17 +38,11 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
 
   const router = useRouter();
 
-  const [status, setStatus] = React.useState<string>("");
+  const [status, setStatus] = useStatus();
 
   React.useEffect(() => {
     setEditedRelease(release || emptyRelease);
   }, [release]);
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setStatus("");
-    }, 5000);
-  }, [status]);
 
   const getReleaseUpdater = (field: keyof Release) => {
     return (value: string | number | Link[]) => {
@@ -64,7 +59,7 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
     <div
       className={"flex justify-center max-h-full w-full  "}
       style={{
-        color: styling.colours.foreground,
+        color: styling.colours.foreground || "",
       }}
     >
       <form
@@ -240,19 +235,7 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
               Save
             </Button>
           </div>
-          {status != "" && (
-            <p
-              className={
-                "text-right  rounded-md p-4 m-4 absolute left-4 bottom-0"
-              }
-              style={{
-                backgroundColor: styling.colours.accent,
-                color: styling.colours.background,
-              }}
-            >
-              {status}
-            </p>
-          )}
+          <StatusPopup status={status} />
         </div>
       </form>
     </div>
