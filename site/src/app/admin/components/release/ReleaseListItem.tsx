@@ -42,14 +42,14 @@ export const ReleaseListItem = ({
     >
       <div
         className={
-          "flex flex-col-reverse lg:flex-row justify-between w-full items-center min-w-[120px]"
+          "flex flex-col-reverse lg:flex-row justify-between w-full items-center min-w-30"
         }
       >
         <div className={"flex-3 text-center lg:text-left"}>
           <div className={"pb-4"}>
             <h2
               className={
-                " font-medium lg:text-2xl truncate max-w-[120px] sm:max-w-[200px] lg:max-w-none"
+                " font-medium lg:text-2xl truncate max-w-30 sm:max-w-50 lg:max-w-90"
               }
             >
               {release.title}

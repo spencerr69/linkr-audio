@@ -42,7 +42,7 @@ export const Releases = ({ releases }: { releases: Release[] }) => {
     >
       <div
         className={
-          " lg:w-xl border-r border-dashed overflow-x-auto lg:overflow-y-auto shrink-0"
+          " lg:w-xl border-r border-dashed overflow-x-auto lg:overflow-x-clip lg:overflow-y-auto shrink-0"
         }
         style={{
           borderColor: `${styling.colours.foreground}22`,

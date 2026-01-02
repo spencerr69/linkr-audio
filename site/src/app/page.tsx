@@ -1,4 +1,5 @@
 import { getRecentReleases } from "@/app/actions/releases";
+import { ApplyButton } from "@/app/ui/ApplyButton";
 import { ExternalButton } from "@/app/ui/Button";
 import { ReleaseArtwork } from "@/app/ui/ReleaseArtwork";
 import { verifySession } from "@/lib/dal";
@@ -51,13 +52,13 @@ export default async function Page() {
             </h3>
           </div>
           <div>
-            <ExternalButton secondary href={"/apply"} className={"m-2"}>
-              Apply
-            </ExternalButton>
             {session.isAuth ? (
               <ExternalButton href={"/admin"}>Admin</ExternalButton>
             ) : (
-              <LoginButton />
+              <>
+                <ApplyButton />
+                <LoginButton />
+              </>
             )}
           </div>
         </div>

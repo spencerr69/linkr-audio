@@ -5,6 +5,8 @@ export const rootDomain =
 
 export const apiDomain = process.env.API_ROOT_DOMAIN || "http://localhost:8787";
 
+export const applyEmail = process.env.PUBLIC_APPLY_EMAIL || "apply@linkr.audio";
+
 export const baseDomain = rootDomain.split("//")[1];
 
 export const stylingComp = (styling: Styling): StylingGuaranteed => {

@@ -1,6 +1,6 @@
 import { logout } from "@/app/actions/auth";
 import { HeaderLink } from "@/app/admin/components/layout/HeaderLink";
-import { ChangePasswordModal } from "@/app/ui/ChangePasswordModal";
+import { ChangePasswordDialog } from "@/app/ui/Dialogs/ChangePasswordDialog";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import {
   MenuButton,
@@ -28,7 +28,9 @@ export const HeaderDropdown = () => {
           <MoreHorizIcon fontSize={"large"} />
         </MenuButton>
         <MenuItems
-          className={" absolute top-22 right-5 drop-shadow-xl rounded-md z-20"}
+          className={
+            " absolute top-22 right-5 shadow-lg shadow-black/50 rounded-md z-20"
+          }
           style={{
             backgroundColor: styling.colours.background,
             color: styling.colours.foreground,
@@ -54,7 +56,7 @@ export const HeaderDropdown = () => {
           </div>
         </MenuItems>
       </Menu>
-      <ChangePasswordModal
+      <ChangePasswordDialog
         isOpen={isChangePasswordOpen}
         onClose={() => setIsChangePasswordOpen(false)}
       />

@@ -1,7 +1,7 @@
 "use server";
 
-import { ChangePasswordData } from "@/app/ui/ChangePasswordModal";
-import { LoginData } from "@/app/ui/LoginForm";
+import { ChangePasswordData } from "@/app/ui/Dialogs/ChangePasswordDialog";
+import { LoginData } from "@/app/ui/Dialogs/LoginDialog";
 import { serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
 import { LoginFormSchema } from "@/lib/definitions";

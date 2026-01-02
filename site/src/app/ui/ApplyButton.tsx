@@ -1,19 +1,19 @@
 "use client";
 
 import { Button } from "@/app/ui/Button";
-import { LoginDialog } from "@/app/ui/Dialogs/LoginDialog";
+import { ApplyDialog } from "@/app/ui/Dialogs/ApplyDialog";
 import { useState } from "react";
 
-export function LoginButton() {
+export function ApplyButton() {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <Button className={"m-2"} onClick={() => setOpen(!open)}>
-        Log In
+        Apply
       </Button>
 
-      <LoginDialog isOpen={open} onCloseAction={() => setOpen(!open)} />
+      <ApplyDialog isOpen={open} onCloseAction={() => setOpen(!open)} />
     </>
   );
 }
