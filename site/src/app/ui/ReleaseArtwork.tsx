@@ -69,7 +69,7 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
         className={
           `aspect-square rounded-md w-full max-w-[${small ? "250px" : "500px"}] h-auto object-cover transition-all duration-200` +
           "  ease-custom " +
-          " hover:shadow-lg hover:drop-shadow-lg z-10"
+          " hover:shadow-lg hover:drop-shadow-lg shadow-black/20 drop-shadow-black/20 z-10"
         }
         draggable={false}
       />
