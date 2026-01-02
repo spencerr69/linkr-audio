@@ -27,6 +27,8 @@ export const ReleaseLinks: React.FC<ReleaseLinksProps> = ({ links }) => {
       }
       style={{
         borderColor: `${styling.colours.foreground}22`,
+        scrollbarColor: `${styling.colours.foreground}22 ${styling.colours.background}`,
+        scrollbarGutter: "stable both-edges",
       }}
     >
       {links.map((link) => (

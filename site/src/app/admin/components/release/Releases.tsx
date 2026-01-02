@@ -34,16 +34,27 @@ export const Releases = ({ releases }: { releases: Release[] }) => {
   });
 
   return (
-    <div className={"flex flex-col lg:flex-row min-h-0 h-full overflow-hidden"}>
+    <div
+      className={"flex flex-col lg:flex-row min-h-0 h-full overflow-hidden"}
+      style={{
+        scrollbarColor: `${styling.colours.foreground}22, ${styling.colours.background}`,
+      }}
+    >
       <div
         className={
           " lg:w-xl border-r border-dashed overflow-x-auto lg:overflow-y-auto shrink-0"
         }
         style={{
           borderColor: `${styling.colours.foreground}22`,
+          scrollbarColor: `${styling.colours.foreground}22, ${styling.colours.background}`,
         }}
       >
-        <ul className={"flex lg:flex-col"}>
+        <ul
+          className={"flex lg:flex-col"}
+          style={{
+            scrollbarColor: `${styling.colours.foreground}22, ${styling.colours.background}`,
+          }}
+        >
           {releasesList}
           <div className={"flex justify-center m-2"}>
             <Button squish onClick={() => createReleaseForm()}>
