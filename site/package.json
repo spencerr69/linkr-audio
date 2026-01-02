@@ -25,6 +25,7 @@
     "react": "19.1.4",
     "react-color-palette": "^7.3.1",
     "react-dom": "19.1.4",
+    "react-multi-carousel": "^2.8.6",
     "react-responsive": "^10.0.1",
     "uuid": "^13.0.0",
     "zod": "^4.2.1"

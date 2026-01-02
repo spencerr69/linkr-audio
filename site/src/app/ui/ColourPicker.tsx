@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { ColorPicker, useColor } from "react-color-palette";
 import "react-color-palette/css";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";

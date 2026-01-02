@@ -17,6 +17,280 @@
   <component name="AIDiffSettings">
     <option name="showAIDiff" value="true" />
   </component>
+  <component name="AIDiffStorage" id="4">
+    <groups>
+      <group changeListId="015bdcec-9ed4-418a-87ed-1334edcd9625" id="1" name="Refactor 'login' action to use LoginData and return LoginFormState" description="Refactor the login action to use a structured LoginData object and return a consistent LoginFormState for better error handling." importance="0.9">
+        <files>
+          <file summary="Refactors the `login` function to accept `LoginData` and return `LoginFormState`, improving type safety and error handling. Also adds a redirect to '/' after `logout`." importance="0.9" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/actions/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/auth.ts" afterDir="false" />
+            <ranges>
+              <range afterLine1="2" afterLine2="3" beforeLine1="2" beforeLine2="2" groupId="1" />
+              <range afterLine1="7" afterLine2="8" beforeLine1="6" beforeLine2="6" groupId="1" />
+              <range afterLine1="9" afterLine2="10" beforeLine1="7" beforeLine2="8" groupId="1" />
+              <range afterLine1="12" afterLine2="14" beforeLine1="10" beforeLine2="12" groupId="1" />
+              <range afterLine1="18" afterLine2="19" beforeLine1="16" beforeLine2="17" groupId="1" />
+              <range afterLine1="35" afterLine2="36" beforeLine1="33" beforeLine2="34" groupId="1" />
+              <range afterLine1="40" afterLine2="41" beforeLine1="38" beforeLine2="38" groupId="1" />
+              <range afterLine1="46" afterLine2="47" beforeLine1="43" beforeLine2="43" groupId="1" />
+            </ranges>
+          </file>
+          <file summary="Updates the `LoginFormState` type to include `error` and `success` properties, aligning with the refactored `login` action's return type." importance="0.8" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/lib/definitions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/definitions.ts" afterDir="false" />
+            <ranges>
+              <range afterLine1="10" afterLine2="12" beforeLine1="10" beforeLine2="15" groupId="1" />
+            </ranges>
+          </file>
+          <file summary="Adds a redirect to '/admin' after `createSession` to ensure users are directed to the admin dashboard upon successful login." importance="0.7" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/lib/session.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/session.ts" afterDir="false" />
+            <ranges>
+              <range afterLine1="4" afterLine2="5" beforeLine1="4" beforeLine2="4" groupId="1" />
+              <range afterLine1="46" afterLine2="48" beforeLine1="45" beforeLine2="45" groupId="1" />
+            </ranges>
+          </file>
+          <file summary="Adds 'use server' directive to `dal.ts` and `verifySession` to explicitly mark them as server-side functions." importance="0.6" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/lib/dal.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/dal.ts" afterDir="false" />
+            <ranges>
+              <range afterLine1="0" afterLine2="2" beforeLine1="0" beforeLine2="0" groupId="1" />
+              <range afterLine1="14" afterLine2="15" beforeLine1="12" beforeLine2="12" groupId="1" />
+            </ranges>
+          </file>
+        </files>
+      </group>
+      <group changeListId="47c2c887-1f18-4106-ab69-72959640dae0" id="2" name="Implement 'StatusPopup' and 'useStatus' hook for UI feedback" description="Introduce a reusable StatusPopup component and a useStatus hook to provide consistent UI feedback across forms." importance="0.8">
+        <files>
+          <file summary="Adds the `StatusPopup` component and `useStatus` hook for displaying transient status messages with automatic hiding and styling based on `StylingContext`." importance="0.8" isPending="false">
+            <change afterPath="$PROJECT_DIR$/site/src/app/ui/StatusPopup.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="0" afterLine2="55" beforeLine1="0" beforeLine2="0" groupId="2" />
+            </ranges>
+          </file>
+          <file summary="Replaces manual status state and display with the new `useStatus` hook and `StatusPopup` component in `ArtistForm`." importance="0.7" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="7" afterLine2="8" beforeLine1="7" beforeLine2="8" groupId="2" />
+              <range afterLine1="12" afterLine2="13" beforeLine1="12" beforeLine2="13" groupId="2" />
+              <range afterLine1="23" afterLine2="24" beforeLine1="23" beforeLine2="24" groupId="2" />
+              <range afterLine1="27" afterLine2="27" beforeLine1="27" beforeLine2="29" groupId="2" />
+              <range afterLine1="29" afterLine2="30" beforeLine1="31" beforeLine2="32" groupId="2" />
+              <range afterLine1="31" afterLine2="32" beforeLine1="33" beforeLine2="34" groupId="2" />
+              <range afterLine1="35" afterLine2="35" beforeLine1="37" beforeLine2="43" groupId="2" />
+              <range afterLine1="90" afterLine2="91" beforeLine1="98" beforeLine2="111" groupId="2" />
+            </ranges>
+          </file>
+          <file summary="Integrates the `useStatus` hook and `StatusPopup` component into `ReleaseForm` for consistent status message display." importance="0.7" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="11" afterLine2="12" beforeLine1="11" beforeLine2="11" groupId="2" />
+              <range afterLine1="40" afterLine2="41" beforeLine1="39" beforeLine2="40" groupId="2" />
+              <range afterLine1="46" afterLine2="46" beforeLine1="45" beforeLine2="51" groupId="2" />
+              <range afterLine1="61" afterLine2="62" beforeLine1="66" beforeLine2="67" groupId="2" />
+              <range afterLine1="237" afterLine2="238" beforeLine1="242" beforeLine2="255" groupId="2" />
+            </ranges>
+          </file>
+        </files>
+      </group>
+      <group changeListId="0c1703a5-cd81-4f12-8754-0badaa78b2b2" id="3" name="Update 'LoginForm' to use FormField and StatusPopup" description="Modernize the LoginForm by integrating FormField, StatusPopup, and headlessui components for improved UX." importance="0.8">
+        <files>
+          <file summary="Rewrites `LoginForm` to use `FormField`, `StatusPopup`, and `@headlessui/react` for popover functionality, enhancing UI and state management." importance="0.8" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/ui/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/LoginForm.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="4" afterLine2="15" beforeLine1="4" beforeLine2="8" groupId="3" />
+              <range afterLine1="16" afterLine2="18" beforeLine1="9" beforeLine2="13" groupId="3" />
+              <range afterLine1="19" afterLine2="23" beforeLine1="14" beforeLine2="17" groupId="3" />
+              <range afterLine1="24" afterLine2="25" beforeLine1="18" beforeLine2="19" groupId="3" />
+              <range afterLine1="26" afterLine2="38" beforeLine1="20" beforeLine2="26" groupId="3" />
+              <range afterLine1="39" afterLine2="46" beforeLine1="27" beforeLine2="31" groupId="3" />
+              <range afterLine1="48" afterLine2="106" beforeLine1="33" beforeLine2="66" groupId="3" />
+            </ranges>
+          </file>
+          <file summary="Adds a `type` prop to `FormField` with a default of 'text', allowing for different input types like 'password'." importance="0.7" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/ui/FormField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormField.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="8" afterLine2="9" beforeLine1="8" beforeLine2="8" groupId="3" />
+              <range afterLine1="15" afterLine2="16" beforeLine1="14" beforeLine2="14" groupId="3" />
+              <range afterLine1="45" afterLine2="46" beforeLine1="43" beforeLine2="44" groupId="3" />
+            </ranges>
+          </file>
+          <file summary="Removes the direct rendering of `LoginForm` and adds a redirect to '/' if the user is not authenticated, streamlining the admin page access." importance="0.7" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/admin/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/page.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="3" afterLine2="3" beforeLine1="3" beforeLine2="4" groupId="3" />
+              <range afterLine1="5" afterLine2="6" beforeLine1="6" beforeLine2="6" groupId="3" />
+              <range afterLine1="10" afterLine2="14" beforeLine1="10" beforeLine2="10" groupId="3" />
+              <range afterLine1="17" afterLine2="18" beforeLine1="13" beforeLine2="18" groupId="3" />
+            </ranges>
+          </file>
+          <file summary="Introduces a new `LoginButton` component that uses `@headlessui/react`'s `Popover` to trigger the `LoginForm`." importance="0.6" isPending="false">
+            <change afterPath="$PROJECT_DIR$/site/src/app/ui/LoginButton.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="0" afterLine2="21" beforeLine1="0" beforeLine2="0" groupId="3" />
+            </ranges>
+          </file>
+          <file summary="Replaces the direct 'Log In' button with the new `LoginButton` component, integrating the popover login functionality." importance="0.6" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/page.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="0" afterLine2="0" beforeLine1="0" beforeLine2="1" groupId="3" />
+              <range afterLine1="2" afterLine2="5" beforeLine1="3" beforeLine2="4" groupId="3" />
+              <range afterLine1="7" afterLine2="7" beforeLine1="6" beforeLine2="7" groupId="3" />
+              <range afterLine1="13" afterLine2="14" beforeLine1="13" beforeLine2="14" groupId="3" />
+              <range afterLine1="20" afterLine2="24" beforeLine1="20" beforeLine2="22" groupId="3" />
+              <range afterLine1="30" afterLine2="31" beforeLine1="28" beforeLine2="29" groupId="3" />
+              <range afterLine1="53" afterLine2="54" beforeLine1="51" beforeLine2="60" groupId="3" />
+            </ranges>
+          </file>
+        </files>
+      </group>
+      <group changeListId="6205506d-bebf-4753-bdb5-abd5e608a3be" id="4" name="Add 'HeaderDropdown' for admin navigation" description="Introduce a HeaderDropdown component to consolidate admin navigation options like logout and password change." importance="0.7">
+        <files>
+          <file summary="Adds the `HeaderDropdown` component using `@headlessui/react` to provide a menu for admin actions like logout." importance="0.7" isPending="false">
+            <change afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderDropdown.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="0" afterLine2="78" beforeLine1="0" beforeLine2="0" groupId="4" />
+            </ranges>
+          </file>
+          <file summary="Replaces the direct `logout` link with the new `HeaderDropdown` component in the admin header." importance="0.6" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="2" afterLine2="3" beforeLine1="2" beforeLine2="3" groupId="4" />
+              <range afterLine1="7" afterLine2="8" beforeLine1="7" beforeLine2="8" groupId="4" />
+              <range afterLine1="10" afterLine2="10" beforeLine1="10" beforeLine2="11" groupId="4" />
+              <range afterLine1="64" afterLine2="65" beforeLine1="65" beforeLine2="68" groupId="4" />
+            </ranges>
+          </file>
+          <file summary="Sets a default empty function for the `onClick` prop in `HeaderLink` to prevent potential undefined errors when used with components like `MenuButton`." importance="0.5" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="17" afterLine2="18" beforeLine1="17" beforeLine2="18" groupId="4" />
+            </ranges>
+          </file>
+        </files>
+      </group>
+      <group changeListId="ea2e5bb3-c1c2-4eba-b16c-f3a40d53f7c3" id="6" name="Update 'getRecentReleases' to limit results" description="Modify `getRecentReleases` to fetch a limited number of recent releases for performance and display." importance="0.7">
+        <files>
+          <file summary="Modifies `getRecentReleases` to fetch a maximum of 9 releases and refines `getRelease`'s `notFound()` logic." importance="0.7" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/actions/releases.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/releases.ts" afterDir="false" />
+            <ranges>
+              <range afterLine1="155" afterLine2="162" beforeLine1="155" beforeLine2="160" groupId="6" />
+              <range afterLine1="167" afterLine2="168" beforeLine1="165" beforeLine2="166" groupId="6" />
+            </ranges>
+          </file>
+          <file summary="Adjusts the display of recent releases to use a grid layout and adds basic styling for release titles and artist names." importance="0.6" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/page.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="57" afterLine2="67" beforeLine1="63" beforeLine2="65" groupId="6" />
+              <range afterLine1="68" afterLine2="70" beforeLine1="66" beforeLine2="68" groupId="6" />
+              <range afterLine1="71" afterLine2="80" beforeLine1="69" beforeLine2="69" groupId="6" />
+            </ranges>
+          </file>
+        </files>
+      </group>
+      <group changeListId="5bee2b1f-b7fd-45a9-957a-9aec4d830674" id="5" name="Enhance 'ReleaseArtwork' and 'ReleaseGrid' components" description="Improve the ReleaseArtwork component by conditionally rendering vinyl and update ReleaseGrid to pass `small` prop." importance="0.6">
+        <files>
+          <file summary="Modifies `ReleaseArtwork` to conditionally render the vinyl image only when the `small` prop is false, improving display for smaller artwork." importance="0.6" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/ui/ReleaseArtwork.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/ReleaseArtwork.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="75" afterLine2="89" beforeLine1="75" beforeLine2="87" groupId="5" />
+            </ranges>
+          </file>
+          <file summary="Adds `small={false}` prop to `ReleaseArtwork` in `ReleaseGrid` to ensure the vinyl image is rendered for full-size release displays." importance="0.5" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseGrid.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="59" afterLine2="60" beforeLine1="59" beforeLine2="59" groupId="5" />
+            </ranges>
+          </file>
+        </files>
+      </group>
+      <group changeListId="de620d4e-476b-485b-98f2-01fe99d9f82e" id="7" name="Enhance 'ReleaseLinks' and 'Releases' scrollbar styling" description="Apply custom scrollbar styling to ReleaseLinks and Releases components for better visual integration." importance="0.5">
+        <files>
+          <file summary="Adds custom scrollbar styling to the `ReleaseLinks` component using `scrollbarColor` and `scrollbarGutter`." importance="0.5" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseLinks.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="29" afterLine2="31" beforeLine1="29" beforeLine2="29" groupId="7" />
+            </ranges>
+          </file>
+          <file summary="Applies custom scrollbar styling to the main container and `ul` elements within the `Releases` component for theme consistency." importance="0.5" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="36" afterLine2="42" beforeLine1="36" beforeLine2="37" groupId="7" />
+              <range afterLine1="48" afterLine2="49" beforeLine1="43" beforeLine2="43" groupId="7" />
+              <range afterLine1="51" afterLine2="57" beforeLine1="45" beforeLine2="46" groupId="7" />
+            </ranges>
+          </file>
+        </files>
+      </group>
+      <group changeListId="3cea91af-03ef-4aba-b8f2-213fecdec71f" id="8" name="Update 'FormLinks' to use optional chaining for array access" description="Update `FormLinks` to use optional chaining for array access, preventing potential runtime errors." importance="0.4">
+        <files>
+          <file summary="Modifies `FormLinks` to use optional chaining (`!`) when updating link properties, ensuring safer array access." importance="0.4" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="21" afterLine2="22" beforeLine1="21" beforeLine2="22" groupId="8" />
+            </ranges>
+          </file>
+        </files>
+      </group>
+      <group changeListId="c3e5e13b-d1c7-473d-bda2-6e93a0382944" id="9" name="Update TypeScript configuration and dependencies" description="Update TypeScript configuration for stricter checks and add 'react-multi-carousel' dependency." importance="0.3">
+        <files>
+          <file summary="Adds stricter TypeScript compilation options to `tsconfig.json` for improved code quality." importance="0.3" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/site/tsconfig.json" afterDir="false" />
+            <ranges>
+              <range afterLine1="7" afterLine2="16" beforeLine1="7" beforeLine2="7" groupId="9" />
+              <range afterLine1="29" afterLine2="30" beforeLine1="20" beforeLine2="20" groupId="9" />
+            </ranges>
+          </file>
+          <file summary="Adds `react-multi-carousel` as a new dependency to `package.json`." importance="0.2" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/site/package.json" afterDir="false" />
+            <ranges>
+              <range afterLine1="27" afterLine2="28" beforeLine1="27" beforeLine2="27" groupId="9" />
+            </ranges>
+          </file>
+          <file summary="Updates `pnpm-lock.yaml` to include the new `react-multi-carousel` dependency and its transitive dependencies." importance="0.2" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/site/pnpm-lock.yaml" afterDir="false" />
+            <ranges>
+              <range afterLine1="46" afterLine2="49" beforeLine1="46" beforeLine2="46" groupId="9" />
+              <range afterLine1="3081" afterLine2="3085" beforeLine1="3078" beforeLine2="3078" groupId="9" />
+              <range afterLine1="3542" afterLine2="3616" beforeLine1="3535" beforeLine2="3535" groupId="9" />
+              <range afterLine1="3810" afterLine2="3814" beforeLine1="3729" beforeLine2="3729" groupId="9" />
+              <range afterLine1="8285" afterLine2="8287" beforeLine1="8200" beforeLine2="8200" groupId="9" />
+              <range afterLine1="8686" afterLine2="8688" beforeLine1="8599" beforeLine2="8599" groupId="9" />
+              <range afterLine1="8883" afterLine2="8889" beforeLine1="8794" beforeLine2="8794" groupId="9" />
+            </ranges>
+          </file>
+          <file summary="Updates the generated OpenAPI schema definition file `schema.d.ts` to reflect API changes, specifically making `background`, `foreground`, and `accent` non-nullable in `Colours`." importance="0.1" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/lib/schema.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/schema.d.ts" afterDir="false" />
+            <ranges>
+              <range afterLine1="6" afterLine2="564" beforeLine1="6" beforeLine2="564" groupId="9" />
+              <range afterLine1="567" afterLine2="617" beforeLine1="567" beforeLine2="617" groupId="9" />
+            </ranges>
+          </file>
+          <file summary="Removes an unused `React` import from `ColourPicker.tsx`." importance="0.1" isPending="false">
+            <change beforePath="$PROJECT_DIR$/site/src/app/ui/ColourPicker.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/ColourPicker.tsx" afterDir="false" />
+            <ranges>
+              <range afterLine1="2" afterLine2="2" beforeLine1="2" beforeLine2="3" groupId="9" />
+            </ranges>
+          </file>
+          <file summary="Updates `.idea/workspace.xml` to reflect changes in project tasks, branch cleanup history, and embedding indexing information." importance="0.0" isPending="false">
+            <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+            <ranges>
+              <range afterLine1="19" afterLine2="150" beforeLine1="19" beforeLine2="19" groupId="9" />
+              <range afterLine1="161" afterLine2="163" beforeLine1="30" beforeLine2="31" groupId="9" />
+              <range afterLine1="164" afterLine2="164" beforeLine1="32" beforeLine2="36" groupId="9" />
+              <range afterLine1="166" afterLine2="170" beforeLine1="38" beforeLine2="38" groupId="9" />
+              <range afterLine1="171" afterLine2="174" beforeLine1="39" beforeLine2="39" groupId="9" />
+              <range afterLine1="175" afterLine2="197" beforeLine1="40" beforeLine2="40" groupId="9" />
+              <range afterLine1="204" afterLine2="205" beforeLine1="47" beforeLine2="48" groupId="9" />
+              <range afterLine1="261" afterLine2="272" beforeLine1="104" beforeLine2="104" groupId="9" />
+              <range afterLine1="329" afterLine2="330" beforeLine1="161" beforeLine2="162" groupId="9" />
+              <range afterLine1="406" afterLine2="407" beforeLine1="238" beforeLine2="238" groupId="9" />
+              <range afterLine1="464" afterLine2="466" beforeLine1="295" beforeLine2="303" groupId="9" />
+              <range afterLine1="859" afterLine2="868" beforeLine1="696" beforeLine2="697" groupId="9" />
+              <range afterLine1="907" afterLine2="907" beforeLine1="736" beforeLine2="737" groupId="9" />
+              <range afterLine1="931" afterLine2="933" beforeLine1="761" beforeLine2="762" groupId="9" />
+            </ranges>
+          </file>
+        </files>
+      </group>
+    </groups>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
@@ -28,16 +302,52 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="feat(admin): Add PostHog tracking to admin forms and UI elements">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/openapi.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/openapi.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/releases/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/releases/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseArtwork.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/ReleaseArtwork.tsx" afterDir="false" />
+    <list default="true" id="c416d33b-9015-4291-91e5-42e43d57cb4d" name="Changes" comment="feat(releases): add /releases/recent endpoint and frontend integration" />
+    <list id="6205506d-bebf-4753-bdb5-abd5e608a3be" name="Add 'HeaderDropdown' for admin navigation" comment="Introduce a HeaderDropdown component to consolidate admin navigation options like logout and password change.">
+      <change afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderDropdown.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/layout/HeaderLink.tsx" afterDir="false" />
+    </list>
+    <list id="5bee2b1f-b7fd-45a9-957a-9aec4d830674" name="Enhance 'ReleaseArtwork' and 'ReleaseGrid' components" comment="Improve the ReleaseArtwork component by conditionally rendering vinyl and update ReleaseGrid to pass `small` prop.">
       <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseGrid.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/ui/ReleaseArtwork.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/ReleaseArtwork.tsx" afterDir="false" />
+    </list>
+    <list id="de620d4e-476b-485b-98f2-01fe99d9f82e" name="Enhance 'ReleaseLinks' and 'Releases' scrollbar styling" comment="Apply custom scrollbar styling to ReleaseLinks and Releases components for better visual integration.">
+      <change beforePath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseLinks.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/Releases.tsx" afterDir="false" />
+    </list>
+    <list id="47c2c887-1f18-4106-ab69-72959640dae0" name="Implement 'StatusPopup' and 'useStatus' hook for UI feedback" comment="Introduce a reusable StatusPopup component and a useStatus hook to provide consistent UI feedback across forms.">
+      <change afterPath="$PROJECT_DIR$/site/src/app/ui/StatusPopup.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/artist/ArtistForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/components/release/ReleaseForm.tsx" afterDir="false" />
+    </list>
+    <list id="015bdcec-9ed4-418a-87ed-1334edcd9625" name="Refactor 'login' action to use LoginData and return LoginFormState" comment="Refactor the login action to use a structured LoginData object and return a consistent LoginFormState for better error handling.">
+      <change beforePath="$PROJECT_DIR$/site/src/app/actions/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/lib/dal.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/dal.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/lib/definitions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/definitions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/lib/session.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/session.ts" afterDir="false" />
+    </list>
+    <list id="3cea91af-03ef-4aba-b8f2-213fecdec71f" name="Update 'FormLinks' to use optional chaining for array access" comment="Update `FormLinks` to use optional chaining for array access, preventing potential runtime errors.">
+      <change beforePath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormLinks.tsx" afterDir="false" />
+    </list>
+    <list id="ea2e5bb3-c1c2-4eba-b16c-f3a40d53f7c3" name="Update 'getRecentReleases' to limit results" comment="Modify `getRecentReleases` to fetch a limited number of recent releases for performance and display.">
       <change beforePath="$PROJECT_DIR$/site/src/app/actions/releases.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/actions/releases.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/page.tsx" afterDir="false" />
+    </list>
+    <list id="0c1703a5-cd81-4f12-8754-0badaa78b2b2" name="Update 'LoginForm' to use FormField and StatusPopup" comment="Modernize the LoginForm by integrating FormField, StatusPopup, and headlessui components for improved UX.">
+      <change afterPath="$PROJECT_DIR$/site/src/app/ui/LoginButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/admin/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/admin/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/ui/FormField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/FormField.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/ui/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/LoginForm.tsx" afterDir="false" />
+    </list>
+    <list id="c3e5e13b-d1c7-473d-bda2-6e93a0382944" name="Update TypeScript configuration and dependencies" comment="Update TypeScript configuration for stricter checks and add 'react-multi-carousel' dependency.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/site/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/site/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/app/ui/ColourPicker.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/app/ui/ColourPicker.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/lib/schema.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/lib/schema.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/site/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +355,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="159" />
+    <option name="cachedIndexableFilesCount" value="154" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -102,6 +412,17 @@
               </option>
               <option name="timestamp" value="1767181673987" />
             </BranchCleanupEntry>
+            <BranchCleanupEntry>
+              <option name="deletions">
+                <list>
+                  <BranchDeletion>
+                    <option name="hash" value="080abf8181368baa1c540e27cee6901bde3ca848" />
+                    <option name="name" value="hmm" />
+                  </BranchDeletion>
+                </list>
+              </option>
+              <option name="timestamp" value="1767269807823" />
+            </BranchCleanupEntry>
           </list>
         </option>
       </BranchesCleanupHistory>
@@ -146,6 +467,22 @@
     &quot;repository&quot;: &quot;linkr-audio&quot;
   }
 }</component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/site/src/app/page.tsx">
+      <ranges>
+        <range start1="0" end1="1" start2="0" end2="0" changelist="0c1703a5-cd81-4f12-8754-0badaa78b2b2" />
+        <range start1="3" end1="4" start2="2" end2="5" changelist="0c1703a5-cd81-4f12-8754-0badaa78b2b2" />
+        <range start1="6" end1="7" start2="7" end2="7" changelist="0c1703a5-cd81-4f12-8754-0badaa78b2b2" />
+        <range start1="13" end1="14" start2="13" end2="14" changelist="0c1703a5-cd81-4f12-8754-0badaa78b2b2" />
+        <range start1="20" end1="22" start2="20" end2="24" changelist="0c1703a5-cd81-4f12-8754-0badaa78b2b2" />
+        <range start1="28" end1="29" start2="30" end2="31" changelist="0c1703a5-cd81-4f12-8754-0badaa78b2b2" />
+        <range start1="51" end1="60" start2="53" end2="54" changelist="0c1703a5-cd81-4f12-8754-0badaa78b2b2" />
+        <range start1="63" end1="65" start2="57" end2="67" changelist="ea2e5bb3-c1c2-4eba-b16c-f3a40d53f7c3" />
+        <range start1="66" end1="68" start2="68" end2="70" changelist="ea2e5bb3-c1c2-4eba-b16c-f3a40d53f7c3" />
+        <range start1="69" end1="69" start2="71" end2="80" changelist="ea2e5bb3-c1c2-4eba-b16c-f3a40d53f7c3" />
+      </ranges>
+    </file>
+  </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="Ci8PDHaC" />
   </component>
@@ -159,7 +496,7 @@
     </order>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;ff066aff&quot;,
@@ -236,6 +573,7 @@
       <recent name="$PROJECT_DIR$/site/src" />
     </key>
     <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/site/src/ui/LoginButton.tsx" />
       <recent name="$PROJECT_DIR$/site/src/app/admin/components/artist/FormStyling.tsx" />
       <recent name="$PROJECT_DIR$/site/src/app/admin/components/ReleaseListItem.tsx" />
       <recent name="$PROJECT_DIR$/site/src/app/[id]/[slug]/components/ReleaseGrid.tsx" />
@@ -293,14 +631,8 @@
       <workItem from="1767096003372" duration="5398000" />
       <workItem from="1767148460318" duration="10839000" />
       <workItem from="1767236468021" duration="14982000" />
-    </task>
-    <task id="LOCAL-00004" summary="Implemented auth&#10;&#10;use verifySession() to get current session from cookie&#10;added schema.d.ts built from openapi spec from bend">
-      <option name="closed" value="true" />
-      <created>1766207845406</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1766207845406</updated>
+      <workItem from="1767318982249" duration="1674000" />
+      <workItem from="1767320753155" duration="6996000" />
     </task>
     <task id="LOCAL-00005" summary="add logout, delete index">
       <option name="closed" value="true" />
@@ -694,7 +1026,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767257791652</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="feat(releases): add /releases/recent endpoint and frontend integration">
+      <option name="closed" value="true" />
+      <created>1767259752438</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1767259752438</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers>
       <ClickUp SelectedAssigneeId="294854719" SelectedWorkspaceId="90161318375" />
     </servers>
@@ -734,7 +1074,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="style(site): update header and button components, remove unused styles" />
     <MESSAGE value="docs(README): add clarification on linkr.audio purpose" />
     <MESSAGE value="feat(artist-form): use artist styling for status message background and text color" />
     <MESSAGE value="refactor(types): migrate shared types from apihelper to definitions module" />
@@ -759,7 +1098,8 @@
     <MESSAGE value="Refined spacing and roundedness of HeaderLink component for improved aesthetic consistency. Adjusted padding and border-radius for better visual harmony across admin components." />
     <MESSAGE value="feat(admin): Add colour pickers to styling area" />
     <MESSAGE value="feat(admin): Add PostHog tracking to admin forms and UI elements" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(admin): Add PostHog tracking to admin forms and UI elements" />
+    <MESSAGE value="feat(releases): add /releases/recent endpoint and frontend integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(releases): add /releases/recent endpoint and frontend integration" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
