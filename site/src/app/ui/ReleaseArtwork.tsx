@@ -73,18 +73,20 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
         }
         draggable={false}
       />
-      <Image
-        src={"/vinyl.png"}
-        ref={vinylRef}
-        alt={"vinyl"}
-        height={small ? 250 : 500}
-        width={small ? 250 : 500}
-        className={
-          `aspect-square rounded-md w-full max-w-[${small ? "250px" : "500px"}] ${small ? "scale-75" : ""} h-auto absolute -z-10 duration-200 ease-custom` +
-          " drop-shadow-2xl transition-all object-cover"
-        }
-        draggable={false}
-      />
+      {!small && (
+        <Image
+          src={"/vinyl.png"}
+          ref={vinylRef}
+          alt={"vinyl"}
+          height={small ? 250 : 500}
+          width={small ? 250 : 500}
+          className={
+            `aspect-square rounded-md  max-w-[${small ? "250px" : "500px"}] ${small ? "scale-75" : ""} h-auto absolute -z-10 duration-200 ease-custom` +
+            " drop-shadow-2xl transition-all"
+          }
+          draggable={false}
+        />
+      )}
     </div>
   );
 };

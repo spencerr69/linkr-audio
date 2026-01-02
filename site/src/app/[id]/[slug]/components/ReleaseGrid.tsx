@@ -57,6 +57,7 @@ export const ReleaseGrid = (props: {
         </div>
         <ReleaseLinks links={props.release.links} />
         <ReleaseArtwork
+          small={false}
           artwork={props.release.artwork}
           title={props.release.title}
         />
