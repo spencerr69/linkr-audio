@@ -19,7 +19,7 @@ export const FormLinks = ({
 
   const getLinkUpdater = (i: number, key: keyof Link) => (value: string) => {
     const newLinks = [...links];
-    newLinks[i][key] = value;
+    newLinks[i]![key] = value;
     valueUpdateAction(newLinks);
   };
 
