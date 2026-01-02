@@ -2,6 +2,7 @@ import "server-only";
 import { SessionPayload } from "@/lib/definitions";
 import { jwtVerify, SignJWT } from "jose";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
@@ -43,4 +44,6 @@ export const createSession = async (artistId: string) => {
     sameSite: "lax",
     path: "/",
   });
+
+  redirect("/admin");
 };

@@ -1,3 +1,5 @@
+"use server";
+
 import "server-only";
 import { decrypt } from "@/lib/session";
 import { JWTPayload } from "jose";
@@ -10,6 +12,7 @@ export type Session = {
 };
 
 export const verifySession = cache(async (): Promise<Session> => {
+  "use server";
   const cookie = (await cookies()).get("session")?.value;
   const session = await decrypt(cookie);
 
