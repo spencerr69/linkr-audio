@@ -1,5 +1,5 @@
 import { StylingContext } from "@/app/ui/StylingProvider";
-import React, { useContext } from "react";
+import React, { HTMLInputTypeAttribute, useContext } from "react";
 
 export const FormField = ({
   name,
@@ -13,7 +13,7 @@ export const FormField = ({
   name: string;
   label: string;
   value: string;
-  type?: string;
+  type?: HTMLInputTypeAttribute;
   button?: React.JSX.Element;
   inactive?: boolean;
   valueUpdater?: (value: string) => void;
