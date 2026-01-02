@@ -1,7 +1,6 @@
 import { ColourPicker } from "@/app/ui/ColourPicker";
 import { FormField } from "@/app/ui/FormField";
 import { Colours, EditArtist, Link, Styling } from "@/lib/definitions";
-import React from "react";
 
 export function FormStyling(props: {
   editedArtist: EditArtist;

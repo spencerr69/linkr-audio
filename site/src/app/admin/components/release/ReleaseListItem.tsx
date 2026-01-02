@@ -2,10 +2,10 @@ import { ExternalButton } from "@/app/ui/Button";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { Release } from "@/lib/definitions";
 import { baseDomain } from "@/lib/utils";
-import Image from "next/image";
-import React, { useContext } from "react";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import Image from "next/image";
+import { useContext } from "react";
 
 export const ReleaseListItem = ({
   release,

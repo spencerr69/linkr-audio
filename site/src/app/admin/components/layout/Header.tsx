@@ -34,7 +34,7 @@ export const Header = (props: HeaderProps) => {
       <div className={"flex items-center"}>
         <Link href={"/"}>
           <i
-            className={"logo block"}
+            className={"logo block scale-50 lg:scale-100"}
             style={{
               backgroundColor: styling.colours.background,
             }}

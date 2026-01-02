@@ -24,7 +24,7 @@ export const FormField = ({
     <div
       // key={uuidv4()}
       className={
-        "p-1 flex flex-col w-full pb-0 mb-2 border-dashed " +
+        "p-1 flex flex-col w-full pb-0 mb-2 border-dashed text-left" +
         (inactive ? " rounded-md" : " border-b")
       }
       style={{

@@ -162,6 +162,7 @@ pub async fn post_edit_artist(mut req: Request, ctx: RouteContext<()>) -> worker
    Response::ok("Artist updated successfully")
 }
 
+
 pub async fn post_change_password(
    mut req: Request,
    ctx: RouteContext<()>,

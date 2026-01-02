@@ -40,7 +40,7 @@ export const StatusPopup = ({ status }: { status: StatusState }) => {
     <>
       <p
         className={
-          "text-right  rounded-md p-4 m-4 absolute right-0 bottom-0 duration-200"
+          "text-right font-sans  rounded-md p-4 m-4 absolute right-0 bottom-0 duration-200"
         }
         style={{
           backgroundColor: styling.colours.accent || "",
