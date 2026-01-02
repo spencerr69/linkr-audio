@@ -1,11 +1,13 @@
 import { Styling, StylingGuaranteed } from "@/lib/definitions";
 
 export const rootDomain =
-  process.env.PUBLIC_ROOT_DOMAIN || "http://localhost:3000";
+  process.env.NEXT_PUBLIC_ROOT_DOMAIN || "http://localhost:3000";
 
-export const apiDomain = process.env.API_ROOT_DOMAIN || "http://localhost:8787";
+export const apiDomain =
+  process.env.NEXT_PUBLIC_API_ROOT_DOMAIN || "http://localhost:8787";
 
-export const applyEmail = process.env.PUBLIC_APPLY_EMAIL || "apply@linkr.audio";
+export const applyEmail =
+  process.env.NEXT_PUBLIC_APPLY_EMAIL || "apply@linkr.audio";
 
 export const baseDomain = rootDomain.split("//")[1];
 

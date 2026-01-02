@@ -1,11 +1,11 @@
 import { getRecentReleases } from "@/app/actions/releases";
 import { ApplyButton } from "@/app/ui/ApplyButton";
 import { ExternalButton } from "@/app/ui/Button";
+import LinkrAudioLogo from "@/app/ui/LinkrAudioLogo";
 import { ReleaseArtwork } from "@/app/ui/ReleaseArtwork";
 import { verifySession } from "@/lib/dal";
 import { baseDomain } from "@/lib/utils";
 import { LoginButton } from "@/app/ui/LoginButton";
-import Image from "next/image";
 import Link from "next/link";
 
 export default async function Page() {
@@ -40,12 +40,11 @@ export default async function Page() {
       >
         <div className={"flex align-middle items-center w-6xl justify-between"}>
           <div className={"flex align-middle items-center "}>
-            <Image
-              src={"/linkraudio.svg"}
-              alt={"linkr.audio"}
-              height={100}
-              width={100}
-              draggable={false}
+            <LinkrAudioLogo
+              style={{
+                width: "100px",
+                height: "100px",
+              }}
             />
             <h3 className={" align-middle font-bold  text-3xl "}>
               linkr.audio
