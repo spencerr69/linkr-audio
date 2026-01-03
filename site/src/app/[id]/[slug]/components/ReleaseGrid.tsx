@@ -16,13 +16,13 @@ export const ReleaseGrid = (props: {
   release: Release;
   artist: ArtistResponse;
 }) => {
-  const isMobileLayout = useMediaQuery({
-    query: "(max-width: 923px)",
+  const isNotMobileLayout = useMediaQuery({
+    query: "(min-width: 923px)",
   });
 
   const styling = useContext(StylingContext);
 
-  return isMobileLayout ? (
+  return !isNotMobileLayout ? (
     <>
       <Image
         src={props.release.artwork || ""}
@@ -81,7 +81,10 @@ export const ReleaseGrid = (props: {
             </div>
           </div>
         </div>
-        <div className={"max-h-90 "}>
+        <div
+          className={"max-h-90 border-t-2 border-dashed "}
+          style={{ borderColor: styling.colours.foreground + "22" }}
+        >
           <ReleaseLinks links={props.release.links} />
         </div>
         <div className={"p-4 flex w-full font-mono text-xs"}>
