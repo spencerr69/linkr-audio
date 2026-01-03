@@ -50,6 +50,10 @@ export default {
 
 		const newDomain = `${domain}/${route && `${subdomain}/${route}`}`;
 
+		if (newDomain.endsWith("vinyl.png")) {
+			return Response.redirect(`${domain}/vinyl.png`);
+		}
+
 		return await fetch(newDomain, newRequest);
 	},
 } satisfies ExportedHandler<Env>;
