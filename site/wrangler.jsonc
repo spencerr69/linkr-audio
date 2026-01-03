@@ -8,6 +8,12 @@
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
+  "routes": [
+    {
+      "pattern": "*linkr.audio/*",
+      "zone_name": "linkr.audio"
+    }
+  ],
   "name": "linkr-audio",
   "main": ".open-next/worker.js",
   "compatibility_date": "2025-12-01",
@@ -51,7 +57,7 @@
    * Smart Placement
    * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
    */
-  // "placement": { "mode": "smart" }
+   "placement": { "mode": "smart" },
   /**
    * Bindings
    * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including
@@ -63,8 +69,8 @@
    * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
    */
   "vars": {
-    "NEXT_PUBLIC_ROOT_DOMAIN": "https://linkr-audio.aletrispinkroot.workers.dev",
-    "NEXT_PUBLIC_API_ROOT_DOMAIN": "https://linkr-audio-api.aletrispinkroot.workers.dev",
+    "NEXT_PUBLIC_ROOT_DOMAIN": "https://linkr.audio",
+    "NEXT_PUBLIC_API_ROOT_DOMAIN": "https://api.linkr.audio",
     "NEXT_PUBLIC_POSTHOG_KEY": "phc_lS7cr0A6XrPZpeE5YBWg4lw8M98VIuTaJIuPYOiAB5a",
     "NEXT_PUBLIC_POSTHOG_HOST": "https://eu.i.posthog.com",
     "NEXT_PUBLIC_APPLY_EMAIL": "apply@linkr.audio"
