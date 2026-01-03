@@ -8,12 +8,6 @@
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "routes": [
-    {
-      "pattern": "*linkr.audio/*",
-      "zone_name": "linkr.audio"
-    }
-  ],
   "name": "linkr-audio",
   "main": ".open-next/worker.js",
   "compatibility_date": "2025-12-01",
