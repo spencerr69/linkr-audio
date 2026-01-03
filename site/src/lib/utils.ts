@@ -1,10 +1,10 @@
 import { Styling, StylingGuaranteed } from "@/lib/definitions";
 
 export const rootDomain =
-  process.env.NEXT_PUBLIC_ROOT_DOMAIN || "http://localhost:3000";
+  process.env.NEXT_PUBLIC_ROOT_DOMAIN || "https://linkr.audio";
 
 export const apiDomain =
-  process.env.NEXT_PUBLIC_API_ROOT_DOMAIN || "http://localhost:8787";
+  process.env.NEXT_PUBLIC_API_ROOT_DOMAIN || "https://api.linkr.audio";
 
 export const applyEmail =
   process.env.NEXT_PUBLIC_APPLY_EMAIL || "apply@linkr.audio";

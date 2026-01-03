@@ -22,7 +22,7 @@ export async function generateMetadata({
   const iconImage = cloudflareLoader({
     src: release.artwork || "",
     width: 16,
-    quality: 1,
+    quality: 30,
   });
 
   const socialImage = cloudflareLoader({
