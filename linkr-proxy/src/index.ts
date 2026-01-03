@@ -29,7 +29,7 @@ export default {
 
 		const route = urlWithoutProtocol.slice(slash+1);
 
-		const regex = /\/((?!api|site|images|_next|[\w-]+\.\w+).*)/
+		const regex = /\/((?!api|site|images|_next|cdn-cgi|[\w-]+\.\w+).*)/
 
 		if (regex.exec(route) || !route || route.endsWith(".svg") || route.startsWith(subdomain) /* hacky ass way*/) {
 			return Response.redirect(`${domain}/${route}`, 301)

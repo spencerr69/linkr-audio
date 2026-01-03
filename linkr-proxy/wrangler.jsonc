@@ -14,7 +14,13 @@
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
 	 */
-	// "placement": {  "mode": "smart" }
+	 "placement": {  "mode": "smart" },
+	"routes": [
+		{
+			"pattern": "*.linkr.audio/*",
+			"zone_name": "linkr.audio"
+		}
+	],
 	/**
 	 * Bindings
 	 * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including

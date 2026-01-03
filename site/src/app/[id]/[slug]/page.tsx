@@ -3,6 +3,7 @@
 import { ReleaseGrid } from "@/app/[id]/[slug]/components/ReleaseGrid";
 import { getArtist } from "@/app/actions/artists";
 import { getRelease } from "@/app/actions/releases";
+import LinkrAudioLogo from "@/app/ui/LinkrAudioLogo";
 import StylingProvider from "@/app/ui/StylingProvider";
 import { rootDomain, stylingComp } from "@/lib/utils";
 import { Metadata } from "next";
@@ -51,10 +52,8 @@ const Page = async ({
         <ReleaseGrid release={release} artist={artist} />
         <div className={"absolute bottom-4 "}>
           <Link href={`${rootDomain}`}>
-            <i
-              className={
-                "logo block w-8! h-8! opacity-25 hover:opacity-50 duration-100"
-              }
+            <LinkrAudioLogo
+              className={"w-8! h-8! opacity-25 hover:opacity-50 duration-100"}
             />
           </Link>
         </div>
