@@ -10,17 +10,20 @@
 	"observability": {
 		"enabled": true
 	},
+
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
 	 */
-	 "placement": {  "mode": "smart" },
-//	"routes": [
-//		{
-//			"pattern": "*/*",
-//			"zone_name": "linkr.audio"
-//		}
-//	],
+	"placement": {
+		"mode": "smart"
+	},
+	//	"routes": [
+	//		{
+	//			"pattern": "*/*",
+	//			"zone_name": "linkr.audio"
+	//		}
+	//	],
 	/**
 	 * Bindings
 	 * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including
@@ -33,7 +36,9 @@
 	 * Note: Use secrets to store sensitive data.
 	 * https://developers.cloudflare.com/workers/configuration/secrets/
 	 */
-	 "vars": {  "domain": "https://linkr.audio" }
+	"vars": {
+		"domain": "https://linkr.audio"
+	}
 	/**
 	 * Static Assets
 	 * https://developers.cloudflare.com/workers/static-assets/binding/

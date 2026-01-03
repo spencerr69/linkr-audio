@@ -13,8 +13,12 @@
 
 export default {
 	async fetch(request, env, _ctx): Promise<Response> {
-		const newRequest = new Request(request);
-
+		const newRequest = new Request(request, {
+			cf: {
+				cacheTtl: 600,
+				cacheEverything: true,
+			}
+		});
 
 
 		const domain = env.domain;
