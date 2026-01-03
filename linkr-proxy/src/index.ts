@@ -15,32 +15,38 @@ export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		const newRequest = new Request(request);
 
-		console.log(request.headers)
-
 
 		const domain = env.domain;
 
 		const url = request.url;
-		console.log(url)
 
 		const protocolSpot = url.indexOf("//");
 
-		const urlWithoutProtocol = url.slice(protocolSpot+2);
+		const urlWithoutProtocol = url.slice(protocolSpot + 2);
 
 		const subdomain = urlWithoutProtocol.split(".")[0];
 
 		const slash = urlWithoutProtocol.indexOf("/");
 
-		const route = urlWithoutProtocol.slice(slash+1);
+		const route = urlWithoutProtocol.slice(slash + 1);
 
-		const regex = /\/((?!api|site|images|_next|cdn-cgi|[\w-]+\.\w+).*)/
+		const ignoreBeginnings = [
+			"images", "site", "_next", "api", "cdn-cgi",
+		];
 
-		if (regex.exec(route) || !route || route.endsWith(".svg") || route.startsWith(subdomain) /* hacky ass way*/) {
-			return Response.redirect(`${domain}/${route}`, 301)
+		const ignore = ignoreBeginnings.reduce((prev, thisOne) => {
+			if (prev) {
+				return true;
+			} else return route.startsWith(thisOne);
+		}, false);
+
+
+		if (ignore || !route || route.endsWith(".svg") || route.startsWith(subdomain) /* hacky ass way*/) {
+			return Response.redirect(`${domain}/${route}`, 301);
 		}
 
 		const newDomain = `${domain}/${route && `${subdomain}/${route}`}`;
 
-		return await fetch(newDomain, newRequest)
+		return await fetch(newDomain, newRequest);
 	},
 } satisfies ExportedHandler<Env>;
