@@ -10,6 +10,7 @@ import StylingProvider from "@/app/ui/StylingProvider";
 import { verifySession } from "@/lib/dal";
 import { stylingComp } from "@/lib/utils";
 import { LoginButton } from "@/app/ui/LoginButton";
+import { Metadata } from "next";
 import Link from "next/link";
 
 export default async function Page() {
@@ -112,4 +113,11 @@ export default async function Page() {
       </div>
     </StylingProvider>
   );
+}
+
+export async function generateMetadata() {
+  return {
+    title: "linkr.audio",
+    description: "A customisable and free linksite for music releases.",
+  } as Metadata;
 }
