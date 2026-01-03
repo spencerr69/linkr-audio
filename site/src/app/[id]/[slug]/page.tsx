@@ -19,10 +19,52 @@ export async function generateMetadata({
   const release = await getRelease(id, slug);
 
   return {
-    title: release.title,
-    description: release.artist_name,
+    title: `${release.title}`,
+    description: `Listen to ${release.title} by ${release.artist_name}.`,
     icons: {
       icon: release.artwork || "",
+    },
+    alternates: {
+      canonical: `${rootDomain}/releases/${id}/${slug}`,
+    },
+    openGraph: {
+      title: `${release.title} | ${release.artist_name}`,
+      description: `Listen to ${release.title} by ${release.artist_name}.`,
+      images: [
+        {
+          url: release.artwork || "",
+          width: 500,
+          height: 500,
+          alt: `${release.title} by ${release.artist_name}`,
+        },
+      ],
+      siteName: "linkr.audio",
+      url: `${rootDomain}/releases/${id}/${slug}`,
+      locale: "en-US",
+      type: "website",
+    },
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+        noimageindex: false,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${release.title} | ${release.artist_name}`,
+      description: `Listen to ${release.title} by ${release.artist_name}.`,
+      images: [
+        {
+          url: release.artwork || "",
+        },
+      ],
     },
   };
 }
