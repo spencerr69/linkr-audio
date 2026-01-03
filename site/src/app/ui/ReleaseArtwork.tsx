@@ -53,9 +53,7 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
         // Reset position when mouse leaves
         vinylRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) translateX(0)`;
       }}
-      className={
-        "relative w-full border-b-2 flex items-center justify-center p-8 border-l-2 border-dashed "
-      }
+      className={`relative w-full ${small || "border-b-2 border-l-2"} flex items-center justify-center p-8 border-dashed `}
       style={{
         borderColor: `${styling.colours.foreground}22`,
       }}

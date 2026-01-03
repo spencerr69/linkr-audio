@@ -1,10 +1,14 @@
+"use server";
+
+import { getArtist } from "@/app/actions/artists";
 import { getRecentReleases } from "@/app/actions/releases";
 import { ApplyButton } from "@/app/ui/ApplyButton";
 import { ExternalButton } from "@/app/ui/Button";
 import LinkrAudioLogo from "@/app/ui/LinkrAudioLogo";
-import { ReleaseArtwork } from "@/app/ui/ReleaseArtwork";
+import { RecentRelease } from "@/app/ui/RecentRelease";
+import StylingProvider from "@/app/ui/StylingProvider";
 import { verifySession } from "@/lib/dal";
-import { baseDomain } from "@/lib/utils";
+import { stylingComp } from "@/lib/utils";
 import { LoginButton } from "@/app/ui/LoginButton";
 import Link from "next/link";
 
@@ -13,79 +17,99 @@ export default async function Page() {
 
   const recentReleases = await getRecentReleases();
 
+  const recentArtist = await getArtist(recentReleases[0]?.artist_id || "");
+
+  const styling = stylingComp(recentArtist.styling || {});
+
   const releasesList = recentReleases.map((release) => {
-    return (
-      <div key={release.slug} className={"w-full "}>
-        <Link href={`//${release.artist_id}.${baseDomain}/${release.slug}`}>
-          <ReleaseArtwork
-            small
-            artwork={release.artwork}
-            title={release.title}
-          />
-          <h3 className={"font-bold text-xl"}>{release.title}</h3>
-          <h4 className={"italic"} style={{ lineHeight: "0.8em" }}>
-            {release.artist_name}
-          </h4>
-        </Link>
-      </div>
-    );
+    return <RecentRelease key={release.slug} release={release} />;
   });
 
   return (
-    <div className={"w-full"}>
-      <header
-        className={
-          "fixed top-0 w-full flex  justify-center font-sans text-white z-10"
-        }
-      >
-        <div className={"flex align-middle items-center w-6xl justify-between"}>
-          <div className={"flex align-middle items-center "}>
-            <LinkrAudioLogo
+    <StylingProvider styling={styling}>
+      <div className={"w-full"}>
+        <header
+          className={"fixed top-0 w-full flex  justify-center font-sans z-10"}
+          style={{
+            color: styling.colours.background,
+            backgroundColor: styling.colours.accent,
+          }}
+        >
+          <div
+            className={"flex align-middle items-center w-6xl justify-between"}
+          >
+            <div className={"flex align-middle items-center "}>
+              <LinkrAudioLogo
+                style={{
+                  width: "100px",
+                  height: "100px",
+                }}
+              />
+              <h3 className={" align-middle font-bold  text-3xl "}>
+                linkr.audio
+              </h3>
+            </div>
+            <div>
+              {session.isAuth ? (
+                <ExternalButton secondary href={"/admin"}>
+                  Admin
+                </ExternalButton>
+              ) : (
+                <>
+                  <ApplyButton />
+                  <LoginButton />
+                </>
+              )}
+            </div>
+          </div>
+        </header>
+        <div
+          className={"h-[90vh] w-full "}
+          style={{
+            backgroundColor: styling.colours.accent,
+          }}
+        >
+          <div className={"flex justify-center items-center h-full"}>
+            <h1
+              className={"font-sans font-bold text-3xl"}
               style={{
-                width: "100px",
-                height: "100px",
+                color: styling.colours.background,
               }}
-            />
-            <h3 className={" align-middle font-bold  text-3xl "}>
+            >
               linkr.audio
-            </h3>
-          </div>
-          <div>
-            {session.isAuth ? (
-              <ExternalButton href={"/admin"}>Admin</ExternalButton>
-            ) : (
-              <>
-                <ApplyButton />
-                <LoginButton />
-              </>
-            )}
+            </h1>
           </div>
         </div>
-      </header>
-      <div className={"h-[90vh] w-full bg-blue-500"}>
-        <div className={"flex justify-center items-center h-full"}>
-          <h1>linkr.audio</h1>
+        <div
+          className={
+            "text-center flex flex-col items-center w-full p-8 font-sans"
+          }
+          style={{ backgroundColor: styling.colours.background }}
+        >
+          <h1 className={"font-bold text-3xl mb-4"}>Recent Releases</h1>
+          <div className={"w-6xl overflow-hidden z-0"}>
+            <div className={" grid grid-cols-3 gap-4 w-full "}>
+              {releasesList}
+            </div>
+          </div>
         </div>
+        <footer
+          className={"bottom-0 w-full h-24 border-dashed border-t-2 "}
+          style={{
+            backgroundColor: styling.colours.background,
+            borderColor: `${styling.colours.foreground}22`,
+          }}
+        >
+          <div className={"flex justify-center items-center h-full"}>
+            <Link href="/">
+              <LinkrAudioLogo style={{ width: "75px", height: "75px" }} />
+            </Link>
+            <div>
+              <p className={"font-sans text-sm"}>homepage wip</p>
+            </div>
+          </div>
+        </footer>
       </div>
-      <div
-        className={
-          "text-center flex flex-col items-center w-full p-4 font-sans"
-        }
-      >
-        <h1>Recent Releases</h1>
-        <div className={"w-6xl overflow-hidden z-0"}>
-          <div className={" grid grid-cols-3 w-full "}>{releasesList}</div>
-        </div>
-      </div>
-      <div className={"w-6xl"}>
-        <h1>The story</h1>
-        <p>
-          linkr.audio is a site i made for me and my friends to share new
-          releases with the world ! i plan to keep the amount of artists on this
-          site fairly small, but i will also make this website open source, so
-          you can easily self host or fork the site.
-        </p>
-      </div>
-    </div>
+    </StylingProvider>
   );
 }
