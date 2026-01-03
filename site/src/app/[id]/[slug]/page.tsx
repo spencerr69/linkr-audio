@@ -6,7 +6,7 @@ import { getRelease } from "@/app/actions/releases";
 import LinkrAudioLogo from "@/app/ui/LinkrAudioLogo";
 import StylingProvider from "@/app/ui/StylingProvider";
 import cloudflareLoader from "@/lib/imageLoader";
-import { rootDomain, stylingComp } from "@/lib/utils";
+import { baseDomain, rootDomain, stylingComp } from "@/lib/utils";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -38,7 +38,7 @@ export async function generateMetadata({
       icon: iconImage,
     },
     alternates: {
-      canonical: `${rootDomain}/releases/${id}/${slug}`,
+      canonical: `https://${id}.${baseDomain}/${slug}`,
     },
     openGraph: {
       title: `${release.title} | ${release.artist_name}`,
@@ -52,7 +52,7 @@ export async function generateMetadata({
         },
       ],
       siteName: "linkr.audio",
-      url: `${rootDomain}/releases/${id}/${slug}`,
+      url: `https://${id}.${baseDomain}/${slug}`,
       locale: "en-US",
       type: "website",
     },

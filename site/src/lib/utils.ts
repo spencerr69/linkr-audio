@@ -9,7 +9,7 @@ export const apiDomain =
 export const applyEmail =
   process.env.NEXT_PUBLIC_APPLY_EMAIL || "apply@linkr.audio";
 
-export const baseDomain = rootDomain.split("//")[1];
+export const baseDomain = rootDomain.split("//")[1]!;
 
 export const stylingComp = (styling: Styling): StylingGuaranteed => {
   return {
