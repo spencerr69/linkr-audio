@@ -16,73 +16,13 @@ export const ReleaseGrid = (props: {
   release: Release;
   artist: ArtistResponse;
 }) => {
-  const isMobileLayout = useMediaQuery({
-    query: "(max-width: 923px)",
+  const isNotMobileLayout = useMediaQuery({
+    query: "(min-width: 923px)",
   });
 
   const styling = useContext(StylingContext);
 
-  return !isMobileLayout ? (
-    <>
-      <Image
-        src={props.release.artwork || ""}
-        alt={props.release.title}
-        height={500}
-        width={500}
-        draggable={false}
-        className={"blur-3xl w-full aspect-square fixed -z-10 "}
-        style={{ transform: "scale(1.35)" }}
-      />
-      <div
-        className={
-          "m-16 releasegrid  w-4xl grid grid-cols-2 font-sans rounded-2xl shadow-2xl drop-shadow-2xl z-20 "
-        }
-        style={{
-          backgroundColor: styling.colours.background,
-        }}
-      >
-        <ReleaseHeader
-          title={props.release.title}
-          artistName={props.release.artist_name}
-        />
-        <div
-          className={
-            " overflow-hidden border-l-2 border-b-2 border-dashed  select-none"
-          }
-          style={{
-            borderColor: `${styling.colours.foreground}22`,
-          }}
-        >
-          <ScrollingBackground text={props.release.artist_id || ""} />
-        </div>
-        <ReleaseLinks links={props.release.links} />
-        <ReleaseArtwork
-          small={false}
-          artwork={props.release.artwork}
-          title={props.release.title}
-        />
-        <div className={"p-4 flex w-full font-mono text-xs h-28"}>
-          <ReleaseInfo
-            releaseDate={props.release.release_date}
-            trackCount={props.release.track_count}
-            upc={props.release.upc}
-          />
-          <ArtistLinks
-            artistName={props.artist.master_artist_name}
-            links={props.artist.links}
-          />
-        </div>
-        <div
-          className={"overflow-hidden border-l-2 border-dashed select-none"}
-          style={{
-            borderColor: `${styling.colours.foreground}22`,
-          }}
-        >
-          <ScrollingBackground text={props.release.slug || ""} />
-        </div>
-      </div>
-    </>
-  ) : (
+  return !isNotMobileLayout ? (
     <>
       <Image
         src={props.release.artwork || ""}
@@ -141,7 +81,10 @@ export const ReleaseGrid = (props: {
             </div>
           </div>
         </div>
-        <div className={"max-h-90 "}>
+        <div
+          className={"max-h-90 border-t-2 border-dashed "}
+          style={{ borderColor: styling.colours.foreground + "22" }}
+        >
           <ReleaseLinks links={props.release.links} />
         </div>
         <div className={"p-4 flex w-full font-mono text-xs"}>
@@ -154,6 +97,66 @@ export const ReleaseGrid = (props: {
             artistName={props.release.artist_name}
             links={props.artist.links}
           />
+        </div>
+      </div>
+    </>
+  ) : (
+    <>
+      <Image
+        src={props.release.artwork || ""}
+        alt={props.release.title}
+        height={500}
+        width={500}
+        draggable={false}
+        className={"blur-3xl w-full aspect-square fixed -z-10 "}
+        style={{ transform: "scale(1.35)" }}
+      />
+      <div
+        className={
+          "m-16 releasegrid  w-4xl grid grid-cols-2 font-sans rounded-2xl shadow-2xl drop-shadow-2xl z-20 "
+        }
+        style={{
+          backgroundColor: styling.colours.background,
+        }}
+      >
+        <ReleaseHeader
+          title={props.release.title}
+          artistName={props.release.artist_name}
+        />
+        <div
+          className={
+            " overflow-hidden border-l-2 border-b-2 border-dashed  select-none"
+          }
+          style={{
+            borderColor: `${styling.colours.foreground}22`,
+          }}
+        >
+          <ScrollingBackground text={props.release.artist_id || ""} />
+        </div>
+        <ReleaseLinks links={props.release.links} />
+        <ReleaseArtwork
+          small={false}
+          artwork={props.release.artwork}
+          title={props.release.title}
+        />
+        <div className={"p-4 flex w-full font-mono text-xs h-28"}>
+          <ReleaseInfo
+            releaseDate={props.release.release_date}
+            trackCount={props.release.track_count}
+            upc={props.release.upc}
+          />
+          <ArtistLinks
+            artistName={props.artist.master_artist_name}
+            links={props.artist.links}
+          />
+        </div>
+        <div
+          className={"overflow-hidden border-l-2 border-dashed select-none"}
+          style={{
+            borderColor: `${styling.colours.foreground}22`,
+          }}
+        >
+          <ScrollingBackground text={props.release.slug || ""} />
         </div>
       </div>
     </>
