@@ -1,6 +1,7 @@
 "use server";
 
 import { getLatestRelease } from "@/app/actions/releases";
+import { rootDomain } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
 export default async function Page({
@@ -11,5 +12,5 @@ export default async function Page({
   const { id } = await params;
   const latest_release = await getLatestRelease(id);
 
-  redirect(`/${latest_release.slug}`);
+  redirect(`${id}.${rootDomain}/${latest_release.slug}`);
 }
