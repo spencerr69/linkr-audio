@@ -12,11 +12,14 @@
  */
 
 export default {
-	async fetch(request, env, ctx): Promise<Response> {
+	async fetch(request, env, _ctx): Promise<Response> {
 		const newRequest = new Request(request);
 
 
+
 		const domain = env.domain;
+
+		newRequest.headers.set("Origin", domain);
 
 		const url = request.url;
 
