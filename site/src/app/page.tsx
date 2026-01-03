@@ -1,5 +1,3 @@
-"use server";
-
 import { getArtist } from "@/app/actions/artists";
 import { getRecentReleases } from "@/app/actions/releases";
 import { ApplyButton } from "@/app/ui/ApplyButton";
@@ -85,7 +83,10 @@ export default async function Page() {
           className={
             "text-center flex flex-col items-center w-full p-8 font-sans"
           }
-          style={{ backgroundColor: styling.colours.background }}
+          style={{
+            backgroundColor: styling.colours.background,
+            color: styling.colours.foreground,
+          }}
         >
           <h1 className={"font-bold text-3xl mb-4"}>Recent Releases</h1>
           <div className={"w-6xl overflow-hidden z-0"}>
@@ -99,6 +100,7 @@ export default async function Page() {
           style={{
             backgroundColor: styling.colours.background,
             borderColor: `${styling.colours.foreground}22`,
+            color: styling.colours.foreground,
           }}
         >
           <div className={"flex justify-center items-center h-full"}>
@@ -115,9 +117,7 @@ export default async function Page() {
   );
 }
 
-export async function generateMetadata() {
-  return {
-    title: "linkr.audio",
-    description: "A customisable and free linksite for music releases.",
-  } as Metadata;
-}
+export const metadata: Metadata = {
+  title: "linkr.audio",
+  description: "A customisable and free linksite for music releases.",
+};
