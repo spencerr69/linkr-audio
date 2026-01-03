@@ -25,11 +25,11 @@ export async function generateMetadata({
     quality: 30,
   });
 
-  const socialImage = cloudflareLoader({
+  const socialImage = `${rootDomain}${cloudflareLoader({
     src: release.artwork || "",
     width: 500,
     quality: 80,
-  });
+  })}`;
 
   return {
     title: `${release.title}`,
