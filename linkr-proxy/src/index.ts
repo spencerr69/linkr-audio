@@ -15,9 +15,13 @@ export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		const newRequest = new Request(request);
 
+		console.log(request.headers)
+
+
 		const domain = env.domain;
 
 		const url = request.url;
+		console.log(url)
 
 		const protocolSpot = url.indexOf("//");
 

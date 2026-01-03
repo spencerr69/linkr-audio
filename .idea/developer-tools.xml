@@ -4,9 +4,8 @@
     <developerToolsConfigurations>
       <developerToolConfiguration developerToolId="regular-expression-matcher" id="02fd40f0-4e00-489c-b186-462edd01a55e" name="Workbench">
         <properties>
-          <property key="inputText" type="INPUT" value="kotlin.String|jk" />
           <property key="regexOption" type="CONFIGURATION" value="kotlin.Int|2" />
-          <property key="regexText" type="INPUT" value="kotlin.String|^#(?:[0-9a-fA-F]{3}){1,2}$" />
+          <property key="regexText" type="INPUT" value="kotlin.String|/(?!api|site|images|_next|cdn-cgi*)" />
         </properties>
       </developerToolConfiguration>
       <developerToolConfiguration developerToolId="jwt-encoder-decoder" id="afe0a780-d395-489f-95a5-f1899133b5a0" name="Workbench">
