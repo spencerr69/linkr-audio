@@ -95,7 +95,7 @@ pub async fn get_links_by_upc(req: Request, ctx: RouteContext<()>) -> worker::Re
         .url
         .clone();
 
-    let Some(spotify_artist) = spotify_release.clone().artists.first() else {
+    let Some(spotify_artist) = spotify_release.artists.first() else {
         return Response::error("Release not found.", 404);
     };
 
