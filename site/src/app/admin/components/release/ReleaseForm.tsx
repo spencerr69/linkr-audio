@@ -1,18 +1,18 @@
 "use client";
 
-import { getLinks } from "@/actions/getlinks";
+import { getLinks } from "@/app/actions/getlinks";
 import {
   createRelease,
   deleteRelease,
   updateRelease,
-} from "@/actions/releases";
+} from "@/app/actions/releases";
+import { ReleaseImage } from "@/app/admin/components/release/ReleaseImage";
 import { Button } from "@/app/ui/Button";
 import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
 import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { Link, Release } from "@/lib/definitions";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import React, { useContext } from "react";
@@ -27,13 +27,10 @@ export const emptyRelease: Release = {
   artist_name: "",
   links: [],
   track_count: 0,
-  active: true,
 };
 
-export const ReleaseForm = ({ release }: { release?: Release }) => {
-  const [editedRelease, setEditedRelease] = React.useState<Release>(
-    release || emptyRelease,
-  );
+export const ReleaseForm = ({ release }: { release: Release }) => {
+  const [editedRelease, setEditedRelease] = React.useState<Release>(release);
 
   const styling = useContext(StylingContext);
 
@@ -46,7 +43,7 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
   }, [release]);
 
   const getReleaseUpdater = (field: keyof Release) => {
-    return (value: string | number | Link[] | boolean) => {
+    return (value: string | number | Link[]) => {
       setEditedRelease((prev) => {
         return {
           ...prev,
@@ -164,38 +161,10 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
             valueUpdateAction={getReleaseUpdater("links")}
             links={editedRelease.links || []}
           />
-          <div className="flex flex-col items-start mt-8 lg:mt-0">
-            <label
-              htmlFor="artwork"
-              className={" font-light text-sm p-0 m-0"}
-              style={{ color: styling.colours.foreground + "AA" }}
-            >
-              Artwork
-            </label>
-            <Image
-              id={"artwork"}
-              src={editedRelease.artwork || "/linkraudio.svg"}
-              alt={"Artwork"}
-              width={200}
-              height={200}
-              className={"aspect-square h-fit rounded-md max-w-full "}
-            />
-          </div>
+          <ReleaseImage editedRelease={editedRelease} />
         </div>
         <div className="saveContainer flex-col flex items-center lg:items-end my-12">
           <div>
-            <label
-              className={" font-light text-sm p-0 m-0"}
-              style={{ color: styling.colours.foreground + "AA" }}
-            >
-              Active{" "}
-              <input
-                type={"checkbox"}
-                checked={editedRelease.active}
-                className={"mr-4"}
-                onChange={(e) => getReleaseUpdater("active")(e.target.checked)}
-              />
-            </label>
             <Button
               secondary
               name={"delete"}
