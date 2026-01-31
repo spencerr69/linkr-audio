@@ -1,4 +1,4 @@
-import { changePassword, logout } from "@/app/actions/auth";
+import { changePassword, logout } from "@/actions/auth";
 import { Button } from "@/app/ui/Button";
 import { DialogPopup } from "@/app/ui/Dialogs/DialogPopup";
 import { FormField } from "@/app/ui/FormField";

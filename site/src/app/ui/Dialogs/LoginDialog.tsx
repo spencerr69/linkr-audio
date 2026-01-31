@@ -1,6 +1,6 @@
 "use client";
 
-import { login } from "@/app/actions/auth";
+import { login } from "@/actions/auth";
 import { Button } from "@/app/ui/Button";
 import { DialogPopup } from "@/app/ui/Dialogs/DialogPopup";
 import { FormField } from "@/app/ui/FormField";

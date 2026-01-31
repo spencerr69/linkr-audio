@@ -1,11 +1,11 @@
 "use client";
 
-import { getLinks } from "@/app/actions/getlinks";
+import { getLinks } from "@/actions/getlinks";
 import {
   createRelease,
   deleteRelease,
   updateRelease,
-} from "@/app/actions/releases";
+} from "@/actions/releases";
 import { Button } from "@/app/ui/Button";
 import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";

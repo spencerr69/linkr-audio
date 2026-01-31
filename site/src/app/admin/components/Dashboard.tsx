@@ -1,4 +1,4 @@
-import { getArtist } from "@/app/actions/artists";
+import { getArtist } from "@/actions/artists";
 import { Artist } from "@/app/admin/components/artist/Artist";
 import StylingProvider from "@/app/ui/StylingProvider";
 import { Header } from "./Header";

@@ -1,5 +1,5 @@
-import { getArtist } from "@/app/actions/artists";
-import { getRecentReleases } from "@/app/actions/releases";
+import { getArtist } from "@/actions/artists";
+import { getRecentReleases } from "@/actions/releases";
 import { ApplyButton } from "@/app/ui/ApplyButton";
 import { ExternalButton } from "@/app/ui/Button";
 import LinkrAudioLogo from "@/app/ui/LinkrAudioLogo";

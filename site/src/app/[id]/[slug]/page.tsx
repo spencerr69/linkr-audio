@@ -1,8 +1,8 @@
 "use server";
 
 import { ReleaseGrid } from "@/app/[id]/[slug]/components/ReleaseGrid";
-import { getArtist } from "@/app/actions/artists";
-import { getRelease } from "@/app/actions/releases";
+import { getArtist } from "@/actions/artists";
+import { getRelease } from "@/actions/releases";
 import LinkrAudioLogo from "@/app/ui/LinkrAudioLogo";
 import StylingProvider from "@/app/ui/StylingProvider";
 import cloudflareLoader from "@/lib/imageLoader";
