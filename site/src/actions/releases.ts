@@ -135,8 +135,6 @@ export const getRelease = cache(
 
     const result: Release = await resp.json();
 
-    console.log(result);
-
     return result;
   },
 );
