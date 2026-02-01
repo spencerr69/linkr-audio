@@ -39,6 +39,7 @@ export const releaseFormSchema = z.object({
   artist_id: z.string().nullable(),
   slug: z.string().nullable(),
   track_count: z.number().min(1),
+  active: z.boolean(),
 });
 
 export const editArtistSchema = z.object({

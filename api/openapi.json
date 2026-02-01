@@ -218,6 +218,15 @@
               "type": "integer",
               "default": 0
             }
+          },
+          {
+            "name": "showActive",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
           }
         ],
         "responses": {
@@ -510,16 +519,13 @@
         "type": "object",
         "properties": {
           "background": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "foreground": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "accent": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         }
       },
@@ -531,7 +537,8 @@
           "artist_name",
           "release_date",
           "links",
-          "track_count"
+          "track_count",
+          "active"
         ],
         "properties": {
           "upc": {
@@ -561,6 +568,13 @@
             "nullable": true
           },
           "slug": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "self_url": {
             "type": "string",
             "nullable": true
           },

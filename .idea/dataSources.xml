@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="Cloudflare D1" uuid="065f8166-be92-492e-9938-5f9f183ea5b9">
+      <driver-ref>java.sql.Driver</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <jdbc-driver>org.isaacmcfadyen.D1Driver</jdbc-driver>
+      <jdbc-url>jdbc:d1://9fe15959-f4dd-4b76-810f-42ca521b697e</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="local.sqlite" uuid="1a252710-46b5-4399-9288-47b1230d6c70">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/api/.wrangler/state/v3/d1/miniflare-D1DatabaseObject/0e7a6350cf3b74dd32537f4249736f24685560b0f947e48829a96c65db4ba651.sqlite</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>

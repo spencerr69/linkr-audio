@@ -27,6 +27,7 @@ export const emptyRelease: Release = {
   artist_name: "",
   links: [],
   track_count: 0,
+  active: true,
 };
 
 export const ReleaseForm = ({ release }: { release?: Release }) => {
@@ -45,7 +46,7 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
   }, [release]);
 
   const getReleaseUpdater = (field: keyof Release) => {
-    return (value: string | number | Link[]) => {
+    return (value: string | number | Link[] | boolean) => {
       setEditedRelease((prev) => {
         return {
           ...prev,
@@ -183,6 +184,18 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
         </div>
         <div className="saveContainer flex-col flex items-center lg:items-end my-12">
           <div>
+            <label
+              className={" font-light text-sm p-0 m-0"}
+              style={{ color: styling.colours.foreground + "AA" }}
+            >
+              Active{" "}
+              <input
+                type={"checkbox"}
+                checked={editedRelease.active}
+                className={"mr-4"}
+                onChange={(e) => getReleaseUpdater("active")(e.target.checked)}
+              />
+            </label>
             <Button
               secondary
               name={"delete"}

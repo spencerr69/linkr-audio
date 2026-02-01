@@ -133,7 +133,11 @@ export const getRelease = cache(
       notFound();
     }
 
-    return await resp.json();
+    const result: Release = await resp.json();
+
+    console.log(result);
+
+    return result;
   },
 );
 

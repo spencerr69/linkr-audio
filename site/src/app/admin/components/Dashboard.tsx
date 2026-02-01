@@ -25,7 +25,7 @@ export const Dashboard = async ({
 
   const req_releases = await serverFetch(
     session.jwt,
-    `/releases/${session.jwt.artistId}`,
+    `/releases/${session.jwt.artistId}?showActive=false`,
     {},
   );
 
