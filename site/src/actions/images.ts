@@ -8,30 +8,39 @@ export type ImageUploadURLResponse = {
 };
 
 export const getImageUploadURL = async (path: string) => {
-  const accountId = process.env.CLOUDFLARE_ID;
-  const token = process.env.CLOUDFLARE_TOKEN;
-
-  const formData = new FormData();
-
-  formData.append("id", path);
-
-  const url = await fetch(
-    `https://api.cloudflare.com/client/v4/accounts/${accountId}/images/v2/direct_upload`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    },
-  );
-
+  "use server";
+  const url = `https://linkr.audio/images/upload?key=${path}`;
   console.log(url);
-  if (!url.ok) {
-    console.error(url);
+
+  return url;
+};
+
+export const uploadImage = async (uploadUrl: string, image: File) => {
+  "use server";
+  console.log(uploadUrl);
+
+  const data = new FormData();
+
+  data.append("imageFile", image);
+
+  const req = await fetch(uploadUrl, {
+    method: "POST",
+    body: data,
+  });
+
+  if (!req.ok) {
+    return {
+      success: false,
+      error: "Could not upload image.",
+    };
   }
 
-  const result: ImageUploadURLResponse = await url.json();
+  const body = await req.text();
 
-  return result.result.uploadURL;
+  console.log(`Uploaded! ${body}`);
+
+  return {
+    success: true,
+    key: body.split("?"),
+  };
 };

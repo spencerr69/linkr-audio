@@ -13,6 +13,10 @@ export default function cloudflareLoader({
   if (quality) {
     params.push(`quality=${quality}`);
   }
+  if (src.startsWith("https://linkr.audio/images")) {
+    return `${src}&${params.join("&")}`;
+  }
+
   if (process.env.NODE_ENV === "development") {
     return `${src}?${params.join("&")}`;
   }

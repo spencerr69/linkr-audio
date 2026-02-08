@@ -1,13 +1,20 @@
-import { getImageUploadURL } from "@/app/actions/images";
+import { getImageUploadURL, uploadImage } from "@/actions/images";
+import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { Release } from "@/lib/definitions";
 import { Button } from "@/app/ui/Button";
 import Image from "next/image";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useState } from "react";
 
-export function ReleaseImage(props: { editedRelease: Release }) {
+export function ReleaseImage(props: {
+  editedRelease: Release;
+  artworkUpdater: (newData: string) => void;
+}) {
   const styling = useContext(StylingContext);
   const [uploadUrl, setUploadUrl] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+
+  const [status, setStatus] = useStatus();
 
   return (
     <div className="flex flex-col items-start mt-8 lg:mt-0">
@@ -36,18 +43,48 @@ export function ReleaseImage(props: { editedRelease: Release }) {
         >
           <Button
             onClick={async () => {
-              setUploadUrl(
-                await getImageUploadURL(
-                  `${props.editedRelease.artist_id}-${props.editedRelease.slug}`,
-                ),
+              if (!image) {
+                setStatus("Image not found.");
+                return;
+              }
+
+              let key = `${props.editedRelease.artist_id}-${props.editedRelease.slug}-${new Date().toISOString()}`;
+
+              key = key.replaceAll(/[-:.TZ]/g, "");
+
+              setUploadUrl(await getImageUploadURL(key));
+
+              const upload = await uploadImage(uploadUrl, image);
+
+              if (!upload.success) {
+                setStatus(upload.error || "Failed to upload.");
+                return;
+              }
+
+              setStatus("Upload successful!");
+
+              props.artworkUpdater(
+                `https://linkr.audio/images?image=${upload.key}`,
               );
             }}
           >
             Wig
           </Button>
-          <input type="file" alt={"artwork"} id={"artwork"} />
+          <input
+            type="file"
+            alt={"artwork"}
+            id={"artwork"}
+            onInput={(e) => {
+              if (e.currentTarget.files?.length != 1) {
+                return;
+              }
+
+              setImage(e.currentTarget.files[0] as File);
+            }}
+          />
         </div>
       )}
+      <StatusPopup status={status} />
     </div>
   );
 }
