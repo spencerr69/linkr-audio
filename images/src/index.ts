@@ -20,29 +20,19 @@ export default {
       };
       
       async function handleOptions(request: Request) {
-         if (
-            request.headers.get("Origin") !== null &&
-            request.headers.get("Access-Control-Request-Method") !== null &&
-            request.headers.get("Access-Control-Request-Headers") !== null
-         ) {
-            // Handle CORS preflight requests.
-            return new Response(null, {
-               headers: {
-                  ...corsHeaders,
-                  "Access-Control-Allow-Headers": request.headers.get(
-                     "Access-Control-Request-Headers",
-                  ) || "",
-               },
-            });
-         } else {
-            // Handle standard OPTIONS request.
-            return new Response(null, {
-               headers: {
-                  Allow: "GET, HEAD, POST, OPTIONS",
-               },
-            });
-         }
+         
+         // Handle CORS preflight requests.
+         return new Response(null, {
+            headers: {
+               ...corsHeaders,
+               "Access-Control-Allow-Headers": request.headers.get(
+                  "Access-Control-Request-Headers",
+               ) || "",
+               "Allow": "HEAD, POST, OPTIONS, GET",
+            },
+         });
       }
+      
       
       const url = new URL(request.url);
       if (request.method === "OPTIONS") {
@@ -68,6 +58,9 @@ export default {
          if (upload?.size && upload?.size > 1) {
             return new Response(`${key}`, {
                status: 200,
+               headers: {
+                  ...corsHeaders,
+               },
             });
          }
          
