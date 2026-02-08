@@ -33,6 +33,7 @@
     "pattern": "*.linkr.audio/images*",
     "zone_name": "linkr.audio"
   }
+
   /**
    * Bindings
    * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including
