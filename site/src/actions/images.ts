@@ -14,33 +14,3 @@ export const getImageUploadURL = async (path: string) => {
 
   return url;
 };
-
-export const uploadImage = async (uploadUrl: string, image: File) => {
-  "use server";
-  console.log(uploadUrl);
-
-  const data = new FormData();
-
-  data.append("imageFile", image);
-
-  const req = await fetch(uploadUrl, {
-    method: "POST",
-    body: data,
-  });
-
-  if (!req.ok) {
-    return {
-      success: false,
-      error: "Could not upload image.",
-    };
-  }
-
-  const body = await req.text();
-
-  console.log(`Uploaded! ${body}`);
-
-  return {
-    success: true,
-    key: body.split("?"),
-  };
-};
