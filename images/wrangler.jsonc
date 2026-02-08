@@ -30,7 +30,7 @@
     "mode": "smart"
   },
   "route": {
-    "pattern": "*.linkr.audio/images*",
+    "pattern": "*linkr.audio/images*",
     "zone_name": "linkr.audio"
   }
 
