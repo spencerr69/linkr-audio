@@ -79,7 +79,7 @@ export default {
          
          const out = await env.IMAGES.input(image)
                               .transform(options)
-                              .output({ format: accept, quality } as ImageOutputOptions);
+                              .output({ format: "image/jpeg", quality } as ImageOutputOptions);
          
          return out.response();
          
