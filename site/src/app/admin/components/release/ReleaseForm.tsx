@@ -117,7 +117,10 @@ export const ReleaseForm = ({ release }: { release: Release }) => {
           <FormField
             name="track-count"
             label="Track Count"
-            valueUpdater={getReleaseUpdater("track_count")}
+            valueUpdater={(value) => {
+              const num = parseInt(value);
+              getReleaseUpdater("track_count")(num);
+            }}
             value={editedRelease.track_count.toString() || ""}
           />
           <FormField
