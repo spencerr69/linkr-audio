@@ -12,14 +12,24 @@ import React, { useContext } from "react";
 
 import AddIcon from "@mui/icons-material/Add";
 
-export const Releases = ({ releases }: { releases: Release[] }) => {
+export const Releases = ({
+  releases,
+  artistId,
+}: {
+  releases: Release[];
+  artistId: string;
+}) => {
   const [editingRelease, setEditingRelease] = React.useState<Release | null>();
 
   const styling = useContext(StylingContext);
 
   const createReleaseForm = (release?: Release) => {
+    const filledRelease = {
+      ...emptyRelease,
+      artist_id: artistId,
+    };
     //TODO: Add confirmation if editingRelease already exists
-    setEditingRelease(release || emptyRelease);
+    setEditingRelease(release || filledRelease);
   };
 
   const releasesList = releases.map((release, i) => {

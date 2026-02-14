@@ -12,7 +12,7 @@ import { FormLinks } from "@/app/ui/FormLinks";
 import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { Link, Release } from "@/lib/definitions";
-import Image from "next/image";
+import { ReleaseImage } from "@/app/admin/components/release/ReleaseImage";
 import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import React, { useContext } from "react";
@@ -29,11 +29,8 @@ export const emptyRelease: Release = {
   track_count: 0,
   active: true,
 };
-
-export const ReleaseForm = ({ release }: { release?: Release }) => {
-  const [editedRelease, setEditedRelease] = React.useState<Release>(
-    release || emptyRelease,
-  );
+export const ReleaseForm = ({ release }: { release: Release }) => {
+  const [editedRelease, setEditedRelease] = React.useState<Release>(release);
 
   const styling = useContext(StylingContext);
 
@@ -120,7 +117,10 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
           <FormField
             name="track-count"
             label="Track Count"
-            valueUpdater={getReleaseUpdater("track_count")}
+            valueUpdater={(value) => {
+              const num = parseInt(value);
+              getReleaseUpdater("track_count")(num);
+            }}
             value={editedRelease.track_count.toString() || ""}
           />
           <FormField
@@ -164,23 +164,10 @@ export const ReleaseForm = ({ release }: { release?: Release }) => {
             valueUpdateAction={getReleaseUpdater("links")}
             links={editedRelease.links || []}
           />
-          <div className="flex flex-col items-start mt-8 lg:mt-0">
-            <label
-              htmlFor="artwork"
-              className={" font-light text-sm p-0 m-0"}
-              style={{ color: styling.colours.foreground + "AA" }}
-            >
-              Artwork
-            </label>
-            <Image
-              id={"artwork"}
-              src={editedRelease.artwork || "/linkraudio.svg"}
-              alt={"Artwork"}
-              width={200}
-              height={200}
-              className={"aspect-square h-fit rounded-md max-w-full "}
-            />
-          </div>
+          <ReleaseImage
+            editedRelease={editedRelease}
+            artworkUpdater={getReleaseUpdater("artwork")}
+          />
         </div>
         <div className="saveContainer flex-col flex items-center lg:items-end my-12">
           <div>

@@ -1,3 +1,5 @@
+"use client";
+
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { useContext, useEffect, useState } from "react";
 
@@ -40,7 +42,7 @@ export const StatusPopup = ({ status }: { status: StatusState }) => {
     <>
       <p
         className={
-          "text-right font-sans shadow-lg shadow-black/20 rounded-md p-4 m-4 absolute right-0 bottom-0 duration-200"
+          "text-right font-sans shadow-lg shadow-black/20 rounded-md p-4 m-4 fixed right-0 bottom-0 duration-200"
         }
         style={{
           backgroundColor: styling.colours.accent || "",
