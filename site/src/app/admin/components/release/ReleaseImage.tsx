@@ -1,3 +1,5 @@
+"use client";
+
 import { getImageUploadURL } from "@/actions/images";
 import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { StylingContext } from "@/app/ui/StylingProvider";
@@ -9,7 +11,8 @@ import RemoveIcon from "@mui/icons-material/Remove";
 
 export function ReleaseImage(props: {
   editedRelease: Release;
-  artworkUpdater: (newData: string | null) => void;
+  // @ts-expect-error idk why it has issues here
+  artworkUpdater: (params: (typeof Release)[keyof typeof Release]) => void;
 }) {
   const styling = useContext(StylingContext);
   const [image, setImage] = useState<File | null>(null);
@@ -30,7 +33,7 @@ export function ReleaseImage(props: {
           <Image
             id={"artwork"}
             src={props.editedRelease.artwork}
-            alt={"Artwork"}
+            alt={`Artwork of ${props.editedRelease.title}`}
             width={200}
             height={200}
             className={"aspect-square h-fit rounded-md max-w-full "}
@@ -42,6 +45,7 @@ export function ReleaseImage(props: {
             className={"absolute top-1 right-0 m-0 scale-75"}
             onClick={() => {
               props.artworkUpdater(null);
+              setImage(null);
             }}
           >
             <RemoveIcon />
@@ -49,11 +53,31 @@ export function ReleaseImage(props: {
         </>
       ) : (
         <div
-          className={"w-[200px] h-[200px] max-w-full rounded-md aspect-square"}
+          className={
+            "w-[200px] h-[200px] max-w-full rounded-md  p-2 border-dashed border-2 flex flex-col justify-center" +
+            " items-center"
+          }
           style={{
-            backgroundColor: `${styling.colours.foreground}AA`,
+            backgroundColor: `${styling.colours.background}`,
           }}
         >
+          <input
+            type="file"
+            className={"text-sm w-full"}
+            style={{
+              color: styling.colours.foreground,
+            }}
+            onInput={(e) => {
+              if (e.currentTarget.files?.length != 1) {
+                return;
+              }
+
+              setImage(e.currentTarget.files[0] as File);
+            }}
+            name={"artwork"}
+            accept={"image/*"}
+            multiple={false}
+          />
           <Button
             onClick={async () => {
               if (!image) {
@@ -61,7 +85,7 @@ export function ReleaseImage(props: {
                 return;
               }
 
-              const key = `${props.editedRelease.artist_id}-${props.editedRelease.slug}-${new Date().toISOString().replaceAll(/[-:.TZ]/g, "")}`;
+              const key = `${props.editedRelease.artist_id}-${props.editedRelease.slug}-${new Date().toISOString().replaceAll(/[-:.TZ]/g, "")}.${image.name.split(".")[1]}`;
 
               const url = await getImageUploadURL(key);
 
@@ -81,18 +105,6 @@ export function ReleaseImage(props: {
           >
             Upload Image
           </Button>
-          <input
-            type="file"
-            alt={"artwork"}
-            id={"artwork"}
-            onInput={(e) => {
-              if (e.currentTarget.files?.length != 1) {
-                return;
-              }
-
-              setImage(e.currentTarget.files[0] as File);
-            }}
-          />
         </div>
       )}
       <StatusPopup status={status} />
@@ -100,8 +112,6 @@ export function ReleaseImage(props: {
   );
 }
 const uploadImage = async (uploadUrl: string, image: File) => {
-  console.log(uploadUrl);
-
   const data = new FormData();
 
   data.append("imageFile", image);

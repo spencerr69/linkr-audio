@@ -9,6 +9,7 @@ export const FormField = ({
   type = "text",
   inactive = false,
   valueUpdater,
+  onInput,
 }: {
   name: string;
   label: string;
@@ -17,6 +18,7 @@ export const FormField = ({
   button?: React.JSX.Element;
   inactive?: boolean;
   valueUpdater?: (value: string) => void;
+  onInput?: React.FormEventHandler<HTMLInputElement>;
 }) => {
   const styling = useContext(StylingContext);
 
@@ -55,7 +57,10 @@ export const FormField = ({
               ? styling.colours.foreground + "AA"
               : styling.colours.foreground,
           }}
-          onInput={(e) => valueUpdater && valueUpdater(e.currentTarget.value)}
+          onInput={
+            onInput ||
+            ((e) => valueUpdater && valueUpdater(e.currentTarget.value))
+          }
         />
         {button}
       </div>
