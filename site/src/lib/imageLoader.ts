@@ -13,12 +13,15 @@ export default function cloudflareLoader({
   if (quality) {
     params.push(`quality=${quality}`);
   }
-  if (src.startsWith("https://linkr.audio/images")) {
-    return `${src}&${params.join("&")}`;
-  }
-
   if (process.env.NODE_ENV === "development") {
+    if (src.startsWith("https://linkr.audio/images")) {
+      return `${src}&${params.join("&")}`;
+    }
     return `${src}?${params.join("&")}`;
   }
+  if (src.startsWith("https://linkr.audio")) {
+    return `${src.replace("https://linkr.audio", "")}&${params.join("&")}`;
+  }
+
   return `/cdn-cgi/image/${params.join(",")}/${normalizeSrc(src)}`;
 }
