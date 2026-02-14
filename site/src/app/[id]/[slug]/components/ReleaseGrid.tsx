@@ -27,9 +27,9 @@ export const ReleaseGrid = (props: {
       <Image
         src={props.release.artwork || ""}
         alt={props.release.title}
-        height={500}
-        width={500}
-        quality={60}
+        height={200}
+        width={200}
+        quality={30}
         draggable={false}
         className={
           "blur-3xl w-full aspect-square fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 "
@@ -59,6 +59,7 @@ export const ReleaseGrid = (props: {
               alt={`${props.release.title} artwork`}
               height={500}
               width={500}
+              quality={60}
               className={
                 "aspect-square rounded-md w-full max-w-[80%] h-auto object-cover"
               }
