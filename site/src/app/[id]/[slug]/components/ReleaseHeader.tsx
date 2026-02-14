@@ -1,3 +1,5 @@
+"use client";
+
 import { StylingContext } from "@/app/ui/StylingProvider";
 import React, { useContext } from "react";
 

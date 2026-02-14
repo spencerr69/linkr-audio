@@ -125,7 +125,7 @@ export const getRelease = cache(
     const resp = await fetch(`${apiDomain}/releases/${id}/${slug}`, {
       cache: "force-cache",
       next: {
-        revalidate: 10,
+        revalidate: 1000,
       },
     });
 

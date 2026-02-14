@@ -1,5 +1,3 @@
-"use server";
-
 import { ReleaseGrid } from "@/app/[id]/[slug]/components/ReleaseGrid";
 import { getArtist } from "@/actions/artists";
 import { getRelease } from "@/actions/releases";
@@ -9,6 +7,8 @@ import cloudflareLoader from "@/lib/imageLoader";
 import { baseDomain, rootDomain, stylingComp } from "@/lib/utils";
 import { Metadata } from "next";
 import Link from "next/link";
+
+export const revalidate = 3600;
 
 export async function generateMetadata({
   params,

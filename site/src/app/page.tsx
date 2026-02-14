@@ -11,6 +11,7 @@ import { LoginButton } from "@/app/ui/LoginButton";
 import { Metadata } from "next";
 import Link from "next/link";
 
+export const revalidate = 36000;
 export default async function Page() {
   const session = await verifySession();
 
