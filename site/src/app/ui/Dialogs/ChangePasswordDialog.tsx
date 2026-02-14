@@ -1,3 +1,5 @@
+"use client";
+
 import { changePassword, logout } from "@/actions/auth";
 import { Button } from "@/app/ui/Button";
 import { DialogPopup } from "@/app/ui/Dialogs/DialogPopup";

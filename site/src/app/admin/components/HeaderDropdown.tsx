@@ -1,3 +1,5 @@
+"use client";
+
 import { logout } from "@/actions/auth";
 import { HeaderLink } from "@/app/admin/components/HeaderLink";
 import { ChangePasswordDialog } from "@/app/ui/Dialogs/ChangePasswordDialog";

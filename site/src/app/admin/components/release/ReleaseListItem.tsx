@@ -1,3 +1,5 @@
+"use client";
+
 import { ExternalButton } from "@/app/ui/Button";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { Release } from "@/lib/definitions";

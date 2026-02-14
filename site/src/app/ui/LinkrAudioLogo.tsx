@@ -1,3 +1,5 @@
+"use client";
+
 import { SvgIcon } from "@mui/material";
 import { ComponentProps } from "react";
 
