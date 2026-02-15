@@ -16,7 +16,6 @@ export default async function Page() {
   const session = await verifySession();
 
   const recentReleases = await getRecentReleases();
-
   const recentArtist = await getArtist(recentReleases[0]?.artist_id || "");
 
   const styling = stylingComp(recentArtist.styling || {});
