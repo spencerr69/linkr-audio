@@ -20,7 +20,10 @@ export function ReleaseImage(props: {
   const [status, setStatus] = useStatus();
 
   return (
-    <div className="flex flex-col relative items-start mt-8 lg:mt-0">
+    <div
+      key={props.editedRelease.slug || ""}
+      className="flex flex-col relative items-start mt-8 lg:mt-0"
+    >
       <label
         htmlFor="artwork"
         className={" font-light text-sm p-0 m-0"}

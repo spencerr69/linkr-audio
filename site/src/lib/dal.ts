@@ -9,11 +9,17 @@ import { cache } from "react";
 export type Session = {
   isAuth: boolean;
   jwt?: JWTPayload;
+  raw_token?: string;
 };
 
 export const verifySession = cache(async (): Promise<Session> => {
   "use server";
   const cookie = (await cookies()).get("session")?.value;
+
+  if (!cookie) {
+    return { isAuth: false };
+  }
+
   const session = await decrypt(cookie);
 
   if (!session) {
@@ -23,5 +29,6 @@ export const verifySession = cache(async (): Promise<Session> => {
   return {
     isAuth: true,
     jwt: session,
+    raw_token: cookie,
   };
 });

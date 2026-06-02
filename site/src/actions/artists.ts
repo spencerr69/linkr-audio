@@ -23,14 +23,14 @@ export const updateArtist = async (artist: EditArtist) => {
 
   const session = await verifySession();
 
-  if (!session.isAuth || !session.jwt) {
+  if (!session.isAuth || !session.jwt || !session.raw_token) {
     return {
       error: "Could not authenticate user",
     };
   }
 
   const response = await serverFetch(
-    session.jwt,
+    session.raw_token,
     `/artists/${session.jwt.artistId}`,
     {
       method: "POST",

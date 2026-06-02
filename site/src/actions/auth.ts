@@ -5,7 +5,7 @@ import { LoginData } from "@/app/ui/Dialogs/LoginDialog";
 import { serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
 import { LoginFormSchema } from "@/lib/definitions";
-import { createSession } from "@/lib/session";
+import { authenticateUser, createSession } from "@/lib/session";
 import { apiDomain } from "@/lib/utils";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -23,28 +23,23 @@ export async function login(loginData: LoginData) {
     };
   }
 
-  const token = btoa(
-    `${validatedFields.data.artistid}:${validatedFields.data.password}`,
+  const token = await authenticateUser(
+    validatedFields.data.artistid,
+    validatedFields.data.password,
   );
 
-  const data = await fetch(`${apiDomain}/auth/login`, {
-    method: "GET",
-    headers: {
-      Authorization: `Basic ${token}`,
-    },
-  });
-
-  if (!data.ok) {
+  if (!token) {
     return {
       error: "Incorrect login details.",
     };
   }
 
-  await createSession(validatedFields.data.artistid);
+  await createSession(token);
   return { success: true };
 }
 
 export async function logout() {
+  "use server";
   const cookie = await cookies();
   cookie.delete("session");
   redirect("/");
@@ -53,7 +48,7 @@ export async function logout() {
 export async function changePassword(changePasswordData: ChangePasswordData) {
   const session = await verifySession();
 
-  if (!session.isAuth || !session.jwt) {
+  if (!session.isAuth || !session.jwt || !session.raw_token) {
     await logout();
     return { success: false, message: "You are not logged in." };
   }
@@ -73,15 +68,23 @@ export async function changePassword(changePasswordData: ChangePasswordData) {
     return { success: false, message: "Incorrect current password." };
   }
 
-  await serverFetch(session.jwt, `/artists/${artistId}/password`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  const changePassword = await serverFetch(
+    session.raw_token,
+    `/artists/${artistId}/password`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        new_password: changePasswordData.newPassword,
+      }),
     },
-    body: JSON.stringify({
-      new_password: changePasswordData.newPassword,
-    }),
-  });
+  );
+
+  if (!changePassword.ok) {
+    return { success: false, message: "Failed to update password." };
+  }
 
   return { success: true, message: "Password changed successfully." };
 }

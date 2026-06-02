@@ -1,39 +1,34 @@
 import "server-only";
-import { SessionPayload } from "@/lib/definitions";
-import { jwtVerify, SignJWT } from "jose";
+import { apiDomain } from "@/lib/utils";
+import { decodeJwt } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-const secretKey = process.env.SESSION_SECRET;
-const encodedKey = new TextEncoder().encode(secretKey);
-
-export const encrypt = async (payload: SessionPayload) => {
-  return new SignJWT(payload)
-    .setProtectedHeader({
-      alg: "HS256",
-    })
-    .setIssuedAt()
-    .setExpirationTime("7d")
-    .sign(encodedKey);
-};
-
 export const decrypt = async (session: string | undefined = "") => {
   try {
-    const { payload } = await jwtVerify(session, encodedKey, {
-      algorithms: ["HS256"],
-    });
-    return payload;
+    return decodeJwt(session);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (_) {
     return null;
   }
 };
 
-export const createSession = async (artistId: string) => {
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  const session = await encrypt({
-    artistId,
+export const authenticateUser = async (id: string, password: string) => {
+  const authRequest = await fetch(`${apiDomain}/auth?id=${id}&pw=${password}`, {
+    method: "POST",
   });
+
+  if (!authRequest.ok) {
+    return null;
+  }
+
+  const { token }: { token: string } = await authRequest.json();
+
+  return token;
+};
+
+export const createSession = async (session: string) => {
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
   const cookieStore = await cookies();
 

@@ -8,11 +8,11 @@ export async function getLinks(upc: string) {
   "use server";
   const session = await verifySession();
 
-  if (!session || !session.jwt) {
+  if (!session || !session.jwt || !session.raw_token) {
     return null;
   }
 
-  const resp = await serverFetch(session.jwt, `/links/${upc}`, {});
+  const resp = await serverFetch(session.raw_token, `/links/${upc}`, {});
 
   if (!resp.ok) {
     return null;
