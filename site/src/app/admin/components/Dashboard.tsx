@@ -15,7 +15,7 @@ export const Dashboard = async ({
 }) => {
   const session = await verifySession();
 
-  if (!session || !session.jwt) {
+  if (!session || !session.jwt || !session.raw_token) {
     return <></>;
   }
 
@@ -24,7 +24,7 @@ export const Dashboard = async ({
   const styling = stylingComp(artist.styling || {});
 
   const req_releases = await serverFetch(
-    session.jwt,
+    session.raw_token,
     `/releases/${session.jwt.artistId}?showActive=false`,
     {},
   );
