@@ -9,7 +9,7 @@ import { ScrollingBackground } from "@/app/[id]/[slug]/components/ScrollingBackg
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { ArtistResponse, Release } from "@/lib/definitions";
 import Image from "next/image";
-import { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 
 export const ReleaseGrid = (props: {
@@ -20,9 +20,18 @@ export const ReleaseGrid = (props: {
     query: "(min-width: 923px)",
   });
 
+  const [isClient, setIsClient] = React.useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsClient(true);
+  }, []);
+
   const styling = useContext(StylingContext);
 
-  return !isNotMobileLayout ? (
+  return !isClient ? (
+    <></>
+  ) : !isNotMobileLayout ? (
     <>
       <Image
         src={props.release.artwork || ""}
@@ -55,6 +64,7 @@ export const ReleaseGrid = (props: {
             }
           >
             <Image
+              suppressHydrationWarning={true}
               src={props.release.artwork || ""}
               alt={`${props.release.title} artwork`}
               height={500}

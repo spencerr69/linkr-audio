@@ -16,7 +16,11 @@ export const ScrollingBackground: React.FC<ScrollingBackgroundProps> = ({
 }) => {
   const initText = [];
   for (let i = 0; i < rows; i += 1) {
-    initText.push(<p key={i}>{text.repeat(100).slice(i)}</p>);
+    initText.push(
+      <p suppressHydrationWarning={true} key={i}>
+        {text.repeat(100).slice(i)}
+      </p>,
+    );
   }
 
   const [textP, setTextP] = React.useState<JSX.Element[]>(initText);
@@ -31,6 +35,7 @@ export const ScrollingBackground: React.FC<ScrollingBackgroundProps> = ({
 
   return (
     <div
+      suppressHydrationWarning={true}
       className={
         " font-mono  opacity-25 overflow-hidden w-full line-clamp-26  sm:line-clamp-48"
       }

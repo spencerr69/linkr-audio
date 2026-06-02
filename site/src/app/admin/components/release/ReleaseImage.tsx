@@ -36,7 +36,7 @@ export function ReleaseImage(props: {
             alt={`Artwork of ${props.editedRelease.title}`}
             width={200}
             height={200}
-            quality={80}
+            quality={75}
             className={"aspect-square h-fit rounded-md max-w-full "}
           />
           <Button

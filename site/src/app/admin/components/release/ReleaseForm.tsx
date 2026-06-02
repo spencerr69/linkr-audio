@@ -16,6 +16,7 @@ import { ReleaseImage } from "@/app/admin/components/release/ReleaseImage";
 import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import React, { useContext } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export const emptyRelease: Release = {
   artwork: "",
@@ -55,6 +56,7 @@ export const ReleaseForm = ({ release }: { release: Release }) => {
 
   return (
     <div
+      key={uuidv4()}
       className={"flex justify-center max-h-full w-full  "}
       style={{
         color: styling.colours.foreground || "",

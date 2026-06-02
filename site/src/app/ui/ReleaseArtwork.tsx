@@ -60,22 +60,28 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
     >
       <Image
         ref={ref}
+        suppressHydrationWarning={true}
         src={artwork || ""}
         alt={`${title} artwork`}
         height={500}
         width={500}
+        loading={"eager"}
         className={
           `aspect-square rounded-md w-full max-w-[${small ? "250px" : "500px"}] h-auto object-cover transition-all duration-200` +
           "  ease-custom " +
           " hover:shadow-lg hover:drop-shadow-lg shadow-black/20 drop-shadow-black/20 z-10"
         }
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         draggable={false}
       />
       {!small && (
         <Image
+          suppressHydrationWarning={true}
           src={"/vinyl.png"}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           ref={vinylRef}
           alt={"vinyl"}
+          loading={"eager"}
           height={small ? 250 : 500}
           width={small ? 250 : 500}
           className={
