@@ -128,7 +128,7 @@ pub async fn get_recent_releases(req: Request, ctx: RouteContext<()>) -> worker:
     let params: QueryParams = req.query()?;
 
     let d1 = ctx.d1("prod_sr_db")?;
-    let query = d1.prepare("SELECT * FROM Releases ORDER BY release_date DESC LIMIT ?1");
+    let query = d1.prepare("SELECT * FROM Releases WHERE active = true ORDER BY release_date DESC LIMIT ?1");
     let binded = query.bind(&[JsValue::from(params.limit.unwrap_or(10))])?;
     let result = binded.run().await?;
     let Ok(out): worker::Result<Vec<DbSchema>> = result.results() else {
