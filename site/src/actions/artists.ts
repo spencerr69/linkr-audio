@@ -59,6 +59,7 @@ export const getArtist = cache(async (id: string): Promise<ArtistResponse> => {
 
   if (!resp.ok) {
     //Previously this would throw an error. This isn't the best way to handle this
+
     return {
       artist_id: "",
       links: [],
