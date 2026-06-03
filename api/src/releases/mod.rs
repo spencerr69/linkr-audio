@@ -11,20 +11,20 @@ pub struct ReleaseBody {
     pub release_date: String,
     pub artwork: Option<String>,
     pub links: Vec<Link>,
-
+    
     pub artist_id: Option<String>,
     pub slug: Option<String>,
-
+    
     pub active: bool,
     pub self_url: Option<String>,
-
+    
     pub track_count: u32,
 }
 
 impl From<DbSchema> for ReleaseBody {
     fn from(db_schema: DbSchema) -> Self {
         let new_links = serde_json::from_str(&db_schema.links).unwrap_or(vec![]);
-
+        
         Self {
             upc: db_schema.upc,
             title: db_schema.title,
@@ -79,14 +79,26 @@ pub async fn get_releases_for_artist(
     let Some(artist_id) = ctx.param("id") else {
         return Response::error("No artist id provided", 400);
     };
-
+    
     let params: QueryParams = req.query()?;
-
+    
     let d1 = ctx.d1("prod_sr_db")?;
-    let query = d1.prepare(
-        "SELECT * FROM Releases WHERE artist_id = ?1  ORDER BY release_date DESC LIMIT ?2 \
-      OFFSET ?3",
-    );
+    
+    let show_active = params.showActive.unwrap_or(true);
+    let query = match show_active {
+        true =>
+            d1.prepare(
+                "SELECT * FROM Releases WHERE artist_id = ?1 AND active = true ORDER BY release_date DESC LIMIT ?2 \
+                  OFFSET ?3",
+            ),
+        
+        false =>
+            d1.prepare(
+                "SELECT * FROM Releases WHERE artist_id = ?1 ORDER BY release_date DESC LIMIT ?2 \
+                  OFFSET ?3",
+            )
+    };
+    
     let binded = query.bind(&[
         JsValue::from(artist_id),
         JsValue::from(params.limit.unwrap_or(100)),
@@ -96,29 +108,24 @@ pub async fn get_releases_for_artist(
     let Ok(out): worker::Result<Vec<DbSchema>> = result.results() else {
         return Response::error("No releases found for artist", 404);
     };
-
-    let show_active = params.showActive.unwrap_or(true);
-
+    
     let out: Vec<ReleaseBody> = out
         .into_iter()
         .map(ReleaseBody::from)
-        .filter(|release| match release.active {
-            true => true,
-            false => !show_active,
-        })
+        
         .map(populate_self_url(ctx))
         .collect();
-
+    
     Response::from_json(&out)
 }
 
 fn populate_self_url(ctx: RouteContext<()>) -> impl Fn(ReleaseBody) -> ReleaseBody {
     let public_url = ctx.env.secret("PUBLIC_URL").expect("PUBLIC_URL not set");
-
+    
     move |mut release| {
         let slug = release.slug.clone().unwrap_or("".into());
         let artist_id = release.artist_id.clone().unwrap_or("".into());
-
+        
         release.self_url = Some(format!("https://{}.{}/{}", artist_id, &public_url, slug));
         release
     }
@@ -126,7 +133,7 @@ fn populate_self_url(ctx: RouteContext<()>) -> impl Fn(ReleaseBody) -> ReleaseBo
 
 pub async fn get_recent_releases(req: Request, ctx: RouteContext<()>) -> worker::Result<Response> {
     let params: QueryParams = req.query()?;
-
+    
     let d1 = ctx.d1("prod_sr_db")?;
     let query = d1.prepare("SELECT * FROM Releases WHERE active = true ORDER BY release_date DESC LIMIT ?1");
     let binded = query.bind(&[JsValue::from(params.limit.unwrap_or(10))])?;
@@ -134,13 +141,13 @@ pub async fn get_recent_releases(req: Request, ctx: RouteContext<()>) -> worker:
     let Ok(out): worker::Result<Vec<DbSchema>> = result.results() else {
         return Response::error("No releases found", 404);
     };
-
+    
     let out = out
         .into_iter()
         .map(ReleaseBody::from)
         .map(populate_self_url(ctx))
         .collect::<Vec<ReleaseBody>>();
-
+    
     Response::from_json(&out)
 }
 
@@ -148,20 +155,20 @@ pub async fn get_release(_req: Request, ctx: RouteContext<()>) -> worker::Result
     let (Some(artist_id), Some(slug)) = (ctx.param("id"), ctx.param("slug")) else {
         return Response::error("Missing artist id or slug", 400);
     };
-
+    
     let d1 = ctx.d1("prod_sr_db")?;
-
+    
     let query = d1.prepare("SELECT * FROM Releases WHERE artist_id = ?1 AND slug = ?2");
     let binded = query.bind(&[JsValue::from(artist_id), JsValue::from(slug)])?;
-
+    
     let Some(release): Option<DbSchema> = binded.first(None).await? else {
         return Response::error("Release not found", 404);
     };
-
+    
     let out = ReleaseBody::from(release);
-
+    
     let out = populate_self_url(ctx)(out);
-
+    
     Response::from_json(&out)
 }
 
@@ -170,33 +177,33 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
     let Some(artist_id) = ctx.param("id") else {
         return Response::error("No artist id provided", 400);
     };
-
+    
     let d1 = ctx.d1("prod_sr_db")?;
-
+    
     if !authenticated(req.headers(), &d1, Some(artist_id), &ctx).await {
         return Response::error("Unauthorized", 401);
     }
-
+    
     let Ok(new_release) = req.json::<ReleaseBody>().await else {
         return Response::error(
             "JSON incorrectly formatted. Please ensure you meet the schema.",
             400,
         );
     };
-
+    
     let Some(slug) = new_release.slug else {
         return Response::error("Release slug not provided", 400);
     };
-
+    
     if slug.trim() == "" {
         return Response::error("Release slug cannot be empty", 400);
     }
-
+    
     let query = d1.prepare(
         "INSERT INTO Releases (slug, upc, title, artist_name, artist_id, \
     artwork, links, track_count, release_date, active) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)",
     );
-
+    
     let binded = query.bind(&[
         JsValue::from(slug),
         JsValue::from(new_release.upc),
@@ -209,13 +216,13 @@ pub async fn post_new_release(mut req: Request, ctx: RouteContext<()>) -> worker
         JsValue::from(new_release.release_date),
         JsValue::from(new_release.active),
     ])?;
-
+    
     let result = binded.run().await?;
-
+    
     if result.success() {
         return Response::ok("Release created successfully");
     }
-
+    
     Response::error("Release not created. Likely already exists.", 500)
 }
 
@@ -227,20 +234,20 @@ pub async fn post_edit_release(
     let (Some(artist_id), Some(slug)) = (ctx.param("id"), ctx.param("slug")) else {
         return Response::error("No artist id or slug provided", 400);
     };
-
+    
     let d1 = ctx.d1("prod_sr_db")?;
-
+    
     if !authenticated(req.headers(), &d1, Some(artist_id), &ctx).await {
         return Response::error("Unauthorized", 401);
     }
-
+    
     let Ok(new_release) = req.json::<ReleaseBody>().await else {
         return Response::error(
             "JSON incorrectly formatted. Please ensure you meet the schema.",
             400,
         );
     };
-
+    
     let query = d1.prepare(
         "UPDATE Releases SET ( upc, title, artist_name,  \
     artwork, links, track_count, release_date, active) = (?2, ?3, ?4, ?5, ?6, ?7, ?8, ?10) WHERE slug \
@@ -258,13 +265,13 @@ pub async fn post_edit_release(
         JsValue::from(artist_id),
         JsValue::from(new_release.active),
     ])?;
-
+    
     let result = binded.run().await?;
-
+    
     if result.success() {
         return Response::ok("Release created successfully");
     }
-
+    
     Response::error("Could not edit release.", 500)
 }
 
@@ -273,21 +280,21 @@ pub async fn delete_release(req: Request, ctx: RouteContext<()>) -> worker::Resu
     let (Some(artist_id), Some(slug)) = (ctx.param("id"), ctx.param("slug")) else {
         return Response::error("No artist id or slug provided", 400);
     };
-
+    
     let d1 = ctx.d1("prod_sr_db")?;
-
+    
     if !authenticated(req.headers(), &d1, Some(artist_id), &ctx).await {
         return Response::error("Unauthorized", 401);
     }
-
+    
     let query = d1.prepare("DELETE FROM Releases WHERE slug = ?1 AND artist_id = ?2");
     let binded = query.bind(&[JsValue::from(slug), JsValue::from(artist_id)])?;
-
+    
     let result = binded.run().await?;
-
+    
     if result.success() {
         return Response::ok("Release deleted successfully");
     }
-
+    
     Response::error("Could not edit release.", 500)
 }
