@@ -6,7 +6,7 @@ import { StylingContext } from "@/app/ui/StylingProvider";
 import { Release } from "@/lib/definitions";
 import { Button } from "@/app/ui/Button";
 import Image from "next/image";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import RemoveIcon from "@mui/icons-material/Remove";
 
 export function ReleaseImage(props: {
@@ -15,13 +15,12 @@ export function ReleaseImage(props: {
   artworkUpdater: (params: (typeof Release)[keyof typeof Release]) => void;
 }) {
   const styling = useContext(StylingContext);
-  const [image, setImage] = useState<File | null>(null);
 
   const [status, setStatus] = useStatus();
 
   return (
     <div
-      key={props.editedRelease.slug || ""}
+      // key={props.editedRelease.artwork || ""}
       className="flex flex-col relative items-start mt-8 lg:mt-0"
     >
       <label
@@ -49,7 +48,6 @@ export function ReleaseImage(props: {
             className={"absolute top-1 right-0 m-0 scale-75"}
             onClick={() => {
               props.artworkUpdater(null);
-              setImage(null);
             }}
           >
             <RemoveIcon />
@@ -58,34 +56,54 @@ export function ReleaseImage(props: {
       ) : (
         <div
           className={
-            "w-[200px] h-[200px] max-w-full rounded-md  p-2 border-dashed border-2 flex flex-col justify-center" +
-            " items-center"
+            "w-[200px] h-[200px] aspect-square rounded-md  p-2 border-dashed border-2 flex flex-col justify-center" +
+            " items-center content-center justify-self-center text-center"
           }
           style={{
             backgroundColor: `${styling.colours.background}`,
           }}
         >
+          <style>
+            {`
+            input[type="file"]::file-selector-button:hover {
+              background: ${styling.colours.background};
+              color: ${styling.colours.accent};
+            }
+            
+            input[type="file"]::file-selector-button {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              align-self: center;
+              justify-self: center;
+              background: ${styling.colours.accent};
+              color: ${styling.colours.background};
+              border-radius: 3px;
+              cursor: pointer;
+              padding: 2px 1em;
+              border-color: ${styling.colours.accent};
+              border-width: 2px;
+              transition: 0.2s;
+            `}
+          </style>
           <input
             type="file"
-            className={"text-sm w-full"}
+            className={"text-sm w-full text-center"}
             style={{
               color: styling.colours.foreground,
             }}
-            onInput={(e) => {
+            onChange={async (e) => {
+              console.log(e.currentTarget.files);
+
               if (e.currentTarget.files?.length != 1) {
                 return;
               }
 
-              setImage(e.currentTarget.files[0] as File);
-            }}
-            name={"artwork"}
-            accept={"image/*"}
-            multiple={false}
-          />
-          <Button
-            onClick={async () => {
+              const image = e.currentTarget.files[0] as File;
+
+              console.log(image);
+
               if (!image) {
-                setStatus("Image not found.");
                 return;
               }
 
@@ -105,10 +123,12 @@ export function ReleaseImage(props: {
               props.artworkUpdater(
                 `https://linkr.audio/images?image=${upload.key}`,
               );
+              return;
             }}
-          >
-            Upload Image
-          </Button>
+            name={"artwork"}
+            accept={"image/*"}
+            multiple={false}
+          />
         </div>
       )}
       <StatusPopup status={status} />
