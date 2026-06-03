@@ -3,7 +3,14 @@
 import { SvgIcon } from "@mui/material";
 import { ComponentProps } from "react";
 
-export default function LinkrAudioLogo(props: ComponentProps<typeof SvgIcon>) {
+interface LinkrAudioLogoProps extends ComponentProps<typeof SvgIcon> {
+  fillColor?: string;
+}
+
+export default function LinkrAudioLogo({
+  fillColor,
+  ...props
+}: LinkrAudioLogoProps) {
   return (
     <div suppressHydrationWarning={true}>
       <SvgIcon {...props}>
@@ -20,7 +27,7 @@ export default function LinkrAudioLogo(props: ComponentProps<typeof SvgIcon>) {
             <clipPath id="_clip1" style={{ fill: "none" }}>
               <rect x="2.4" y="2.4" width="19.2" height="19.2" />
             </clipPath>
-            <g clipPath="url(#_clip1)" fill={"currentColor"}>
+            <g clipPath="url(#_clip1)" fill={fillColor || "currentColor"}>
               <rect x="2.4" y="20.62" width="19.2" height="1" />
               <path d="M1.73,17.98L2.11,17.06C2.11,17.06 6.13,18.7 12,18.7C17.87,18.7 21.89,17.06 21.89,17.06L22.27,17.98C22.27,17.98 18.09,19.7 12,19.7C5.91,19.7 1.73,17.98 1.73,17.98Z" />
               <path d="M1.57,14.28L2.27,13.56C2.27,13.56 5.08,16.3 12,16.3C18.92,16.3 21.73,13.56 21.73,13.56L22.43,14.28C22.43,14.28 19.43,17.3 12,17.3C4.57,17.3 1.57,14.28 1.57,14.28Z" />

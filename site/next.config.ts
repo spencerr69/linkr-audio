@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
     ],
     loader: "custom",
     loaderFile: "./src/lib/imageLoader.ts",
-    qualities: [60, 75],
+    qualities: [30, 60, 75],
   },
   logging: {
     fetches: {

@@ -8,7 +8,7 @@ import { baseDomain, rootDomain, stylingComp } from "@/lib/utils";
 import { Metadata } from "next";
 import Link from "next/link";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export async function generateMetadata({
   params,
@@ -112,7 +112,11 @@ const Page = async ({
         >
           <Link href={`${rootDomain}`}>
             <LinkrAudioLogo
-              className={"w-4! h-4! sm:w-8! sm:h-8!  transition-all"}
+              suppressHydrationWarning={true}
+              fillColor={"white"}
+              className={
+                "w-4! h-4! sm:w-8! sm:h-8! white  accent-white  transition-all"
+              }
             />
           </Link>
         </div>
