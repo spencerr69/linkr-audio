@@ -58,7 +58,14 @@ export const getArtist = cache(async (id: string): Promise<ArtistResponse> => {
   });
 
   if (!resp.ok) {
-    throw new Error("Could not find artist");
+    //Previously this would throw an error. This isn't the best way to handle this
+    const fakeResp: ArtistResponse = {
+      artist_id: "",
+      links: [],
+      master_artist_name: "",
+      styling: {},
+    };
+    return fakeResp;
   }
 
   return await resp.json();
