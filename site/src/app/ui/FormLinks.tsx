@@ -7,6 +7,7 @@ import { Link } from "@/lib/definitions";
 import { useContext } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
 export const FormLinks = ({
   links,
@@ -23,6 +24,19 @@ export const FormLinks = ({
     valueUpdateAction(newLinks);
   };
 
+  const moveLink = (from: number, to: number) => {
+    const newLinks = [...links];
+    if (newLinks.length <= Math.max(from, to)) {
+      return;
+    }
+    const temp = newLinks[to];
+    // @ts-expect-error, we know this works cause we checked the length
+    newLinks[to] = newLinks[from];
+    // @ts-expect-error, we know this works cause we checked the length
+    newLinks[from] = temp;
+    valueUpdateAction(newLinks);
+  };
+
   const linkFields = links.map((link, i) => {
     return (
       <div
@@ -36,15 +50,43 @@ export const FormLinks = ({
           valueUpdater={getLinkUpdater(i, "name")}
           value={link.name}
           button={
-            <Button
-              className={""}
-              inline
-              secondary
-              squish
-              onClick={() => valueUpdateAction(links.filter((_, j) => j !== i))}
-            >
-              <RemoveIcon />
-            </Button>
+            <>
+              {i > 0 && (
+                <Button
+                  inline
+                  secondary
+                  squish
+                  onClick={() => {
+                    moveLink(i, i - 1);
+                  }}
+                >
+                  <KeyboardArrowUp />
+                </Button>
+              )}
+              {i < links.length - 1 && (
+                <Button
+                  inline
+                  secondary
+                  squish
+                  onClick={() => {
+                    moveLink(i, i + 1);
+                  }}
+                >
+                  <KeyboardArrowDown />
+                </Button>
+              )}
+              <Button
+                className={""}
+                inline
+                secondary
+                squish
+                onClick={() =>
+                  valueUpdateAction(links.filter((_, j) => j !== i))
+                }
+              >
+                <RemoveIcon />
+              </Button>
+            </>
           }
         />
         <FormField
