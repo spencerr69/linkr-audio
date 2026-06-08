@@ -40,7 +40,6 @@ export const Releases = ({
       ...emptyRelease,
       artist_id: artistId,
     };
-    //TODO: Add confirmation if status is dirty
     if (dirtyStatus) {
       setDialogSettings({
         open: true,

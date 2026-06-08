@@ -269,35 +269,20 @@ export const ReleaseForm = ({
             You have made changes to this release without saving. Would you like
             to save your changes?
           </p>
-          <Button
-            secondary
-            onClick={() =>
-              dialogSettingsUpdateAction({
-                ...dialogSettings,
-                open: false,
-              })
-            }
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={() => {
-              dirtyUpdateAction(false);
-              setEditedRelease(dialogSettings.newRelease || emptyRelease);
-              releaseChangeAction(dialogSettings.newRelease || emptyRelease);
-              dialogSettingsUpdateAction({
-                newRelease: null,
-                oldRelease: null,
-                open: false,
-              });
-            }}
-          >
-            Discard changes
-          </Button>
-          <Button
-            onClick={async () => {
-              if (editedRelease) {
-                await saveRelease();
+          <div className={"m-4 flex justify-evenly "}>
+            <Button
+              secondary
+              onClick={() =>
+                dialogSettingsUpdateAction({
+                  ...dialogSettings,
+                  open: false,
+                })
+              }
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
                 dirtyUpdateAction(false);
                 setEditedRelease(dialogSettings.newRelease || emptyRelease);
                 releaseChangeAction(dialogSettings.newRelease || emptyRelease);
@@ -306,11 +291,30 @@ export const ReleaseForm = ({
                   oldRelease: null,
                   open: false,
                 });
-              }
-            }}
-          >
-            Save changes
-          </Button>
+              }}
+            >
+              Discard changes
+            </Button>
+            <Button
+              onClick={async () => {
+                if (editedRelease) {
+                  await saveRelease();
+                  dirtyUpdateAction(false);
+                  setEditedRelease(dialogSettings.newRelease || emptyRelease);
+                  releaseChangeAction(
+                    dialogSettings.newRelease || emptyRelease,
+                  );
+                  dialogSettingsUpdateAction({
+                    newRelease: null,
+                    oldRelease: null,
+                    open: false,
+                  });
+                }
+              }}
+            >
+              Save changes
+            </Button>
+          </div>
         </ConfirmDialog>
       )}
     </div>
