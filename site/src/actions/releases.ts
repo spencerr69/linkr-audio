@@ -13,7 +13,9 @@ import { cache } from "react";
  * @param {Release} release
  * @returns {Result<Release, string>}
  */
-const validateReleaseForm = (release: Release): Result<Release, string> => {
+const validateReleaseForm = async (
+  release: Release,
+): Promise<Result<Release, string>> => {
   "use server";
 
   const validated = releaseFormSchema.safeParse(release);
@@ -33,7 +35,7 @@ export const updateRelease = async (
 ): Promise<Result<boolean, string>> => {
   "use server";
 
-  const validated = validateReleaseForm(release);
+  const validated = await validateReleaseForm(release);
   if (validated.isErr) {
     return validated;
   }
@@ -76,7 +78,7 @@ export async function createRelease(
 ): Promise<Result<boolean, string>> {
   "use server";
 
-  const validated = validateReleaseForm(release);
+  const validated = await validateReleaseForm(release);
   if (validated.isErr) {
     return validated;
   }
