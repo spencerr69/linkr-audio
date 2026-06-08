@@ -7,10 +7,18 @@ import { verifySession } from "@/lib/dal";
 import { LoginFormSchema } from "@/lib/definitions";
 import { authenticateUser, createSession } from "@/lib/session";
 import { apiDomain } from "@/lib/utils";
+import { Err, Ok, Result } from "@scidsgn/std";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export async function login(loginData: LoginData) {
+/**
+ * Login. Stores token in cookies if successful.
+ * @param {LoginData} loginData
+ * @returns {Promise<Result<boolean, string>>}
+ */
+export async function login(
+  loginData: LoginData,
+): Promise<Result<boolean, string>> {
   "use server";
   const validatedFields = LoginFormSchema.safeParse({
     artistid: loginData.artist_id,
@@ -18,9 +26,7 @@ export async function login(loginData: LoginData) {
   });
 
   if (!validatedFields.success) {
-    return {
-      error: validatedFields.error.message,
-    };
+    return Err.of(validatedFields.error.message);
   }
 
   const token = await authenticateUser(
@@ -29,28 +35,32 @@ export async function login(loginData: LoginData) {
   );
 
   if (!token) {
-    return {
-      error: "Incorrect login details.",
-    };
+    return Err.of("Incorrect login details.");
   }
 
   await createSession(token);
-  return { success: true };
+  return Ok.of(true);
 }
 
-export async function logout() {
+/**
+ * Logout. Cannot fail.
+ * @returns {Promise<void>}
+ */
+export async function logout(): Promise<void> {
   "use server";
   const cookie = await cookies();
   cookie.delete("session");
   redirect("/");
 }
 
-export async function changePassword(changePasswordData: ChangePasswordData) {
+export async function changePassword(
+  changePasswordData: ChangePasswordData,
+): Promise<Result<boolean, string>> {
   const session = await verifySession();
 
   if (!session.isAuth || !session.jwt || !session.raw_token) {
     await logout();
-    return { success: false, message: "You are not logged in." };
+    return Err.of("You are not logged in.");
   }
 
   const artistId = session.jwt?.artistId;
@@ -65,10 +75,10 @@ export async function changePassword(changePasswordData: ChangePasswordData) {
   });
 
   if (!data.ok) {
-    return { success: false, message: "Incorrect current password." };
+    return Err.of("Incorrect current password.");
   }
 
-  const changePassword = await serverFetch(
+  const changePasswordRequest = await serverFetch(
     session.raw_token,
     `/artists/${artistId}/password`,
     {
@@ -82,9 +92,9 @@ export async function changePassword(changePasswordData: ChangePasswordData) {
     },
   );
 
-  if (!changePassword.ok) {
-    return { success: false, message: "Failed to update password." };
+  if (!changePasswordRequest.ok) {
+    return Err.of("Failed to update password.");
   }
 
-  return { success: true, message: "Password changed successfully." };
+  return Ok.of(true);
 }

@@ -9,14 +9,17 @@ import {
 } from "@/lib/definitions";
 import { apiDomain } from "@/lib/utils";
 import { cache } from "react";
+import { Err, Ok, Result } from "@scidsgn/std";
 
-export const updateArtist = async (artist: EditArtist) => {
+export const updateArtist = async (
+  artist: EditArtist,
+): Promise<Result<boolean, string>> => {
   "use server";
 
   const validated = editArtistSchema.safeParse(artist);
 
   if (!validated.success) {
-    return { error: validated.error.message };
+    return Err.of(validated.error.message);
   }
 
   const validatedArtist = validated.data;
@@ -24,9 +27,7 @@ export const updateArtist = async (artist: EditArtist) => {
   const session = await verifySession();
 
   if (!session.isAuth || !session.jwt || !session.raw_token) {
-    return {
-      error: "Could not authenticate user",
-    };
+    return Err.of("Could not authenticate user");
   }
 
   const response = await serverFetch(
@@ -39,34 +40,25 @@ export const updateArtist = async (artist: EditArtist) => {
   );
 
   if (!response.ok) {
-    return {
-      error: "Could not update artist",
-    };
+    return Err.of("Could not update artist");
   }
 
-  return {
-    success: true,
-  };
+  return Ok.of(true);
 };
-export const getArtist = cache(async (id: string): Promise<ArtistResponse> => {
-  "use server";
-  const resp = await fetch(`${apiDomain}/artists/${id}`, {
-    cache: "force-cache",
-    next: {
-      revalidate: 10,
-    },
-  });
+export const getArtist = cache(
+  async (id: string): Promise<Result<ArtistResponse, string>> => {
+    "use server";
+    const resp = await fetch(`${apiDomain}/artists/${id}`, {
+      cache: "force-cache",
+      next: {
+        revalidate: 10,
+      },
+    });
 
-  if (!resp.ok) {
-    //Previously this would throw an error. This isn't the best way to handle this
+    if (!resp.ok) {
+      return Err.of("Artist not found.");
+    }
 
-    return {
-      artist_id: "",
-      links: [],
-      master_artist_name: "",
-      styling: {},
-    };
-  }
-
-  return await resp.json();
-});
+    return Ok.of(await resp.json());
+  },
+);

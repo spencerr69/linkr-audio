@@ -4,26 +4,45 @@ import { serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
 import { Release, releaseFormSchema } from "@/lib/definitions";
 import { apiDomain } from "@/lib/utils";
+import { Err, Ok, Result } from "@scidsgn/std";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
-export async function updateRelease(release: Release) {
+/**
+ * Use Zod to validate release using `releaseFormSchema`
+ * @param {Release} release
+ * @returns {Result<Release, string>}
+ */
+const validateReleaseForm = (release: Release): Result<Release, string> => {
   "use server";
 
   const validated = releaseFormSchema.safeParse(release);
-
   if (!validated.success) {
-    return { error: validated.error.message };
+    return Err.of(validated.error.message);
   }
+  return Ok.of(validated.data);
+};
 
-  const validatedRelease = validated.data;
+/**
+ * Update an existing release.
+ * @param {Release} release
+ * @returns {Promise<Result<boolean, string>>}
+ */
+export const updateRelease = async (
+  release: Release,
+): Promise<Result<boolean, string>> => {
+  "use server";
+
+  const validated = validateReleaseForm(release);
+  if (validated.isErr) {
+    return validated;
+  }
+  const validatedRelease = validated.get();
 
   const session = await verifySession();
 
   if (!session || !session.jwt || !session.raw_token) {
-    return {
-      error: "Not logged in.",
-    };
+    return Err.of("Not logged in.");
   }
 
   const resp = await serverFetch(
@@ -39,33 +58,32 @@ export async function updateRelease(release: Release) {
   );
 
   if (!resp.ok) {
-    return {
-      error: "Could not update release.",
-    };
+    return Err.of("Could not update release.");
   }
 
-  return {
-    success: true,
-  };
-}
+  return Ok.of(true);
+};
 
-export async function createRelease(release: Release) {
+/**
+ * Create new release for the currently logged in artist.
+ * @param {Release} release
+ * @returns {Promise<Result<boolean, string>>}
+ */
+export async function createRelease(
+  release: Release,
+): Promise<Result<boolean, string>> {
   "use server";
 
-  const validated = releaseFormSchema.safeParse(release);
-
-  if (!validated.success) {
-    return { error: validated.error.message };
+  const validated = validateReleaseForm(release);
+  if (validated.isErr) {
+    return validated;
   }
-
-  const validatedRelease = validated.data;
+  const validatedRelease = validated.get();
 
   const session = await verifySession();
 
   if (!session || !session.jwt || !session.raw_token) {
-    return {
-      error: "Not logged in.",
-    };
+    return Err.of("Not logged in.");
   }
 
   const resp = await serverFetch(
@@ -81,45 +99,48 @@ export async function createRelease(release: Release) {
   );
 
   if (!resp.ok) {
-    return {
-      error: "Could not update release.",
-    };
+    return Err.of("Could not update release.");
   }
 
-  return {
-    success: true,
-  };
+  return Ok.of(true);
 }
 
-export async function deleteRelease(release: Release) {
+/**
+ * Delete the provided release for the currently logged in artist.
+ * @param {string} slug
+ * @returns {Promise<Result<boolean, string>>}
+ */
+export async function deleteRelease(
+  slug: string,
+): Promise<Result<boolean, string>> {
   "use server";
 
   const session = await verifySession();
 
   if (!session || !session.jwt || !session.raw_token) {
-    return {
-      error: "Not logged in.",
-    };
+    return Err.of("Not logged in.");
   }
 
   const req = await serverFetch(
     session.raw_token,
-    `/releases/${release.artist_id}/${release.slug}`,
+    `/releases/${session.jwt.artistId}/${slug}`,
     {
       method: "DELETE",
     },
   );
 
   if (!req.ok) {
-    return {
-      error: "Could not delete release.",
-    };
+    return Err.of(`Could not delete release. ${req.body}`);
   }
 
-  return { success: true };
+  return Ok.of(true);
 }
 
-export const getRelease = cache(
+/**
+ * Get a release for the given artist and slug. If release is not found, will redirect to 404.
+ * @type {(id: string, slug: string) => Promise<Release>}
+ */
+export const getRelease: (id: string, slug: string) => Promise<Release> = cache(
   async (id: string, slug: string): Promise<Release> => {
     "use server";
     const resp = await fetch(`${apiDomain}/releases/${id}/${slug}`, {
@@ -133,50 +154,29 @@ export const getRelease = cache(
       notFound();
     }
 
-    const result: Release = await resp.json();
-
-    return result;
+    return await resp.json();
   },
 );
 
-export const getLatestRelease = cache(async (id: string): Promise<Release> => {
-  "use server";
+/**
+ * Get recent releases from all artists. Cached 600 seconds.
+ * @type {() => Promise<Release[]>}
+ */
+export const getRecentReleases: () => Promise<Release[]> = cache(
+  async (): Promise<Release[]> => {
+    "use server";
 
-  const resp = await fetch(`${apiDomain}/releases/${id}?limit=1`, {
-    cache: "force-cache",
-    next: {
-      revalidate: 10,
-    },
-  });
+    const resp = await fetch(`${apiDomain}/releases/recent?limit=9`, {
+      cache: "force-cache",
+      next: {
+        revalidate: 600,
+      },
+    });
 
-  if (!resp.ok) {
-    notFound();
-  }
+    if (!resp.ok) {
+      return [];
+    }
 
-  const result: Release[] = await resp.json();
-
-  const out = result[0];
-
-  if (out) {
-    return out;
-  }
-
-  notFound();
-});
-
-export const getRecentReleases = cache(async (): Promise<Release[]> => {
-  "use server";
-
-  const resp = await fetch(`${apiDomain}/releases/recent?limit=9`, {
-    cache: "force-cache",
-    next: {
-      revalidate: 600,
-    },
-  });
-
-  if (!resp.ok) {
-    return [];
-  }
-
-  return await resp.json();
-});
+    return await resp.json();
+  },
+);
