@@ -276,58 +276,14 @@ export const ReleaseForm = ({
             })
           }
           title={"You have unsaved changes"}
-        >
-          <p>
-            You have made changes to this release without saving. Would you like
-            to save your changes?
-          </p>
-          <div className={"m-4 flex justify-evenly "}>
-            <Button
-              secondary
-              onClick={() =>
-                dialogSettingsUpdateAction({
-                  ...dialogSettings,
-                  open: false,
-                })
-              }
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                dirtyUpdateAction(false);
-                setEditedRelease(dialogSettings.newRelease || emptyRelease);
-                releaseChangeAction(dialogSettings.newRelease || emptyRelease);
-                dialogSettingsUpdateAction({
-                  newRelease: null,
-                  oldRelease: null,
-                  open: false,
-                });
-              }}
-            >
-              Discard changes
-            </Button>
-            <Button
-              onClick={async () => {
-                if (editedRelease) {
-                  await saveRelease();
-                  dirtyUpdateAction(false);
-                  setEditedRelease(dialogSettings.newRelease || emptyRelease);
-                  releaseChangeAction(
-                    dialogSettings.newRelease || emptyRelease,
-                  );
-                  dialogSettingsUpdateAction({
-                    newRelease: null,
-                    oldRelease: null,
-                    open: false,
-                  });
-                }
-              }}
-            >
-              Save changes
-            </Button>
-          </div>
-        </ConfirmDialog>
+          dialogSettings={dialogSettings}
+          dirtyUpdateAction={dirtyUpdateAction}
+          dialogSettingsUpdateAction={dialogSettingsUpdateAction}
+          editedReleaseUpdateAction={setEditedRelease}
+          editedRelease={editedRelease}
+          releaseChangeAction={releaseChangeAction}
+          saveReleaseAction={saveRelease}
+        ></ConfirmDialog>
       )}
     </div>
   );
