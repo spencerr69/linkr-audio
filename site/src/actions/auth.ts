@@ -56,12 +56,14 @@ export async function logout(): Promise<void> {
 export async function changePassword(
   changePasswordData: ChangePasswordData,
 ): Promise<Result<boolean, string>> {
-  const session = await verifySession();
+  const sessionRequest = await verifySession();
 
-  if (!session.isAuth || !session.jwt || !session.raw_token) {
+  if (sessionRequest.isErr) {
     await logout();
-    return Err.of("You are not logged in.");
+    return sessionRequest;
   }
+
+  const session = sessionRequest.get();
 
   const artistId = session.jwt?.artistId;
 

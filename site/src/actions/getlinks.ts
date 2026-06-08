@@ -7,7 +7,6 @@ import { Err, Ok, Result } from "@scidsgn/std";
 
 /**
  * Get music links given a UPC. Doesn't fucken work anymore cause like everyone changed their api auth rules...
- * @deprecated
  * @param {string} upc
  * @returns {Promise<Result<LinkResponse, string>>}
  */
@@ -15,11 +14,13 @@ export async function getLinks(
   upc: string,
 ): Promise<Result<LinkResponse, string>> {
   "use server";
-  const session = await verifySession();
+  const sessionRequest = await verifySession();
 
-  if (!session || !session.jwt || !session.raw_token) {
+  if (sessionRequest.isErr) {
     return Err.of("Not logged in.");
   }
+
+  const session = sessionRequest.get();
 
   const resp = await serverFetch(session.raw_token, `/links/${upc}`, {});
 

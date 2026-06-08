@@ -2,33 +2,36 @@
 
 import "server-only";
 import { decrypt } from "@/lib/session";
+import { Err, Ok, Result } from "@scidsgn/std";
 import { JWTPayload } from "jose";
 import { cookies } from "next/headers";
-import { cache } from "react";
 
 export type Session = {
-  isAuth: boolean;
-  jwt?: JWTPayload;
-  raw_token?: string;
+  jwt: JWTPayload;
+  raw_token: string;
 };
 
-export const verifySession = cache(async (): Promise<Session> => {
+/**
+ * Verify if current user is logged in. This will only check if the token is decodable, not if it is encrypted
+ * correctly. That is handled in api.
+ * @returns {Promise<Result<Session, string>>}
+ */
+export const verifySession = async (): Promise<Result<Session, string>> => {
   "use server";
   const cookie = (await cookies()).get("session")?.value;
 
   if (!cookie) {
-    return { isAuth: false };
+    return Err.of("No login cookie found.");
   }
 
   const session = await decrypt(cookie);
 
   if (!session) {
-    return { isAuth: false };
+    return Err.of("Couldn't decrypt cookie.");
   }
 
-  return {
-    isAuth: true,
+  return Ok.of({
     jwt: session,
     raw_token: cookie,
-  };
-});
+  });
+};

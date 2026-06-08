@@ -39,11 +39,13 @@ export const updateRelease = async (
   }
   const validatedRelease = validated.get();
 
-  const session = await verifySession();
+  const sessionRequest = await verifySession();
 
-  if (!session || !session.jwt || !session.raw_token) {
+  if (sessionRequest.isErr) {
     return Err.of("Not logged in.");
   }
+
+  const session = sessionRequest.get();
 
   const resp = await serverFetch(
     session.raw_token,
@@ -80,11 +82,13 @@ export async function createRelease(
   }
   const validatedRelease = validated.get();
 
-  const session = await verifySession();
+  const sessionRequest = await verifySession();
 
-  if (!session || !session.jwt || !session.raw_token) {
+  if (sessionRequest.isErr) {
     return Err.of("Not logged in.");
   }
+
+  const session = sessionRequest.get();
 
   const resp = await serverFetch(
     session.raw_token,
@@ -115,11 +119,13 @@ export async function deleteRelease(
 ): Promise<Result<boolean, string>> {
   "use server";
 
-  const session = await verifySession();
+  const sessionRequest = await verifySession();
 
-  if (!session || !session.jwt || !session.raw_token) {
-    return Err.of("Not logged in.");
+  if (sessionRequest.isErr) {
+    return sessionRequest;
   }
+
+  const session = sessionRequest.get();
 
   const req = await serverFetch(
     session.raw_token,

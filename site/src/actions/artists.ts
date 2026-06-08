@@ -24,11 +24,13 @@ export const updateArtist = async (
 
   const validatedArtist = validated.data;
 
-  const session = await verifySession();
+  const sessionRequest = await verifySession();
 
-  if (!session.isAuth || !session.jwt || !session.raw_token) {
-    return Err.of("Could not authenticate user");
+  if (sessionRequest.isErr) {
+    return sessionRequest;
   }
+
+  const session = sessionRequest.get();
 
   const response = await serverFetch(
     session.raw_token,
