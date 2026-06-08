@@ -5,6 +5,7 @@ import { Button } from "@/app/ui/Button";
 import { DialogPopup } from "@/app/ui/Dialogs/DialogPopup";
 import { FormField } from "@/app/ui/FormField";
 import { useStatus } from "@/app/ui/StatusPopup";
+import { jsonToResult } from "@/lib/utils";
 import { useState } from "react";
 
 export type ChangePasswordData = {
@@ -64,7 +65,9 @@ export const ChangePasswordDialog = ({
             onClick={async (e) => {
               e.preventDefault();
 
-              const attempt = await changePassword(changePasswordData);
+              const attempt = jsonToResult(
+                await changePassword(changePasswordData),
+              );
 
               if (attempt.isErr) {
                 setStatus(attempt.error());

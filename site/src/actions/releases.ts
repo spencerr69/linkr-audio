@@ -3,7 +3,7 @@
 import { serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
 import { Release, releaseFormSchema } from "@/lib/definitions";
-import { apiDomain } from "@/lib/utils";
+import { apiDomain, JSONResult, jsonToResult, resultToJson } from "@/lib/utils";
 import { Err, Ok, Result } from "@scidsgn/std";
 import { notFound } from "next/navigation";
 import { cache } from "react";
@@ -26,25 +26,26 @@ const validateReleaseForm = async (
 };
 
 /**
- * Update an existing release.
+ * Update an existing release.\n
+ * Actually returns Result<boolean, string> but fuckass nextjs needs to stringify it
  * @param {Release} release
- * @returns {Promise<Result<boolean, string>>}
+ * @returns {Promise<JSONResult<boolean, string>>}
  */
 export const updateRelease = async (
   release: Release,
-): Promise<Result<boolean, string>> => {
+): Promise<JSONResult<boolean, string>> => {
   "use server";
 
   const validated = await validateReleaseForm(release);
   if (validated.isErr) {
-    return validated;
+    return resultToJson(validated);
   }
   const validatedRelease = validated.get();
 
-  const sessionRequest = await verifySession();
+  const sessionRequest = jsonToResult(await verifySession());
 
   if (sessionRequest.isErr) {
-    return Err.of("Not logged in.");
+    return resultToJson(Err.of("Not logged in."));
   }
 
   const session = sessionRequest.get();
@@ -62,32 +63,33 @@ export const updateRelease = async (
   );
 
   if (!resp.ok) {
-    return Err.of("Could not update release.");
+    return resultToJson(Err.of("Could not update release."));
   }
 
-  return Ok.of(true);
+  return resultToJson(Ok.of(true));
 };
 
 /**
- * Create new release for the currently logged in artist.
+ * Create new release for the currently logged in artist.\n
+ * Actually returns Result<boolean, string>
  * @param {Release} release
- * @returns {Promise<Result<boolean, string>>}
+ * @returns {Promise<JSONResult<boolean, string>>}
  */
 export async function createRelease(
   release: Release,
-): Promise<Result<boolean, string>> {
+): Promise<JSONResult<boolean, string>> {
   "use server";
 
   const validated = await validateReleaseForm(release);
   if (validated.isErr) {
-    return validated;
+    return resultToJson(validated);
   }
   const validatedRelease = validated.get();
 
-  const sessionRequest = await verifySession();
+  const sessionRequest = jsonToResult(await verifySession());
 
   if (sessionRequest.isErr) {
-    return Err.of("Not logged in.");
+    return resultToJson(Err.of("Not logged in."));
   }
 
   const session = sessionRequest.get();
@@ -105,26 +107,26 @@ export async function createRelease(
   );
 
   if (!resp.ok) {
-    return Err.of("Could not update release.");
+    return resultToJson(Err.of("Could not update release."));
   }
 
-  return Ok.of(true);
+  return resultToJson(Ok.of(true));
 }
 
 /**
  * Delete the provided release for the currently logged in artist.
  * @param {string} slug
- * @returns {Promise<Result<boolean, string>>}
+ * @returns {Promise<JSONResult<boolean, string>>}
  */
 export async function deleteRelease(
   slug: string,
-): Promise<Result<boolean, string>> {
+): Promise<JSONResult<boolean, string>> {
   "use server";
 
-  const sessionRequest = await verifySession();
+  const sessionRequest = jsonToResult(await verifySession());
 
   if (sessionRequest.isErr) {
-    return sessionRequest;
+    return resultToJson(sessionRequest);
   }
 
   const session = sessionRequest.get();
@@ -138,10 +140,10 @@ export async function deleteRelease(
   );
 
   if (!req.ok) {
-    return Err.of(`Could not delete release. ${req.body}`);
+    return resultToJson(Err.of(`Could not delete release. ${req.body}`));
   }
 
-  return Ok.of(true);
+  return resultToJson(Ok.of(true));
 }
 
 /**

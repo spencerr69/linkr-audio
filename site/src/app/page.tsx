@@ -6,7 +6,7 @@ import LinkrAudioLogo from "@/app/ui/LinkrAudioLogo";
 import { RecentRelease } from "@/app/ui/RecentRelease";
 import StylingProvider from "@/app/ui/StylingProvider";
 import { verifySession } from "@/lib/dal";
-import { stylingComp } from "@/lib/utils";
+import { jsonToResult, stylingComp } from "@/lib/utils";
 import { LoginButton } from "@/app/ui/LoginButton";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -16,7 +16,9 @@ export default async function Page() {
   const session = await verifySession();
 
   const recentReleases = await getRecentReleases();
-  const recentArtist = await getArtist(recentReleases[0]?.artist_id || "");
+  const recentArtist = jsonToResult(
+    await getArtist(recentReleases[0]?.artist_id || ""),
+  );
 
   const style = recentArtist.isErr ? {} : recentArtist.get().styling || {};
 

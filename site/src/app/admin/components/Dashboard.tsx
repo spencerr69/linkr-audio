@@ -6,14 +6,14 @@ import { Releases } from "@/app/admin/components/release/Releases";
 import { serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
 import { AdminPages, Release } from "@/lib/definitions";
-import { stylingComp } from "@/lib/utils";
+import { jsonToResult, stylingComp } from "@/lib/utils";
 
 export const Dashboard = async ({
   currentPage,
 }: {
   currentPage: AdminPages;
 }) => {
-  const sessionRequest = await verifySession();
+  const sessionRequest = jsonToResult(await verifySession());
 
   if (sessionRequest.isErr) {
     return <></>;
@@ -21,7 +21,9 @@ export const Dashboard = async ({
 
   const session = sessionRequest.get();
 
-  const artist = (await getArtist(`${session.jwt?.artistId}`)).get();
+  const artist = jsonToResult(
+    await getArtist(`${session.jwt?.artistId}`),
+  ).get();
 
   const styling = stylingComp(artist.styling || {});
 

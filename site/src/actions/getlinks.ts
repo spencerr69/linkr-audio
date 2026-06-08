@@ -3,21 +3,22 @@
 import { serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
 import { LinkResponse } from "@/lib/definitions";
-import { Err, Ok, Result } from "@scidsgn/std";
+import { JSONResult, jsonToResult, resultToJson } from "@/lib/utils";
+import { Err, Ok } from "@scidsgn/std";
 
 /**
  * Get music links given a UPC. Doesn't fucken work anymore cause like everyone changed their api auth rules...
  * @param {string} upc
- * @returns {Promise<Result<LinkResponse, string>>}
+ * @returns {Promise<JSONResult<LinkResponse, string>>}
  */
 export async function getLinks(
   upc: string,
-): Promise<Result<LinkResponse, string>> {
+): Promise<JSONResult<LinkResponse, string>> {
   "use server";
-  const sessionRequest = await verifySession();
+  const sessionRequest = jsonToResult(await verifySession());
 
   if (sessionRequest.isErr) {
-    return Err.of("Not logged in.");
+    return resultToJson(Err.of("Not logged in."));
   }
 
   const session = sessionRequest.get();
@@ -25,8 +26,8 @@ export async function getLinks(
   const resp = await serverFetch(session.raw_token, `/links/${upc}`, {});
 
   if (!resp.ok) {
-    return Err.of(`Could not find music links for UPC: ${upc}`);
+    return resultToJson(Err.of(`Could not find music links for UPC: ${upc}`));
   }
 
-  return Ok.of(await resp.json());
+  return resultToJson(Ok.of(await resp.json()));
 }

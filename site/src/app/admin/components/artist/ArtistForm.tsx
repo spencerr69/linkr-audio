@@ -7,7 +7,7 @@ import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
 import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { ArtistResponse, EditArtist, Link, Styling } from "@/lib/definitions";
-import { stylingComp } from "@/lib/utils";
+import { jsonToResult, stylingComp } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import { useEffect, useState } from "react";
@@ -70,7 +70,7 @@ export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {
           <Button
             name={"save"}
             onClick={async () => {
-              const result = await updateArtist(editedArtist);
+              const result = jsonToResult(await updateArtist(editedArtist));
               if (result.isOk) {
                 posthog.capture("artist_profile_updated", {
                   artist_name: editedArtist.master_artist_name,

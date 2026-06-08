@@ -7,27 +7,27 @@ import {
   EditArtist,
   editArtistSchema,
 } from "@/lib/definitions";
-import { apiDomain } from "@/lib/utils";
+import { apiDomain, JSONResult, jsonToResult, resultToJson } from "@/lib/utils";
 import { cache } from "react";
-import { Err, Ok, Result } from "@scidsgn/std";
+import { Err, Ok } from "@scidsgn/std";
 
 export const updateArtist = async (
   artist: EditArtist,
-): Promise<Result<boolean, string>> => {
+): Promise<JSONResult<boolean, string>> => {
   "use server";
 
   const validated = editArtistSchema.safeParse(artist);
 
   if (!validated.success) {
-    return Err.of(validated.error.message);
+    return resultToJson(Err.of(validated.error.message));
   }
 
   const validatedArtist = validated.data;
 
-  const sessionRequest = await verifySession();
+  const sessionRequest = jsonToResult(await verifySession());
 
   if (sessionRequest.isErr) {
-    return sessionRequest;
+    return resultToJson(sessionRequest);
   }
 
   const session = sessionRequest.get();
@@ -42,13 +42,13 @@ export const updateArtist = async (
   );
 
   if (!response.ok) {
-    return Err.of("Could not update artist");
+    return resultToJson(Err.of("Could not update artist"));
   }
 
-  return Ok.of(true);
+  return resultToJson(Ok.of(true));
 };
 export const getArtist = cache(
-  async (id: string): Promise<Result<ArtistResponse, string>> => {
+  async (id: string): Promise<JSONResult<ArtistResponse, string>> => {
     "use server";
     const resp = await fetch(`${apiDomain}/artists/${id}`, {
       cache: "force-cache",
@@ -58,9 +58,9 @@ export const getArtist = cache(
     });
 
     if (!resp.ok) {
-      return Err.of("Artist not found.");
+      return resultToJson(Err.of("Artist not found."));
     }
 
-    return Ok.of(await resp.json());
+    return resultToJson(Ok.of(await resp.json()));
   },
 );

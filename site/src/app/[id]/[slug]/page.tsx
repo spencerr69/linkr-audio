@@ -4,7 +4,7 @@ import { getRelease } from "@/actions/releases";
 import LinkrAudioLogo from "@/app/ui/LinkrAudioLogo";
 import StylingProvider from "@/app/ui/StylingProvider";
 import cloudflareLoader from "@/lib/imageLoader";
-import { baseDomain, rootDomain, stylingComp } from "@/lib/utils";
+import { baseDomain, jsonToResult, rootDomain, stylingComp } from "@/lib/utils";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -88,7 +88,7 @@ const Page = async ({
 }) => {
   const { id, slug } = await params;
   const release = await getRelease(id, slug);
-  const artist = await getArtist(id);
+  const artist = jsonToResult(await getArtist(id));
 
   const styling = stylingComp(artist.get().styling || {});
 

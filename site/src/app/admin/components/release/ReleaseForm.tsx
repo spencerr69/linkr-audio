@@ -15,6 +15,7 @@ import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { Link, Release } from "@/lib/definitions";
 import { ReleaseImage } from "@/app/admin/components/release/ReleaseImage";
+import { jsonToResult } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import React, { useContext } from "react";
@@ -60,9 +61,12 @@ export const ReleaseForm = ({
 
   const saveRelease = async () => {
     const isUpdate = !!release?.slug;
-    const result = isUpdate
-      ? await updateRelease(editedRelease)
-      : await createRelease(editedRelease);
+    const result = jsonToResult(
+      isUpdate
+        ? await updateRelease(editedRelease)
+        : await createRelease(editedRelease),
+    );
+    console.log(result);
     if (result.isOk) {
       posthog.capture(isUpdate ? "release_updated" : "release_created", {
         release_title: editedRelease.title,
@@ -74,7 +78,7 @@ export const ReleaseForm = ({
       setStatus("Successfully saved release.");
       dirtyUpdateAction(false);
     } else {
-      setStatus(result.error());
+      setStatus(JSON.stringify(result));
     }
 
     router.refresh();
@@ -118,7 +122,9 @@ export const ReleaseForm = ({
                 posthog.capture("get_links_clicked", {
                   upc: editedRelease.upc,
                 });
-                const newRelease = await getLinks(editedRelease.upc);
+                const newRelease = jsonToResult(
+                  await getLinks(editedRelease.upc),
+                );
                 setEditedRelease((prev) => {
                   return {
                     ...prev,
@@ -232,7 +238,9 @@ export const ReleaseForm = ({
                   setStatus("Can't delete a release which doesn't exist diva.");
                   return;
                 }
-                const result = await deleteRelease(editedRelease.slug);
+                const result = jsonToResult(
+                  await deleteRelease(editedRelease.slug),
+                );
 
                 if (result.isOk) {
                   posthog.capture("release_deleted", {

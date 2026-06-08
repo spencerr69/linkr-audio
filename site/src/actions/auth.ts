@@ -6,19 +6,19 @@ import { serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
 import { LoginFormSchema } from "@/lib/definitions";
 import { authenticateUser, createSession } from "@/lib/session";
-import { apiDomain } from "@/lib/utils";
-import { Err, Ok, Result } from "@scidsgn/std";
+import { apiDomain, JSONResult, jsonToResult, resultToJson } from "@/lib/utils";
+import { Err, Ok } from "@scidsgn/std";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 /**
  * Login. Stores token in cookies if successful.
  * @param {LoginData} loginData
- * @returns {Promise<Result<boolean, string>>}
+ * @returns {Promise<JSONResult<boolean, string>>}
  */
 export async function login(
   loginData: LoginData,
-): Promise<Result<boolean, string>> {
+): Promise<JSONResult<boolean, string>> {
   "use server";
   const validatedFields = LoginFormSchema.safeParse({
     artistid: loginData.artist_id,
@@ -26,7 +26,7 @@ export async function login(
   });
 
   if (!validatedFields.success) {
-    return Err.of(validatedFields.error.message);
+    return resultToJson(Err.of(validatedFields.error.message));
   }
 
   const token = await authenticateUser(
@@ -35,11 +35,11 @@ export async function login(
   );
 
   if (!token) {
-    return Err.of("Incorrect login details.");
+    return resultToJson(Err.of("Incorrect login details."));
   }
 
   await createSession(token);
-  return Ok.of(true);
+  return resultToJson(Ok.of(true));
 }
 
 /**
@@ -55,12 +55,12 @@ export async function logout(): Promise<void> {
 
 export async function changePassword(
   changePasswordData: ChangePasswordData,
-): Promise<Result<boolean, string>> {
-  const sessionRequest = await verifySession();
+): Promise<JSONResult<boolean, string>> {
+  const sessionRequest = jsonToResult(await verifySession());
 
   if (sessionRequest.isErr) {
     await logout();
-    return sessionRequest;
+    return resultToJson(sessionRequest);
   }
 
   const session = sessionRequest.get();
@@ -77,7 +77,7 @@ export async function changePassword(
   });
 
   if (!data.ok) {
-    return Err.of("Incorrect current password.");
+    return resultToJson(Err.of("Incorrect current password."));
   }
 
   const changePasswordRequest = await serverFetch(
@@ -95,8 +95,8 @@ export async function changePassword(
   );
 
   if (!changePasswordRequest.ok) {
-    return Err.of("Failed to update password.");
+    return resultToJson(Err.of("Failed to update password."));
   }
 
-  return Ok.of(true);
+  return resultToJson(Ok.of(true));
 }

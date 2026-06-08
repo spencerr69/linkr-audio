@@ -5,6 +5,7 @@ import { Button } from "@/app/ui/Button";
 import { DialogPopup } from "@/app/ui/Dialogs/DialogPopup";
 import { FormField } from "@/app/ui/FormField";
 import { useStatus } from "@/app/ui/StatusPopup";
+import { jsonToResult } from "@/lib/utils";
 import { useState } from "react";
 
 export type LoginData = {
@@ -62,7 +63,7 @@ export function LoginDialog({
           onClick={async (e) => {
             e.preventDefault();
 
-            const attempt = await login(loginData);
+            const attempt = jsonToResult(await login(loginData));
 
             if (attempt.isErr) {
               setStatus(attempt.error());
