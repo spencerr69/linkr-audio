@@ -58,7 +58,7 @@ export async function middleware(request: NextRequest) {
     if (pathname.startsWith("/admin/") && pathname !== "/admin/") {
       const session = await verifySession();
 
-      return session.isAuth
+      return session.isOk
         ? NextResponse.next()
         : NextResponse.redirect(new URL("/admin", request.url));
     }

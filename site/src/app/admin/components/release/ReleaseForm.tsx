@@ -63,7 +63,7 @@ export const ReleaseForm = ({
     const result = isUpdate
       ? await updateRelease(editedRelease)
       : await createRelease(editedRelease);
-    if (result.success) {
+    if (result.isOk) {
       posthog.capture(isUpdate ? "release_updated" : "release_created", {
         release_title: editedRelease.title,
         release_slug: editedRelease.slug,
@@ -74,7 +74,7 @@ export const ReleaseForm = ({
       setStatus("Successfully saved release.");
       dirtyUpdateAction(false);
     } else {
-      setStatus(result.error!);
+      setStatus(result.error());
     }
 
     router.refresh();
@@ -122,7 +122,7 @@ export const ReleaseForm = ({
                 setEditedRelease((prev) => {
                   return {
                     ...prev,
-                    ...newRelease,
+                    ...newRelease.get(),
                   } as Release;
                 });
               }}
@@ -228,9 +228,13 @@ export const ReleaseForm = ({
               name={"delete"}
               className={"mr-4"}
               onClick={async () => {
-                const result = await deleteRelease(editedRelease);
+                if (!editedRelease.slug) {
+                  setStatus("Can't delete a release which doesn't exist diva.");
+                  return;
+                }
+                const result = await deleteRelease(editedRelease.slug);
 
-                if (result.success) {
+                if (result.isOk) {
                   posthog.capture("release_deleted", {
                     release_title: editedRelease.title,
                     release_slug: editedRelease.slug,
@@ -239,7 +243,7 @@ export const ReleaseForm = ({
                   setStatus("Successfully deleted release.");
                   dirtyUpdateAction(false);
                 } else {
-                  setStatus(result.error!);
+                  setStatus(result.error());
                 }
                 router.refresh();
               }}

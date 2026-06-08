@@ -18,7 +18,9 @@ export default async function Page() {
   const recentReleases = await getRecentReleases();
   const recentArtist = await getArtist(recentReleases[0]?.artist_id || "");
 
-  const styling = stylingComp(recentArtist.styling || {});
+  const style = recentArtist.isErr ? {} : recentArtist.get().styling || {};
+
+  const styling = stylingComp(style);
 
   const releasesList = recentReleases.map((release) => {
     return <RecentRelease key={release.slug} release={release} />;
@@ -49,7 +51,7 @@ export default async function Page() {
               </h3>
             </div>
             <div>
-              {session.isAuth ? (
+              {session.isOk ? (
                 <ExternalButton secondary href={"/admin"}>
                   Admin
                 </ExternalButton>

@@ -90,7 +90,7 @@ const Page = async ({
   const release = await getRelease(id, slug);
   const artist = await getArtist(id);
 
-  const styling = stylingComp(artist.styling || {});
+  const styling = stylingComp(artist.get().styling || {});
 
   return (
     <StylingProvider styling={styling}>
@@ -104,7 +104,7 @@ const Page = async ({
           style={{ opacity: "6%" }}
         ></div>
 
-        <ReleaseGrid release={release} artist={artist} />
+        <ReleaseGrid release={release} artist={artist.get()} />
         <div
           className={
             "fixed bottom-1 sm:bottom-4 opacity-25 hover:opacity-50 duration-100 "

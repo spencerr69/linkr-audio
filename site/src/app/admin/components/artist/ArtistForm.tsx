@@ -71,14 +71,14 @@ export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {
             name={"save"}
             onClick={async () => {
               const result = await updateArtist(editedArtist);
-              if (result.success) {
+              if (result.isOk) {
                 posthog.capture("artist_profile_updated", {
                   artist_name: editedArtist.master_artist_name,
                   links_count: editedArtist.links?.length || 0,
                 });
                 setStatus("Successfully saved artist.");
               } else {
-                setStatus(result.error!);
+                setStatus(result.error());
               }
 
               router.refresh();

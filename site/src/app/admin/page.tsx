@@ -8,14 +8,14 @@ import { redirect } from "next/navigation";
 const AdminPage = async () => {
   const session = await verifySession();
 
-  if (!session.isAuth) {
+  if (session.isErr) {
     redirect("/");
   }
 
   return (
     <>
       <main className={" h-screen  overflow-hidden font-sans flex flex-col"}>
-        {session.isAuth && <Dashboard currentPage={AdminPages.Releases} />}
+        {session.isOk && <Dashboard currentPage={AdminPages.Releases} />}
       </main>
     </>
   );

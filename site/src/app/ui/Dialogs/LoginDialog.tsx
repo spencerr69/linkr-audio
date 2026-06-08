@@ -64,8 +64,8 @@ export function LoginDialog({
 
             const attempt = await login(loginData);
 
-            if (!attempt.success) {
-              setStatus(attempt.error || "");
+            if (attempt.isErr) {
+              setStatus(attempt.error());
               return;
             }
 

@@ -13,13 +13,15 @@ export const Dashboard = async ({
 }: {
   currentPage: AdminPages;
 }) => {
-  const session = await verifySession();
+  const sessionRequest = await verifySession();
 
-  if (!session || !session.jwt || !session.raw_token) {
+  if (sessionRequest.isErr) {
     return <></>;
   }
 
-  const artist = await getArtist(`${session.jwt?.artistId}`);
+  const session = sessionRequest.get();
+
+  const artist = (await getArtist(`${session.jwt?.artistId}`)).get();
 
   const styling = stylingComp(artist.styling || {});
 

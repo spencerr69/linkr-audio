@@ -66,12 +66,12 @@ export const ChangePasswordDialog = ({
 
               const attempt = await changePassword(changePasswordData);
 
-              if (!attempt.success) {
-                setStatus(attempt.message);
+              if (attempt.isErr) {
+                setStatus(attempt.error());
                 return;
               }
 
-              setStatus(attempt.message + " Logging out...");
+              setStatus(attempt.get() + " Logging out...");
               setTimeout(() => logout(), 3000);
             }}
           >
