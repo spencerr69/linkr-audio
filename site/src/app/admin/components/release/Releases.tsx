@@ -8,9 +8,15 @@ import { ReleaseListItem } from "@/app/admin/components/release/ReleaseListItem"
 import { Button } from "@/app/ui/Button";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { Release } from "@/lib/definitions";
-import React, { useContext } from "react";
+import { useContext, useState } from "react";
 
 import AddIcon from "@mui/icons-material/Add";
+
+export type DialogSettings = {
+  open: boolean;
+  oldRelease: Release | null;
+  newRelease: Release | null;
+};
 
 export const Releases = ({
   releases,
@@ -19,7 +25,13 @@ export const Releases = ({
   releases: Release[];
   artistId: string;
 }) => {
-  const [editingRelease, setEditingRelease] = React.useState<Release | null>();
+  const [editingRelease, setEditingRelease] = useState<Release | null>();
+  const [dirtyStatus, setDirtyStatus] = useState(false);
+  const [dialogSettings, setDialogSettings] = useState<DialogSettings>({
+    open: false,
+    newRelease: null,
+    oldRelease: null,
+  });
 
   const styling = useContext(StylingContext);
 
@@ -28,8 +40,17 @@ export const Releases = ({
       ...emptyRelease,
       artist_id: artistId,
     };
-    //TODO: Add confirmation if editingRelease already exists
-    setEditingRelease(release || filledRelease);
+    //TODO: Add confirmation if status is dirty
+    if (dirtyStatus) {
+      setDialogSettings({
+        open: true,
+        oldRelease: editingRelease || null,
+        newRelease: release || filledRelease,
+      });
+    }
+    if (!dirtyStatus) {
+      setEditingRelease(release || filledRelease);
+    }
   };
 
   const releasesList = releases.map((release, i) => {
@@ -74,7 +95,16 @@ export const Releases = ({
         </ul>
       </div>
       <div className={"w-full overflow-y-auto"}>
-        {editingRelease && <ReleaseForm release={editingRelease} />}
+        {editingRelease && (
+          <ReleaseForm
+            release={editingRelease}
+            releaseChangeAction={setEditingRelease}
+            dirtyStatus={dirtyStatus}
+            dirtyUpdateAction={setDirtyStatus}
+            dialogSettings={dialogSettings}
+            dialogSettingsUpdateAction={setDialogSettings}
+          />
+        )}
       </div>
     </div>
   );

@@ -1,0 +1,45 @@
+<DataSourcesHistory>
+  <DataSourceFromHistory isRemovedFromProject="false">
+    <data-source source="LOCAL" name="Cloudflare D1" uuid="065f8166-be92-492e-9938-5f9f183ea5b9">
+      <database-info product="Cloudflare D1" version="" jdbc-version="0.0" driver-name="D1 JDBC Driver" driver-version="1.0" dbms="UNKNOWN" exact-version="0.0" exact-driver-version="1.0">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <driver-ref>java.sql.Driver</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <jdbc-driver>org.isaacmcfadyen.D1Driver</jdbc-driver>
+      <jdbc-url>jdbc:d1://9fe15959-f4dd-4b76-810f-42ca521b697e</jdbc-url>
+      <secret-storage>master_key</secret-storage>
+      <user-name>4bf0d326f26fa03d2420c094d366e846</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="database" qname="@">
+            <node kind="schema" qname="@" />
+          </node>
+        </introspection-scope>
+      </schema-mapping>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </DataSourceFromHistory>
+  <DataSourceFromHistory isRemovedFromProject="false">
+    <data-source source="LOCAL" name="local.sqlite" uuid="1a252710-46b5-4399-9288-47b1230d6c70">
+      <database-info product="SQLite" version="3.51.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.51.1.0" dbms="SQLITE" exact-version="3.51.1" exact-driver-version="3.51">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/api/.wrangler/state/v3/d1/miniflare-D1DatabaseObject/0e7a6350cf3b74dd32537f4249736f24685560b0f947e48829a96c65db4ba651.sqlite</jdbc-url>
+      <secret-storage>master_key</secret-storage>
+      <auth-provider>no-auth</auth-provider>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema" qname="@" />
+        </introspection-scope>
+      </schema-mapping>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </DataSourceFromHistory>
+</DataSourcesHistory>

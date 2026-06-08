@@ -6,7 +6,9 @@ import {
   deleteRelease,
   updateRelease,
 } from "@/actions/releases";
+import { DialogSettings } from "@/app/admin/components/release/Releases";
 import { Button } from "@/app/ui/Button";
+import { ConfirmDialog } from "@/app/ui/Dialogs/ConfirmDialog";
 import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
 import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
@@ -29,7 +31,21 @@ export const emptyRelease: Release = {
   track_count: 0,
   active: true,
 };
-export const ReleaseForm = ({ release }: { release: Release }) => {
+export const ReleaseForm = ({
+  release,
+  dirtyStatus,
+  dirtyUpdateAction,
+  dialogSettings,
+  dialogSettingsUpdateAction,
+  releaseChangeAction,
+}: {
+  release: Release;
+  dirtyStatus: boolean;
+  dirtyUpdateAction: (newValue: boolean) => void;
+  dialogSettings: DialogSettings;
+  dialogSettingsUpdateAction: (newValue: DialogSettings) => void;
+  releaseChangeAction: (newRelease: Release) => void;
+}) => {
   const [editedRelease, setEditedRelease] = React.useState<Release>(release);
 
   const styling = useContext(StylingContext);
@@ -42,6 +58,29 @@ export const ReleaseForm = ({ release }: { release: Release }) => {
     setEditedRelease(release || emptyRelease);
   }, [release]);
 
+  const saveRelease = async () => {
+    const isUpdate = !!release?.slug;
+    const result = isUpdate
+      ? await updateRelease(editedRelease)
+      : await createRelease(editedRelease);
+    if (result.success) {
+      posthog.capture(isUpdate ? "release_updated" : "release_created", {
+        release_title: editedRelease.title,
+        release_slug: editedRelease.slug,
+        artist_id: editedRelease.artist_id,
+        track_count: editedRelease.track_count,
+        link_count: editedRelease.links.length,
+      });
+      setStatus("Successfully saved release.");
+      dirtyUpdateAction(false);
+    } else {
+      setStatus(result.error!);
+    }
+
+    router.refresh();
+    return;
+  };
+
   const getReleaseUpdater = (field: keyof Release) => {
     return (value: string | number | Link[] | boolean) => {
       setEditedRelease((prev) => {
@@ -50,6 +89,7 @@ export const ReleaseForm = ({ release }: { release: Release }) => {
           [field]: value,
         } as Release;
       });
+      dirtyUpdateAction(true);
     };
   };
 
@@ -197,6 +237,7 @@ export const ReleaseForm = ({ release }: { release: Release }) => {
                     artist_id: editedRelease.artist_id,
                   });
                   setStatus("Successfully deleted release.");
+                  dirtyUpdateAction(false);
                 } else {
                   setStatus(result.error!);
                 }
@@ -205,39 +246,73 @@ export const ReleaseForm = ({ release }: { release: Release }) => {
             >
               Delete
             </Button>
-            <Button
-              name={"save"}
-              onClick={async () => {
-                const isUpdate = !!release?.slug;
-                const result = isUpdate
-                  ? await updateRelease(editedRelease)
-                  : await createRelease(editedRelease);
-                if (result.success) {
-                  posthog.capture(
-                    isUpdate ? "release_updated" : "release_created",
-                    {
-                      release_title: editedRelease.title,
-                      release_slug: editedRelease.slug,
-                      artist_id: editedRelease.artist_id,
-                      track_count: editedRelease.track_count,
-                      link_count: editedRelease.links.length,
-                    },
-                  );
-                  setStatus("Successfully saved release.");
-                } else {
-                  setStatus(result.error!);
-                }
-
-                router.refresh();
-                return;
-              }}
-            >
+            <Button name={"save"} onClick={saveRelease}>
               Save
             </Button>
           </div>
+          {dirtyStatus && <p>You have unsaved changes!</p>}
           <StatusPopup status={status} />
         </div>
       </form>
+      {dialogSettings.open && (
+        <ConfirmDialog
+          isOpen={dialogSettings.open}
+          onCloseAction={() =>
+            dialogSettingsUpdateAction({
+              ...dialogSettings,
+              open: false,
+            })
+          }
+          title={"You have unsaved changes"}
+        >
+          <p>
+            You have made changes to this release without saving. Would you like
+            to save your changes?
+          </p>
+          <Button
+            secondary
+            onClick={() =>
+              dialogSettingsUpdateAction({
+                ...dialogSettings,
+                open: false,
+              })
+            }
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              dirtyUpdateAction(false);
+              setEditedRelease(dialogSettings.newRelease || emptyRelease);
+              releaseChangeAction(dialogSettings.newRelease || emptyRelease);
+              dialogSettingsUpdateAction({
+                newRelease: null,
+                oldRelease: null,
+                open: false,
+              });
+            }}
+          >
+            Discard changes
+          </Button>
+          <Button
+            onClick={async () => {
+              if (editedRelease) {
+                await saveRelease();
+                dirtyUpdateAction(false);
+                setEditedRelease(dialogSettings.newRelease || emptyRelease);
+                releaseChangeAction(dialogSettings.newRelease || emptyRelease);
+                dialogSettingsUpdateAction({
+                  newRelease: null,
+                  oldRelease: null,
+                  open: false,
+                });
+              }
+            }}
+          >
+            Save changes
+          </Button>
+        </ConfirmDialog>
+      )}
     </div>
   );
 };
