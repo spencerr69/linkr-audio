@@ -11,12 +11,26 @@ import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
 import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { ArtistResponse, Link, Release } from "@/lib/definitions";
+import { ArtistResponse, Release } from "@/lib/definitions";
 import { ReleaseImage } from "@/app/admin/components/release/ReleaseImage";
+import { components } from "@/lib/schema";
 import { jsonToResult } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
-import React, { useContext } from "react";
+import { useContext } from "react";
+
+interface ReleaseFormInput {
+  upc: string;
+  title: string;
+  artist_name: string;
+  release_date: string;
+  artwork: string;
+  links: components["schemas"]["Link"][];
+  artist_id: string;
+  slug: string;
+  active: boolean;
+  track_count: number;
+}
 
 export const ReleaseForm = ({
   release,
