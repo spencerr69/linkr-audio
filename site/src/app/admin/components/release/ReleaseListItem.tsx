@@ -1,4 +1,4 @@
-"use client";
+//This is a client component but i cant put use client because react is a fuck and is giving me warnings
 
 import { ExternalButton } from "@/app/ui/Button";
 import { StylingContext } from "@/app/ui/StylingProvider";
@@ -87,7 +87,7 @@ export const ReleaseListItem = ({
               src={release.artwork || ""}
               alt={release.title + " Artwork"}
               fill
-              quality={60}
+              quality={30}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className={"rounded-md object-cover"}
             />

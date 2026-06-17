@@ -1,101 +1,38 @@
-"use client";
-
 import { getLinks } from "@/actions/getlinks";
 import {
   createRelease,
   deleteRelease,
   updateRelease,
 } from "@/actions/releases";
-import { DialogSettings } from "@/app/admin/components/release/Releases";
+import { DialogState } from "@/app/admin/components/release/Releases";
 import { Button } from "@/app/ui/Button";
 import { ConfirmDialog } from "@/app/ui/Dialogs/ConfirmDialog";
 import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
 import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { Link, Release } from "@/lib/definitions";
+import { ArtistResponse, Link, Release } from "@/lib/definitions";
 import { ReleaseImage } from "@/app/admin/components/release/ReleaseImage";
 import { jsonToResult } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import React, { useContext } from "react";
 
-export const emptyRelease: Release = {
-  artwork: "",
-  slug: "",
-  artist_id: "",
-  upc: "",
-  title: "",
-  release_date: "",
-  artist_name: "",
-  links: [],
-  track_count: 0,
-  active: true,
-};
 export const ReleaseForm = ({
   release,
-  dirtyStatus,
-  dirtyUpdateAction,
-  dialogSettings,
-  dialogSettingsUpdateAction,
-  releaseChangeAction,
 }: {
-  release: Release;
-  dirtyStatus: boolean;
-  dirtyUpdateAction: (newValue: boolean) => void;
-  dialogSettings: DialogSettings;
-  dialogSettingsUpdateAction: (newValue: DialogSettings) => void;
-  releaseChangeAction: (newRelease: Release) => void;
+  release: Release | undefined;
+  artist: ArtistResponse;
+  isDirty: boolean;
+  setDirty: (a: boolean) => void;
+  dialog: DialogState;
+  setDialog: (a: DialogState) => void;
 }) => {
-  const [editedRelease, setEditedRelease] = React.useState<Release>(release);
-
   const styling = useContext(StylingContext);
 
   const router = useRouter();
 
   const [status, setStatus] = useStatus();
-
-  React.useEffect(() => {
-    setEditedRelease(release || emptyRelease);
-  }, [release]);
-
-  const saveRelease = async () => {
-    const isUpdate = !!release?.slug;
-    const result = jsonToResult(
-      isUpdate
-        ? await updateRelease(editedRelease)
-        : await createRelease(editedRelease),
-    );
-    console.log(result);
-    if (result.isOk) {
-      posthog.capture(isUpdate ? "release_updated" : "release_created", {
-        release_title: editedRelease.title,
-        release_slug: editedRelease.slug,
-        artist_id: editedRelease.artist_id,
-        track_count: editedRelease.track_count,
-        link_count: editedRelease.links.length,
-      });
-      setStatus("Successfully saved release.");
-      dirtyUpdateAction(false);
-    } else {
-      setStatus(JSON.stringify(result));
-    }
-
-    router.refresh();
-    return;
-  };
-
-  const getReleaseUpdater = (field: keyof Release) => {
-    return (value: string | number | Link[] | boolean) => {
-      setEditedRelease((prev) => {
-        return {
-          ...prev,
-          [field]: value,
-        } as Release;
-      });
-      dirtyUpdateAction(true);
-    };
-  };
 
   return (
     <div
@@ -276,13 +213,6 @@ export const ReleaseForm = ({
             })
           }
           title={"You have unsaved changes"}
-          dialogSettings={dialogSettings}
-          dirtyUpdateAction={dirtyUpdateAction}
-          dialogSettingsUpdateAction={dialogSettingsUpdateAction}
-          editedReleaseUpdateAction={setEditedRelease}
-          editedRelease={editedRelease}
-          releaseChangeAction={releaseChangeAction}
-          saveReleaseAction={saveRelease}
         ></ConfirmDialog>
       )}
     </div>

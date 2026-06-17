@@ -190,3 +190,38 @@ export const getRecentReleases: () => Promise<Release[]> = cache(
     return await resp.json();
   },
 );
+
+/**
+ * Get releases for the current artist.
+ * @param {string} id
+ * @returns {Promise<JSONResult<Release[], string>>}
+ */
+export const getReleasesForArtist = async (
+  id: string,
+): Promise<JSONResult<Release[], string>> => {
+  "use server";
+
+  const sessionRequest = jsonToResult(await verifySession());
+
+  if (sessionRequest.isErr) {
+    return resultToJson(Err.of("Could not verify session."));
+  }
+
+  const session = sessionRequest.get();
+
+  const releasesReq = await serverFetch(
+    session.raw_token,
+    `/releases/${id}?showActive=false`,
+    {},
+  );
+
+  if (!releasesReq.ok) {
+    return resultToJson(
+      Err.of(`${releasesReq.status} ${releasesReq.statusText}`),
+    );
+  }
+
+  const releases: Release[] = await releasesReq.json();
+
+  return resultToJson(Ok.of(releases));
+};

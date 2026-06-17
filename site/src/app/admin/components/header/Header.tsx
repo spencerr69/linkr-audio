@@ -1,19 +1,18 @@
 "use client";
 
-import { HeaderDropdown } from "@/app/admin/components/HeaderDropdown";
-import { HeaderLink } from "@/app/admin/components/HeaderLink";
+import { HeaderDropdown } from "@/app/admin/components/header/HeaderDropdown";
+import { HeaderLink } from "@/app/admin/components/header/HeaderLink";
 import LinkrAudioLogo from "@/app/ui/LinkrAudioLogo";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { AdminPages } from "@/lib/definitions";
+import { AdminPages, ArtistResponse } from "@/lib/definitions";
 import Link from "next/link";
 import { useContext } from "react";
 import AlbumIcon from "@mui/icons-material/Album";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 type HeaderProps = {
-  artistName: string;
-  artistId: string;
   currentPage: AdminPages;
+  artist: ArtistResponse;
 };
 
 export const Header = (props: HeaderProps) => {
@@ -33,7 +32,7 @@ export const Header = (props: HeaderProps) => {
       }}
     >
       <div className={"flex items-center"}>
-        <Link href={"/"}>
+        <Link href={"/site/public"}>
           <LinkrAudioLogo
             style={{
               color: styling.colours.background,
@@ -43,10 +42,10 @@ export const Header = (props: HeaderProps) => {
           />
         </Link>
         <h1 className={"font-bold font-sans text-xl lg:text-4xl ml-2"}>
-          {props.artistName}
+          {props.artist.master_artist_name}
           {"  "}
           <span className={"font-light italic text-sm lg:text-2xl opacity-50"}>
-            {props.artistId}
+            {props.artist.artist_id}
           </span>
         </h1>
       </div>

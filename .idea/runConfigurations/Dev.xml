@@ -1,7 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Dev" type="CompoundRunConfigurationType">
     <toRun name="Start site" type="js.build_tools.npm" />
-    <toRun name="Start api" type="ShConfigurationType" />
     <method v="2" />
   </configuration>
 </component>

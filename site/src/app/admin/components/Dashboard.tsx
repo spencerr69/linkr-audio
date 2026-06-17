@@ -1,11 +1,11 @@
 import { getArtist } from "@/actions/artists";
+import { getReleasesForArtist } from "@/actions/releases";
 import { Artist } from "@/app/admin/components/artist/Artist";
 import StylingProvider from "@/app/ui/StylingProvider";
-import { Header } from "./Header";
+import { Header } from "./header/Header";
 import { Releases } from "@/app/admin/components/release/Releases";
-import { serverFetch } from "@/lib/apihelper";
 import { verifySession } from "@/lib/dal";
-import { AdminPages, Release } from "@/lib/definitions";
+import { AdminPages } from "@/lib/definitions";
 import { jsonToResult, stylingComp } from "@/lib/utils";
 
 export const Dashboard = async ({
@@ -27,17 +27,9 @@ export const Dashboard = async ({
 
   const styling = stylingComp(artist.styling || {});
 
-  const req_releases = await serverFetch(
-    session.raw_token,
-    `/releases/${session.jwt.artistId}?showActive=false`,
-    {},
-  );
-
-  if (!req_releases.ok) {
-    return <div>Error</div>;
-  }
-
-  let releases: Release[] = await req_releases.json();
+  let releases = jsonToResult(
+    await getReleasesForArtist(artist.artist_id),
+  ).get();
 
   releases = releases.sort((b, a) =>
     a.release_date.localeCompare(b.release_date),
@@ -52,14 +44,10 @@ export const Dashboard = async ({
       }}
     >
       <StylingProvider styling={styling}>
-        <Header
-          currentPage={currentPage}
-          artistName={artist.master_artist_name}
-          artistId={artist.artist_id}
-        />
+        <Header currentPage={currentPage} artist={artist} />
         <div className={"flex-1 min-h-0"}>
           {currentPage == AdminPages.Releases && (
-            <Releases releases={releases} artistId={artist.artist_id} />
+            <Releases releases={releases} artist={artist} />
           )}
           {currentPage == AdminPages.Artist && <Artist artist={artist} />}
         </div>

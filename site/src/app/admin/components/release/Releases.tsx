@@ -1,64 +1,53 @@
 "use client";
 
-import {
-  emptyRelease,
-  ReleaseForm,
-} from "@/app/admin/components/release/ReleaseForm";
+import { ReleaseForm } from "@/app/admin/components/release/ReleaseForm";
 import { ReleaseListItem } from "@/app/admin/components/release/ReleaseListItem";
 import { Button } from "@/app/ui/Button";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { Release } from "@/lib/definitions";
+import { ArtistResponse, Release } from "@/lib/definitions";
 import { useContext, useState } from "react";
 
 import AddIcon from "@mui/icons-material/Add";
 
-export type DialogSettings = {
-  open: boolean;
-  oldRelease: Release | null;
-  newRelease: Release | null;
-};
-
+export enum DialogState {
+  None,
+  Confirm,
+  Delete,
+}
 export const Releases = ({
   releases,
-  artistId,
+  artist,
 }: {
   releases: Release[];
-  artistId: string;
+  artist: ArtistResponse;
 }) => {
-  const [editingRelease, setEditingRelease] = useState<Release | null>();
-  const [dirtyStatus, setDirtyStatus] = useState(false);
-  const [dialogSettings, setDialogSettings] = useState<DialogSettings>({
-    open: false,
-    newRelease: null,
-    oldRelease: null,
-  });
+  // activeSlug === null: no release selected, form should not be visible
+  // activeSlug === "": new release in creation
+  // activeSlug === "xxyy": editing release
+  const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const [isDirty, setDirty] = useState(false);
+  const [dialog, setDialog] = useState(DialogState.None);
 
-  const styling = useContext(StylingContext);
+  const releaseMap = new Map(
+    releases.map((release) => [release.slug!, release]),
+  );
 
-  const createReleaseForm = (release?: Release) => {
-    const filledRelease = {
-      ...emptyRelease,
-      artist_id: artistId,
-    };
-    if (dirtyStatus) {
-      setDialogSettings({
-        open: true,
-        oldRelease: editingRelease || null,
-        newRelease: release || filledRelease,
-      });
-    }
-    if (!dirtyStatus) {
-      setEditingRelease(release || filledRelease);
+  const createReleaseForm = (slug: string | null) => {
+    if (!isDirty) {
+      setActiveSlug(slug);
+    } else {
+      setDialog(DialogState.Confirm);
     }
   };
 
-  const releasesList = releases.map((release, i) => {
+  const styling = useContext(StylingContext);
+
+  const releasesList = releases.map((release) => {
     return (
       <ReleaseListItem
-        onClick={createReleaseForm}
         release={release}
-        key={i}
-        active={editingRelease?.slug == release.slug}
+        onClick={() => createReleaseForm(release.slug!)}
+        key={release.slug}
       />
     );
   });
@@ -87,21 +76,22 @@ export const Releases = ({
         >
           {releasesList}
           <div className={"flex justify-center m-2"}>
-            <Button squish onClick={() => createReleaseForm()}>
+            <Button squish onClick={() => createReleaseForm("")}>
               <AddIcon />
             </Button>
           </div>
         </ul>
       </div>
       <div className={"w-full overflow-y-auto"}>
-        {editingRelease && (
+        {activeSlug !== null && (
           <ReleaseForm
-            release={editingRelease}
-            releaseChangeAction={setEditingRelease}
-            dirtyStatus={dirtyStatus}
-            dirtyUpdateAction={setDirtyStatus}
-            dialogSettings={dialogSettings}
-            dialogSettingsUpdateAction={setDialogSettings}
+            release={releaseMap.get(activeSlug)}
+            artist={artist}
+            createReleaseForm={createReleaseForm}
+            isDirty={isDirty}
+            setDirty={setDirty}
+            dialog={dialog}
+            setDialog={setDialog}
           />
         )}
       </div>

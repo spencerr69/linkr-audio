@@ -1,7 +1,7 @@
 "use client";
 
 import { logout } from "@/actions/auth";
-import { HeaderLink } from "@/app/admin/components/HeaderLink";
+import { HeaderLink } from "@/app/admin/components/header/HeaderLink";
 import { ChangePasswordDialog } from "@/app/ui/Dialogs/ChangePasswordDialog";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import {
