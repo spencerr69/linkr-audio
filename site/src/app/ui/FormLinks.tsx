@@ -109,6 +109,7 @@ export function FormLinks<FormType extends FieldValues>({
         {linkFields}
         <div className={"flex justify-center mt-4"}>
           <Button
+            className={"mb-4"}
             squish
             onClick={() => {
               // @ts-expect-error No way to say this is specifically a Link type

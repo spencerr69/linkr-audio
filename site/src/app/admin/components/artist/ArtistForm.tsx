@@ -1,94 +1,76 @@
-"use client";
-
 import { updateArtist } from "@/actions/artists";
 import { FormStyling } from "@/app/admin/components/artist/FormStyling";
 import { Button } from "@/app/ui/Button";
 import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
-import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
-import { ArtistResponse, EditArtist, Link, Styling } from "@/lib/definitions";
-import { jsonToResult, stylingComp } from "@/lib/utils";
+import { ArtistResponse } from "@/lib/definitions";
+import { components } from "@/lib/schema";
+import { jsonToResult } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import posthog from "posthog-js";
-import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+interface ArtistFormInput {
+  master_artist_name: string;
+  links: components["schemas"]["Link"][];
+  styling: components["schemas"]["Styling"];
+}
 
 const editArtistFromArtist = (artist: ArtistResponse) => {
   return {
     links: artist.links,
     master_artist_name: artist.master_artist_name,
-    styling: stylingComp(artist.styling || {}),
-  } as EditArtist;
+    styling: artist.styling || {},
+  } as ArtistFormInput;
 };
 
-export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {
-  const [editedArtist, setEditedArtist] = useState<EditArtist>(
-    editArtistFromArtist(artist),
-  );
-
+export const ArtistForm = ({
+  artist,
+  setStatus,
+}: {
+  artist: ArtistResponse;
+  setStatus: (s: string) => void;
+}) => {
   const router = useRouter();
 
-  const [status, setStatus] = useStatus();
+  const { register, control, handleSubmit, setValue, getValues } =
+    useForm<ArtistFormInput>({
+      defaultValues: editArtistFromArtist(artist),
+    });
 
-  useEffect(() => {
-    setEditedArtist(editArtistFromArtist(artist));
-  }, [artist]);
+  const onSubmit: SubmitHandler<ArtistFormInput> = async (data) => {
+    const result = jsonToResult(await updateArtist(data));
 
-  const getArtistUpdater = (field: keyof EditArtist) => {
-    return (value: string | Link[] | Styling) => {
-      setEditedArtist((prev) => {
-        return {
-          ...prev,
-          [field]: value,
-        } as EditArtist;
-      });
-    };
+    if (result.isErr) {
+      setStatus(result.error());
+    } else {
+      setStatus("Artist updated!");
+      router.refresh();
+    }
   };
 
   return (
     <div className={"flex justify-center max-h-full w-full  text-black "}>
       <form
         className={"p-4 h-full flex-col flex w-full  "}
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <FormField
-          name={"master-artist-name"}
-          label={"Master Artist Name"}
-          value={editedArtist.master_artist_name}
-          valueUpdater={getArtistUpdater("master_artist_name")}
+          title={"Master Artist Name"}
+          register={register}
+          label={"master_artist_name"}
         />
         <div className={"flex "}>
           <FormStyling
-            editedArtist={editedArtist}
-            artistUpdater={getArtistUpdater("styling")}
+            register={register}
+            setValue={setValue}
+            getValues={getValues}
+            topLabel={"styling"}
           />
         </div>
-        <FormLinks
-          valueUpdateAction={getArtistUpdater("links")}
-          links={editedArtist.links || []}
-        />
+        <FormLinks register={register} control={control} name={"links"} />
         <div className={"justify-center lg:justify-end w-full my-4 flex"}>
-          <Button
-            name={"save"}
-            onClick={async () => {
-              const result = jsonToResult(await updateArtist(editedArtist));
-              if (result.isOk) {
-                posthog.capture("artist_profile_updated", {
-                  artist_name: editedArtist.master_artist_name,
-                  links_count: editedArtist.links?.length || 0,
-                });
-                setStatus("Successfully saved artist.");
-              } else {
-                setStatus(result.error());
-              }
-
-              router.refresh();
-              return;
-            }}
-          >
-            Save
-          </Button>
+          <Button type={"submit"}>Save</Button>
         </div>
-        <StatusPopup status={status} />
       </form>
     </div>
   );

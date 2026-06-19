@@ -1,12 +1,10 @@
-"use client";
-
 import { changePassword, logout } from "@/actions/auth";
 import { Button } from "@/app/ui/Button";
 import { DialogPopup } from "@/app/ui/Dialogs/DialogPopup";
 import { FormField } from "@/app/ui/FormField";
 import { useStatus } from "@/app/ui/StatusPopup";
 import { jsonToResult } from "@/lib/utils";
-import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 export type ChangePasswordData = {
   currentPassword: string;
@@ -22,19 +20,19 @@ export const ChangePasswordDialog = ({
 }) => {
   const [status, setStatus] = useStatus();
 
-  const [changePasswordData, setChangePasswordData] =
-    useState<ChangePasswordData>({
-      currentPassword: "",
-      newPassword: "",
-    });
+  const { register, handleSubmit } = useForm<ChangePasswordData>();
 
-  const changePasswordDataUpdater =
-    (key: keyof ChangePasswordData) => (value: string) => {
-      setChangePasswordData((data) => ({
-        ...data,
-        [key]: value,
-      }));
-    };
+  const onSubmit: SubmitHandler<ChangePasswordData> = async (data) => {
+    const attempt = jsonToResult(await changePassword(data));
+
+    if (attempt.isErr) {
+      setStatus(attempt.error());
+      return;
+    }
+
+    setStatus(attempt.get() + " Logging out...");
+    setTimeout(() => logout(), 3000);
+  };
 
   return (
     <>
@@ -44,40 +42,20 @@ export const ChangePasswordDialog = ({
         title={"Change Password"}
         status={status}
       >
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <FormField
-            name={"currentPassword"}
-            label={"Current Password"}
+            title={"Current Password"}
             type={"password"}
-            value={changePasswordData.currentPassword}
-            valueUpdater={changePasswordDataUpdater("currentPassword")}
+            register={register}
+            label={"currentPassword"}
           />
           <FormField
-            name={"newPassword"}
-            label={"New Password"}
+            title={"New Password"}
             type={"password"}
-            value={changePasswordData.newPassword}
-            valueUpdater={changePasswordDataUpdater("newPassword")}
+            register={register}
+            label={"newPassword"}
           />
-          <Button
-            className={"w-xs mt-4"}
-            type={"submit"}
-            onClick={async (e) => {
-              e.preventDefault();
-
-              const attempt = jsonToResult(
-                await changePassword(changePasswordData),
-              );
-
-              if (attempt.isErr) {
-                setStatus(attempt.error());
-                return;
-              }
-
-              setStatus(attempt.get() + " Logging out...");
-              setTimeout(() => logout(), 3000);
-            }}
-          >
+          <Button className={"w-xs mt-4"} type={"submit"}>
             Change Password
           </Button>
         </form>

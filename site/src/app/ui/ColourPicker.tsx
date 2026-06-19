@@ -1,6 +1,7 @@
 "use client";
 
 import { ColorPicker, useColor } from "react-color-palette";
+// @ts-expect-error this is css
 import "react-color-palette/css";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 

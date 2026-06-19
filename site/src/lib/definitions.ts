@@ -77,7 +77,7 @@ export type ArtistResponse = components["schemas"]["Artist"];
 export type EditArtist = {
   master_artist_name: string;
   links: components["schemas"]["Link"][];
-  styling?: Styling;
+  styling: Styling;
 };
 export type Styling = components["schemas"]["Styling"];
 export type Colours = components["schemas"]["Colours"];

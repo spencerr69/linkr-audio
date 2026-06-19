@@ -91,19 +91,14 @@ export const ReleaseForm = ({
     setDirty(isDirty);
   }, [isDirty, setDirty]);
 
-  const onSubmit: SubmitHandler<ReleaseFormInput> = async (data, e) => {
-    e?.preventDefault();
-    console.log("hello?");
-
+  const onSubmit: SubmitHandler<ReleaseFormInput> = async (data) => {
     const result = jsonToResult(
       release ? await updateRelease(data) : await createRelease(data),
     );
-
     if (result.isErr) {
       setStatus(result.error());
     } else {
       router.refresh();
-      createReleaseForm(getValues("slug"), true);
       setStatus(`Release ${release ? "updated" : "created"}!`);
     }
   };
@@ -125,7 +120,10 @@ export const ReleaseForm = ({
           required
           register={register}
           button={
-            <>{/*  Get Links button would be here if that still worked*/}</>
+            <>
+              {/*  Get Links button would be here if that still worked! thank u spotify for needing premium for
+             your api now... */}
+            </>
           }
         />
         <FormField
@@ -142,7 +140,7 @@ export const ReleaseForm = ({
         />
         <div
           className={
-            "grid grid-cols-1 lg:grid-cols-[auto_max-content] gap-x-4 grid-flow-row"
+            "grid grid-cols-1 lg:grid-cols-[auto_max-content] gap-x-4 p-0 m-0 grid-flow-row"
           }
         >
           <FormField
@@ -246,6 +244,7 @@ export const ReleaseForm = ({
       </form>
       {dialog?.type === "confirm" && (
         <ConfirmDialog
+          title={"You have unsaved changes"}
           isOpen={dialog?.type === "confirm"}
           onCloseAction={() => setDialog(null)}
           onSave={async () => {
@@ -260,7 +259,6 @@ export const ReleaseForm = ({
             setDialog(null);
             createReleaseForm(dialog.nextSlug, true);
           }}
-          title={"You have unsaved changes"}
         ></ConfirmDialog>
       )}
     </div>

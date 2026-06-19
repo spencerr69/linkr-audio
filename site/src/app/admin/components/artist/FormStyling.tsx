@@ -1,53 +1,70 @@
 import { ColourPicker } from "@/app/ui/ColourPicker";
 import { FormField } from "@/app/ui/FormField";
-import { Colours, EditArtist, Link, Styling } from "@/lib/definitions";
+import {
+  FieldValues,
+  Path,
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 
-export function FormStyling(props: {
-  editedArtist: EditArtist;
-  // this edits the Styling object vv
-  artistUpdater: (value: string | Link[] | Styling) => void;
-}) {
-  const getColourUpdater = (field: keyof Colours) => (value: string) => {
-    const newColours: Colours = props.editedArtist.styling?.colours || {};
-    newColours[field] = value;
-    props.artistUpdater({ ...props.editedArtist.styling, colours: newColours });
+interface FormStylingProps<FormType extends FieldValues> {
+  topLabel: Path<FormType>;
+  register: UseFormRegister<FormType>;
+  getValues: UseFormGetValues<FormType>;
+  setValue: UseFormSetValue<FormType>;
+}
+export function FormStyling<FormType extends FieldValues>({
+  register,
+  topLabel,
+  getValues,
+  setValue,
+}: FormStylingProps<FormType>) {
+  const updater = (path: string) => {
+    return (value: string) => {
+      // @ts-expect-error Can't really type this shit
+      setValue(path, value);
+    };
   };
 
   return (
     <div className={"grid lg:grid-cols-3 gap-4 w-full"}>
       <FormField
-        name={"accent-colour"}
-        label={"Accent Colour"}
-        value={props.editedArtist.styling?.colours?.accent || ""}
-        valueUpdater={getColourUpdater("accent")}
+        title={"Accent Colour"}
+        register={register}
+        // @ts-expect-error can't really type it
+        label={`${topLabel}.colours.accent` as const}
         button={
           <ColourPicker
-            value={props.editedArtist.styling?.colours?.accent || ""}
-            valueUpdaterAction={getColourUpdater("accent")}
+            // @ts-expect-error can't really type it
+            value={getValues(`${topLabel}.colours.accent`) || ""}
+            valueUpdaterAction={updater(`${topLabel}.colours.accent`)}
           />
         }
       />
       <FormField
-        name={"background-colour"}
-        label={"Background Colour"}
-        value={props.editedArtist.styling?.colours?.background || ""}
-        valueUpdater={getColourUpdater("background")}
+        title={"Foreground Colour"}
+        register={register}
+        // @ts-expect-error can't really type it
+        label={`${topLabel}.colours.foreground` as const}
         button={
           <ColourPicker
-            value={props.editedArtist.styling?.colours?.background || ""}
-            valueUpdaterAction={getColourUpdater("background")}
+            // @ts-expect-error can't really type it
+            value={getValues(`${topLabel}.colours.foreground`) || ""}
+            valueUpdaterAction={updater(`${topLabel}.colours.foreground`)}
           />
         }
       />
       <FormField
-        name={"foreground-colour"}
-        label={"Foreground Colour"}
-        value={props.editedArtist.styling?.colours?.foreground || ""}
-        valueUpdater={getColourUpdater("foreground")}
+        title={"Background Colour"}
+        register={register}
+        // @ts-expect-error can't really type it
+        label={`${topLabel}.colours.background` as const}
         button={
           <ColourPicker
-            value={props.editedArtist.styling?.colours?.foreground || ""}
-            valueUpdaterAction={getColourUpdater("foreground")}
+            // @ts-expect-error can't really type it
+            value={getValues(`${topLabel}.colours.background`) || ""}
+            valueUpdaterAction={updater(`${topLabel}.colours.background`)}
           />
         }
       />

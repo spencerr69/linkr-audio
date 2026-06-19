@@ -6,7 +6,7 @@ import { DialogPopup } from "@/app/ui/Dialogs/DialogPopup";
 import { FormField } from "@/app/ui/FormField";
 import { useStatus } from "@/app/ui/StatusPopup";
 import { jsonToResult } from "@/lib/utils";
-import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 export type LoginData = {
   artist_id: string;
@@ -20,20 +20,19 @@ export function LoginDialog({
   isOpen: boolean;
   onCloseAction: (value: boolean) => void;
 }) {
-  const [loginData, setLoginData] = useState<LoginData>({
-    artist_id: "",
-    password: "",
-  });
+  const { register, handleSubmit } = useForm<LoginData>();
 
   const [status, setStatus] = useStatus();
 
-  const loginDataChanger = (field: keyof LoginData) => (value: string) => {
-    setLoginData((old) => {
-      return {
-        ...old,
-        [field]: value,
-      } as LoginData;
-    });
+  const onSubmit: SubmitHandler<LoginData> = async (data) => {
+    const attempt = jsonToResult(await login(data));
+
+    if (attempt.isErr) {
+      setStatus(attempt.error());
+      return;
+    }
+
+    setStatus("Logging in...");
   };
 
   return (
@@ -43,36 +42,19 @@ export function LoginDialog({
       title={"Log In"}
       status={status}
     >
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <FormField
-          name={"artist-id"}
-          label={"Artist ID"}
-          value={loginData.artist_id}
-          valueUpdater={loginDataChanger("artist_id")}
+          title={"Artist ID"}
+          register={register}
+          label={"artist_id"}
         />
         <FormField
-          name={"password"}
-          label={"Password"}
+          title={"Password"}
           type={"password"}
-          value={loginData.password}
-          valueUpdater={loginDataChanger("password")}
+          register={register}
+          label={"password"}
         />
-        <Button
-          className={"w-xs mt-4"}
-          type={"submit"}
-          onClick={async (e) => {
-            e.preventDefault();
-
-            const attempt = jsonToResult(await login(loginData));
-
-            if (attempt.isErr) {
-              setStatus(attempt.error());
-              return;
-            }
-
-            setStatus("Logging in...");
-          }}
-        >
+        <Button className={"w-xs mt-4"} type={"submit"}>
           Log In
         </Button>
       </form>

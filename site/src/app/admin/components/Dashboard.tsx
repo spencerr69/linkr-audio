@@ -1,12 +1,12 @@
 import { getArtist } from "@/actions/artists";
 import { getReleasesForArtist } from "@/actions/releases";
 import { Artist } from "@/app/admin/components/artist/Artist";
-import StylingProvider from "@/app/ui/StylingProvider";
-import { Header } from "./header/Header";
 import { Releases } from "@/app/admin/components/release/Releases";
+import StylingProvider from "@/app/ui/StylingProvider";
 import { verifySession } from "@/lib/dal";
 import { AdminPages } from "@/lib/definitions";
 import { jsonToResult, stylingComp } from "@/lib/utils";
+import { Header } from "./header/Header";
 
 export const Dashboard = async ({
   currentPage,
@@ -27,9 +27,10 @@ export const Dashboard = async ({
 
   const styling = stylingComp(artist.styling || {});
 
-  let releases = jsonToResult(
-    await getReleasesForArtist(artist.artist_id),
-  ).get();
+  let releases =
+    currentPage === AdminPages.Releases
+      ? jsonToResult(await getReleasesForArtist(artist.artist_id)).get()
+      : [];
 
   releases = releases.sort((b, a) =>
     a.release_date.localeCompare(b.release_date),
