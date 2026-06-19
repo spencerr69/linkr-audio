@@ -3,17 +3,20 @@
 import { ReleaseForm } from "@/app/admin/components/release/ReleaseForm";
 import { ReleaseListItem } from "@/app/admin/components/release/ReleaseListItem";
 import { Button } from "@/app/ui/Button";
+import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { ArtistResponse, Release } from "@/lib/definitions";
 import { useContext, useState } from "react";
+import * as crypto from "crypto";
 
 import AddIcon from "@mui/icons-material/Add";
 
-export enum DialogState {
-  None,
-  Confirm,
-  Delete,
-}
+export type DialogState =
+  | null
+  | { type: "confirm"; nextSlug: string }
+  | { type: "delete" };
+
+type ActiveSlug = null | { type: "new" } | { type: "edit"; slug: string };
 export const Releases = ({
   releases,
   artist,
@@ -21,22 +24,30 @@ export const Releases = ({
   releases: Release[];
   artist: ArtistResponse;
 }) => {
-  // activeSlug === null: no release selected, form should not be visible
-  // activeSlug === "": new release in creation
-  // activeSlug === "xxyy": editing release
-  const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const [activeSlug, setActiveSlug] = useState<ActiveSlug>(null);
   const [isDirty, setDirty] = useState(false);
-  const [dialog, setDialog] = useState(DialogState.None);
+  const [dialog, setDialog] = useState<DialogState>(null);
+
+  const [status, setStatus] = useStatus();
 
   const releaseMap = new Map(
-    releases.map((release) => [release.slug!, release]),
+    releases.map((release) => [
+      release.slug!,
+      {
+        hash: crypto
+          .createHash("md5")
+          .update(JSON.stringify(release))
+          .digest("hex"),
+        ...release,
+      },
+    ]),
   );
 
-  const createReleaseForm = (slug: string | null) => {
-    if (!isDirty) {
-      setActiveSlug(slug);
+  const createReleaseForm = (slug: string | null, force?: boolean) => {
+    if (!isDirty || force) {
+      setActiveSlug(slug ? { type: "edit", slug } : { type: "new" });
     } else {
-      setDialog(DialogState.Confirm);
+      setDialog({ type: "confirm", nextSlug: slug || "" });
     }
   };
 
@@ -85,8 +96,18 @@ export const Releases = ({
       <div className={"w-full overflow-y-auto"}>
         {activeSlug !== null && (
           <ReleaseForm
-            release={releaseMap.get(activeSlug)}
+            release={
+              activeSlug.type !== "new"
+                ? releaseMap.get(activeSlug.slug)
+                : undefined
+            }
+            key={
+              activeSlug.type !== "new"
+                ? releaseMap.get(activeSlug.slug)?.hash
+                : ""
+            }
             artist={artist}
+            setStatus={setStatus}
             createReleaseForm={createReleaseForm}
             isDirty={isDirty}
             setDirty={setDirty}
@@ -95,6 +116,7 @@ export const Releases = ({
           />
         )}
       </div>
+      <StatusPopup status={status} />
     </div>
   );
 };

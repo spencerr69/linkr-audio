@@ -1,23 +1,23 @@
-import { getLinks } from "@/actions/getlinks";
 import {
   createRelease,
   deleteRelease,
   updateRelease,
 } from "@/actions/releases";
+import { ReleaseImage } from "@/app/admin/components/release/ReleaseImage";
 import { DialogState } from "@/app/admin/components/release/Releases";
 import { Button } from "@/app/ui/Button";
 import { ConfirmDialog } from "@/app/ui/Dialogs/ConfirmDialog";
 import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
-import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { ArtistResponse, Release } from "@/lib/definitions";
-import { ReleaseImage } from "@/app/admin/components/release/ReleaseImage";
+import { ArtistResponse, Release, releaseFormSchema } from "@/lib/definitions";
 import { components } from "@/lib/schema";
 import { jsonToResult } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface ReleaseFormInput {
   upc: string;
@@ -32,8 +32,33 @@ interface ReleaseFormInput {
   track_count: number;
 }
 
+const slugify = (input: string) => {
+  return input
+    .split(" ")
+    .map((word) => word.toLowerCase().replace(/[()'"]/g, "")[0])
+    .join("");
+};
+
+const releaseToReleaseForm = (
+  { artwork, artist_id, slug, ...release }: Release,
+  artistId: string,
+): Partial<ReleaseFormInput> => {
+  return {
+    artwork: artwork || "",
+    artist_id: artist_id || artistId,
+    slug: slug || "",
+    ...release,
+  };
+};
+
 export const ReleaseForm = ({
   release,
+  artist,
+  dialog,
+  setDirty,
+  setDialog,
+  setStatus,
+  createReleaseForm,
 }: {
   release: Release | undefined;
   artist: ArtistResponse;
@@ -41,12 +66,47 @@ export const ReleaseForm = ({
   setDirty: (a: boolean) => void;
   dialog: DialogState;
   setDialog: (a: DialogState) => void;
+  setStatus: (a: string) => void;
+  createReleaseForm: (slug: string, b?: boolean) => void;
 }) => {
   const styling = useContext(StylingContext);
 
+  const {
+    control,
+    register,
+    handleSubmit,
+    getValues,
+    setValue,
+    formState: { errors, isDirty },
+    trigger,
+  } = useForm<ReleaseFormInput>({
+    defaultValues: release
+      ? releaseToReleaseForm(release, artist.artist_id)
+      : { artist_id: artist.artist_id },
+    resolver: zodResolver(releaseFormSchema),
+  });
   const router = useRouter();
 
-  const [status, setStatus] = useStatus();
+  useEffect(() => {
+    setDirty(isDirty);
+  }, [isDirty, setDirty]);
+
+  const onSubmit: SubmitHandler<ReleaseFormInput> = async (data, e) => {
+    e?.preventDefault();
+    console.log("hello?");
+
+    const result = jsonToResult(
+      release ? await updateRelease(data) : await createRelease(data),
+    );
+
+    if (result.isErr) {
+      setStatus(result.error());
+    } else {
+      router.refresh();
+      createReleaseForm(getValues("slug"), true);
+      setStatus(`Release ${release ? "updated" : "created"}!`);
+    }
+  };
 
   return (
     <div
@@ -57,48 +117,28 @@ export const ReleaseForm = ({
     >
       <form
         className={"p-4 h-full flex-col flex w-full  "}
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <FormField
-          name="upc"
-          label="UPC"
-          valueUpdater={getReleaseUpdater("upc")}
-          value={editedRelease.upc || ""}
+          title={"UPC"}
+          label="upc"
+          required
+          register={register}
           button={
-            <Button
-              inline
-              secondary
-              className="text-xs lg:text-base whitespace-nowrap"
-              onClick={async () => {
-                posthog.capture("get_links_clicked", {
-                  upc: editedRelease.upc,
-                });
-                const newRelease = jsonToResult(
-                  await getLinks(editedRelease.upc),
-                );
-                setEditedRelease((prev) => {
-                  return {
-                    ...prev,
-                    ...newRelease.get(),
-                  } as Release;
-                });
-              }}
-            >
-              Get Links...
-            </Button>
+            <>{/*  Get Links button would be here if that still worked*/}</>
           }
         />
         <FormField
-          name="release-title"
-          label="Release Title"
-          valueUpdater={getReleaseUpdater("title")}
-          value={editedRelease.title}
+          title={"Release Title"}
+          required
+          label="title"
+          register={register}
         />
         <FormField
-          name="artist-name"
-          label="Artist Name"
-          valueUpdater={getReleaseUpdater("artist_name")}
-          value={editedRelease.artist_name || ""}
+          title="Artist Name"
+          label={"artist_name"}
+          required
+          register={register}
         />
         <div
           className={
@@ -106,41 +146,33 @@ export const ReleaseForm = ({
           }
         >
           <FormField
-            name="release-date"
-            label="Release Date"
-            valueUpdater={getReleaseUpdater("release_date")}
-            value={editedRelease.release_date || ""}
+            title="Release Date"
+            register={register}
+            label={"release_date"}
+            button={<p>{errors.release_date?.message}</p>}
+          />
+
+          <FormField
+            title="Track Count"
+            type={"number"}
+            register={register}
+            label={"track_count"}
+            button={<p>{errors.track_count?.message}</p>}
           />
           <FormField
-            name="track-count"
-            label="Track Count"
-            valueUpdater={(value) => {
-              const num = parseInt(value);
-              getReleaseUpdater("track_count")(num);
-            }}
-            value={editedRelease.track_count.toString() || ""}
-          />
-          <FormField
-            name="slug"
-            label="Slug"
-            valueUpdater={getReleaseUpdater("slug")}
-            value={editedRelease.slug || ""}
-            inactive={!!release?.slug}
+            title="Slug"
+            register={register}
+            label={"slug"}
+            required
+            inactive={release !== undefined}
             button={
-              !release?.slug ? (
+              release === undefined ? (
                 <Button
                   inline
                   secondary
                   className="text-xs lg:text-base whitespace-nowrap"
                   onClick={() => {
-                    const slug = editedRelease.title
-                      .split(" ")
-                      .map(
-                        (word) => word.toLowerCase().replace(/[()'"]/g, "")[0],
-                      )
-                      .join("");
-
-                    getReleaseUpdater("slug")(slug);
+                    setValue("slug", slugify(getValues("title")));
                   }}
                 >
                   Generate...
@@ -151,19 +183,19 @@ export const ReleaseForm = ({
             }
           />
           <FormField
-            name="artist-id"
-            label="Artist ID"
+            title="Artist ID"
+            register={register}
+            label={"artist_id"}
             inactive
-            valueUpdater={getReleaseUpdater("artist_id")}
-            value={editedRelease.artist_id || ""}
           />
-          <FormLinks
-            valueUpdateAction={getReleaseUpdater("links")}
-            links={editedRelease.links || []}
-          />
+          <FormLinks name={"links"} register={register} control={control} />
           <ReleaseImage
-            editedRelease={editedRelease}
-            artworkUpdater={getReleaseUpdater("artwork")}
+            slug={getValues("slug")}
+            artist_id={getValues("artist_id")}
+            name={"artwork"}
+            title={"title"}
+            getValues={getValues}
+            setValue={setValue}
           />
         </div>
         <div className="saveContainer flex-col flex items-center lg:items-end my-12">
@@ -175,57 +207,59 @@ export const ReleaseForm = ({
               Active{" "}
               <input
                 type={"checkbox"}
-                checked={editedRelease.active}
+                {...register("active")}
                 className={"mr-4"}
-                onChange={(e) => getReleaseUpdater("active")(e.target.checked)}
               />
             </label>
-            <Button
-              secondary
-              name={"delete"}
-              className={"mr-4"}
-              onClick={async () => {
-                if (!editedRelease.slug) {
-                  setStatus("Can't delete a release which doesn't exist diva.");
-                  return;
-                }
-                const result = jsonToResult(
-                  await deleteRelease(editedRelease.slug),
-                );
+            {release !== undefined && (
+              <Button
+                secondary
+                name={"delete"}
+                className={"mr-4"}
+                onClick={async () => {
+                  const result = jsonToResult(
+                    await deleteRelease(release.slug!),
+                  );
 
-                if (result.isOk) {
-                  posthog.capture("release_deleted", {
-                    release_title: editedRelease.title,
-                    release_slug: editedRelease.slug,
-                    artist_id: editedRelease.artist_id,
-                  });
-                  setStatus("Successfully deleted release.");
-                  dirtyUpdateAction(false);
-                } else {
-                  setStatus(result.error());
-                }
-                router.refresh();
-              }}
-            >
-              Delete
-            </Button>
-            <Button name={"save"} onClick={saveRelease}>
+                  if (result.isOk) {
+                    posthog.capture("release_deleted", {
+                      release_title: release.title,
+                      release_slug: release.slug,
+                      artist_id: release.artist_id,
+                    });
+                    setStatus("Successfully deleted release.");
+                  } else {
+                    setStatus(result.error());
+                  }
+                  router.refresh();
+                }}
+              >
+                Delete
+              </Button>
+            )}
+            <Button type="submit" name={"save"}>
               Save
             </Button>
           </div>
-          {dirtyStatus && <p>You have unsaved changes!</p>}
-          <StatusPopup status={status} />
+          {isDirty && <p>You have unsaved changes!</p>}
         </div>
       </form>
-      {dialogSettings.open && (
+      {dialog?.type === "confirm" && (
         <ConfirmDialog
-          isOpen={dialogSettings.open}
-          onCloseAction={() =>
-            dialogSettingsUpdateAction({
-              ...dialogSettings,
-              open: false,
-            })
-          }
+          isOpen={dialog?.type === "confirm"}
+          onCloseAction={() => setDialog(null)}
+          onSave={async () => {
+            const isValid = await trigger();
+            if (isValid) {
+              await handleSubmit(onSubmit)();
+              setDialog(null);
+              createReleaseForm(dialog.nextSlug, true);
+            }
+          }}
+          onDiscard={() => {
+            setDialog(null);
+            createReleaseForm(dialog.nextSlug, true);
+          }}
           title={"You have unsaved changes"}
         ></ConfirmDialog>
       )}

@@ -32,12 +32,12 @@ export const releaseFormSchema = z.object({
   title: z.string().trim(),
   artist_name: z.string().trim(),
   release_date: z.iso.date(),
-  artwork: z.url().nullable(),
+  artwork: z.url(),
   links: z.array(
     z.object({ name: z.string().trim(), url: z.httpUrl().trim() }),
   ),
-  artist_id: z.string().nullable(),
-  slug: z.string().nullable(),
+  artist_id: z.string(),
+  slug: z.string(),
   track_count: z.number().min(1),
   active: z.boolean(),
 });

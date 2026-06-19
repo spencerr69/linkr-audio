@@ -1,54 +1,47 @@
-"use client";
-
 import { Button } from "@/app/ui/Button";
 import { FormField } from "@/app/ui/FormField";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { Link } from "@/lib/definitions";
 import { useContext } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import {
+  ArrayPath,
+  Control,
+  FieldValues,
+  useFieldArray,
+  UseFormRegister,
+} from "react-hook-form";
 
-export const FormLinks = ({
-  links,
-  valueUpdateAction,
-}: {
-  links: Link[];
-  valueUpdateAction: (value: Link[]) => void;
-}) => {
+export type FormLinksProps<FormType extends FieldValues> = {
+  control: Control<FormType>;
+  name: ArrayPath<FormType>;
+  register: UseFormRegister<FormType>;
+};
+export function FormLinks<FormType extends FieldValues>({
+  control,
+  name,
+  register,
+}: FormLinksProps<FormType>) {
   const styling = useContext(StylingContext);
 
-  const getLinkUpdater = (i: number, key: keyof Link) => (value: string) => {
-    const newLinks = [...links];
-    newLinks[i]![key] = value;
-    valueUpdateAction(newLinks);
-  };
+  const { fields, append, remove, swap } = useFieldArray({
+    control,
+    name,
+  });
 
-  const moveLink = (from: number, to: number) => {
-    const newLinks = [...links];
-    if (newLinks.length <= Math.max(from, to)) {
-      return;
-    }
-    const temp = newLinks[to];
-    // @ts-expect-error, we know this works cause we checked the length
-    newLinks[to] = newLinks[from];
-    // @ts-expect-error, we know this works cause we checked the length
-    newLinks[from] = temp;
-    valueUpdateAction(newLinks);
-  };
-
-  const linkFields = links.map((link, i) => {
+  const linkFields = fields.map((field, i) => {
     return (
       <div
-        key={i}
+        key={field.id}
         className={"flex flex-col m-2  p-2 rounded-lg"}
         style={{ backgroundColor: styling.colours.background }}
       >
         <FormField
-          name={"name" + i}
-          label={"Name"}
-          valueUpdater={getLinkUpdater(i, "name")}
-          value={link.name}
+          title={"Name"}
+          register={register}
+          // @ts-expect-error This is a Link type.
+          label={`${name}.${i}.name` as const}
           button={
             <>
               {i > 0 && (
@@ -57,19 +50,19 @@ export const FormLinks = ({
                   secondary
                   squish
                   onClick={() => {
-                    moveLink(i, i - 1);
+                    swap(i, i - 1);
                   }}
                 >
                   <KeyboardArrowUp />
                 </Button>
               )}
-              {i < links.length - 1 && (
+              {i < fields.length - 1 && (
                 <Button
                   inline
                   secondary
                   squish
                   onClick={() => {
-                    moveLink(i, i + 1);
+                    swap(i, i + 1);
                   }}
                 >
                   <KeyboardArrowDown />
@@ -80,9 +73,7 @@ export const FormLinks = ({
                 inline
                 secondary
                 squish
-                onClick={() =>
-                  valueUpdateAction(links.filter((_, j) => j !== i))
-                }
+                onClick={() => remove(i)}
               >
                 <RemoveIcon />
               </Button>
@@ -90,10 +81,10 @@ export const FormLinks = ({
           }
         />
         <FormField
-          name={"url" + i}
-          label={"URL"}
-          valueUpdater={getLinkUpdater(i, "url")}
-          value={link.url}
+          title={"URL"}
+          // @ts-expect-error This is a Link type
+          label={`${name}.${i}.url` as const}
+          register={register}
         />
       </div>
     );
@@ -120,7 +111,8 @@ export const FormLinks = ({
           <Button
             squish
             onClick={() => {
-              valueUpdateAction([...links, { name: "", url: "" }]);
+              // @ts-expect-error No way to say this is specifically a Link type
+              append({ name: "", url: "" });
             }}
           >
             <AddIcon />
@@ -129,4 +121,4 @@ export const FormLinks = ({
       </div>
     </div>
   );
-};
+}

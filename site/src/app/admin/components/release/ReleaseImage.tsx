@@ -1,19 +1,34 @@
-"use client";
-
 import { getImageUploadURL } from "@/actions/images";
 import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { Release } from "@/lib/definitions";
 import { Button } from "@/app/ui/Button";
 import Image from "next/image";
 import { useContext } from "react";
 import RemoveIcon from "@mui/icons-material/Remove";
+import {
+  FieldValues,
+  Path,
+  UseFormGetValues,
+  UseFormSetValue,
+} from "react-hook-form";
 
-export function ReleaseImage(props: {
-  editedRelease: Release;
-  // @ts-expect-error idk why it has issues here
-  artworkUpdater: (params: (typeof Release)[keyof typeof Release]) => void;
-}) {
+export type ReleaseImageProps<FormType extends FieldValues> = {
+  getValues: UseFormGetValues<FormType>;
+  setValue: UseFormSetValue<FormType>;
+  name: Path<FormType>;
+  title: Path<FormType>;
+  artist_id: string;
+  slug: string;
+};
+
+export function ReleaseImage<FormType extends FieldValues>({
+  getValues,
+  setValue,
+  name,
+  title,
+  artist_id,
+  slug,
+}: ReleaseImageProps<FormType>) {
   const styling = useContext(StylingContext);
 
   const [status, setStatus] = useStatus();
@@ -30,12 +45,12 @@ export function ReleaseImage(props: {
       >
         Artwork
       </label>
-      {props.editedRelease.artwork ? (
+      {getValues(name) ? (
         <>
           <Image
             id={"artwork"}
-            src={props.editedRelease.artwork}
-            alt={`Artwork of ${props.editedRelease.title}`}
+            src={getValues(name)}
+            alt={`Artwork of ${getValues(title)}`}
             width={200}
             height={200}
             quality={75}
@@ -47,7 +62,8 @@ export function ReleaseImage(props: {
             squish
             className={"absolute top-1 right-0 m-0 scale-75"}
             onClick={() => {
-              props.artworkUpdater(null);
+              // @ts-expect-error hmm
+              setValue(name, undefined);
             }}
           >
             <RemoveIcon />
@@ -107,7 +123,7 @@ export function ReleaseImage(props: {
                 return;
               }
 
-              const key = `${props.editedRelease.artist_id}-${props.editedRelease.slug}-${new Date().toISOString().replaceAll(/[-:.TZ]/g, "")}.${image.name.split(".")[1]}`;
+              const key = `${artist_id}-${slug}-${new Date().toISOString().replaceAll(/[-:.TZ]/g, "")}.${image.name.split(".")[1]}`;
 
               const url = await getImageUploadURL(key);
 
@@ -120,9 +136,8 @@ export function ReleaseImage(props: {
 
               setStatus("Upload successful!");
 
-              props.artworkUpdater(
-                `https://linkr.audio/images?image=${upload.key}`,
-              );
+              // @ts-expect-error hmm
+              setValue(name, `https://linkr.audio/images?image=${upload.key}`);
               return;
             }}
             name={"artwork"}
