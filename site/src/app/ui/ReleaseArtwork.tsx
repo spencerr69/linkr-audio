@@ -16,7 +16,7 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
   small,
 }) => {
   const ref = useRef<HTMLImageElement>(null);
-  const vinylRef = useRef<HTMLImageElement>(null);
+  const discRef = useRef<HTMLImageElement>(null);
 
   const styling = useContext(StylingContext);
 
@@ -32,7 +32,7 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
-        const intensity = 80;
+        const intensity = small ? 30 : 60;
 
         const rotateY = (centerY - y) / intensity;
         const rotateX = (x - centerX) / intensity;
@@ -41,17 +41,17 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
 
         ref.current.style.transform = `perspective(1000px) rotateX(${rotateY}deg) rotateY(${rotateX}deg) scale3d(0.995, 0.995, 0.995)`;
 
-        if (!vinylRef.current) return;
+        if (!discRef.current) return;
 
-        vinylRef.current.style.transform = `perspective(1000px) rotateX(${rotateY}deg) rotateY(${rotateX}deg) scale3d(0.995, 0.995, 0.995) translateX(100px)`;
+        discRef.current.style.transform = `perspective(1000px) rotateX(${rotateY}deg) rotateY(${rotateX}deg) scale3d(0.995, 0.995, 0.995) translateX(80px)`;
       }}
       onMouseLeave={() => {
         if (!ref.current) return;
         // Reset position when mouse leaves
         ref.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-        if (!vinylRef.current) return;
+        if (!discRef.current) return;
         // Reset position when mouse leaves
-        vinylRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) translateX(0)`;
+        discRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) `;
       }}
       className={`relative w-full ${small || "border-b-2 border-l-2"} flex items-center justify-center p-8 border-dashed `}
       style={{
@@ -67,29 +67,36 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
         width={500}
         loading={"eager"}
         className={
-          `aspect-square rounded-md w-full max-w-[${small ? "250px" : "500px"}] h-auto object-cover transition-all duration-200` +
+          `aspect-square rounded-md w-full max-w-[${small ? "250px" : "500px"}] h-auto object-cover transition-all duration-400` +
           "  ease-custom " +
           " hover:shadow-lg hover:drop-shadow-lg shadow-black/20 drop-shadow-black/20 z-10"
         }
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         draggable={false}
+        preload
       />
       {!small && (
-        <Image
-          suppressHydrationWarning={true}
-          src={"/vinyl.png"}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          ref={vinylRef}
-          alt={"vinyl"}
-          loading={"eager"}
-          height={small ? 250 : 500}
-          width={small ? 250 : 500}
-          className={
-            `aspect-square rounded-md  max-w-[${small ? "250px" : "500px"}] ${small ? "scale-75" : ""} h-auto absolute -z-10 duration-200 ease-custom` +
-            " drop-shadow-2xl transition-all"
-          }
-          draggable={false}
-        />
+        <div
+          className={"absolute -z-10 duration-200 transition-all ease-custom"}
+          ref={discRef}
+        >
+          <Image
+            suppressHydrationWarning={true}
+            src={"/disc.png"}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            // ref={discRef}
+            alt={"Disc"}
+            loading={"eager"}
+            // fill
+            height={500}
+            width={500}
+            className={
+              `aspect-square rounded-md  w-[500px] h-auto ` +
+              " drop-shadow-2xl animate-continuous-spin "
+            }
+            draggable={false}
+          />
+        </div>
       )}
     </div>
   );

@@ -66,3 +66,26 @@ body {
     width: 100px;
     height: 100px;
 }
+
+@keyframes continuous-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.animate-continuous-spin {
+    /*animation: continuous-spin 10s linear infinite;*/
+    animation-name: continuous-spin;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-composition: add;
+}
+
+/*.animate-continuous-spin:hover {*/
+/*    animation: move-right 2s ease-in-out;*/
+/*}*/

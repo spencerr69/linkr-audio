@@ -100,7 +100,7 @@ const Page = async ({
         }
       >
         <div
-          className="fixed  top-0 left-0 w-full h-full content-[''] z-10 pointer-events-none bg-[url('https://www.ui-layouts.com/noise.gif')]"
+          className="fixed  top-0 left-0 w-full h-full content-[''] z-10 pointer-events-none bg-[url('/noise.gif')]"
           style={{ opacity: "6%" }}
         ></div>
 
