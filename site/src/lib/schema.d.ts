@@ -4,6 +4,64 @@
  */
 
 export interface paths {
+    "/auth": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Authenticate and get JWT
+         * @description Authenticates the user using credentials provided in query parameters and returns a JWT token.
+         */
+        post: {
+            parameters: {
+                query: {
+                    id: string;
+                    pw: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Authentication successful */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            token: string;
+                        };
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/auth/login": {
         parameters: {
             query?: never;
@@ -80,7 +138,9 @@ export interface paths {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content?: never;
+                    content: {
+                        "application/json": string;
+                    };
                 };
                 /** @description Invalid request body */
                 400: {
@@ -91,6 +151,13 @@ export interface paths {
                 };
                 /** @description Unauthorized */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Internal Server Error */
+                500: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -185,6 +252,13 @@ export interface paths {
                     };
                     content?: never;
                 };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
             };
         };
         delete?: never;
@@ -193,7 +267,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/releases/recent": {
+    "/releases/{id}/recent": {
         parameters: {
             query?: never;
             header?: never;
@@ -207,7 +281,10 @@ export interface paths {
                     limit?: number;
                 };
                 header?: never;
-                path?: never;
+                path: {
+                    /** @description Artist ID */
+                    id: components["parameters"]["artistId"];
+                };
                 cookie?: never;
             };
             requestBody?: never;
@@ -317,6 +394,13 @@ export interface paths {
                 };
                 /** @description Unauthorized */
                 401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Internal Server Error */
+                500: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -586,12 +670,12 @@ export interface components {
             title: string;
             artist_name: string;
             release_date: string;
-            artwork?: string | null;
+            artwork: string;
             links: components["schemas"]["Link"][];
-            artist_id?: string | null;
-            slug?: string | null;
+            artist_id: string;
+            slug: string;
             active: boolean;
-            self_url?: string | null;
+            self_url?: string;
             track_count: number;
         };
         Link: {
@@ -600,11 +684,11 @@ export interface components {
         };
         LinkResponse: {
             upc: string;
-            title?: string | null;
-            artist_name?: string | null;
-            track_count?: number | null;
-            artwork?: string | null;
-            release_date?: string | null;
+            title: string;
+            artist_name: string;
+            track_count: number;
+            artwork: string;
+            release_date: string;
             links?: components["schemas"]["Link"][];
         };
     };

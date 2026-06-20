@@ -215,7 +215,7 @@ export const ReleaseForm = ({
                 className={"mr-4"}
                 onClick={async () => {
                   const result = jsonToResult(
-                    await deleteRelease(release.slug!),
+                    await deleteRelease(release.slug),
                   );
 
                   if (result.isOk) {

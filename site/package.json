@@ -10,7 +10,8 @@
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy -- --keep-vars",
     "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts"
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts",
+    "typegen": "pnpm dlx openapi-typescript ../api/openapi.json -o ./src/lib/schema.d.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -45,6 +46,7 @@
     "eslint": "^10.5.0",
     "eslint-config-next": "^16.2.9",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "openapi-typescript": "^7.13.0",
     "prettier": "^3.8.4",
     "tailwindcss": "^4",
     "typescript": "^6",

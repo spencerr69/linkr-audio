@@ -6,17 +6,6 @@ export const LoginFormSchema = z.object({
   password: z.string().trim(),
 });
 
-export type LoginFormState =
-  | {
-      error?: string;
-      success?: boolean;
-    }
-  | undefined;
-
-export type SessionPayload = {
-  artistId: string;
-};
-
 export enum AdminPages {
   Releases,
   Artist,
@@ -57,20 +46,6 @@ export const editArtistSchema = z.object({
 });
 
 export type Release = components["schemas"]["Release"];
-/*
- Release: {
- upc: string;
- title: string;
- artist_name: string;
- release_date: string;
- artwork?: string | null;
- links: components["schemas"]["Link"][];
- artist_id?: string | null;
- slug?: string | null;
- track_count: number;
- };
- */
-
 export type Link = components["schemas"]["Link"];
 export type LinkResponse = components["schemas"]["LinkResponse"];
 export type ArtistResponse = components["schemas"]["Artist"];

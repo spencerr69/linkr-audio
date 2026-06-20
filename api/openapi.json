@@ -1,5 +1,5 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.2.0",
   "info": {
     "title": "linkr audio API",
     "version": "1.0.0",
@@ -613,7 +613,10 @@
           "release_date",
           "links",
           "track_count",
-          "active"
+          "active",
+          "artwork",
+          "artist_id",
+          "slug"
         ],
         "properties": {
           "upc": {
@@ -629,8 +632,7 @@
             "type": "string"
           },
           "artwork": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "links": {
             "type": "array",
@@ -639,19 +641,16 @@
             }
           },
           "artist_id": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "slug": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "active": {
             "type": "boolean"
           },
           "self_url": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "track_count": {
             "type": "integer"
@@ -676,31 +675,31 @@
       "LinkResponse": {
         "type": "object",
         "required": [
-          "upc"
+          "upc",
+          "title",
+          "artist_name",
+          "track_count",
+          "artwork",
+          "release_date"
         ],
         "properties": {
           "upc": {
             "type": "string"
           },
           "title": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "artist_name": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "track_count": {
-            "type": "integer",
-            "nullable": true
+            "type": "integer"
           },
           "artwork": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "release_date": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "links": {
             "type": "array",
