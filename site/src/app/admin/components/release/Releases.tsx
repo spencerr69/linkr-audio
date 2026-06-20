@@ -56,6 +56,7 @@ export const Releases = ({
         release={release}
         onClick={() => createReleaseForm(release.slug!)}
         key={release.slug}
+        active={activeSlug?.type === "edit" && release.slug === activeSlug.slug}
       />
     );
   });
