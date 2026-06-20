@@ -1,3 +1,4 @@
+import { rootDomain } from "@/lib/utils";
 import type { ImageLoaderProps } from "next/image";
 
 const normalizeSrc = (src: string) => {
@@ -21,5 +22,5 @@ export default function cloudflareLoader({
     return `${src}?${params.join("&")}`;
   }
 
-  return `/cdn-cgi/image/${params.join(",")}/${normalizeSrc(src)}`;
+  return `${rootDomain}/cdn-cgi/image/${params.join(",")}/${normalizeSrc(src)}`;
 }

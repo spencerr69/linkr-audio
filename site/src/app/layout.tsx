@@ -16,7 +16,7 @@ const chivoMono = Chivo_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "linkr-audio",
+  title: "linkr.audio",
   description: "",
   icons: {
     icon: "/linkraudio.svg",
