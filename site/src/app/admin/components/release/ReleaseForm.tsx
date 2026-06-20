@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import { useContext, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 interface ReleaseFormInput {
   upc: string;
@@ -57,7 +58,6 @@ export const ReleaseForm = ({
   dialog,
   setDirty,
   setDialog,
-  setStatus,
   createReleaseForm,
 }: {
   release: Release | undefined;
@@ -66,7 +66,6 @@ export const ReleaseForm = ({
   setDirty: (a: boolean) => void;
   dialog: DialogState;
   setDialog: (a: DialogState) => void;
-  setStatus: (a: string) => void;
   createReleaseForm: (slug: string, b?: boolean) => void;
 }) => {
   const styling = useContext(StylingContext);
@@ -96,10 +95,10 @@ export const ReleaseForm = ({
       release ? await updateRelease(data) : await createRelease(data),
     );
     if (result.isErr) {
-      setStatus(result.error());
+      toast(result.error());
     } else {
       router.refresh();
-      setStatus(`Release ${release ? "updated" : "created"}!`);
+      toast(`Release ${release ? "updated" : "created"}!`);
     }
   };
 
@@ -225,9 +224,9 @@ export const ReleaseForm = ({
                       release_slug: release.slug,
                       artist_id: release.artist_id,
                     });
-                    setStatus("Successfully deleted release.");
+                    toast("Successfully deleted release.");
                   } else {
-                    setStatus(result.error());
+                    toast(result.error());
                   }
                   router.refresh();
                 }}

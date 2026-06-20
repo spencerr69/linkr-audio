@@ -31,7 +31,7 @@ export const HeaderDropdown = () => {
         </MenuButton>
         <MenuItems
           className={
-            " absolute top-22 right-5 shadow-lg shadow-black/50 rounded-md z-20"
+            " absolute top-22 right-5 shadow-lg shadow-black/50 rounded-md z-20 p-2"
           }
           style={{
             backgroundColor: styling.colours.background,
@@ -47,7 +47,7 @@ export const HeaderDropdown = () => {
               </MenuA>
             </MenuItem>
             <MenuSeparator
-              className={"border-b-2 border-accent"}
+              className={"border-b-2 "}
               style={{
                 borderColor: `${styling.colours.background}22`,
               }}

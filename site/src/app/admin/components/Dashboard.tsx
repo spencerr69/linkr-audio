@@ -6,6 +6,7 @@ import StylingProvider from "@/app/ui/StylingProvider";
 import { verifySession } from "@/lib/dal";
 import { AdminPages } from "@/lib/definitions";
 import { jsonToResult, stylingComp } from "@/lib/utils";
+import { Toaster } from "sonner";
 import { Header } from "./header/Header";
 
 export const Dashboard = async ({
@@ -44,6 +45,15 @@ export const Dashboard = async ({
         backgroundColor: styling.colours.background,
       }}
     >
+      <Toaster
+        toastOptions={{
+          style: {
+            backgroundColor: styling.colours.accent,
+            color: styling.colours.background,
+            border: "none",
+          },
+        }}
+      />
       <StylingProvider styling={styling}>
         <Header currentPage={currentPage} artist={artist} />
         <div className={"flex-1 min-h-0"}>

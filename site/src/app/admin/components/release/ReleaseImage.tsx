@@ -1,5 +1,4 @@
 import { getImageUploadURL } from "@/actions/images";
-import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { Button } from "@/app/ui/Button";
 import Image from "next/image";
@@ -11,6 +10,7 @@ import {
   UseFormGetValues,
   UseFormSetValue,
 } from "react-hook-form";
+import { toast } from "sonner";
 
 export type ReleaseImageProps<FormType extends FieldValues> = {
   getValues: UseFormGetValues<FormType>;
@@ -30,8 +30,6 @@ export function ReleaseImage<FormType extends FieldValues>({
   slug,
 }: ReleaseImageProps<FormType>) {
   const styling = useContext(StylingContext);
-
-  const [status, setStatus] = useStatus();
 
   return (
     <div
@@ -130,11 +128,11 @@ export function ReleaseImage<FormType extends FieldValues>({
               const upload = await uploadImage(url, image);
 
               if (!upload.success) {
-                setStatus(upload.error || "Failed to upload.");
+                toast(upload.error || "Failed to upload.");
                 return;
               }
 
-              setStatus("Upload successful!");
+              toast("Upload successful!");
 
               // @ts-expect-error hmm
               setValue(name, `https://linkr.audio/images?image=${upload.key}`);
@@ -146,7 +144,6 @@ export function ReleaseImage<FormType extends FieldValues>({
           />
         </div>
       )}
-      <StatusPopup status={status} />
     </div>
   );
 }

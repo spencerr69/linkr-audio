@@ -4,9 +4,9 @@ import { login } from "@/actions/auth";
 import { Button } from "@/app/ui/Button";
 import { DialogPopup } from "@/app/ui/Dialogs/DialogPopup";
 import { FormField } from "@/app/ui/FormField";
-import { useStatus } from "@/app/ui/StatusPopup";
 import { jsonToResult } from "@/lib/utils";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export type LoginData = {
   artist_id: string;
@@ -22,26 +22,19 @@ export function LoginDialog({
 }) {
   const { register, handleSubmit } = useForm<LoginData>();
 
-  const [status, setStatus] = useStatus();
-
   const onSubmit: SubmitHandler<LoginData> = async (data) => {
     const attempt = jsonToResult(await login(data));
 
     if (attempt.isErr) {
-      setStatus(attempt.error());
+      toast(attempt.error());
       return;
     }
 
-    setStatus("Logging in...");
+    toast("Logging in...");
   };
 
   return (
-    <DialogPopup
-      isOpen={isOpen}
-      onCloseAction={onCloseAction}
-      title={"Log In"}
-      status={status}
-    >
+    <DialogPopup isOpen={isOpen} onCloseAction={onCloseAction} title={"Log In"}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormField
           title={"Artist ID"}

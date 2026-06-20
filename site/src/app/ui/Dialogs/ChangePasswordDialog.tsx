@@ -2,9 +2,9 @@ import { changePassword, logout } from "@/actions/auth";
 import { Button } from "@/app/ui/Button";
 import { DialogPopup } from "@/app/ui/Dialogs/DialogPopup";
 import { FormField } from "@/app/ui/FormField";
-import { useStatus } from "@/app/ui/StatusPopup";
 import { jsonToResult } from "@/lib/utils";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 
 export type ChangePasswordData = {
   currentPassword: string;
@@ -18,19 +18,17 @@ export const ChangePasswordDialog = ({
   isOpen: boolean;
   onClose: (value: boolean) => void;
 }) => {
-  const [status, setStatus] = useStatus();
-
   const { register, handleSubmit } = useForm<ChangePasswordData>();
 
   const onSubmit: SubmitHandler<ChangePasswordData> = async (data) => {
     const attempt = jsonToResult(await changePassword(data));
 
     if (attempt.isErr) {
-      setStatus(attempt.error());
+      toast(attempt.error());
       return;
     }
 
-    setStatus(attempt.get() + " Logging out...");
+    toast(attempt.get() + " Logging out...");
     setTimeout(() => logout(), 3000);
   };
 
@@ -40,7 +38,6 @@ export const ChangePasswordDialog = ({
         isOpen={isOpen}
         onCloseAction={onClose}
         title={"Change Password"}
-        status={status}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormField

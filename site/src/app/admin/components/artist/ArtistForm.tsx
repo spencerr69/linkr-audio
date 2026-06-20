@@ -8,6 +8,7 @@ import { components } from "@/lib/schema";
 import { jsonToResult } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 interface ArtistFormInput {
   master_artist_name: string;
@@ -23,13 +24,7 @@ const editArtistFromArtist = (artist: ArtistResponse) => {
   } as ArtistFormInput;
 };
 
-export const ArtistForm = ({
-  artist,
-  setStatus,
-}: {
-  artist: ArtistResponse;
-  setStatus: (s: string) => void;
-}) => {
+export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {
   const router = useRouter();
 
   const { register, control, handleSubmit, setValue, getValues } =
@@ -41,9 +36,9 @@ export const ArtistForm = ({
     const result = jsonToResult(await updateArtist(data));
 
     if (result.isErr) {
-      setStatus(result.error());
+      toast(result.error());
     } else {
-      setStatus("Artist updated!");
+      toast("Artist updated!");
       router.refresh();
     }
   };

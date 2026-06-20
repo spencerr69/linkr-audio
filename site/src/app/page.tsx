@@ -10,6 +10,7 @@ import { jsonToResult, stylingComp } from "@/lib/utils";
 import { LoginButton } from "@/app/ui/LoginButton";
 import { Metadata } from "next";
 import Link from "next/link";
+import { Toaster } from "sonner";
 
 export const revalidate = 36000;
 export default async function Page() {
@@ -30,6 +31,15 @@ export default async function Page() {
 
   return (
     <StylingProvider styling={styling}>
+      <Toaster
+        toastOptions={{
+          style: {
+            backgroundColor: styling.colours.accent,
+            color: styling.colours.background,
+            border: "none",
+          },
+        }}
+      />
       <div className={"w-full"}>
         <header
           className={"fixed top-0 w-full flex  justify-center font-sans z-10"}

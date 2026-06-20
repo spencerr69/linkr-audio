@@ -3,7 +3,6 @@
 import { ReleaseForm } from "@/app/admin/components/release/ReleaseForm";
 import { ReleaseListItem } from "@/app/admin/components/release/ReleaseListItem";
 import { Button } from "@/app/ui/Button";
-import { StatusPopup, useStatus } from "@/app/ui/StatusPopup";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import { ArtistResponse, Release } from "@/lib/definitions";
 import { useContext, useState } from "react";
@@ -27,8 +26,6 @@ export const Releases = ({
   const [activeSlug, setActiveSlug] = useState<ActiveSlug>(null);
   const [isDirty, setDirty] = useState(false);
   const [dialog, setDialog] = useState<DialogState>(null);
-
-  const [status, setStatus] = useStatus();
 
   const releaseMap = new Map(
     releases.map((release) => [
@@ -107,7 +104,6 @@ export const Releases = ({
                 : ""
             }
             artist={artist}
-            setStatus={setStatus}
             createReleaseForm={createReleaseForm}
             isDirty={isDirty}
             setDirty={setDirty}
@@ -116,7 +112,6 @@ export const Releases = ({
           />
         )}
       </div>
-      <StatusPopup status={status} />
     </div>
   );
 };

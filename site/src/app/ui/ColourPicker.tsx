@@ -21,7 +21,7 @@ export const ColourPicker = ({
       <Popover>
         <PopoverButton
           style={{
-            backgroundColor: `${value}`,
+            backgroundColor: `${colour.hex}`,
           }}
           className={"w-4 h-4 rounded-full border border-black cursor-pointer"}
         ></PopoverButton>

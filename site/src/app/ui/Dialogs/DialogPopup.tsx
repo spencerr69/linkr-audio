@@ -1,6 +1,5 @@
 "use client";
 
-import { StatusPopup, StatusState } from "@/app/ui/StatusPopup";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import {
   Dialog,
@@ -15,14 +14,12 @@ type DialogPopupProps = {
   onCloseAction: (value: boolean) => void;
   title: string;
   children: React.ReactNode;
-  status?: StatusState;
 };
 export const DialogPopup = ({
   isOpen,
   onCloseAction,
   title,
   children,
-  status,
 }: DialogPopupProps) => {
   const styling = useContext(StylingContext);
 
@@ -54,7 +51,6 @@ export const DialogPopup = ({
           </DialogTitle>
           {children}
         </DialogPanel>
-        {status && <StatusPopup status={status} />}
       </div>
     </Dialog>
   );
