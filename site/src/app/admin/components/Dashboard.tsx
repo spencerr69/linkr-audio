@@ -3,8 +3,8 @@ import { getReleasesForArtist } from "@/actions/releases";
 import { Artist } from "@/app/admin/components/artist/Artist";
 import { Releases } from "@/app/admin/components/release/Releases";
 import StylingProvider from "@/app/ui/StylingProvider";
-import { verifySession } from "@/lib/dal";
 import { AdminPages } from "@/lib/definitions";
+import { getSession } from "@/lib/session";
 import { jsonToResult, stylingComp } from "@/lib/utils";
 import { Toaster } from "sonner";
 import { Header } from "./header/Header";
@@ -14,7 +14,7 @@ export const Dashboard = async ({
 }: {
   currentPage: AdminPages;
 }) => {
-  const sessionRequest = jsonToResult(await verifySession());
+  const sessionRequest = jsonToResult(await getSession());
 
   if (sessionRequest.isErr) {
     return <></>;

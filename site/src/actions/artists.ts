@@ -1,12 +1,12 @@
 "use server";
 
 import { serverFetch } from "@/lib/apihelper";
-import { verifySession } from "@/lib/dal";
 import {
   ArtistResponse,
   EditArtist,
   editArtistSchema,
 } from "@/lib/definitions";
+import { getSession } from "@/lib/session";
 import { apiDomain, JSONResult, jsonToResult, resultToJson } from "@/lib/utils";
 import { cache } from "react";
 import { Err, Ok } from "@scidsgn/std";
@@ -24,7 +24,7 @@ export const updateArtist = async (
 
   const validatedArtist = validated.data;
 
-  const sessionRequest = jsonToResult(await verifySession());
+  const sessionRequest = jsonToResult(await getSession());
 
   if (sessionRequest.isErr) {
     return resultToJson(sessionRequest);

@@ -3,9 +3,8 @@
 import { ChangePasswordData } from "@/app/ui/Dialogs/ChangePasswordDialog";
 import { LoginData } from "@/app/ui/Dialogs/LoginDialog";
 import { serverFetch } from "@/lib/apihelper";
-import { verifySession } from "@/lib/dal";
 import { LoginFormSchema } from "@/lib/definitions";
-import { authenticateUser, createSession } from "@/lib/session";
+import { authenticateUser, createSession, getSession } from "@/lib/session";
 import { apiDomain, JSONResult, jsonToResult, resultToJson } from "@/lib/utils";
 import { Err, Ok } from "@scidsgn/std";
 import { cookies } from "next/headers";
@@ -56,7 +55,7 @@ export async function logout(): Promise<void> {
 export async function changePassword(
   changePasswordData: ChangePasswordData,
 ): Promise<JSONResult<boolean, string>> {
-  const sessionRequest = jsonToResult(await verifySession());
+  const sessionRequest = jsonToResult(await getSession());
 
   if (sessionRequest.isErr) {
     await logout();

@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { verifySession } from "@/lib/dal";
+import { getSession } from "@/lib/session";
 import { rootDomain } from "@/lib/utils";
 import { type NextRequest, NextResponse } from "next/server";
 
@@ -56,7 +56,7 @@ export async function middleware(request: NextRequest) {
     );
   } else {
     if (pathname.startsWith("/admin/") && pathname !== "/admin/") {
-      const session = await verifySession();
+      const session = await getSession();
 
       return session.isOk
         ? NextResponse.next()

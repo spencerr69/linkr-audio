@@ -1,8 +1,8 @@
 "use server";
 
 import { serverFetch } from "@/lib/apihelper";
-import { verifySession } from "@/lib/dal";
 import { Release, releaseFormSchema } from "@/lib/definitions";
+import { getSession } from "@/lib/session";
 import { apiDomain, JSONResult, jsonToResult, resultToJson } from "@/lib/utils";
 import { Err, Ok, Result } from "@scidsgn/std";
 import { notFound } from "next/navigation";
@@ -42,7 +42,7 @@ export const updateRelease = async (
   }
   const validatedRelease = validated.get();
 
-  const sessionRequest = jsonToResult(await verifySession());
+  const sessionRequest = jsonToResult(await getSession());
 
   if (sessionRequest.isErr) {
     return resultToJson(Err.of("Not logged in."));
@@ -86,7 +86,7 @@ export async function createRelease(
   }
   const validatedRelease = validated.get();
 
-  const sessionRequest = jsonToResult(await verifySession());
+  const sessionRequest = jsonToResult(await getSession());
 
   if (sessionRequest.isErr) {
     return resultToJson(Err.of("Not logged in."));
@@ -123,7 +123,7 @@ export async function deleteRelease(
 ): Promise<JSONResult<boolean, string>> {
   "use server";
 
-  const sessionRequest = jsonToResult(await verifySession());
+  const sessionRequest = jsonToResult(await getSession());
 
   if (sessionRequest.isErr) {
     return resultToJson(sessionRequest);
@@ -201,7 +201,7 @@ export const getReleasesForArtist = async (
 ): Promise<JSONResult<Release[], string>> => {
   "use server";
 
-  const sessionRequest = jsonToResult(await verifySession());
+  const sessionRequest = jsonToResult(await getSession());
 
   if (sessionRequest.isErr) {
     return resultToJson(Err.of("Could not verify session."));

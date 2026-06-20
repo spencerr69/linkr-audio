@@ -1,8 +1,8 @@
 "use server";
 
 import { serverFetch } from "@/lib/apihelper";
-import { verifySession } from "@/lib/dal";
 import { LinkResponse } from "@/lib/definitions";
+import { getSession } from "@/lib/session";
 import { JSONResult, jsonToResult, resultToJson } from "@/lib/utils";
 import { Err, Ok } from "@scidsgn/std";
 
@@ -15,7 +15,7 @@ export async function getLinks(
   upc: string,
 ): Promise<JSONResult<LinkResponse, string>> {
   "use server";
-  const sessionRequest = jsonToResult(await verifySession());
+  const sessionRequest = jsonToResult(await getSession());
 
   if (sessionRequest.isErr) {
     return resultToJson(Err.of("Not logged in."));

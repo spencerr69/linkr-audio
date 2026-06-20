@@ -5,7 +5,7 @@ import { ExternalButton } from "@/app/ui/Button";
 import LinkrAudioLogo from "@/app/ui/LinkrAudioLogo";
 import { RecentRelease } from "@/app/ui/RecentRelease";
 import StylingProvider from "@/app/ui/StylingProvider";
-import { verifySession } from "@/lib/dal";
+import { getSession } from "@/lib/session";
 import { jsonToResult, stylingComp } from "@/lib/utils";
 import { LoginButton } from "@/app/ui/LoginButton";
 import { Metadata } from "next";
@@ -14,7 +14,7 @@ import { Toaster } from "sonner";
 
 export const revalidate = 36000;
 export default async function Page() {
-  const session = await verifySession();
+  const session = await getSession();
 
   const recentReleases = await getRecentReleases();
   const recentArtist = jsonToResult(

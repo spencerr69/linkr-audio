@@ -20,13 +20,13 @@ export async function generateMetadata({
   const release = await getRelease(id, slug);
 
   const iconImage = cloudflareLoader({
-    src: release.artwork || "",
+    src: release.artwork,
     width: 16,
     quality: 30,
   });
 
   const socialImage = `${rootDomain}${cloudflareLoader({
-    src: release.artwork || "",
+    src: release.artwork,
     width: 500,
     quality: 80,
   })}`;

@@ -1,12 +1,12 @@
 "use server";
 
 import { Dashboard } from "@/app/admin/components/Dashboard";
-import { verifySession } from "@/lib/dal";
 import { AdminPages } from "@/lib/definitions";
+import { getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 
 const AdminPage = async () => {
-  const session = await verifySession();
+  const session = await getSession();
 
   if (session.isErr) {
     redirect("/");
