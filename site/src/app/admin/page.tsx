@@ -1,5 +1,3 @@
-"use server";
-
 import { Dashboard } from "@/app/admin/components/Dashboard";
 import { AdminPages } from "@/lib/definitions";
 import { getSession } from "@/lib/session";
@@ -14,7 +12,7 @@ const AdminPage = async () => {
 
   return (
     <>
-      <main className={" h-screen  overflow-hidden font-sans flex flex-col"}>
+      <main className={"h-screen overflow-hidden font-sans flex flex-col"}>
         {session.isOk && <Dashboard currentPage={AdminPages.Releases} />}
       </main>
     </>

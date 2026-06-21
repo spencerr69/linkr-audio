@@ -38,7 +38,7 @@ export const createSession = async (session: string) => {
     httpOnly: true,
     secure: true,
     expires: expiresAt,
-    sameSite: "lax",
+    sameSite: "strict",
     path: "/",
   });
 

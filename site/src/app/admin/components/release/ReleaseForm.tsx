@@ -83,6 +83,7 @@ export const ReleaseForm = ({
       ? releaseToReleaseForm(release, artist.artist_id)
       : { artist_id: artist.artist_id },
     resolver: zodResolver(releaseFormSchema),
+    // mode: "all",
   });
   const router = useRouter();
 
@@ -161,9 +162,9 @@ export const ReleaseForm = ({
             register={register}
             label={"slug"}
             required
-            inactive={release !== undefined}
+            inactive={!release}
             button={
-              release === undefined ? (
+              release ? (
                 <Button
                   inline
                   secondary
