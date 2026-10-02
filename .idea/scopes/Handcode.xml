@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="Handcode" pattern="file[linkr-audio]:site/src//*&amp;&amp;!file:site/src/lib/schema.d.ts||file[linkr-audio]:api/src//*" />
-</component>
