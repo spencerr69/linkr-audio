@@ -6,6 +6,8 @@ import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  agentRules: false,
+  reactCompiler: true,
   images: {
     remotePatterns: [
       {
