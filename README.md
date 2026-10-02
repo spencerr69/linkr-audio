@@ -21,7 +21,8 @@ At the same time, run the following in another terminal
 
 ```aiignore
 cd site
-pnpm dev
+bun install
+bun dev
 # This will start the nextjs site in dev mode.
 ```
 
