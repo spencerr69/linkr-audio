@@ -26,14 +26,14 @@ function extractSubdomain(request: NextRequest): string | null {
   }
 
   // Production environment
-  const rootDomainFormatted = rootDomain.split(":")[0];
+  const rootHost = new URL(rootDomain).hostname;
   // Regular subdomain detection
   const isSubdomain =
-    hostname !== rootDomainFormatted &&
-    hostname !== `www.${rootDomainFormatted}` &&
-    hostname.endsWith(`.${rootDomainFormatted}`);
+    hostname !== rootHost &&
+    hostname !== `www.${rootHost}` &&
+    hostname.endsWith(`.${rootHost}`);
 
-  return isSubdomain ? hostname.replace(`.${rootDomainFormatted}`, "") : null;
+  return isSubdomain ? hostname.replace(`.${rootHost}`, "") : null;
 }
 
 export async function middleware(request: NextRequest) {
