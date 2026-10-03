@@ -142,18 +142,7 @@ export const ReleaseForm = ({
         className={"p-4 h-full flex-col flex w-full  "}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <FormField
-          title={"UPC"}
-          label="upc"
-          required
-          register={register}
-          button={
-            <>
-              {/*  Get Links button would be here if that still worked! thank u spotify for needing premium for
-               your api now... */}
-            </>
-          }
-        />
+        <FormField title={"UPC"} label="upc" required register={register} />
         <FormField
           title={"Release Title"}
           required

@@ -1,9 +1,7 @@
 mod artists;
 mod auth;
-mod links;
 mod releases;
 
-use crate::links::get_links_by_upc;
 use worker::{Context, Env, Request, Response, Router};
 
 use crate::artists::{get_artist, post_change_password, post_create_artist, post_edit_artist};
@@ -22,8 +20,6 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> worker::Result<Response
         //Auth
         .get_async("/auth/login", login)
         .post_async("/auth", auth)
-        //Get Links
-        .get_async("/links/:upc", get_links_by_upc)
         //Artist Management
         .get_async("/artists/:id", get_artist)
         .post_async("/artists", post_create_artist)

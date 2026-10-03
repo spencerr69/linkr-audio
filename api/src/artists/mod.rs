@@ -184,7 +184,7 @@ pub async fn post_change_password(
    
    let request = req.json::<EditPasswordRequest>().await?;
    
-   let pw_hash = salt_and_hash(&request.new_password, &id);
+   let pw_hash = salt_and_hash(&request.new_password, id);
    
    let statement = d1.prepare("UPDATE Artists SET (pw_hash) = (?1) WHERE artist_id = ?2");
    

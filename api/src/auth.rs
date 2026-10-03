@@ -1,4 +1,3 @@
-use crate::releases::QueryParams;
 use base64::Engine;
 use hmac::digest::InvalidLength;
 use hmac::{Hmac, Mac};
@@ -6,7 +5,6 @@ use jwt::{Header, SignWithKey, Token, VerifyWithKey};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::BTreeMap;
-use std::default;
 use worker::wasm_bindgen::JsValue;
 use worker::{D1Database, Headers, Request, Response, RouteContext, console_log};
 
@@ -21,10 +19,10 @@ pub async fn auth(req: Request, ctx: RouteContext<()>) -> worker::Result<Respons
 
     let params: AuthQueryParams = req.query()?;
 
-    let mut headers = req.headers().clone();
+    let headers = req.headers().clone();
     headers.append(
         "Authorization",
-        &*("Basic ".to_owned()
+        &("Basic ".to_owned()
             + &*base64::engine::general_purpose::STANDARD
                 .encode(format!("{}:{}", params.id, params.pw))),
     )?;

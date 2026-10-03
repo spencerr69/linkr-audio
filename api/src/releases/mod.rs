@@ -35,10 +35,7 @@ impl From<DbSchema> for ReleaseBody {
             artist_id: Some(db_schema.artist_id),
             artist_name: db_schema.artist_name,
             release_date: db_schema.release_date,
-            active: match db_schema.active {
-                1.0 => true,
-                _ => false,
-            },
+            active: matches!(db_schema.active, 1.0),
             self_url: None,
         }
     }
@@ -126,7 +123,7 @@ fn populate_self_url(ctx: RouteContext<()>) -> impl Fn(ReleaseBody) -> ReleaseBo
         let slug = release.slug.clone().unwrap_or("".into());
         let artist_id = release.artist_id.clone().unwrap_or("".into());
         
-        release.self_url = Some(format!("https://{}.{}/{}", artist_id, &public_url, slug));
+        release.self_url = Some(format!("https://{}.{}/{}", artist_id, public_url, slug));
         release
     }
 }

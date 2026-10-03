@@ -54,7 +54,6 @@ export const editArtistSchema = z.object({
 
 export type Release = components["schemas"]["Release"];
 export type Link = components["schemas"]["Link"];
-export type LinkResponse = components["schemas"]["LinkResponse"];
 export type ArtistResponse = components["schemas"]["Artist"];
 export type EditArtist = {
   master_artist_name: string;

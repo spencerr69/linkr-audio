@@ -438,44 +438,7 @@
         }
       }
     },
-    "/links/{upc}": {
-      "get": {
-        "summary": "Get streaming links by UPC",
-        "security": [
-          {
-            "basicAuth": []
-          },
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "upc",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Streaming links",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LinkResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
+
     "/artists/{id}/password": {
       "post": {
         "summary": "Change artist password",
@@ -669,43 +632,6 @@
           },
           "url": {
             "type": "string"
-          }
-        }
-      },
-      "LinkResponse": {
-        "type": "object",
-        "required": [
-          "upc",
-          "title",
-          "artist_name",
-          "track_count",
-          "artwork",
-          "release_date"
-        ],
-        "properties": {
-          "upc": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "artist_name": {
-            "type": "string"
-          },
-          "track_count": {
-            "type": "integer"
-          },
-          "artwork": {
-            "type": "string"
-          },
-          "release_date": {
-            "type": "string"
-          },
-          "links": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Link"
-            }
           }
         }
       }
