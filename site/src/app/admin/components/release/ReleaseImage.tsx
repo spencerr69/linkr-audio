@@ -19,7 +19,6 @@ export type ReleaseImageProps<FormType extends FieldValues> = {
   name: Path<FormType>;
   title: Path<FormType>;
   artist_id: string;
-  slug: string;
 };
 
 export function ReleaseImage<FormType extends FieldValues>({
@@ -28,7 +27,6 @@ export function ReleaseImage<FormType extends FieldValues>({
   name,
   title,
   artist_id,
-  slug,
 }: ReleaseImageProps<FormType>) {
   const styling = useContext(StylingContext);
 
@@ -114,9 +112,12 @@ export function ReleaseImage<FormType extends FieldValues>({
                 return;
               }
 
-              const key = `${artist_id}-${slug}-${new Date()
+              const key = `${artist_id}-${new Date()
                 .toISOString()
-                .replaceAll(/[-:.TZ]/g, "")}.${image.name.split(".")[1]}`;
+                .replaceAll(
+                  /[-:.TZ]/g,
+                  "",
+                )}.${(image.name.split(".")[1] ?? "").toLowerCase()}`;
 
               const upload = await uploadImage(key, image);
 

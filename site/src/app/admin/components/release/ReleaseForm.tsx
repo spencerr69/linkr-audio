@@ -38,12 +38,12 @@ type ReleaseFormInput = {
   track_count: number;
 };
 
-const slugify = (input: string) => {
-  return input
-    .split(" ")
-    .map((word) => word.toLowerCase().replace(/[()'"]/g, "")[0])
+const slugify = (input: string) =>
+  input
+    .toLowerCase()
+    .split(/\s+/)
+    .map((word) => word.replace(/[^a-z0-9]/g, "")[0] ?? "")
     .join("");
-};
 
 const releaseToReleaseForm = (
   { artwork, artist_id, slug, ...release }: Release,
@@ -64,6 +64,7 @@ export const ReleaseForm = ({
   setDirty,
   setDialog,
   createReleaseForm,
+  closeForm,
 }: {
   release: Release | undefined;
   artist: ArtistResponse;
@@ -72,6 +73,7 @@ export const ReleaseForm = ({
   dialog: DialogState;
   setDialog: (a: DialogState) => void;
   createReleaseForm: (slug: string, b?: boolean) => void;
+  closeForm: () => void;
 }) => {
   const styling = useContext(StylingContext);
 
@@ -106,6 +108,27 @@ export const ReleaseForm = ({
       router.refresh();
       toast(`Release ${release ? "updated" : "created"}!`);
     }
+  };
+
+  const onDelete = async () => {
+    if (!release) return;
+    const result = jsonToResult(await deleteRelease(release.slug));
+
+    if (result.isOk) {
+      posthog.capture("release_deleted", {
+        release_title: release.title,
+        release_slug: release.slug,
+        artist_id: release.artist_id,
+      });
+      toast("Successfully deleted release.");
+      setDialog(null);
+      closeForm();
+    } else {
+      toast(result.error());
+      setDialog(null);
+    }
+
+    router.refresh();
   };
 
   return (
@@ -167,19 +190,29 @@ export const ReleaseForm = ({
             register={register}
             label={"slug"}
             required
-            inactive={!release}
+            inactive={release !== undefined}
             button={
-              release ? (
-                <Button
-                  inline
-                  secondary
-                  className="text-xs lg:text-base whitespace-nowrap"
-                  onClick={() => {
-                    setValue("slug", slugify(getValues("title")));
-                  }}
-                >
-                  Generate...
-                </Button>
+              !release ? (
+                <div className={"flex items-center gap-2"}>
+                  {errors.slug && (
+                    <p className={"text-xs whitespace-nowrap"}>
+                      {errors.slug.message}
+                    </p>
+                  )}
+                  <Button
+                    inline
+                    secondary
+                    className="text-xs lg:text-base whitespace-nowrap"
+                    onClick={() => {
+                      setValue("slug", slugify(getValues("title")), {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                      });
+                    }}
+                  >
+                    Generate...
+                  </Button>
+                </div>
               ) : (
                 <></>
               )
@@ -193,7 +226,6 @@ export const ReleaseForm = ({
           />
           <FormLinks name={"links"} register={register} control={control} />
           <ReleaseImage
-            slug={getValues("slug")}
             artist_id={getValues("artist_id")}
             name={"artwork"}
             title={"title"}
@@ -219,22 +251,8 @@ export const ReleaseForm = ({
                 secondary
                 name={"delete"}
                 className={"mr-4"}
-                onClick={async () => {
-                  const result = jsonToResult(
-                    await deleteRelease(release.slug),
-                  );
-
-                  if (result.isOk) {
-                    posthog.capture("release_deleted", {
-                      release_title: release.title,
-                      release_slug: release.slug,
-                      artist_id: release.artist_id,
-                    });
-                    toast("Successfully deleted release.");
-                  } else {
-                    toast(result.error());
-                  }
-                  router.refresh();
+                onClick={() => {
+                  setDialog({ type: "delete" });
                 }}
               >
                 Delete
@@ -254,19 +272,60 @@ export const ReleaseForm = ({
           onCloseAction={() => {
             setDialog(null);
           }}
-          onSave={async () => {
-            const isValid = await trigger();
-            if (isValid) {
-              await handleSubmit(onSubmit)();
+          actions={
+            <>
+              <Button
+                onClick={async () => {
+                  const isValid = await trigger();
+                  if (isValid) {
+                    await handleSubmit(onSubmit)();
+                    setDialog(null);
+                    createReleaseForm(dialog.nextSlug, true);
+                  }
+                }}
+              >
+                Save
+              </Button>
+              <Button
+                onClick={() => {
+                  setDialog(null);
+                  createReleaseForm(dialog.nextSlug, true);
+                }}
+              >
+                Discard Changes
+              </Button>
+            </>
+          }
+        >
+          <p>
+            You have made changes to this release but have not saved. Save or
+            discard?
+          </p>
+        </ConfirmDialog>
+      )}
+      {dialog?.type === "delete" && (
+        <>
+          <ConfirmDialog
+            isOpen={true}
+            onCloseAction={() => {
               setDialog(null);
-              createReleaseForm(dialog.nextSlug, true);
+            }}
+            title={`Delete ${release?.title}`}
+            actions={
+              <>
+                <Button onClick={onDelete}>Delete</Button>
+              </>
             }
-          }}
-          onDiscard={() => {
-            setDialog(null);
-            createReleaseForm(dialog.nextSlug, true);
-          }}
-        ></ConfirmDialog>
+          >
+            <p>
+              Are you sure you want to delete {release?.title}? This cannot be
+              undone.
+            </p>
+            <p className={"text-sm break-all opacity-70"}>
+              {release?.self_url}
+            </p>
+          </ConfirmDialog>
+        </>
       )}
     </div>
   );

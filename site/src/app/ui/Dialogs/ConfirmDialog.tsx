@@ -1,30 +1,26 @@
 "use client";
 import { DialogPopup } from "@/app/ui/Dialogs/DialogPopup";
+import React from "react";
 import { Button } from "../Button";
+
+export type ConfirmDialogProps = {
+  isOpen: boolean;
+  onCloseAction: () => void;
+  title: string;
+  children: React.ReactNode;
+  actions: React.ReactNode;
+};
 
 export const ConfirmDialog = ({
   isOpen,
   onCloseAction,
   title,
   children,
-  onSave,
-  onDiscard,
-}: {
-  isOpen: boolean;
-  onCloseAction: () => void;
-  title: string;
-  onSave: () => void;
-  onDiscard: () => void;
-  children?: React.ReactNode;
-}) => {
+  actions,
+}: ConfirmDialogProps) => {
   return (
     <DialogPopup isOpen={isOpen} onCloseAction={onCloseAction} title={title}>
-      {children ?? (
-        <p>
-          You have made changes to this release without saving. Would you like
-          to save your changes?
-        </p>
-      )}
+      {children}
 
       <div className={"m-4 flex justify-evenly "}>
         <Button
@@ -35,20 +31,7 @@ export const ConfirmDialog = ({
         >
           Cancel
         </Button>
-        <Button
-          onClick={() => {
-            onDiscard();
-          }}
-        >
-          Discard changes
-        </Button>
-        <Button
-          onClick={() => {
-            onSave();
-          }}
-        >
-          Save changes
-        </Button>
+        {actions}
       </div>
     </DialogPopup>
   );

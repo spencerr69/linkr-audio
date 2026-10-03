@@ -48,6 +48,11 @@ export const Releases = ({
     }
   };
 
+  const closeForm = () => {
+    setActiveSlug(null);
+    setDirty(false);
+  };
+
   const styling = useContext(StylingContext);
 
   const releasesList = releases.map((release) => {
@@ -101,6 +106,7 @@ export const Releases = ({
       <div className={"w-full overflow-y-auto"}>
         {activeSlug !== null && (
           <ReleaseForm
+            closeForm={closeForm}
             release={
               activeSlug.type !== "new"
                 ? releaseMap.get(activeSlug.slug)

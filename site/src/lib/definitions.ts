@@ -1,15 +1,18 @@
-import { type components } from "@/lib/schema";
+import type { components } from "@/lib/schema";
 import * as z from "zod";
 
 export const LoginFormSchema = z.object({
   artistid: z.string().trim(),
-  password: z.string().trim()
+  password: z.string().trim(),
 });
 
 export const AdminPages = { Releases: "releases", Artist: "artist" } as const;
 export type AdminPage = (typeof AdminPages)[keyof typeof AdminPages];
 
 const hexRegex = /^#(?:[0-9a-fA-F]{3}){1,2}$/;
+
+const slugRegex = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
+const reservedSlugs = ["api", "site", "images", "admin", "_next", "cdn-cgi"];
 
 export const releaseFormSchema = z.object({
   upc: z
@@ -21,26 +24,32 @@ export const releaseFormSchema = z.object({
   release_date: z.iso.date(),
   artwork: z.url(),
   links: z.array(
-    z.object({ name: z.string().trim(), url: z.httpUrl().trim() })
+    z.object({ name: z.string().trim(), url: z.httpUrl().trim() }),
   ),
   artist_id: z.string(),
-  slug: z.string(),
+  slug: z
+    .string()
+    .trim()
+    .regex(slugRegex)
+    .refine((slug) => {
+      return !reservedSlugs.includes(slug);
+    }),
   track_count: z.number().min(1),
-  active: z.boolean()
+  active: z.boolean(),
 });
 
 export const editArtistSchema = z.object({
   master_artist_name: z.string().trim(),
   links: z.array(
-    z.object({ name: z.string().trim(), url: z.httpUrl().trim() })
+    z.object({ name: z.string().trim(), url: z.httpUrl().trim() }),
   ),
   styling: z.object({
     colours: z.object({
       background: z.string().regex(hexRegex).nullable(),
       accent: z.string().regex(hexRegex).nullable(),
-      foreground: z.string().regex(hexRegex).nullable()
-    })
-  })
+      foreground: z.string().regex(hexRegex).nullable(),
+    }),
+  }),
 });
 
 export type Release = components["schemas"]["Release"];
