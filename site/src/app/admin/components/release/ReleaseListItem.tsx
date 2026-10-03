@@ -1,8 +1,8 @@
-//This is a client component but i cant put use client because react is a fuck and is giving me warnings
+"use client";
 
 import { ExternalButton } from "@/app/ui/Button";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { Release } from "@/lib/definitions";
+import type { Release } from "@/lib/definitions";
 import { baseDomain } from "@/lib/utils";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -40,7 +40,9 @@ export const ReleaseListItem = ({
           ? styling.colours.foreground + "22"
           : "transparent";
       }}
-      onClick={() => onClick(release)}
+      onClick={() => {
+        onClick(release);
+      }}
     >
       <div
         className={
@@ -61,7 +63,7 @@ export const ReleaseListItem = ({
             </h4>
             <p className="text-xs lg:text-base">{release.release_date}</p>
             <p className="text-xs lg:text-base">
-              {release.links.length + " links"}
+              {release.links.length.toString() + " links"}
             </p>
           </div>
           <ExternalButton
@@ -72,7 +74,9 @@ export const ReleaseListItem = ({
             href={
               "//" + release.artist_id + "." + baseDomain + "/" + release.slug
             }
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
           >
             <VisibilityIcon />
           </ExternalButton>

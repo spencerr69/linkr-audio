@@ -1,15 +1,15 @@
 "use client";
 
-import { StylingGuaranteed } from "@/lib/definitions";
+import { type StylingGuaranteed } from "@/lib/definitions";
 import { stylingComp } from "@/lib/utils";
 import React, { createContext } from "react";
 
 export const StylingContext = createContext<StylingGuaranteed>(stylingComp({}));
 
 export default function StylingProvider({
-  styling,
-  children,
-}: {
+                                          styling,
+                                          children
+                                        }: {
   styling: StylingGuaranteed;
   children: React.ReactNode;
 }) {

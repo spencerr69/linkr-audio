@@ -25,19 +25,19 @@ const getClasses = (
   return inner_classes;
 };
 
-interface ButtonProps extends React.ComponentProps<"button"> {
+type ButtonProps = {
   inline?: boolean;
   secondary?: boolean;
   squish?: boolean;
   fill?: boolean;
-}
+} & React.ComponentProps<"button">
 
-interface ExternalButtonProps extends React.ComponentProps<typeof Link> {
+type ExternalButtonProps = {
   inline?: boolean;
   secondary?: boolean;
   squish?: boolean;
   fill?: boolean;
-}
+} & React.ComponentProps<typeof Link>
 
 export const Button = ({
   inline,

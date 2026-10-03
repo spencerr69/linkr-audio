@@ -21,7 +21,7 @@ export const ColourPicker = ({
       <Popover>
         <PopoverButton
           style={{
-            backgroundColor: `${colour.hex}`,
+            backgroundColor: colour.hex,
           }}
           className={"w-4 h-4 rounded-full border border-black cursor-pointer"}
         ></PopoverButton>
@@ -32,7 +32,7 @@ export const ColourPicker = ({
               hideAlpha
               color={colour}
               onChange={setColour}
-              onChangeComplete={(value) => valueUpdaterAction(value.hex)}
+              onChangeComplete={(value) => { valueUpdaterAction(value.hex); }}
             />
           </div>
         </PopoverPanel>

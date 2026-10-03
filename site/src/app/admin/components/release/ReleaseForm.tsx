@@ -1,26 +1,31 @@
+"use client";
 import {
   createRelease,
   deleteRelease,
   updateRelease,
 } from "@/actions/releases";
 import { ReleaseImage } from "@/app/admin/components/release/ReleaseImage";
-import { DialogState } from "@/app/admin/components/release/Releases";
+import type { DialogState } from "@/app/admin/components/release/Releases";
 import { Button } from "@/app/ui/Button";
 import { ConfirmDialog } from "@/app/ui/Dialogs/ConfirmDialog";
 import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { ArtistResponse, Release, releaseFormSchema } from "@/lib/definitions";
-import { components } from "@/lib/schema";
+import {
+  type ArtistResponse,
+  type Release,
+  releaseFormSchema,
+} from "@/lib/definitions";
+import type { components } from "@/lib/schema";
 import { jsonToResult } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import { useContext, useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-interface ReleaseFormInput {
+type ReleaseFormInput = {
   upc: string;
   title: string;
   artist_name: string;
@@ -31,7 +36,7 @@ interface ReleaseFormInput {
   slug: string;
   active: boolean;
   track_count: number;
-}
+};
 
 const slugify = (input: string) => {
   return input
@@ -122,7 +127,7 @@ export const ReleaseForm = ({
           button={
             <>
               {/*  Get Links button would be here if that still worked! thank u spotify for needing premium for
-             your api now... */}
+               your api now... */}
             </>
           }
         />
@@ -246,7 +251,9 @@ export const ReleaseForm = ({
         <ConfirmDialog
           title={"You have unsaved changes"}
           isOpen={dialog?.type === "confirm"}
-          onCloseAction={() => setDialog(null)}
+          onCloseAction={() => {
+            setDialog(null);
+          }}
           onSave={async () => {
             const isValid = await trigger();
             if (isValid) {

@@ -7,7 +7,7 @@ import { ReleaseInfo } from "@/app/[id]/[slug]/components/ReleaseInfo";
 import { ReleaseLinks } from "@/app/[id]/[slug]/components/ReleaseLinks";
 import { ScrollingBackground } from "@/app/[id]/[slug]/components/ScrollingBackground";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { ArtistResponse, Release } from "@/lib/definitions";
+import type { ArtistResponse, Release } from "@/lib/definitions";
 import Image from "next/image";
 import React, { useContext, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -17,18 +17,18 @@ export const ReleaseGrid = (props: {
   artist: ArtistResponse;
 }) => {
   const isNotMobileLayout = useMediaQuery({
-    query: "(min-width: 923px)",
+    query: "(min-width: 923px)"
   });
-
+  
   const [isClient, setIsClient] = React.useState(false);
-
+  
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsClient(true);
   }, []);
-
+  
   const styling = useContext(StylingContext);
-
+  
   return !isClient ? (
     <></>
   ) : !isNotMobileLayout ? (
@@ -50,7 +50,7 @@ export const ReleaseGrid = (props: {
           "mx-4 my-8 releasegridmob  max-w-2xl grid grid-cols-1 font-sans rounded-2xl shadow-xl z-20 "
         }
         style={{
-          backgroundColor: styling.colours.background,
+          backgroundColor: styling.colours.background
         }}
       >
         <ReleaseHeader
@@ -129,7 +129,7 @@ export const ReleaseGrid = (props: {
           "m-16 releasegrid  w-4xl grid grid-cols-2 font-sans rounded-2xl shadow-2xl drop-shadow-2xl z-20 "
         }
         style={{
-          backgroundColor: styling.colours.background,
+          backgroundColor: styling.colours.background
         }}
       >
         <ReleaseHeader
@@ -141,7 +141,7 @@ export const ReleaseGrid = (props: {
             " overflow-hidden border-l-2 border-b-2 border-dashed  select-none"
           }
           style={{
-            borderColor: `${styling.colours.foreground}22`,
+            borderColor: `${styling.colours.foreground}22`
           }}
         >
           <ScrollingBackground text={props.release.artist_id || ""} />
@@ -166,7 +166,7 @@ export const ReleaseGrid = (props: {
         <div
           className={"overflow-hidden border-l-2 border-dashed select-none"}
           style={{
-            borderColor: `${styling.colours.foreground}22`,
+            borderColor: `${styling.colours.foreground}22`
           }}
         >
           <ScrollingBackground text={props.release.slug || ""} />

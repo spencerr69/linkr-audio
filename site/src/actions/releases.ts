@@ -1,10 +1,15 @@
 "use server";
 
 import { serverFetch } from "@/lib/apihelper";
-import { Release, releaseFormSchema } from "@/lib/definitions";
+import { type Release, releaseFormSchema } from "@/lib/definitions";
 import { getSession } from "@/lib/session";
-import { apiDomain, JSONResult, jsonToResult, resultToJson } from "@/lib/utils";
-import { Err, Ok, Result } from "@scidsgn/std";
+import {
+  apiDomain,
+  type JSONResult,
+  jsonToResult,
+  resultToJson,
+} from "@/lib/utils";
+import { Err, Ok, type Result } from "@scidsgn/std";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
@@ -52,7 +57,7 @@ export const updateRelease = async (
 
   const resp = await serverFetch(
     session.raw_token,
-    `/releases/${session.jwt.artistId}/${release.slug}`,
+    `/releases/${session.artistId}/${release.slug}`,
     {
       method: "POST",
       headers: {
@@ -96,7 +101,7 @@ export async function createRelease(
 
   const resp = await serverFetch(
     session.raw_token,
-    `/releases/${session.jwt.artistId}`,
+    `/releases/${session.artistId}`,
     {
       method: "POST",
       headers: {
@@ -133,7 +138,7 @@ export async function deleteRelease(
 
   const req = await serverFetch(
     session.raw_token,
-    `/releases/${session.jwt.artistId}/${slug}`,
+    `/releases/${session.artistId}/${slug}`,
     {
       method: "DELETE",
     },

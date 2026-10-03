@@ -9,11 +9,11 @@ export function ApplyButton() {
 
   return (
     <>
-      <Button className={"m-2"} onClick={() => setOpen(!open)}>
+      <Button className={"m-2"} onClick={() => { setOpen(!open); }}>
         Apply
       </Button>
 
-      <ApplyDialog isOpen={open} onCloseAction={() => setOpen(!open)} />
+      <ApplyDialog isOpen={open} onCloseAction={() => { setOpen(!open); }} />
     </>
   );
 }

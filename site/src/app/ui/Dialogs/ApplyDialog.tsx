@@ -4,7 +4,7 @@ import { Button } from "@/app/ui/Button";
 import { DialogPopup } from "@/app/ui/Dialogs/DialogPopup";
 import { FormField } from "@/app/ui/FormField";
 import { applyEmail } from "@/lib/utils";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 
 export type ApplyData = {
   artistName: string;
@@ -15,22 +15,22 @@ export type ApplyData = {
 };
 
 export const ApplyDialog = ({
-  isOpen,
-  onCloseAction,
-}: {
+                              isOpen,
+                              onCloseAction
+                            }: {
   isOpen: boolean;
   onCloseAction: () => void;
 }) => {
   const { register, handleSubmit } = useForm<ApplyData>();
-
+  
   const onSubmit: SubmitHandler<ApplyData> = (data) => {
     if (window) {
       window.open(
-        `mailto:${applyEmail}?subject=linkr.audio%20Application%20from%20${data.artistName}&body=Artist%20Name%3A%20${data.artistName}%0AArtist%20ID%3A%20${data.artistId}%0AEmail%3A%20${data.email}%0AWebsite%3A%20${data.website}%0AMessage%3A%20${data.message}`,
+        `mailto:${applyEmail}?subject=linkr.audio%20Application%20from%20${data.artistName}&body=Artist%20Name%3A%20${data.artistName}%0AArtist%20ID%3A%20${data.artistId}%0AEmail%3A%20${data.email}%0AWebsite%3A%20${data.website}%0AMessage%3A%20${data.message}`
       );
     }
   };
-
+  
   return (
     <DialogPopup isOpen={isOpen} onCloseAction={onCloseAction} title={"Apply"}>
       <p>

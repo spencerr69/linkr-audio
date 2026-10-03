@@ -1,6 +1,7 @@
+"use client";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import React, { HTMLInputTypeAttribute, useContext } from "react";
-import { FieldValues, Path, UseFormRegister } from "react-hook-form";
+import React, { type HTMLInputTypeAttribute, useContext } from "react";
+import type { FieldValues, Path, UseFormRegister } from "react-hook-form";
 
 type FormFieldProps<FormType extends FieldValues> = {
   title: string;

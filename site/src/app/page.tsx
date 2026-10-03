@@ -8,7 +8,7 @@ import StylingProvider from "@/app/ui/StylingProvider";
 import { getSession } from "@/lib/session";
 import { jsonToResult, stylingComp } from "@/lib/utils";
 import { LoginButton } from "@/app/ui/LoginButton";
-import { Metadata } from "next";
+import { type Metadata } from "next";
 import Link from "next/link";
 import { Toaster } from "sonner";
 

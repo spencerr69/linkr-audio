@@ -4,7 +4,7 @@ import { StylingContext } from "@/app/ui/StylingProvider";
 import Image from "next/image";
 import React, { useContext, useRef } from "react";
 
-interface ReleaseArtworkProps {
+type ReleaseArtworkProps = {
   artwork: string | null | undefined;
   title: string;
   small: boolean;

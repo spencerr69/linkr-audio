@@ -1,9 +1,10 @@
+"use client";
 import { changePassword, logout } from "@/actions/auth";
 import { Button } from "@/app/ui/Button";
 import { DialogPopup } from "@/app/ui/Dialogs/DialogPopup";
 import { FormField } from "@/app/ui/FormField";
 import { jsonToResult } from "@/lib/utils";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export type ChangePasswordData = {

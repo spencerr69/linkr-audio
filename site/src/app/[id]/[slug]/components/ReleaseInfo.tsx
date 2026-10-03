@@ -3,7 +3,7 @@
 import { StylingContext } from "@/app/ui/StylingProvider";
 import React, { useContext } from "react";
 
-interface ReleaseInfoProps {
+type ReleaseInfoProps = {
   releaseDate: string | null | undefined;
   trackCount: number;
   upc: string | null | undefined;

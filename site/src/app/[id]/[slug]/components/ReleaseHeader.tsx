@@ -3,7 +3,7 @@
 import { StylingContext } from "@/app/ui/StylingProvider";
 import React, { useContext } from "react";
 
-interface ReleaseHeaderProps {
+type ReleaseHeaderProps = {
   title: string;
   artistName: string;
 }

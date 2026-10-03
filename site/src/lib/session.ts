@@ -1,17 +1,18 @@
 "use server";
 
 import "server-only";
-import { apiDomain, JSONResult, resultToJson } from "@/lib/utils";
+import { apiDomain, type JSONResult, resultToJson } from "@/lib/utils";
 import { Err, Ok } from "@scidsgn/std";
-import { decodeJwt, JWTPayload } from "jose";
+import { decodeJwt } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export type Session = {
-  jwt: JWTPayload;
+  artistId: string;
   raw_token: string;
 };
-export const decrypt = async (session: string | undefined = "") => {
+
+const decode = async (session: string | undefined = "") => {
   return decodeJwt(session);
 };
 
@@ -57,15 +58,20 @@ export const getSession = async (): Promise<JSONResult<Session, string>> => {
     return resultToJson(Err.of("No login cookie found."));
   }
 
-  const session = await decrypt(cookie);
+  const session = await decode(cookie).catch(() => {
+    return null;
+  });
 
   if (!session) {
-    return resultToJson(Err.of("Couldn't decrypt cookie."));
+    return resultToJson(Err.of("Couldn't get session"));
   }
+
+  if (!session.artistId || typeof session.artistId !== "string")
+    return resultToJson(Err.of("Invalid session"));
 
   return resultToJson(
     Ok.of({
-      jwt: session,
+      artistId: session.artistId,
       raw_token: cookie,
     }),
   );

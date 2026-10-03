@@ -4,20 +4,20 @@ import { HeaderDropdown } from "@/app/admin/components/header/HeaderDropdown";
 import { HeaderLink } from "@/app/admin/components/header/HeaderLink";
 import LinkrAudioLogo from "@/app/ui/LinkrAudioLogo";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { AdminPages, ArtistResponse } from "@/lib/definitions";
+import { type AdminPage, AdminPages, type ArtistResponse } from "@/lib/definitions";
 import Link from "next/link";
 import { useContext } from "react";
 import AlbumIcon from "@mui/icons-material/Album";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 type HeaderProps = {
-  currentPage: AdminPages;
+  currentPage: AdminPage;
   artist: ArtistResponse;
 };
 
 export const Header = (props: HeaderProps) => {
   const styling = useContext(StylingContext);
-
+  
   return (
     <header
       className={
@@ -28,7 +28,7 @@ export const Header = (props: HeaderProps) => {
       }
       style={{
         backgroundColor: styling.colours.accent,
-        color: styling.colours.background,
+        color: styling.colours.background
       }}
     >
       <div className={"flex items-center"}>
@@ -37,7 +37,7 @@ export const Header = (props: HeaderProps) => {
             style={{
               color: styling.colours.background,
               width: "100px",
-              height: "100px",
+              height: "100px"
             }}
           />
         </Link>
@@ -49,7 +49,7 @@ export const Header = (props: HeaderProps) => {
           </span>
         </h1>
       </div>
-
+      
       <div className={"flex items-center"} style={{}}>
         <HeaderLink
           href={"/admin"}

@@ -1,16 +1,17 @@
+"use client";
 import { Button } from "@/app/ui/Button";
 import { FormField } from "@/app/ui/FormField";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { useContext } from "react";
+import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import { useContext } from "react";
 import {
-  ArrayPath,
-  Control,
-  FieldValues,
+  type ArrayPath,
+  type Control,
+  type FieldValues,
   useFieldArray,
-  UseFormRegister,
+  type UseFormRegister,
 } from "react-hook-form";
 
 export type FormLinksProps<FormType extends FieldValues> = {
@@ -18,6 +19,7 @@ export type FormLinksProps<FormType extends FieldValues> = {
   name: ArrayPath<FormType>;
   register: UseFormRegister<FormType>;
 };
+
 export function FormLinks<FormType extends FieldValues>({
   control,
   name,
@@ -73,7 +75,9 @@ export function FormLinks<FormType extends FieldValues>({
                 inline
                 secondary
                 squish
-                onClick={() => remove(i)}
+                onClick={() => {
+                  remove(i);
+                }}
               >
                 <RemoveIcon />
               </Button>

@@ -3,7 +3,7 @@ import { getReleasesForArtist } from "@/actions/releases";
 import { Artist } from "@/app/admin/components/artist/Artist";
 import { Releases } from "@/app/admin/components/release/Releases";
 import StylingProvider from "@/app/ui/StylingProvider";
-import { AdminPages } from "@/lib/definitions";
+import { type AdminPage, AdminPages } from "@/lib/definitions";
 import { getSession } from "@/lib/session";
 import { jsonToResult, stylingComp } from "@/lib/utils";
 import { Toaster } from "sonner";
@@ -12,7 +12,7 @@ import { Header } from "./header/Header";
 export const Dashboard = async ({
   currentPage,
 }: {
-  currentPage: AdminPages;
+  currentPage: AdminPage;
 }) => {
   const sessionRequest = jsonToResult(await getSession());
 
@@ -22,11 +22,9 @@ export const Dashboard = async ({
 
   const session = sessionRequest.get();
 
-  const artist = jsonToResult(
-    await getArtist(`${session.jwt?.artistId}`),
-  ).get();
+  const artist = jsonToResult(await getArtist(session.artistId)).get();
 
-  const styling = stylingComp(artist.styling || {});
+  const styling = stylingComp(artist.styling ?? {});
 
   let releases =
     currentPage === AdminPages.Releases

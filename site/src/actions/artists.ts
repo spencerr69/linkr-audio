@@ -2,12 +2,17 @@
 
 import { serverFetch } from "@/lib/apihelper";
 import {
-  ArtistResponse,
-  EditArtist,
+  type ArtistResponse,
+  type EditArtist,
   editArtistSchema,
 } from "@/lib/definitions";
 import { getSession } from "@/lib/session";
-import { apiDomain, JSONResult, jsonToResult, resultToJson } from "@/lib/utils";
+import {
+  apiDomain,
+  type JSONResult,
+  jsonToResult,
+  resultToJson,
+} from "@/lib/utils";
 import { cache } from "react";
 import { Err, Ok } from "@scidsgn/std";
 
@@ -34,7 +39,7 @@ export const updateArtist = async (
 
   const response = await serverFetch(
     session.raw_token,
-    `/artists/${session.jwt.artistId}`,
+    `/artists/${session.artistId}`,
     {
       method: "POST",
       body: JSON.stringify(validatedArtist),

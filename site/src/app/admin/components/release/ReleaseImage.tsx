@@ -1,10 +1,11 @@
+"use client";
 import { getImageUploadURL } from "@/actions/images";
-import { StylingContext } from "@/app/ui/StylingProvider";
 import { Button } from "@/app/ui/Button";
+import { StylingContext } from "@/app/ui/StylingProvider";
+import RemoveIcon from "@mui/icons-material/Remove";
 import Image from "next/image";
 import { useContext } from "react";
-import RemoveIcon from "@mui/icons-material/Remove";
-import {
+import type {
   FieldValues,
   Path,
   UseFormGetValues,
@@ -74,7 +75,7 @@ export function ReleaseImage<FormType extends FieldValues>({
             " items-center content-center justify-self-center text-center"
           }
           style={{
-            backgroundColor: `${styling.colours.background}`,
+            backgroundColor: styling.colours.background,
           }}
         >
           <style>
@@ -113,7 +114,7 @@ export function ReleaseImage<FormType extends FieldValues>({
                 return;
               }
 
-              const image = e.currentTarget.files[0] as File;
+              const image = e.currentTarget.files[0]!;
 
               console.log(image);
 
@@ -121,7 +122,9 @@ export function ReleaseImage<FormType extends FieldValues>({
                 return;
               }
 
-              const key = `${artist_id}-${slug}-${new Date().toISOString().replaceAll(/[-:.TZ]/g, "")}.${image.name.split(".")[1]}`;
+              const key = `${artist_id}-${slug}-${new Date()
+                .toISOString()
+                .replaceAll(/[-:.TZ]/g, "")}.${image.name.split(".")[1]}`;
 
               const url = await getImageUploadURL(key);
 
@@ -147,6 +150,7 @@ export function ReleaseImage<FormType extends FieldValues>({
     </div>
   );
 }
+
 const uploadImage = async (uploadUrl: string, image: File) => {
   const data = new FormData();
 

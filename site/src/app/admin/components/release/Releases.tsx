@@ -4,11 +4,11 @@ import { ReleaseForm } from "@/app/admin/components/release/ReleaseForm";
 import { ReleaseListItem } from "@/app/admin/components/release/ReleaseListItem";
 import { Button } from "@/app/ui/Button";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { ArtistResponse, Release } from "@/lib/definitions";
-import { useContext, useState } from "react";
-import * as crypto from "crypto";
+import type { ArtistResponse, Release } from "@/lib/definitions";
 
 import AddIcon from "@mui/icons-material/Add";
+import * as crypto from "crypto";
+import { useContext, useState } from "react";
 
 export type DialogState =
   | null
@@ -17,29 +17,29 @@ export type DialogState =
 
 type ActiveSlug = null | { type: "new" } | { type: "edit"; slug: string };
 export const Releases = ({
-  releases,
-  artist,
-}: {
+                           releases,
+                           artist
+                         }: {
   releases: Release[];
   artist: ArtistResponse;
 }) => {
   const [activeSlug, setActiveSlug] = useState<ActiveSlug>(null);
   const [isDirty, setDirty] = useState(false);
   const [dialog, setDialog] = useState<DialogState>(null);
-
+  
   const releaseMap = new Map(
     releases.map((release) => [
-      release.slug!,
+      release.slug,
       {
         hash: crypto
           .createHash("md5")
           .update(JSON.stringify(release))
           .digest("hex"),
-        ...release,
-      },
-    ]),
+        ...release
+      }
+    ])
   );
-
+  
   const createReleaseForm = (slug: string | null, force?: boolean) => {
     if (!isDirty || force) {
       setActiveSlug(slug ? { type: "edit", slug } : { type: "new" });
@@ -47,25 +47,27 @@ export const Releases = ({
       setDialog({ type: "confirm", nextSlug: slug || "" });
     }
   };
-
+  
   const styling = useContext(StylingContext);
-
+  
   const releasesList = releases.map((release) => {
     return (
       <ReleaseListItem
         release={release}
-        onClick={() => createReleaseForm(release.slug!)}
+        onClick={() => {
+          createReleaseForm(release.slug);
+        }}
         key={release.slug}
         active={activeSlug?.type === "edit" && release.slug === activeSlug.slug}
       />
     );
   });
-
+  
   return (
     <div
       className={"flex flex-col lg:flex-row min-h-0 h-full overflow-hidden"}
       style={{
-        scrollbarColor: `${styling.colours.foreground}22, ${styling.colours.background}`,
+        scrollbarColor: `${styling.colours.foreground}22, ${styling.colours.background}`
       }}
     >
       <div
@@ -74,18 +76,20 @@ export const Releases = ({
         }
         style={{
           borderColor: `${styling.colours.foreground}22`,
-          scrollbarColor: `${styling.colours.foreground}22, ${styling.colours.background}`,
+          scrollbarColor: `${styling.colours.foreground}22, ${styling.colours.background}`
         }}
       >
         <ul
           className={"flex lg:flex-col"}
           style={{
-            scrollbarColor: `${styling.colours.foreground}22, ${styling.colours.background}`,
+            scrollbarColor: `${styling.colours.foreground}22, ${styling.colours.background}`
           }}
         >
           {releasesList}
           <div className={"flex justify-center m-2"}>
-            <Button squish onClick={() => createReleaseForm("")}>
+            <Button squish onClick={() => {
+              createReleaseForm("");
+            }}>
               <AddIcon />
             </Button>
           </div>

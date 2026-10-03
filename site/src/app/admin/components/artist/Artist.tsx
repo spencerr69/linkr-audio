@@ -1,7 +1,7 @@
 "use client";
 
 import { ArtistForm } from "@/app/admin/components/artist/ArtistForm";
-import { ArtistResponse } from "@/lib/definitions";
+import type { ArtistResponse } from "@/lib/definitions";
 
 export const Artist = ({ artist }: { artist: ArtistResponse }) => {
   return (

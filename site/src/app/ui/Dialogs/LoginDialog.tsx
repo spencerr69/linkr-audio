@@ -5,7 +5,7 @@ import { Button } from "@/app/ui/Button";
 import { DialogPopup } from "@/app/ui/Dialogs/DialogPopup";
 import { FormField } from "@/app/ui/FormField";
 import { jsonToResult } from "@/lib/utils";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export type LoginData = {
@@ -14,25 +14,25 @@ export type LoginData = {
 };
 
 export function LoginDialog({
-  isOpen,
-  onCloseAction,
-}: {
+                              isOpen,
+                              onCloseAction
+                            }: {
   isOpen: boolean;
   onCloseAction: (value: boolean) => void;
 }) {
   const { register, handleSubmit } = useForm<LoginData>();
-
+  
   const onSubmit: SubmitHandler<LoginData> = async (data) => {
     const attempt = jsonToResult(await login(data));
-
+    
     if (attempt.isErr) {
       toast(attempt.error());
       return;
     }
-
+    
     toast("Logging in...");
   };
-
+  
   return (
     <DialogPopup isOpen={isOpen} onCloseAction={onCloseAction} title={"Log In"}>
       <form onSubmit={handleSubmit(onSubmit)}>

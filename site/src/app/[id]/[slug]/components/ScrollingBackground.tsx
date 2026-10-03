@@ -1,38 +1,38 @@
 "use client";
 
 import { StylingContext } from "@/app/ui/StylingProvider";
-import React, { JSX, useContext, useEffect } from "react";
+import React, { type JSX, useContext, useEffect } from "react";
 
-interface ScrollingBackgroundProps {
+type ScrollingBackgroundProps = {
   text: string;
   rows?: number;
   speed?: number;
 }
 
 export const ScrollingBackground: React.FC<ScrollingBackgroundProps> = ({
-  text,
-  rows = 8,
-  speed = 1,
-}) => {
+                                                                          text,
+                                                                          rows = 8,
+                                                                          speed = 1
+                                                                        }) => {
   const initText = [];
   for (let i = 0; i < rows; i += 1) {
     initText.push(
       <p suppressHydrationWarning={true} key={i}>
         {text.repeat(100).slice(i)}
-      </p>,
+      </p>
     );
   }
-
+  
   const [textP, setTextP] = React.useState<JSX.Element[]>(initText);
-
+  
   const styling = useContext(StylingContext);
-
+  
   useEffect(() => {
     setTimeout(() => {
       setTextP((t) => shuffleArray(t));
     }, 300 * speed);
   }, [speed, textP]);
-
+  
   return (
     <div
       suppressHydrationWarning={true}
@@ -43,7 +43,7 @@ export const ScrollingBackground: React.FC<ScrollingBackgroundProps> = ({
         fontSize: "0.6rem",
         textOverflow: "clip",
         textWrap: "nowrap",
-        color: styling.colours.foreground,
+        color: styling.colours.foreground
       }}
     >
       {textP}

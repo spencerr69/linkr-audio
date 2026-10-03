@@ -1,11 +1,16 @@
 "use server";
 
-import { ChangePasswordData } from "@/app/ui/Dialogs/ChangePasswordDialog";
-import { LoginData } from "@/app/ui/Dialogs/LoginDialog";
+import type { ChangePasswordData } from "@/app/ui/Dialogs/ChangePasswordDialog";
+import type { LoginData } from "@/app/ui/Dialogs/LoginDialog";
 import { serverFetch } from "@/lib/apihelper";
 import { LoginFormSchema } from "@/lib/definitions";
 import { authenticateUser, createSession, getSession } from "@/lib/session";
-import { apiDomain, JSONResult, jsonToResult, resultToJson } from "@/lib/utils";
+import {
+  apiDomain,
+  type JSONResult,
+  jsonToResult,
+  resultToJson,
+} from "@/lib/utils";
 import { Err, Ok } from "@scidsgn/std";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -64,7 +69,7 @@ export async function changePassword(
 
   const session = sessionRequest.get();
 
-  const artistId = session.jwt?.artistId;
+  const artistId = session.artistId;
 
   const token = btoa(`${artistId}:${changePasswordData.currentPassword}`);
 

@@ -1,5 +1,5 @@
-import { Styling, StylingGuaranteed } from "@/lib/definitions";
-import { Err, Ok, Result } from "@scidsgn/std";
+import type { Styling, StylingGuaranteed } from "@/lib/definitions";
+import { Err, Ok, type Result } from "@scidsgn/std";
 
 export const rootDomain =
   process.env.NEXT_PUBLIC_ROOT_DOMAIN || "https://linkr.audio";
@@ -17,9 +17,9 @@ export const stylingComp = (styling: Styling): StylingGuaranteed => {
     colours: {
       accent: styling.colours?.accent || "#FF066A",
       foreground: styling.colours?.foreground || "#000000",
-      background: styling.colours?.background || "#F5F5F5",
-    },
-  } as StylingGuaranteed;
+      background: styling.colours?.background || "#F5F5F5"
+    }
+  };
 };
 
 export type JSONResult<T, E> = {
@@ -34,13 +34,13 @@ export function resultToJson<T, E>(result: Result<T, E>) {
     return {
       isOk: true,
       isErr: false,
-      value: result.get(),
+      value: result.get()
     } as JSONResult<T, E>;
   } else {
     return {
       isOk: false,
       isErr: true,
-      error: result.error(),
+      error: result.error()
     };
   }
 }

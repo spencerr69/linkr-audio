@@ -2,14 +2,14 @@
 
 import { ReleaseArtwork } from "@/app/ui/ReleaseArtwork";
 import { StylingContext } from "@/app/ui/StylingProvider";
-import { Release } from "@/lib/definitions";
+import { type Release } from "@/lib/definitions";
 import { baseDomain } from "@/lib/utils";
 import Link from "next/link";
 import { useContext } from "react";
 
 export function RecentRelease(props: { release: Release }) {
   const styling = useContext(StylingContext);
-
+  
   return (
     <div
       className={"w-full  pb-8 transition duration-300 ease-in-out rounded-lg "}

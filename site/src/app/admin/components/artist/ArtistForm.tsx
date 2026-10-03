@@ -1,27 +1,28 @@
+"use client";
 import { updateArtist } from "@/actions/artists";
 import { FormStyling } from "@/app/admin/components/artist/FormStyling";
 import { Button } from "@/app/ui/Button";
 import { FormField } from "@/app/ui/FormField";
 import { FormLinks } from "@/app/ui/FormLinks";
-import { ArtistResponse } from "@/lib/definitions";
-import { components } from "@/lib/schema";
+import type { ArtistResponse } from "@/lib/definitions";
+import type { components } from "@/lib/schema";
 import { jsonToResult } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-interface ArtistFormInput {
+type ArtistFormInput = {
   master_artist_name: string;
   links: components["schemas"]["Link"][];
   styling: components["schemas"]["Styling"];
-}
+};
 
 const editArtistFromArtist = (artist: ArtistResponse) => {
   return {
     links: artist.links,
     master_artist_name: artist.master_artist_name,
     styling: artist.styling || {},
-  } as ArtistFormInput;
+  };
 };
 
 export const ArtistForm = ({ artist }: { artist: ArtistResponse }) => {

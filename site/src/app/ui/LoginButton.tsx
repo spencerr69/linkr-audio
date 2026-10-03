@@ -9,11 +9,11 @@ export function LoginButton() {
 
   return (
     <>
-      <Button className={"m-2"} onClick={() => setOpen(!open)}>
+      <Button className={"m-2"} onClick={() => { setOpen(!open); }}>
         Log In
       </Button>
 
-      <LoginDialog isOpen={open} onCloseAction={() => setOpen(!open)} />
+      <LoginDialog isOpen={open} onCloseAction={() => { setOpen(!open); }} />
     </>
   );
 }
