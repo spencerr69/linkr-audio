@@ -93,8 +93,7 @@
     "NEXT_PUBLIC_API_ROOT_DOMAIN": "https://api.linkr.audio",
     "NEXT_PUBLIC_POSTHOG_KEY": "phc_lS7cr0A6XrPZpeE5YBWg4lw8M98VIuTaJIuPYOiAB5a",
     "NEXT_PUBLIC_POSTHOG_HOST": "https://b.linkr.audio",
-    "NEXT_PUBLIC_APPLY_EMAIL": "apply@linkr.audio",
-    "BUN_VERSION": "1.4.2"
+    "NEXT_PUBLIC_APPLY_EMAIL": "apply@linkr.audio"
   }
   /**
    * Note: Use secrets to store sensitive data.
