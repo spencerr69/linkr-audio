@@ -1,5 +1,4 @@
 "use client";
-import { getImageUploadURL } from "@/actions/images";
 import { Button } from "@/app/ui/Button";
 import { StylingContext } from "@/app/ui/StylingProvider";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -8,6 +7,7 @@ import { useContext } from "react";
 import type {
   FieldValues,
   Path,
+  PathValue,
   UseFormGetValues,
   UseFormSetValue,
 } from "react-hook-form";
@@ -33,10 +33,7 @@ export function ReleaseImage<FormType extends FieldValues>({
   const styling = useContext(StylingContext);
 
   return (
-    <div
-      // key={props.editedRelease.artwork || ""}
-      className="flex flex-col relative items-start mt-8 lg:mt-0"
-    >
+    <div className="flex flex-col relative items-start mt-8 lg:mt-0">
       <label
         htmlFor="artwork"
         className={" font-light text-sm p-0 m-0"}
@@ -61,8 +58,7 @@ export function ReleaseImage<FormType extends FieldValues>({
             squish
             className={"absolute top-1 right-0 m-0 scale-75"}
             onClick={() => {
-              // @ts-expect-error hmm
-              setValue(name, undefined);
+              setValue(name, undefined as PathValue<FormType, Path<FormType>>);
             }}
           >
             <RemoveIcon />
@@ -71,7 +67,7 @@ export function ReleaseImage<FormType extends FieldValues>({
       ) : (
         <div
           className={
-            "w-[200px] h-[200px] aspect-square rounded-md  p-2 border-dashed border-2 flex flex-col justify-center" +
+            "w-50 h-50 aspect-square rounded-md  p-2 border-dashed border-2 flex flex-col justify-center" +
             " items-center content-center justify-self-center text-center"
           }
           style={{
@@ -108,15 +104,11 @@ export function ReleaseImage<FormType extends FieldValues>({
               color: styling.colours.foreground,
             }}
             onChange={async (e) => {
-              console.log(e.currentTarget.files);
-
               if (e.currentTarget.files?.length != 1) {
                 return;
               }
 
-              const image = e.currentTarget.files[0]!;
-
-              console.log(image);
+              const image = e.currentTarget.files[0];
 
               if (!image) {
                 return;
@@ -126,19 +118,22 @@ export function ReleaseImage<FormType extends FieldValues>({
                 .toISOString()
                 .replaceAll(/[-:.TZ]/g, "")}.${image.name.split(".")[1]}`;
 
-              const url = await getImageUploadURL(key);
-
-              const upload = await uploadImage(url, image);
+              const upload = await uploadImage(key, image);
 
               if (!upload.success) {
-                toast(upload.error || "Failed to upload.");
+                toast(upload.error);
                 return;
               }
 
               toast("Upload successful!");
 
-              // @ts-expect-error hmm
-              setValue(name, `https://linkr.audio/images?image=${upload.key}`);
+              setValue(
+                name,
+                `https://linkr.audio/images?image=${upload.key}` as PathValue<
+                  FormType,
+                  Path<FormType>
+                >,
+              );
               return;
             }}
             name={"artwork"}
@@ -151,7 +146,14 @@ export function ReleaseImage<FormType extends FieldValues>({
   );
 }
 
-const uploadImage = async (uploadUrl: string, image: File) => {
+const uploadImage = async (
+  key: string,
+  image: File,
+): Promise<
+  { success: true; key: string } | { success: false; error: string }
+> => {
+  const uploadUrl = `https://linkr.audio/images/upload?key=${key}`;
+
   const data = new FormData();
 
   data.append("imageFile", image);
@@ -174,6 +176,6 @@ const uploadImage = async (uploadUrl: string, image: File) => {
 
   return {
     success: true,
-    key: body.split("?"),
+    key: key,
   };
 };

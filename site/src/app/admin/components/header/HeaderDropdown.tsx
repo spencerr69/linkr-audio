@@ -9,20 +9,20 @@ import {
   MenuItems,
   MenuSeparator,
   Menu,
-  MenuItem
+  MenuItem,
 } from "@headlessui/react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import {
   type AnchorHTMLAttributes,
   type DetailedHTMLProps,
   useContext,
-  useState
+  useState,
 } from "react";
 
 export const HeaderDropdown = () => {
   const styling = useContext(StylingContext);
   const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
-  
+
   return (
     <>
       <Menu>
@@ -35,7 +35,7 @@ export const HeaderDropdown = () => {
           }
           style={{
             backgroundColor: styling.colours.background,
-            color: styling.colours.foreground
+            color: styling.colours.foreground,
           }}
         >
           <div className={"w-full flex flex-col"}>
@@ -51,7 +51,7 @@ export const HeaderDropdown = () => {
             <MenuSeparator
               className={"border-b-2 "}
               style={{
-                borderColor: `${styling.colours.background}22`
+                borderColor: `${styling.colours.background}22`,
               }}
             />
             <MenuItem>
@@ -71,24 +71,24 @@ export const HeaderDropdown = () => {
 };
 
 const MenuA = ({
-                 className,
-                 onMouseEnter,
-                 onMouseLeave,
-                 style,
-                 ...rest
-               }: DetailedHTMLProps<
+  className,
+  onMouseEnter,
+  onMouseLeave,
+  style,
+  ...rest
+}: DetailedHTMLProps<
   AnchorHTMLAttributes<HTMLAnchorElement>,
   HTMLAnchorElement
 >) => {
   const styling = useContext(StylingContext);
-  
+
   return (
     <a
-      className={"w-full cursor-pointer p-2  " + className}
+      className={`w-full cursor-pointer p-2 ${className ?? ""}`}
       style={{
         ...style,
         backgroundColor: `transparent`,
-        color: styling.colours.foreground
+        color: styling.colours.foreground,
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.backgroundColor = `${styling.colours.accent}AA`;

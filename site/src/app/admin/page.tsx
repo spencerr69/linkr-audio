@@ -13,7 +13,7 @@ const AdminPage = async () => {
   return (
     <>
       <main className={"h-screen overflow-hidden font-sans flex flex-col"}>
-        {session.isOk && <Dashboard currentPage={AdminPages.Releases} />}
+        <Dashboard currentPage={AdminPages.Releases} />
       </main>
     </>
   );

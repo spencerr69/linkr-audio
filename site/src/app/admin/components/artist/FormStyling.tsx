@@ -5,7 +5,7 @@ import type {
   Path,
   UseFormGetValues,
   UseFormRegister,
-  UseFormSetValue
+  UseFormSetValue,
 } from "react-hook-form";
 
 type FormStylingProps<FormType extends FieldValues> = {
@@ -13,21 +13,21 @@ type FormStylingProps<FormType extends FieldValues> = {
   register: UseFormRegister<FormType>;
   getValues: UseFormGetValues<FormType>;
   setValue: UseFormSetValue<FormType>;
-}
+};
 
 export function FormStyling<FormType extends FieldValues>({
-                                                            register,
-                                                            topLabel,
-                                                            getValues,
-                                                            setValue
-                                                          }: FormStylingProps<FormType>) {
+  register,
+  topLabel,
+  getValues,
+  setValue,
+}: FormStylingProps<FormType>) {
   const updater = (path: string) => {
     return (value: string) => {
       // @ts-expect-error Can't really type this shit
       setValue(path, value);
     };
   };
-  
+
   return (
     <div className={"grid lg:grid-cols-3 gap-4 w-full"}>
       <FormField
@@ -38,7 +38,7 @@ export function FormStyling<FormType extends FieldValues>({
         button={
           <ColourPicker
             // @ts-expect-error can't really type it
-            value={getValues(`${topLabel}.colours.accent`) || ""}
+            value={getValues(`${topLabel}.colours.accent`)}
             valueUpdaterAction={updater(`${topLabel}.colours.accent`)}
           />
         }
@@ -51,7 +51,7 @@ export function FormStyling<FormType extends FieldValues>({
         button={
           <ColourPicker
             // @ts-expect-error can't really type it
-            value={getValues(`${topLabel}.colours.foreground`) || ""}
+            value={getValues(`${topLabel}.colours.foreground`)}
             valueUpdaterAction={updater(`${topLabel}.colours.foreground`)}
           />
         }
@@ -64,7 +64,7 @@ export function FormStyling<FormType extends FieldValues>({
         button={
           <ColourPicker
             // @ts-expect-error can't really type it
-            value={getValues(`${topLabel}.colours.background`) || ""}
+            value={getValues(`${topLabel}.colours.background`)}
             valueUpdaterAction={updater(`${topLabel}.colours.background`)}
           />
         }

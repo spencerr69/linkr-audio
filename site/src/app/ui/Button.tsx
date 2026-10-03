@@ -30,14 +30,14 @@ type ButtonProps = {
   secondary?: boolean;
   squish?: boolean;
   fill?: boolean;
-} & React.ComponentProps<"button">
+} & React.ComponentProps<"button">;
 
 type ExternalButtonProps = {
   inline?: boolean;
   secondary?: boolean;
   squish?: boolean;
   fill?: boolean;
-} & React.ComponentProps<typeof Link>
+} & React.ComponentProps<typeof Link>;
 
 export const Button = ({
   inline,
@@ -52,9 +52,7 @@ export const Button = ({
 
   return (
     <button
-      className={
-        getClasses(!!inline, !!secondary, !!squish, !!fill) + " " + className
-      }
+      className={`${getClasses(!!inline, !!secondary, !!squish, !!fill)} ${className ?? ""}`}
       type={"button"}
       style={{
         color: !secondary ? styling.colours.background : styling.colours.accent,
@@ -100,8 +98,7 @@ export const ExternalButton = ({
   style,
   ...rest
 }: ExternalButtonProps) => {
-  const classes =
-    getClasses(!!inline, !!secondary, !!squish, !!fill) + " " + className;
+  const classes = `${getClasses(!!inline, !!secondary, !!squish, !!fill)} ${className ?? ""}`;
 
   const styling = useContext(StylingContext);
 

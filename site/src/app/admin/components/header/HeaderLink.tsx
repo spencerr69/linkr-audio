@@ -16,13 +16,13 @@ export const HeaderLink = ({
   href,
   active = false,
   children,
-  onClick = () => {},
+  onClick,
 }: HeaderLinkProps) => {
   const styling = useContext(StylingContext);
 
   return (
     <Link
-      className={"mr-3 p-1  rounded-sm duration-100 " + className}
+      className={`mr-3 p-1 rounded-sm duration-100 ${className ?? ""}`}
       style={{
         backgroundColor: active
           ? styling.colours.background + "AA"

@@ -250,7 +250,7 @@ export const ReleaseForm = ({
       {dialog?.type === "confirm" && (
         <ConfirmDialog
           title={"You have unsaved changes"}
-          isOpen={dialog?.type === "confirm"}
+          isOpen={true}
           onCloseAction={() => {
             setDialog(null);
           }}

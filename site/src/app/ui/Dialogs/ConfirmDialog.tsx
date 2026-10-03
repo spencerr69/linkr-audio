@@ -19,7 +19,7 @@ export const ConfirmDialog = ({
 }) => {
   return (
     <DialogPopup isOpen={isOpen} onCloseAction={onCloseAction} title={title}>
-      {children || (
+      {children ?? (
         <p>
           You have made changes to this release without saving. Would you like
           to save your changes?

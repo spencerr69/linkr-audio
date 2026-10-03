@@ -24,6 +24,7 @@ const eslintConfig = defineConfig([
       ],
       "@typescript-eslint/consistent-type-definitions": ["error", "type"],
       "@typescript-eslint/no-misused-promises": "off",
+      "@typescript-eslint/require-await": "off",
     },
   },
   {

@@ -22,7 +22,6 @@
     },
     "types": ["./cloudflare-env.d.ts", "node"],
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

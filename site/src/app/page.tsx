@@ -18,10 +18,10 @@ export default async function Page() {
 
   const recentReleases = await getRecentReleases();
   const recentArtist = jsonToResult(
-    await getArtist(recentReleases[0]?.artist_id || ""),
+    await getArtist(recentReleases[0]?.artist_id ?? ""),
   );
 
-  const style = recentArtist.isErr ? {} : recentArtist.get().styling || {};
+  const style = recentArtist.isErr ? {} : (recentArtist.get().styling ?? {});
 
   const styling = stylingComp(style);
 

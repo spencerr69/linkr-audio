@@ -21,7 +21,7 @@ const editArtistFromArtist = (artist: ArtistResponse) => {
   return {
     links: artist.links,
     master_artist_name: artist.master_artist_name,
-    styling: artist.styling || {},
+    styling: artist.styling ?? {},
   };
 };
 

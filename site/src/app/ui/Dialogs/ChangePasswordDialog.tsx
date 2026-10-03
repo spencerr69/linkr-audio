@@ -29,7 +29,7 @@ export const ChangePasswordDialog = ({
       return;
     }
 
-    toast(attempt.get() + " Logging out...");
+    toast("Password changed. Logging out...");
     setTimeout(() => logout(), 3000);
   };
 

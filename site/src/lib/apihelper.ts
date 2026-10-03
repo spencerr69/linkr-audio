@@ -15,9 +15,12 @@ export const serverFetch = async (
 ) => {
   "use server";
 
+  const newHeaders = new Headers(fetchOptions.headers);
+  newHeaders.set("Authorization", `Bearer ${token}`);
+
   const newFetchOptions = {
     ...fetchOptions,
-    headers: { ...fetchOptions.headers, Authorization: `Bearer ${token}` },
+    headers: newHeaders,
   };
 
   const url = apiDomain + path;

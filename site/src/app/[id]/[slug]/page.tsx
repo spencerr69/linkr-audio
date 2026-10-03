@@ -11,34 +11,34 @@ import Link from "next/link";
 export const revalidate = 60;
 
 export async function generateMetadata({
-                                         params
-                                       }: {
+  params,
+}: {
   params: Promise<{ id: string; slug: string }>;
 }): Promise<Metadata> {
   const { id, slug } = await params;
-  
+
   const release = await getRelease(id, slug);
-  
+
   const iconImage = cloudflareLoader({
     src: release.artwork,
     width: 16,
-    quality: 30
+    quality: 30,
   });
-  
+
   const socialImage = cloudflareLoader({
     src: release.artwork,
     width: 500,
-    quality: 80
+    quality: 80,
   });
-  
+
   return {
     title: release.title,
     description: `Listen to ${release.title} by ${release.artist_name}.`,
     icons: {
-      icon: iconImage
+      icon: iconImage,
     },
     alternates: {
-      canonical: `https://${id}.${baseDomain}/${slug}`
+      canonical: `https://${id}.${baseDomain}/${slug}`,
     },
     openGraph: {
       title: `${release.title} | ${release.artist_name}`,
@@ -48,13 +48,13 @@ export async function generateMetadata({
           url: socialImage,
           width: 500,
           height: 500,
-          alt: `${release.title} by ${release.artist_name}`
-        }
+          alt: `${release.title} by ${release.artist_name}`,
+        },
       ],
       siteName: "linkr.audio",
       url: `https://${id}.${baseDomain}/${slug}`,
       locale: "en-US",
-      type: "website"
+      type: "website",
     },
     robots: {
       index: true,
@@ -66,8 +66,8 @@ export async function generateMetadata({
         noimageindex: false,
         "max-video-preview": -1,
         "max-image-preview": "large",
-        "max-snippet": -1
-      }
+        "max-snippet": -1,
+      },
     },
     twitter: {
       card: "summary_large_image",
@@ -75,24 +75,24 @@ export async function generateMetadata({
       description: `Listen to ${release.title} by ${release.artist_name}.`,
       images: [
         {
-          url: socialImage
-        }
-      ]
-    }
+          url: socialImage,
+        },
+      ],
+    },
   };
 }
 
 const Page = async ({
-                      params
-                    }: {
+  params,
+}: {
   params: Promise<{ id: string; slug: string }>;
 }) => {
   const { id, slug } = await params;
   const release = await getRelease(id, slug);
   const artist = jsonToResult(await getArtist(id));
-  
-  const styling = stylingComp(artist.get().styling || {});
-  
+
+  const styling = stylingComp(artist.get().styling ?? {});
+
   return (
     <StylingProvider styling={styling}>
       <main
@@ -104,7 +104,7 @@ const Page = async ({
           className="fixed  top-0 left-0 w-full h-full content-[''] z-10 pointer-events-none bg-[url('/noise.gif')]"
           style={{ opacity: "6%" }}
         ></div>
-        
+
         <ReleaseGrid release={release} artist={artist.get()} />
         <div
           className={

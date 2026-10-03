@@ -54,4 +54,4 @@ const nextConfig: NextConfig = {
 
 export default nextConfig;
 
-initOpenNextCloudflareForDev();
+void initOpenNextCloudflareForDev();

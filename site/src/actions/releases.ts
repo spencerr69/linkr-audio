@@ -145,7 +145,9 @@ export async function deleteRelease(
   );
 
   if (!req.ok) {
-    return resultToJson(Err.of(`Could not delete release. ${req.body}`));
+    return resultToJson(
+      Err.of(`Could not delete release. ${await req.text()}`),
+    );
   }
 
   return resultToJson(Ok.of(true));

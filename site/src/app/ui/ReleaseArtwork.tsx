@@ -8,7 +8,7 @@ type ReleaseArtworkProps = {
   artwork: string | null | undefined;
   title: string;
   small: boolean;
-}
+};
 
 export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
   artwork,
@@ -61,7 +61,7 @@ export const ReleaseArtwork: React.FC<ReleaseArtworkProps> = ({
       <Image
         ref={ref}
         suppressHydrationWarning={true}
-        src={artwork || ""}
+        src={artwork ?? ""}
         alt={`${title} artwork`}
         height={500}
         width={500}
