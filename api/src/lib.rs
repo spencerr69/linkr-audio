@@ -9,11 +9,14 @@ use utoipa::openapi::security::{HttpAuthScheme, HttpBuilder, SecurityScheme};
 use utoipa::{Modify, OpenApi, openapi};
 use utoipa_axum::router::OpenApiRouter;
 
+mod db;
 pub mod error;
 pub mod extract;
 pub mod state;
 
 const BODY_LIMIT: usize = 64 * 1024;
+
+pub type Result<T, E = ApiError> = std::result::Result<T, E>;
 
 #[derive(OpenApi)]
 #[openapi(info(title = "linkr.audio API", version = "1.0.0"), modifiers(&BearerAuth), version = "3.2.0")]
