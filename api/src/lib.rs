@@ -15,7 +15,9 @@ pub mod extract;
 pub mod state;
 
 pub mod artists;
+pub mod link;
 pub mod releases;
+pub mod validators;
 
 const BODY_LIMIT: usize = 64 * 1024;
 
