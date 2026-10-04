@@ -1,37 +1,76 @@
-mod artists;
-mod auth;
-mod releases;
+use crate::error::ApiError;
+use crate::state::AppState;
+use axum::extract::DefaultBodyLimit;
+use axum::response::IntoResponse;
+use axum::{Json, Router, http, routing::get};
+use std::sync::OnceLock;
+use tower_service::Service;
+use utoipa::openapi::security::{HttpAuthScheme, HttpBuilder, SecurityScheme};
+use utoipa::{Modify, OpenApi, openapi};
+use utoipa_axum::router::OpenApiRouter;
 
-use worker::{Context, Env, Request, Response, Router};
+pub mod error;
+pub mod extract;
+pub mod state;
 
-use crate::artists::{get_artist, post_change_password, post_create_artist, post_edit_artist};
-use crate::auth::{auth, login};
-use crate::releases::{
-    delete_release, get_recent_releases, get_release, get_releases_for_artist, post_edit_release,
-    post_new_release,
-};
-use worker_macros::event;
+const BODY_LIMIT: usize = 64 * 1024;
 
-#[event(fetch)]
-async fn fetch(req: Request, env: Env, _ctx: Context) -> worker::Result<Response> {
-    let router = Router::new();
+#[derive(OpenApi)]
+#[openapi(info(title = "linkr.audio API", version = "1.0.0"), modifiers(&BearerAuth), version = "3.2.0")]
+pub struct ApiDoc;
 
-    router
-        //Auth
-        .get_async("/auth/login", login)
-        .post_async("/auth", auth)
-        //Artist Management
-        .get_async("/artists/:id", get_artist)
-        .post_async("/artists", post_create_artist)
-        .post_async("/artists/:id", post_edit_artist)
-        .post_async("/artists/:id/password", post_change_password)
-        //Release Management
-        .get_async("/releases/:id/:slug", get_release)
-        .get_async("/releases/:id", get_releases_for_artist)
-        .get_async("/releases/recent", get_recent_releases)
-        .post_async("/releases/:id", post_new_release)
-        .post_async("/releases/:id/:slug", post_edit_release)
-        .delete_async("/releases/:id/:slug", delete_release)
-        .run(req, env)
-        .await
+pub struct BearerAuth;
+
+impl Modify for BearerAuth {
+    fn modify(&self, openapi: &mut openapi::OpenApi) {
+        openapi
+            .components
+            .get_or_insert_default()
+            .add_security_scheme(
+                "bearer",
+                SecurityScheme::Http(
+                    HttpBuilder::new()
+                        .scheme(HttpAuthScheme::Bearer)
+                        .bearer_format("JWT")
+                        .build(),
+                ),
+            );
+    }
+}
+
+pub fn api_router() -> OpenApiRouter<AppState> {
+    OpenApiRouter::with_openapi(ApiDoc::openapi())
+        // routes to go here
+        .layer(DefaultBodyLimit::max(BODY_LIMIT))
+}
+
+pub fn openapi() -> openapi::OpenApi {
+    api_router().split_for_parts().1
+}
+
+static ROUTER: OnceLock<Router<AppState>> = OnceLock::new();
+
+fn router() -> Router<AppState> {
+    ROUTER
+        .get_or_init(|| {
+            let (router, doc) = api_router().split_for_parts();
+            let doc = Json(doc);
+            router
+                .route("/openapi.json", get(doc))
+                .fallback(|| async { ApiError::NotFound("route") })
+        })
+        .clone()
+}
+
+#[worker::event(fetch)]
+async fn fetch(
+    req: worker::HttpRequest,
+    env: worker::Env,
+    _ctx: worker::Context,
+) -> worker::Result<http::Response<axum::body::Body>> {
+    let state = match AppState::from_env(&env) {
+        Ok(state) => state,
+        Err(err) => return Ok(err.into_response()),
+    };
+    Ok(router().with_state(state).call(req).await?)
 }
