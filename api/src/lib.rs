@@ -38,12 +38,14 @@ impl Modify for BearerAuth {
     }
 }
 
+#[must_use]
 pub fn api_router() -> OpenApiRouter<AppState> {
     OpenApiRouter::with_openapi(ApiDoc::openapi())
         // routes to go here
         .layer(DefaultBodyLimit::max(BODY_LIMIT))
 }
 
+#[must_use]
 pub fn openapi() -> openapi::OpenApi {
     api_router().split_for_parts().1
 }

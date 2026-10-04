@@ -81,7 +81,7 @@ impl IntoResponse for ApiError {
     }
 }
 
-impl From<worker::Error> for ApiError {
+impl From<Error> for ApiError {
     fn from(value: Error) -> Self {
         ApiError::Internal(value.to_string())
     }
@@ -116,5 +116,54 @@ impl From<garde::Report> for ApiError {
                 })
                 .collect(),
         )
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn into_responses() {
+        assert_eq!(
+            ApiError::Rejected(StatusCode::BAD_REQUEST, "Invalid request".to_string())
+                .into_response()
+                .status(),
+            StatusCode::BAD_REQUEST
+        );
+        assert_eq!(
+            ApiError::Unauthorized.into_response().status(),
+            StatusCode::UNAUTHORIZED
+        );
+        assert_eq!(
+            ApiError::Forbidden.into_response().status(),
+            StatusCode::FORBIDDEN
+        );
+        assert_eq!(
+            ApiError::NotFound("route").into_response().status(),
+            StatusCode::NOT_FOUND
+        );
+        assert_eq!(
+            ApiError::Conflict("Conflict").into_response().status(),
+            StatusCode::CONFLICT
+        );
+        assert_eq!(
+            ApiError::UnsupportedMediaType("Media".to_string())
+                .into_response()
+                .status(),
+            StatusCode::UNSUPPORTED_MEDIA_TYPE
+        );
+        assert_eq!(
+            ApiError::PayloadTooLarge(16).into_response().status(),
+            StatusCode::PAYLOAD_TOO_LARGE
+        );
+        assert_eq!(
+            ApiError::TooManyRequests.into_response().status(),
+            StatusCode::TOO_MANY_REQUESTS
+        );
+        assert_eq!(
+            ApiError::Validation(vec![]).into_response().status(),
+            StatusCode::UNPROCESSABLE_ENTITY
+        );
     }
 }
