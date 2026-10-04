@@ -9,10 +9,13 @@ use utoipa::openapi::security::{HttpAuthScheme, HttpBuilder, SecurityScheme};
 use utoipa::{Modify, OpenApi, openapi};
 use utoipa_axum::router::OpenApiRouter;
 
-mod db;
+pub mod db;
 pub mod error;
 pub mod extract;
 pub mod state;
+
+pub mod artists;
+pub mod releases;
 
 const BODY_LIMIT: usize = 64 * 1024;
 
