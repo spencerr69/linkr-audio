@@ -1,5 +1,5 @@
 [package]
-name = "sr-api"
+name = "linkr-api"
 version = "0.1.0"
 edition = "2024"
 authors = ["Spencer Raymond <spencer@spencerraymon.de>"]
@@ -18,7 +18,13 @@ utoipa-axum = "0.3.0"
 garde = { version = "0.23.0", features = ["derive", "serde", "url", "pattern", "js-sys"] }
 js-sys = "0.3"
 sea-query = { version = "1.0.2", default-features = false, features = ["derive", "backend-sqlite"] }
+argon2 = "0.6"
+jsonwebtoken = { version = "11.1", default-features = false, features = ["rust_crypto"] }
+# two getrandoms needed as i think jsonwebtoken and argon2 use different versions
+getrandom = { version = "0.4", features = ["wasm_js"] }
+getrandom02 = { package = "getrandom", version = "0.2", features = ["js"] }
 
 [lints.clippy]
 pedantic = { level = "warn", priority = -1 }
 missing_errors_doc = { level = "allow" }
+unused_async_trait_impl = { level = "allow" }

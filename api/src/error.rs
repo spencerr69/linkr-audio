@@ -5,6 +5,7 @@ use serde::Serialize;
 use utoipa::ToSchema;
 use worker::Error;
 
+#[derive(Debug)]
 pub enum ApiError {
     Rejected(StatusCode, String),
     Unauthorized,
@@ -25,7 +26,7 @@ pub struct ErrorBody {
     pub fields: Vec<FieldError>,
 }
 
-#[derive(Serialize, Clone, ToSchema)]
+#[derive(Serialize, Clone, ToSchema, Debug)]
 pub struct FieldError {
     pub path: String,
     pub message: String,

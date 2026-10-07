@@ -15,6 +15,7 @@ pub mod extract;
 pub mod state;
 
 pub mod artists;
+pub mod auth;
 pub mod link;
 pub mod releases;
 pub mod validators;
