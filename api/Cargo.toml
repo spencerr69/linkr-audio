@@ -4,8 +4,16 @@ version = "0.1.0"
 edition = "2024"
 authors = ["Spencer Raymond <spencer@spencerraymon.de>"]
 
+[features]
+cli = []
+
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "hash-password"
+path = "src/bin/hash_password.rs"
+required-features = ["cli"]
 
 [dependencies]
 worker = { version = "0.8.7", features = ["http", "axum", "d1"] }
