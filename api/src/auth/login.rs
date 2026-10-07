@@ -1,8 +1,7 @@
 use crate::Result;
-use crate::artists::row::{ArtistRowIden, Role};
 use crate::auth::password::verify;
+use crate::auth::queries::get_artist_auth;
 use crate::auth::token::sign;
-use crate::db::prepare;
 use crate::error::{ApiError, ErrorBody};
 use crate::extract::ValidJson;
 use crate::state::AppState;
@@ -10,7 +9,6 @@ use axum::Json;
 use axum::extract::State;
 use axum::http::{HeaderMap, HeaderValue, StatusCode};
 use garde::Validate;
-use sea_query::{Expr, ExprTrait, Query};
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 
@@ -27,12 +25,6 @@ pub struct LoginResponse {
     pub token: String,
 }
 
-#[derive(Deserialize, Clone)]
-struct QueryResponse {
-    role: Role,
-    password_hash: Option<String>,
-}
-
 #[utoipa::path(post, path = "/auth/login", tag = "auth", request_body = LoginRequest, responses(
     (status = 200, description = "Login successful", body = LoginResponse),
     (status = 400, description = "Invalid request", body = ErrorBody),
@@ -46,53 +38,35 @@ pub async fn login(
     headers: HeaderMap,
     ValidJson(body): ValidJson<LoginRequest>,
 ) -> Result<(StatusCode, Json<LoginResponse>)> {
+    // Handle the rate limiting per the user's IP (CF-Connecting-IP is cloudflare's end user IP header)
     let unknown_header = HeaderValue::from_static("unknown");
-
     let limiter_key = headers
         .get("CF-Connecting-IP")
         .unwrap_or(&unknown_header)
         .to_str()
         .map_err(|_| ApiError::Internal("Unable to parse CF-Connecting-IP".to_string()))?;
-
     let limited = !state
         .login_limiter
         .limit(limiter_key.to_string())
         .await?
         .success;
-
     if limited {
         return Err(ApiError::TooManyRequests);
     }
 
-    let artist_row = get_artist_row(&state, &body).await?;
-
+    // verify password against stored hash
+    let artist_row = get_artist_auth(&state.db, &body.handle).await?;
     let is_password_correct = verify(
         &body.password,
         artist_row.password_hash.as_ref().unwrap_or(&String::new()),
     );
-
     if !is_password_correct {
         return Err(ApiError::Unauthorized);
     }
 
+    // sign token and return
     let token = sign(&body.handle, artist_row.role, &state.session_secret)?;
-
     Ok((StatusCode::OK, Json(LoginResponse { token })))
-}
-
-async fn get_artist_row(state: &AppState, body: &LoginRequest) -> Result<QueryResponse, ApiError> {
-    let query_response = prepare(
-        &state.db,
-        Query::select()
-            .columns([ArtistRowIden::Role, ArtistRowIden::PasswordHash])
-            .from(ArtistRowIden::Table)
-            .and_where(Expr::col(ArtistRowIden::Handle).eq(body.handle.as_str())),
-    )?
-    .first::<QueryResponse>(None)
-    .await?;
-
-    let artist_row = query_response.ok_or(ApiError::Unauthorized)?;
-    Ok(artist_row)
 }
 
 #[cfg(test)]
