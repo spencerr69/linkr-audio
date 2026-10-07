@@ -10,7 +10,7 @@ use axum::Json;
 use axum::extract::State;
 use axum::http::{HeaderMap, HeaderValue, StatusCode};
 use garde::Validate;
-use sea_query::{Expr, Query};
+use sea_query::{Expr, ExprTrait, Query};
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 
@@ -84,15 +84,13 @@ async fn get_artist_row(state: &AppState, body: &LoginRequest) -> Result<QueryRe
     let query_response = prepare(
         &state.db,
         Query::select()
-            .from(ArtistRowIden::Table)
             .columns([ArtistRowIden::Role, ArtistRowIden::PasswordHash])
-            .and_where(Expr::value(
-                Expr::col(ArtistRowIden::Handle).eq(&Expr::value(&body.handle)),
-            )),
+            .from(ArtistRowIden::Table)
+            .and_where(Expr::col(ArtistRowIden::Handle).eq(body.handle.as_str())),
     )?
-    .await?
-    .results::<QueryResponse>()?;
+    .first::<QueryResponse>(None)
+    .await?;
 
-    let artist_row = query_response.first().ok_or(ApiError::Unauthorized)?;
-    Ok(artist_row.clone())
+    let artist_row = query_response.ok_or(ApiError::Unauthorized)?;
+    Ok(artist_row)
 }
