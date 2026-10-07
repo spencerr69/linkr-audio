@@ -94,3 +94,66 @@ async fn get_artist_row(state: &AppState, body: &LoginRequest) -> Result<QueryRe
     let artist_row = query_response.ok_or(ApiError::Unauthorized)?;
     Ok(artist_row)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use garde::Validate;
+    fn request() -> LoginRequest {
+        LoginRequest {
+            handle: "sr".into(),
+            password: "correct horse battery".into(),
+        }
+    }
+    fn failing_paths(value: &LoginRequest) -> Vec<String> {
+        match value.validate() {
+            Ok(()) => vec![],
+            Err(report) => report.iter().map(|(path, _)| path.to_string()).collect(),
+        }
+    }
+    #[test]
+    fn fixture_is_valid() {
+        assert_eq!(failing_paths(&request()), Vec::<String>::new());
+    }
+    #[test]
+    fn malformed_handle_is_not_a_422() {
+        // only the length is checked, so a handle that can't exist reaches the handler and gets the same 401
+        let body = LoginRequest {
+            handle: "not a handle!".into(),
+            ..request()
+        };
+        assert_eq!(failing_paths(&body), Vec::<String>::new());
+    }
+    #[test]
+    fn handle_length() {
+        assert_eq!(
+            failing_paths(&LoginRequest {
+                handle: String::new(),
+                ..request()
+            }),
+            ["handle"]
+        );
+        assert_eq!(
+            failing_paths(&LoginRequest {
+                handle: "a".repeat(64),
+                ..request()
+            }),
+            ["handle"]
+        );
+        assert_eq!(
+            failing_paths(&LoginRequest {
+                handle: "a".repeat(63),
+                ..request()
+            }),
+            Vec::<String>::new()
+        );
+    }
+    #[test]
+    fn password_too_long() {
+        let body = LoginRequest {
+            password: "p".repeat(129),
+            ..request()
+        };
+        assert_eq!(failing_paths(&body), ["password"]);
+    }
+}
