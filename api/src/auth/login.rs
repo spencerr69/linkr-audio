@@ -1,5 +1,5 @@
 use crate::Result;
-use crate::auth::password::verify;
+use crate::auth::password::{Password, verify};
 use crate::auth::queries::get_artist_auth;
 use crate::auth::token::sign;
 use crate::error::{ApiError, ErrorBody};
@@ -16,8 +16,8 @@ use utoipa::ToSchema;
 pub struct LoginRequest {
     #[garde(length(chars, min = 1, max = 63))]
     pub handle: String,
-    #[garde(length(chars, min = 8, max = 128))]
-    pub password: String,
+    #[garde(dive)]
+    pub password: Password,
 }
 
 #[derive(Serialize, ToSchema)]
@@ -76,7 +76,7 @@ mod tests {
     fn request() -> LoginRequest {
         LoginRequest {
             handle: "sr".into(),
-            password: "correct horse battery".into(),
+            password: Password("correct horse battery".into()),
         }
     }
     fn failing_paths(value: &LoginRequest) -> Vec<String> {
@@ -125,7 +125,7 @@ mod tests {
     #[test]
     fn password_too_long() {
         let body = LoginRequest {
-            password: "p".repeat(129),
+            password: Password("p".repeat(129)),
             ..request()
         };
         assert_eq!(failing_paths(&body), ["password"]);

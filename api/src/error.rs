@@ -40,7 +40,7 @@ impl IntoResponse for ApiError {
             ApiError::Rejected(status, message) => (status, message),
             ApiError::Unauthorized => (StatusCode::UNAUTHORIZED, "Unauthorized".to_string()),
             ApiError::Forbidden => (StatusCode::FORBIDDEN, "Forbidden".to_string()),
-            ApiError::NotFound(message) => (StatusCode::NOT_FOUND, message.to_string()),
+            ApiError::NotFound(message) => (StatusCode::NOT_FOUND, format!("{message} not found")),
             ApiError::Conflict(message) => (StatusCode::CONFLICT, message.to_string()),
             ApiError::UnsupportedMediaType(message) => {
                 (StatusCode::UNSUPPORTED_MEDIA_TYPE, message)

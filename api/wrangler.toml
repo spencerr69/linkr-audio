@@ -10,7 +10,7 @@ command = "cargo install -q worker-build@^0.8 && worker-build --release"
 binding = "prod_sr_db"
 database_name = "prod-sr-db"
 database_id = "9fe15959-f4dd-4b76-810f-42ca521b697e"
-migrations_dir = "src/queries/migrations"
+migrations_dir = "src/db/migrations"
 
 [[ratelimits]]
 name = "LOGIN_LIMITER"
