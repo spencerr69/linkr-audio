@@ -1,3 +1,5 @@
+use crate::auth::login::__path_login;
+use crate::auth::login::login;
 use crate::error::ApiError;
 use crate::state::AppState;
 use axum::extract::DefaultBodyLimit;
@@ -8,6 +10,7 @@ use tower_service::Service;
 use utoipa::openapi::security::{HttpAuthScheme, HttpBuilder, SecurityScheme};
 use utoipa::{Modify, OpenApi, openapi};
 use utoipa_axum::router::OpenApiRouter;
+use utoipa_axum::routes;
 
 pub mod db;
 pub mod error;
@@ -50,6 +53,7 @@ impl Modify for BearerAuth {
 #[must_use]
 pub fn api_router() -> OpenApiRouter<AppState> {
     OpenApiRouter::with_openapi(ApiDoc::openapi())
+        .routes(routes!(login))
         // routes to go here
         .layer(DefaultBodyLimit::max(BODY_LIMIT))
 }

@@ -12,6 +12,10 @@ database_name = "prod-sr-db"
 database_id = "9fe15959-f4dd-4b76-810f-42ca521b697e"
 migrations_dir = "src/queries/migrations"
 
+[[ratelimits]]
+name = "LOGIN_LIMITER"
+namespace_id = "1001"
+simple = { limit = 10, period = 60 }
 
 [observability]
 enabled = false
