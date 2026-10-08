@@ -1,8 +1,12 @@
+use crate::artists::__path_edit_artist;
+use crate::artists::__path_get_artist;
+use crate::artists::{edit_artist, get_artist};
 use crate::auth::login::__path_login;
 use crate::auth::login::login;
 use crate::error::ApiError;
 use crate::state::AppState;
 use axum::extract::DefaultBodyLimit;
+use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::{Json, Router, http, routing::get};
 use std::sync::OnceLock;
@@ -26,6 +30,8 @@ pub mod validators;
 const BODY_LIMIT: usize = 64 * 1024;
 
 pub type Result<T, E = ApiError> = std::result::Result<T, E>;
+pub type ApiResult<T> = Result<(StatusCode, Json<T>)>;
+pub type ApiResultEmpty = Result<(StatusCode, ())>;
 
 #[derive(OpenApi)]
 #[openapi(info(title = "linkr.audio API", version = "1.0.0"), modifiers(&BearerAuth), version = "3.2.0")]
@@ -54,6 +60,7 @@ impl Modify for BearerAuth {
 pub fn api_router() -> OpenApiRouter<AppState> {
     OpenApiRouter::with_openapi(ApiDoc::openapi())
         .routes(routes!(login))
+        .routes(routes!(get_artist, edit_artist))
         // routes to go here
         .layer(DefaultBodyLimit::max(BODY_LIMIT))
 }

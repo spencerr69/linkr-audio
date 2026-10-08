@@ -19,6 +19,13 @@ pub enum ApiError {
     Internal(String),
 }
 
+macro_rules! internal {
+    ($($arg:tt)+) => {
+        $crate::error::ApiError::Internal(::std::format!($($arg)+))
+    };
+}
+pub(crate) use internal;
+
 #[derive(Serialize, ToSchema)]
 pub struct ErrorBody {
     pub error: String,
@@ -103,6 +110,12 @@ impl From<PathRejection> for ApiError {
 impl From<QueryRejection> for ApiError {
     fn from(value: QueryRejection) -> Self {
         ApiError::Rejected(value.status(), value.body_text())
+    }
+}
+
+impl From<serde_json::error::Error> for ApiError {
+    fn from(value: serde_json::error::Error) -> Self {
+        ApiError::Internal(value.to_string())
     }
 }
 

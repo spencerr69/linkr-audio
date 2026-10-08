@@ -1,3 +1,4 @@
+use crate::Result;
 use crate::artists::row::{ArtistRowIden, Role};
 use crate::db::prepare;
 use crate::error::ApiError;
@@ -11,10 +12,7 @@ pub struct GetArtistAuthQueryResponse {
     pub password_hash: Option<String>,
 }
 
-pub async fn get_artist_auth(
-    db: &D1Database,
-    handle: &str,
-) -> crate::Result<GetArtistAuthQueryResponse> {
+pub async fn get_artist_auth(db: &D1Database, handle: &str) -> Result<GetArtistAuthQueryResponse> {
     let query_response = prepare(
         db,
         Query::select()
@@ -25,5 +23,24 @@ pub async fn get_artist_auth(
     .first::<GetArtistAuthQueryResponse>(None)
     .await?;
 
-    query_response.ok_or(ApiError::Unauthorized)
+    query_response.ok_or(ApiError::NotFound("artist"))
+}
+
+pub async fn change_password(db: &D1Database, handle: &str, new_hash: &str) -> Result<()> {
+    let updated_handle = prepare(
+        db,
+        Query::update()
+            .table(ArtistRowIden::Table)
+            .and_where(Expr::col(ArtistRowIden::Handle).eq(handle))
+            .value(ArtistRowIden::PasswordHash, new_hash)
+            .returning_col(ArtistRowIden::Handle),
+    )?
+    .first::<String>(None)
+    .await?;
+
+    let Some(_) = updated_handle else {
+        return Err(ApiError::Unauthorized);
+    };
+
+    Ok(())
 }

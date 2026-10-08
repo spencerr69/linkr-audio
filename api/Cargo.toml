@@ -36,3 +36,4 @@ getrandom02 = { package = "getrandom", version = "0.2", features = ["js"] }
 pedantic = { level = "warn", priority = -1 }
 missing_errors_doc = { level = "allow" }
 unused_async_trait_impl = { level = "allow" }
+assert_is_empty = { level = "allow" }
