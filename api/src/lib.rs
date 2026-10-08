@@ -1,5 +1,7 @@
-use crate::artists::__path_edit_artist;
-use crate::artists::__path_get_artist;
+use crate::artists::{
+    __path_change_password, __path_create_artist, __path_edit_artist, change_password,
+};
+use crate::artists::{__path_get_artist, create_artist};
 use crate::artists::{edit_artist, get_artist};
 use crate::auth::login::__path_login;
 use crate::auth::login::login;
@@ -59,8 +61,10 @@ impl Modify for BearerAuth {
 #[must_use]
 pub fn api_router() -> OpenApiRouter<AppState> {
     OpenApiRouter::with_openapi(ApiDoc::openapi())
-        .routes(routes!(login))
-        .routes(routes!(get_artist, edit_artist))
+        .routes(routes!(login)) // /auth/login
+        .routes(routes!(get_artist, edit_artist)) // /artists/{handle}
+        .routes(routes!(change_password)) // /artists/{handle}/password
+        .routes(routes!(create_artist)) // /artists
         // routes to go here
         .layer(DefaultBodyLimit::max(BODY_LIMIT))
 }

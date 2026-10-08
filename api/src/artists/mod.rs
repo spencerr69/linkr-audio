@@ -57,7 +57,7 @@ pub struct Artist {
     pub updated_at: String,
 }
 
-#[derive(Deserialize, Validate)]
+#[derive(Deserialize, Validate, ToSchema)]
 pub struct CreateArtist {
     #[garde(custom(validators::handle))]
     pub handle: String,
@@ -67,7 +67,7 @@ pub struct CreateArtist {
     pub password: Password,
 }
 
-#[derive(Deserialize, Validate)]
+#[derive(Deserialize, Validate, ToSchema)]
 pub struct EditArtist {
     #[garde(length(min = 1, max = 200))]
     pub name: String,
@@ -77,7 +77,7 @@ pub struct EditArtist {
     pub styling: Option<Styling>,
 }
 
-#[derive(Deserialize, Validate)]
+#[derive(Deserialize, Validate, ToSchema)]
 pub struct ChangePassword {
     #[garde(dive)]
     pub current_password: Password,
@@ -99,9 +99,12 @@ pub async fn get_artist(
     ))
 }
 
-#[utoipa::path(post, path = "/artists", tag = "artists", responses(
+#[utoipa::path(post, path = "/artists", request_body = CreateArtist, tag = "artists", security(("bearer" = ["admin"])),
+responses(
     (status = 201, description = "Artist created", body = Artist),
-    (status = 401, description = "Unauthorized", body = ErrorBody),))]
+    (status = 401, description = "Unauthorized", body = ErrorBody),
+    (status = 403, description = "Forbidden", body = ErrorBody),
+))]
 #[worker::send]
 pub async fn create_artist(
     State(state): State<AppState>,
@@ -116,7 +119,8 @@ pub async fn create_artist(
     ))
 }
 
-#[utoipa::path(post, path = "/artists/{handle}", tag = "artists", responses(
+#[utoipa::path(post, path = "/artists/{handle}", request_body = EditArtist, tag = "artists", security(("bearer" = [])),
+responses(
     (status = 204, description = "Artist edited"),
 ))]
 #[worker::send]
@@ -131,7 +135,8 @@ pub async fn edit_artist(
 
     Ok((StatusCode::NO_CONTENT, ()))
 }
-#[utoipa::path(post, path = "/artists/{handle}/password", tag = "artists", responses(
+#[utoipa::path(post, path = "/artists/{handle}/password", request_body = ChangePassword, tag = "artists", security(
+("bearer" = [])), responses(
     (status = 204, description = "Password changed"),
     (status = 401, description = "Unauthorized", body = ErrorBody),
     (status = 403, description = "Forbidden", body = ErrorBody),
