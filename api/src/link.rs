@@ -18,7 +18,7 @@ mod tests {
     #[test]
     fn empty_name() {
         let link = Link {
-            name: "".to_string(),
+            name: String::new(),
             url: "https://something.com".to_string(),
         };
 

@@ -93,10 +93,10 @@ pub async fn get_artist(
     State(state): State<AppState>,
     Path(handle): Path<String>,
 ) -> ApiResult<Artist> {
-    let mut artist: Artist = queries::get_artist(&state.db, &handle).await?.into();
-    artist.styling = Some(Styling::empty());
-
-    Ok((StatusCode::OK, Json(artist)))
+    Ok((
+        StatusCode::OK,
+        Json(queries::get_artist(&state.db, &handle).await?.into()),
+    ))
 }
 
 #[utoipa::path(post, path = "/artists", tag = "artists", responses(
@@ -246,6 +246,22 @@ mod tests {
         }
         .into();
         assert!(artist.links.is_empty());
+    }
+
+    #[test]
+    fn missing_or_garbage_styling_has_no_colours() {
+        // Colours should not be sent as none, each colour should be sent as null.
+        for styling in [None, Some("not json".to_string())] {
+            let artist: Artist = ArtistRow {
+                styling: styling.clone(),
+                ..row()
+            }
+            .into();
+            let styling_out = artist
+                .styling
+                .expect("a styling, even when the column is unusable");
+            assert!(styling_out.colours.is_some(), "styling {styling:?}");
+        }
     }
 
     #[test]

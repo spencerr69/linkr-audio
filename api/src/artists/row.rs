@@ -35,14 +35,16 @@ pub struct ArtistRow {
 
 impl From<ArtistRow> for Artist {
     fn from(row: ArtistRow) -> Artist {
-        let styling: Option<Styling> = serde_json::from_str(&row.styling.unwrap_or_default()).ok();
+        let styling: Styling = serde_json::from_str(&row.styling.unwrap_or_default())
+            .ok()
+            .unwrap_or(Styling::empty());
         let links: Vec<Link> = serde_json::from_str(&row.links).ok().unwrap_or_default();
 
         Artist {
             handle: row.handle,
             name: row.name,
             links,
-            styling,
+            styling: Some(styling),
             role: row.role,
             created_at: row.created_at,
             updated_at: row.updated_at,
