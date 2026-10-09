@@ -1,3 +1,6 @@
+use crate::link::Link;
+use crate::releases::model::Release;
+use crate::state::AppState;
 use sea_query::{Value, enum_def};
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
@@ -71,6 +74,38 @@ pub struct ReleaseWithArtistRow {
     pub updated_at: String,
     pub artist_handle: String,
     pub artist_name: String,
+}
+
+impl ReleaseWithArtistRow {
+    fn to_release(&self, state: &AppState) -> Release {
+        let artwork = self
+            .artwork_key
+            .clone()
+            .map(|key| format!("{}/{}", state.artwork_url_prefix, key));
+
+        let links: Vec<Link> = serde_json::from_str(&self.links).unwrap_or_default();
+
+        Release {
+            slug: self.slug.clone(),
+            title: self.title.clone(),
+            artist_credit: self.artist_credit.clone(),
+            upc: self.upc.clone(),
+            release_date: self.release_date.clone(),
+            track_count: self.track_count,
+            artwork_key: self.artwork_key.clone(),
+            artwork,
+            links,
+            status: self.status,
+            created_at: self.created_at.clone(),
+            updated_at: self.updated_at.clone(),
+            artist_handle: self.artist_handle.clone(),
+            artist_name: self.artist_name.clone(),
+            self_url: format!(
+                "https://{}.{}/{}",
+                self.artist_handle, state.public_host, self.slug
+            ),
+        }
+    }
 }
 
 #[cfg(test)]
