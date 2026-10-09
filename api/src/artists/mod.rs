@@ -3,7 +3,7 @@ use crate::auth::extract::AuthArtist;
 use crate::auth::password::{Password, hash, verify};
 use crate::auth::queries::get_artist_auth;
 use crate::error::{ApiError, ErrorBody, internal};
-use crate::extract::ValidJson;
+use crate::extract::{ApiPath, ValidJson};
 use crate::link::Link;
 use crate::state::AppState;
 use crate::validators;
@@ -91,7 +91,7 @@ pub struct ChangePassword {
 #[worker::send]
 pub async fn get_artist(
     State(state): State<AppState>,
-    Path(handle): Path<String>,
+    ApiPath(handle): ApiPath<String>,
 ) -> ApiResult<Artist> {
     Ok((
         StatusCode::OK,
@@ -104,6 +104,8 @@ responses(
     (status = 201, description = "Artist created", body = Artist),
     (status = 401, description = "Unauthorized", body = ErrorBody),
     (status = 403, description = "Forbidden", body = ErrorBody),
+    (status = 409, description = "Artist already exists", body = ErrorBody),
+    (status = 422, description = "Validation error", body = ErrorBody),
 ))]
 #[worker::send]
 pub async fn create_artist(
@@ -122,6 +124,10 @@ pub async fn create_artist(
 #[utoipa::path(post, path = "/artists/{handle}", request_body = EditArtist, tag = "artists", security(("bearer" = [])),
 responses(
     (status = 204, description = "Artist edited"),
+    (status = 401, description = "Unauthorized", body = ErrorBody),
+    (status = 403, description = "Forbidden", body = ErrorBody),
+    (status = 404, description = "Artist not found", body = ErrorBody),
+    (status = 422, description = "Validation error", body = ErrorBody),
 ))]
 #[worker::send]
 pub async fn edit_artist(
@@ -141,6 +147,7 @@ pub async fn edit_artist(
     (status = 401, description = "Unauthorized", body = ErrorBody),
     (status = 403, description = "Forbidden", body = ErrorBody),
     (status = 404, description = "Artist not found", body = ErrorBody),
+    (status = 422, description = "Validation error", body = ErrorBody),
 ))]
 #[worker::send]
 pub async fn change_password(

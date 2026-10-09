@@ -7,7 +7,7 @@ use utoipa::ToSchema;
 
 #[derive(Validate, Deserialize, ToSchema)]
 #[garde(transparent)]
-pub struct Password(#[garde(length(min = 8, max = 128))] pub String);
+pub struct Password(#[garde(length(chars, min = 8, max = 128))] pub String);
 
 pub fn hash(password: &Password) -> Result<String> {
     Argon2::default()

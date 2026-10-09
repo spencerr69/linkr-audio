@@ -8,14 +8,16 @@ pub fn slug(value: &str, _: &()) -> garde::Result {
         return Err(garde::Error::new("slug is reserved"));
     }
 
-    if value.len() > 64 {
+    if value.len() > 63 {
         return Err(garde::Error::new("slug must be less than 64 characters"));
     }
     if value.is_empty() {
         return Err(garde::Error::new("slug must be at least 1 character"));
     }
 
-    let valid = value.chars().all(|c| c.is_alphanumeric() || c == '-')
+    let valid = value
+        .chars()
+        .all(|c| (c.is_ascii_alphabetic() && c.is_lowercase()) || c.is_ascii_digit() || c == '-')
         && value.chars().next().unwrap_or('-') != '-'
         && value.chars().last().unwrap_or('-') != '-';
 
@@ -33,14 +35,16 @@ pub fn handle(value: &str, _: &()) -> garde::Result {
         return Err(garde::Error::new("handle is reserved"));
     }
 
-    if value.len() > 64 {
+    if value.len() > 63 {
         return Err(garde::Error::new("handle must be less than 64 characters"));
     }
     if value.is_empty() {
         return Err(garde::Error::new("handle must be at least 1 character"));
     }
 
-    let valid = value.chars().all(|c| c.is_alphanumeric() || c == '-')
+    let valid = value
+        .chars()
+        .all(|c| (c.is_ascii_alphabetic() && c.is_lowercase()) || c.is_ascii_digit() || c == '-')
         && value.chars().next().unwrap_or('-') != '-'
         && value.chars().last().unwrap_or('-') != '-';
 

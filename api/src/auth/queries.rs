@@ -27,6 +27,11 @@ pub async fn get_artist_auth(db: &D1Database, handle: &str) -> Result<GetArtistA
 }
 
 pub async fn change_password(db: &D1Database, handle: &str, new_hash: &str) -> Result<()> {
+    #[derive(Deserialize)]
+    struct HandleResponse {
+        handle: String,
+    }
+
     let updated_handle = prepare(
         db,
         Query::update()
@@ -35,11 +40,11 @@ pub async fn change_password(db: &D1Database, handle: &str, new_hash: &str) -> R
             .value(ArtistRowIden::PasswordHash, new_hash)
             .returning_col(ArtistRowIden::Handle),
     )?
-    .first::<String>(None)
+    .first::<HandleResponse>(None)
     .await?;
 
     let Some(_) = updated_handle else {
-        return Err(ApiError::Unauthorized);
+        return Err(ApiError::Forbidden);
     };
 
     Ok(())

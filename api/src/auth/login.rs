@@ -55,7 +55,9 @@ pub async fn login(
     }
 
     // verify password against stored hash
-    let artist_row = get_artist_auth(&state.db, &body.handle).await?;
+    let artist_row = get_artist_auth(&state.db, &body.handle)
+        .await
+        .map_err(|_| ApiError::Unauthorized)?;
     let is_password_correct = verify(
         &body.password,
         artist_row.password_hash.as_ref().unwrap_or(&String::new()),
