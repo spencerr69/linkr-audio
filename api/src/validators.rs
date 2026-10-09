@@ -17,7 +17,7 @@ pub fn slug(value: &str, _: &()) -> garde::Result {
 
     let valid = value
         .chars()
-        .all(|c| (c.is_ascii_alphabetic() && c.is_lowercase()) || c.is_ascii_digit() || c == '-')
+        .all(|c| (c.is_ascii_lowercase()) || c.is_ascii_digit() || c == '-')
         && value.chars().next().unwrap_or('-') != '-'
         && value.chars().last().unwrap_or('-') != '-';
 
@@ -44,7 +44,7 @@ pub fn handle(value: &str, _: &()) -> garde::Result {
 
     let valid = value
         .chars()
-        .all(|c| (c.is_ascii_alphabetic() && c.is_lowercase()) || c.is_ascii_digit() || c == '-')
+        .all(|c| (c.is_ascii_lowercase()) || c.is_ascii_digit() || c == '-')
         && value.chars().next().unwrap_or('-') != '-'
         && value.chars().last().unwrap_or('-') != '-';
 
@@ -147,6 +147,7 @@ mod tests {
 
     #[test]
     fn slugs() {
+        let long_text = "a".repeat(64);
         let table = vec![
             ("hi", true),
             ("abc123", true),
@@ -155,6 +156,10 @@ mod tests {
             ("$$$", false),
             ("W$GIA", false),
             ("-poop", false),
+            ("Bruh", false),
+            ("café", false),
+            ("cafe", true),
+            (&long_text, false),
         ];
 
         for (input, ok) in table {
@@ -164,6 +169,7 @@ mod tests {
 
     #[test]
     fn handles() {
+        let long_text = "a".repeat(64);
         let table = vec![
             ("hi", true),
             ("abc123", true),
@@ -172,6 +178,10 @@ mod tests {
             ("$$$", false),
             ("W$GIA", false),
             ("-poop", false),
+            ("Bruh", false),
+            ("café", false),
+            ("cafe", true),
+            (&long_text, false),
         ];
 
         for (input, ok) in table {

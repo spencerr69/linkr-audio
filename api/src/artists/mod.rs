@@ -153,7 +153,7 @@ pub async fn edit_artist(
 pub async fn change_password(
     State(state): State<AppState>,
     auth: AuthArtist,
-    Path(handle): Path<String>,
+    ApiPath(handle): ApiPath<String>,
     ValidJson(change_password): ValidJson<ChangePassword>,
 ) -> ApiResultEmpty {
     auth.require_owner(&handle)?;
