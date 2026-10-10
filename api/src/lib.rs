@@ -6,6 +6,11 @@ use crate::artists::{edit_artist, get_artist};
 use crate::auth::login::__path_login;
 use crate::auth::login::login;
 use crate::error::ApiError;
+use crate::releases::routes::read::__path_list_for_artist;
+use crate::releases::routes::read::__path_list_recent_releases;
+use crate::releases::routes::read::get_release;
+use crate::releases::routes::read::list_recent_releases;
+use crate::releases::routes::read::{__path_get_release, list_for_artist};
 use crate::state::AppState;
 use axum::extract::DefaultBodyLimit;
 use axum::http::StatusCode;
@@ -65,6 +70,9 @@ pub fn api_router() -> OpenApiRouter<AppState> {
         .routes(routes!(get_artist, edit_artist)) // /artists/{handle}
         .routes(routes!(change_password)) // /artists/{handle}/password
         .routes(routes!(create_artist)) // /artists
+        .routes(routes!(get_release)) // /releases/{handle}/{slug}
+        .routes(routes!(list_recent_releases)) // /releases
+        .routes(routes!(list_for_artist)) // /releases/{handle}
         // routes to go here
         .layer(DefaultBodyLimit::max(BODY_LIMIT))
 }

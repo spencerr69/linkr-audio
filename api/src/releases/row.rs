@@ -41,20 +41,20 @@ pub struct ReleaseRow {
     pub updated_at: String,
 }
 
-pub const RELEASE_COLUMNS: [ReleaseRowIden; 13] = [
-    ReleaseRowIden::Id,
-    ReleaseRowIden::ArtistId,
-    ReleaseRowIden::Slug,
-    ReleaseRowIden::Title,
-    ReleaseRowIden::ArtistCredit,
-    ReleaseRowIden::Upc,
-    ReleaseRowIden::ReleaseDate,
-    ReleaseRowIden::TrackCount,
-    ReleaseRowIden::ArtworkKey,
-    ReleaseRowIden::Links,
-    ReleaseRowIden::Status,
-    ReleaseRowIden::CreatedAt,
-    ReleaseRowIden::UpdatedAt,
+pub const RELEASE_COLUMNS: [(ReleaseRowIden, ReleaseRowIden); 13] = [
+    (ReleaseRowIden::Table, ReleaseRowIden::Id),
+    (ReleaseRowIden::Table, ReleaseRowIden::ArtistId),
+    (ReleaseRowIden::Table, ReleaseRowIden::Slug),
+    (ReleaseRowIden::Table, ReleaseRowIden::Title),
+    (ReleaseRowIden::Table, ReleaseRowIden::ArtistCredit),
+    (ReleaseRowIden::Table, ReleaseRowIden::Upc),
+    (ReleaseRowIden::Table, ReleaseRowIden::ReleaseDate),
+    (ReleaseRowIden::Table, ReleaseRowIden::TrackCount),
+    (ReleaseRowIden::Table, ReleaseRowIden::ArtworkKey),
+    (ReleaseRowIden::Table, ReleaseRowIden::Links),
+    (ReleaseRowIden::Table, ReleaseRowIden::Status),
+    (ReleaseRowIden::Table, ReleaseRowIden::CreatedAt),
+    (ReleaseRowIden::Table, ReleaseRowIden::UpdatedAt),
 ];
 
 #[derive(Debug, Deserialize)]
@@ -77,7 +77,8 @@ pub struct ReleaseWithArtistRow {
 }
 
 impl ReleaseWithArtistRow {
-    fn to_release(&self, state: &AppState) -> Release {
+    #[must_use]
+    pub fn to_release(&self, state: &AppState) -> Release {
         let artwork = self
             .artwork_key
             .clone()

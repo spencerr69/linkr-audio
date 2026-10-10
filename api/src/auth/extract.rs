@@ -29,6 +29,14 @@ impl AuthArtist {
 
 pub struct OptionalAuthArtist(pub Option<AuthArtist>);
 
+#[must_use]
+pub fn is_authed_with_handle(auth: &Option<AuthArtist>, handle: &str) -> bool {
+    if let Some(artist) = auth {
+        return artist.require_owner(handle).is_ok();
+    }
+    false
+}
+
 fn parts_to_auth(parts: &Parts, state: &AppState) -> Result<Option<AuthArtist>> {
     let auth = parts.headers.get(AUTHORIZATION);
 
