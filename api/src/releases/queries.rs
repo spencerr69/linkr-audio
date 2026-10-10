@@ -3,7 +3,7 @@ use crate::artists::row::ArtistRowIden;
 use crate::db::prepare;
 use crate::error::ApiError;
 use crate::releases::row::{RELEASE_COLUMNS, ReleaseRowIden, ReleaseStatus, ReleaseWithArtistRow};
-use sea_query::{Expr, ExprTrait, Order, OrderedStatement, Query, SelectStatement};
+use sea_query::{Expr, ExprTrait, Order, Query, SelectStatement};
 use worker::D1Database;
 
 #[must_use]
