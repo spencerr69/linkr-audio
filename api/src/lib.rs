@@ -71,7 +71,7 @@ pub fn api_router() -> OpenApiRouter<AppState> {
         .routes(routes!(change_password)) // /artists/{handle}/password
         .routes(routes!(create_artist)) // /artists
         .routes(routes!(get_release)) // /releases/{handle}/{slug}
-        .routes(routes!(list_recent_releases)) // /releases
+        .routes(routes!(list_recent_releases)) // /releases/recent
         .routes(routes!(list_for_artist)) // /releases/{handle}
         // routes to go here
         .layer(DefaultBodyLimit::max(BODY_LIMIT))

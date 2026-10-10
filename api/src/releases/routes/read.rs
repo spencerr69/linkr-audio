@@ -16,9 +16,9 @@ pub struct ListQuery {
     pub offset: Option<u32>,
 }
 
-#[utoipa::path(get, path = "/releases", tag = "releases", params(ListQuery),
+#[utoipa::path(get, path = "/releases/recent", tag = "releases", params(ListQuery),
 responses(
-    (status = 200, description = "Release returned", body = Release),
+    (status = 200, description = "Release returned", body = Vec<Release>),
 ))]
 #[worker::send]
 pub async fn list_recent_releases(
@@ -46,7 +46,7 @@ pub async fn list_for_artist(
     ApiQuery(query): ApiQuery<ListQuery>,
     OptionalAuthArtist(optional_artist): OptionalAuthArtist,
 ) -> ApiResult<Vec<Release>> {
-    let limit = query.limit.unwrap_or(10).max(50);
+    let limit = query.limit.unwrap_or(100).min(100);
     let offset = query.offset.unwrap_or(0);
 
     let include_private = is_authed_with_handle(&optional_artist, &handle);

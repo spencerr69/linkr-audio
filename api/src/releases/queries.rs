@@ -2,8 +2,8 @@ use crate::Result;
 use crate::artists::row::ArtistRowIden;
 use crate::db::prepare;
 use crate::error::ApiError;
-use crate::releases::row::{RELEASE_COLUMNS, ReleaseRowIden, ReleaseWithArtistRow};
-use sea_query::{Expr, ExprTrait, Order, Query, SelectStatement};
+use crate::releases::row::{RELEASE_COLUMNS, ReleaseRowIden, ReleaseStatus, ReleaseWithArtistRow};
+use sea_query::{Expr, ExprTrait, Order, OrderedStatement, Query, SelectStatement};
 use worker::D1Database;
 
 #[must_use]
@@ -13,14 +13,17 @@ pub fn select_with_artist() -> SelectStatement {
         .from(ReleaseRowIden::Table)
         .inner_join(
             ArtistRowIden::Table,
-            Expr::col(ArtistRowIden::Id).eq(Expr::col(ReleaseRowIden::ArtistId)),
+            Expr::col((ArtistRowIden::Table, ArtistRowIden::Id))
+                .eq(Expr::col((ReleaseRowIden::Table, ReleaseRowIden::ArtistId))),
         )
-        .columns([
-            (ArtistRowIden::Table, ArtistRowIden::Handle),
-            (ArtistRowIden::Table, ArtistRowIden::Name),
-        ])
-        .expr_as(Expr::col(ArtistRowIden::Handle), "artist_handle")
-        .expr_as(Expr::col(ArtistRowIden::Name), "artist_name")
+        .expr_as(
+            Expr::col((ArtistRowIden::Table, ArtistRowIden::Handle)),
+            "artist_handle",
+        )
+        .expr_as(
+            Expr::col((ArtistRowIden::Table, ArtistRowIden::Name)),
+            "artist_name",
+        )
         .to_owned()
 }
 
@@ -31,7 +34,7 @@ pub async fn list_recent_releases(
     let results = prepare(
         db,
         select_with_artist()
-            .and_where(Expr::col(ReleaseRowIden::Status).eq("active"))
+            .and_where(Expr::col(ReleaseRowIden::Status).eq(ReleaseStatus::Public))
             .order_by(ReleaseRowIden::ReleaseDate, Order::Desc)
             .limit(limit.into()),
     )?
@@ -45,8 +48,8 @@ pub async fn list_recent_releases(
 pub async fn list_for_artist(
     db: &D1Database,
     handle: &str,
-    offset: u32,
     limit: u32,
+    offset: u32,
     include_private: bool,
 ) -> Result<Vec<ReleaseWithArtistRow>> {
     let results = prepare(
@@ -54,10 +57,15 @@ pub async fn list_for_artist(
         select_with_artist()
             .and_where(Expr::col(ArtistRowIden::Handle).eq(handle))
             .and_where_option(
-                (!include_private).then_some(Expr::col(ReleaseRowIden::Status).eq("active")),
+                (!include_private)
+                    .then_some(Expr::col(ReleaseRowIden::Status).eq(ReleaseStatus::Public)),
             )
             .limit(limit.into())
-            .offset(offset.into()),
+            .offset(offset.into())
+            .order_by(
+                (ReleaseRowIden::Table, ReleaseRowIden::ReleaseDate),
+                Order::Desc,
+            ),
     )?
     .all()
     .await?
@@ -80,7 +88,11 @@ pub async fn get_release(
                 Expr::col(ReleaseRowIden::Slug).eq(slug),
             ))
             .and_where_option(
-                (!allow_private).then_some(Expr::col(ReleaseRowIden::Status).eq("active")),
+                (!allow_private).then_some(
+                    Expr::col(ReleaseRowIden::Status)
+                        .eq(ReleaseStatus::Public)
+                        .or(Expr::col(ReleaseRowIden::Status).eq(ReleaseStatus::Unlisted)),
+                ),
             ),
     )?
     .first::<ReleaseWithArtistRow>(None)

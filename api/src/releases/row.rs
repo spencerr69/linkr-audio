@@ -100,7 +100,11 @@ impl ReleaseWithArtistRow {
             created_at: self.created_at.clone(),
             updated_at: self.updated_at.clone(),
             artist_handle: self.artist_handle.clone(),
-            artist_name: self.artist_name.clone(),
+            artist_name: if let Some(artist_credit) = self.artist_credit.clone() {
+                artist_credit
+            } else {
+                self.artist_name.clone()
+            },
             self_url: format!(
                 "https://{}.{}/{}",
                 self.artist_handle, state.public_host, self.slug
