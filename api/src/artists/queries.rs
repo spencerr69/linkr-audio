@@ -91,3 +91,18 @@ pub async fn edit_artist(
 
     row.ok_or(ApiError::NotFound("artist"))
 }
+
+pub async fn artist_id_for(db: &D1Database, handle: &str) -> Result<i64> {
+    let id = prepare(
+        db,
+        Query::select()
+            .column(ArtistRowIden::Id)
+            .from(ArtistRowIden::Table)
+            .and_where(Expr::col(ArtistRowIden::Handle).eq(handle)),
+    )?
+    .first::<i64>(None)
+    .await
+    .map_err(|_| ApiError::NotFound("artist"))?;
+
+    id.ok_or(ApiError::NotFound("artist"))
+}

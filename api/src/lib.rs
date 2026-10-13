@@ -11,6 +11,10 @@ use crate::releases::routes::read::__path_list_recent_releases;
 use crate::releases::routes::read::get_release;
 use crate::releases::routes::read::list_recent_releases;
 use crate::releases::routes::read::{__path_get_release, list_for_artist};
+use crate::releases::routes::write::__path_delete_release;
+use crate::releases::routes::write::create_release;
+use crate::releases::routes::write::{__path_create_release, edit_release};
+use crate::releases::routes::write::{__path_edit_release, delete_release};
 use crate::state::AppState;
 use axum::extract::DefaultBodyLimit;
 use axum::http::StatusCode;
@@ -70,9 +74,9 @@ pub fn api_router() -> OpenApiRouter<AppState> {
         .routes(routes!(get_artist, edit_artist)) // /artists/{handle}
         .routes(routes!(change_password)) // /artists/{handle}/password
         .routes(routes!(create_artist)) // /artists
-        .routes(routes!(get_release)) // /releases/{handle}/{slug}
+        .routes(routes!(get_release, edit_release, delete_release)) // /releases/{handle}/{slug}
         .routes(routes!(list_recent_releases)) // /releases/recent
-        .routes(routes!(list_for_artist)) // /releases/{handle}
+        .routes(routes!(list_for_artist, create_release)) // /releases/{handle}
         // routes to go here
         .layer(DefaultBodyLimit::max(BODY_LIMIT))
 }
