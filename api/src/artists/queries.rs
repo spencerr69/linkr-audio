@@ -1,7 +1,7 @@
 use crate::artists::row::{ARTIST_COLUMNS, ArtistRow, ArtistRowIden, Role};
 use crate::artists::{CreateArtist, EditArtist};
 use crate::db::prepare;
-use crate::error::ApiError;
+use crate::error::{ApiError, internal};
 use crate::{Result, auth};
 use sea_query::{Expr, ExprTrait, OnConflict, Query};
 use worker::D1Database;
@@ -102,7 +102,7 @@ pub async fn artist_id_for(db: &D1Database, handle: &str) -> Result<i64> {
     )?
     .first::<i64>(None)
     .await
-    .map_err(|_| ApiError::NotFound("artist"))?;
+    .map_err(|err| internal!("{}", err.to_string()))?;
 
     id.ok_or(ApiError::NotFound("artist"))
 }
